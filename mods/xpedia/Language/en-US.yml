@@ -1,0 +1,2384 @@
+en-US:
+  STR_AVENGER_UFOPEDIA: "TRANSPORTER AND COMBAT SPACECRAFT. THE ULTIMATE REPLICATION OF ALIEN TECHNOLOGY."
+  STR_INTERCEPTOR_UFOPEDIA: "COMBAT AIRCRAFT WITH DUAL PULSE DETONATION ENGINES AND SPECIALLY SHIELDED ELECTRONIC SYSTEMS. THE BEST AVAILABLE EARTH BASED TECHNOLOGY."
+  STR_LIGHTNING_UFOPEDIA: "TRANSPORTER AND COMBAT CRAFT. A CRUDE BUT EFFECTIVE REPLICATION OF ALIEN PROPULSION SYSTEMS."
+  STR_SKYRANGER_UFOPEDIA: "TROOP TRANSPORTER. THE FASTEST OF ITS KIND, WITH VERTICAL TAKE OFF AND LANDING (V.T.O.L.) CAPABILITY."
+  STR_FIRESTORM_UFOPEDIA: "COMBAT CRAFT. THIS ONE-MAN FIGHTER REPLICATES THE CLASSIC ALIEN FLYING SAUCER DESIGN, WITH CENTRAL PROPULSION UNIT."
+  STR_STINGRAY_UFOPEDIA: "ADVANCED AIR TO AIR MISSILE WITH SPECIALLY SHIELDED ELECTRONICS."
+  STR_AVALANCHE_UFOPEDIA: "AIR TO AIR MISSILE WITH NUCLEAR WARHEAD, BUT AN EXTREMELY HEAVY LOAD."
+  STR_CANNON_UFOPEDIA: "HIGH POWERED CANNON WHICH FIRES ARMOR PIERCING ROUNDS CAPABLE OF PENETRATING 16 INCHES OF STEEL."
+  STR_FUSION_BALL_UFOPEDIA: "THIS LAUNCHER FIRES A BALL SHAPED MISSILE POWERED BY ANTI-MATTER REACTION. THE BALL DESTROYS THE TARGET WITH A GRAVITY WAVE IMPLOSION."
+  STR_LASER_CANNON_UFOPEDIA: "THIS CONVENTIONAL LASER BEAM IS POWERED BY AN ANTI-MATTER REACTION CHAMBER."
+  STR_PLASMA_BEAM_UFOPEDIA: "THE GRAVITY BEAM DIRECTS A FINELY CHANNELED IMPLODING GRAVITY FIELD."
+  STR_SECTOID_UFOPEDIA: "The Sectoid hierarchy ranges from soldiers to leaders with powerful psionic abilities. These psionic powers can be used to demoralize soldiers in combat, or even take control of their minds. They tend to indulge in human abductions and cattle mutilation. The abduction is used to extract genetic material for cross breeding and developing clones for infiltrating human society. The cattle provide both nutrition and genetic material. This race appears to want to develop superior genetic hybrids to increase the efficiency of their hive-like society."
+  STR_SECTOID_AUTOPSY: "Sectoid autopsy"
+  STR_SECTOID_AUTOPSY_UFOPEDIA: "The autopsy reveals vestigial digestive organs and a simple structure. The brain and eyes are very well developed. The structure suggests genetic alteration or mutation. The small mouth and nose appear to have little function. The webbing between the fingers, and the flat feet suggest aquatic origins. There are no reproductive organs, and no clues as to how this species can reproduce. They are most probably a genetically engineered species."
+  STR_SNAKEMAN_UFOPEDIA: "This race developed in an extremely hostile environment. They are extremely tough and can resist extreme temperature variations. Their mobility depends on a snake-like giant 'foot' which protects all the vital organs. Their objectives appear to be purely predatory and they appear to be under the command of some other intelligence which directs their military-style incursions on earth."
+  STR_SNAKEMAN_AUTOPSY: "Snakeman autopsy"
+  STR_SNAKEMAN_AUTOPSY_UFOPEDIA: "The skin is extremely tough and heat resistant. The cardio-vascular system is part of the muscular system which uses the hydraulic principle to create motion. The only true muscle is the 'heart'. The reproductive system appears to be very efficient. Reproduction is asexual, with each snakeman carrying up to fifty eggs inside its body at any one time. Left to its own devices this species would be a severe threat to life on earth."
+  STR_ETHEREAL_UFOPEDIA: "This being has awesome mental powers which allow for telepathic communication and telekinetic abilities. The apparently weak physical abilities of this creature are sustained by its mental powers. We do not understand how these telekinetic powers work, since they seem to defy the laws of physics as we know them. They are extremely dangerous in any combat situation, where they rely on their mental powers for combat. They rarely appear on earth since they seem to rely on other races to pursue their objectives."
+  STR_ETHEREAL_AUTOPSY: "Ethereal autopsy"
+  STR_ETHEREAL_AUTOPSY_UFOPEDIA: "This being is physically retarded and seems incapable of sustaining any life functions. The muscles are severely atrophied and the internal organs appear to be under-developed. The sensory organs, including the eyes, do not appear to function at all. The brain, however, is well developed and draws on a high proportion of the body's blood supply. It is a mystery as to how this creature can sustain itself without external support."
+  STR_MUTON_UFOPEDIA: "This humanoid creature is physically powerful and intelligent. They have a particular appetite for consuming raw flesh of any kind, which they need for sustenance like earth based carnivores. They appear to rely on telepathic commands from a race known as 'Ethereals'. Once separated from this telepathic link their mental system appears to break down and they die. The cybernetic implants are used to enhance their combat performance. They are clearly the foot soldiers for a higher intelligence."
+  STR_MUTON_AUTOPSY: "Muton autopsy"
+  STR_MUTON_AUTOPSY_UFOPEDIA: "The 'skin' of this creature appears to be an organically created protective armor which is grafted onto the body. There are numerous cybernetic implants which are used to enhance the cardio-vascular system and the senses. The reproductive organs appear to have been surgically removed. Evidently these unfortunate creatures are limited to a life of warfare and conquest. Armor piercing ammunition is not very effective against their toughened skin."
+  STR_CELATID_UFOPEDIA: "This life-form has the mysterious natural ability to float through the air. It appears to detect human brain waves and will move towards a human target even if well hidden. Once a target is detected the Celatid lands and fires small globules of extremely corrosive venom. The creature has the ability to clone itself at an alarming rate. It accompanies the Muton race in its wanderings."
+  STR_CELATID_AUTOPSY: "Celatid autopsy"
+  STR_CELATID_AUTOPSY_UFOPEDIA: "The core contains a small bio-mechanical device which appears to be a naturally evolved anti-gravity propulsion system. The sac of venom is the largest organ and there does not appear to be a separate brain structure. There is no discernible digestive or reproductive system. A small organ contains embryos which can grow rapidly into a new being."
+  STR_SILACOID_UFOPEDIA: "This silicon based life form generates an enormous amount of heat. It has the strength to crush rocks which can then be ingested by the hot core. It has a primitive intelligence and can be controlled by implants or telepathic beings. It works with the Muton alien race."
+  STR_SILACOID_AUTOPSY: "Silacoid autopsy"
+  STR_SILACOID_AUTOPSY_UFOPEDIA: "The core of the creature is extremely hot, and seems to be the basis for a digestive system. Its unique muscle system has tremendous power and speed. Its rock-like skin is not harmed by fire or incendiary ammunition."
+  STR_CHRYSSALID_UFOPEDIA: "The crab-like claws of this creature are a powerful weapon in close combat. The high metabolism and strength of this creature give it speed and dexterity. Instead of killing its victim it impregnates it with an egg and injects a venom which turns it into a walking zombie. A new Chryssalid will burst from the victim shortly after impregnation. Chryssalids are associated with the Snakeman race."
+  STR_CHRYSSALID_AUTOPSY: "Chryssalid autopsy"
+  STR_CHRYSSALID_AUTOPSY_UFOPEDIA: "The exoskeleton of this creature is extremely tough, but surprisingly vulnerable to explosive ammunition. The brain is well developed, and its cell growth rate very fast. The creature carries twenty eggs which are laid inside other organisms. This creature is a very effective terror weapon."
+  STR_FLOATER_UFOPEDIA: "The Floaters are primarily soldiers and terror agents. They are naturally predatory beasts, genetically engineered and cybernetically enhanced to make formidable warriors. The lower half of the body and most internal organs are surgically removed, and a life support system is installed. This implant contains an anti-gravity unit which enables the creature to float, albeit unsteadily, through the air."
+  STR_FLOATER_AUTOPSY: "Floater autopsy"
+  STR_FLOATER_AUTOPSY_UFOPEDIA: "The creature has been drastically altered by surgery. The device which seems to form the core of the body is a life support system, taking over the function of heart, lungs and digestive system. This would enable the creature to survive in extremely hostile environments. The brain is smaller than ours, but the sensory organs are well developed."
+  STR_REAPER_UFOPEDIA: "This bipedal carnivore has powerful jaws and a voracious appetite. It has a number of brain implants which are used to control its activity. The primitive predatory instincts of this creature are of little use except to terrorize and destroy. Reapers are commonly associated with Floaters."
+  STR_REAPER_AUTOPSY: "Reaper autopsy"
+  STR_REAPER_AUTOPSY_UFOPEDIA: "The Reaper contains two 'brains' and two 'hearts' which allow it to function even when heavily wounded. However, its furry skin is highly flammable, making the creature vulnerable to incendiary weapons."
+  STR_SECTOPOD_UFOPEDIA: "Sectopods are robot creatures with a powerful laser beam weapon. The control of these mechanical beasts is via a telepathic link to their controllers, the Ethereals. Sectopods are the most powerful terror weapon available to the alien forces."
+  STR_SECTOPOD_AUTOPSY: "Sectopod autopsy"
+  STR_SECTOPOD_AUTOPSY_UFOPEDIA: "The robot is sturdily constructed with powered armor capable of resisting most forms of attack, in particular plasma weapons. However, the sensing circuitry seems particularly vulnerable to laser weapons."
+  STR_CYBERDISC_UFOPEDIA: "This miniature flying saucer is an automated terror weapon armed with a powerful plasma beam. The anti-gravity propulsion gives it a big advantage in difficult terrain. Its primary function is destruction and terror in the service of the Sectoid race."
+  STR_CYBERDISC_AUTOPSY: "Cyberdisc autopsy"
+  STR_CYBERDISC_AUTOPSY_UFOPEDIA: "The Cyberdisc is well shielded and is particularly good at withstanding explosive ammunition. The primary anti-gravity system is too badly damaged to gain any understanding of its functioning."
+  STR_UFO_POWER_SOURCE_UFOPEDIA: "The power source of alien craft is an anti-matter reactor which uses Elerium (element 115) to generate powerful gravity waves as well as other forms of energy. The conversion of matter to energy is an incredible 99% efficient, therefore tiny quantities of Elerium can produce a huge amount of power. This unit can be reproduced easily using alien alloys."
+  STR_UFO_NAVIGATION_UFOPEDIA: "Alien craft use sophisticated computers to navigate on earth and through space. The system is based on optical processors arranged in network fashion. The control interface is relatively simple - the navigator controls the direction of gravity waves generated by the power source to move the craft in any direction. This system can be used easily by humans, and it can be reproduced using alien alloys and other components."
+  STR_UFO_CONSTRUCTION_UFOPEDIA: "Alien craft consist of three main components - a power source, a navigation system and a hull built from alien alloys. The hull is specially designed to allow gravity waves to be directed and controlled. In addition a small quantity of Elerium is required to fuel the power source. Once the principles of construction are understood, and the functions of each component are known, then it is possible to build these types of craft."
+  STR_ALIEN_FOOD_UFOPEDIA: "These chambers contain various enzymes which are used to digest the body parts of cattle, other animals and even humans. The liquid is then consumed as ready digested food - probably direct to the bloodstream. This suggests a certain dependence on earth for food - a symbiosis between earth and alien society."
+  STR_ALIEN_REPRODUCTION_UFOPEDIA: "These chambers contain alien fetuses. The design of these containers seems to suggest that the aliens which use this process rely completely on laboratory reproduction. The rich nutrients ensure rapid development of the fetus. This factory line system could generate thousands of alien clones in a short space of time. The process could be easily adapted for human reproduction, or alien-human hybrids."
+  STR_ALIEN_ENTERTAINMENT_UFOPEDIA: "The most likely function of these spheres is recreational. The psionic circuitry stimulates various centers of the brain. The effect is similar to hallucinogenic drugs. This is the only evidence that aliens have any cultural or recreational pastimes."
+  STR_ALIEN_SURGERY_UFOPEDIA: "This surgical equipment uses laser cutters to extract certain body parts from cattle and other animals. The widespread cattle mutilations can be accounted for by this bizarre alien activity. It is likely that these parts are used for nutritional or genetic purposes."
+  STR_EXAMINATION_ROOM_UFOPEDIA: "In the past many thousands of people have claimed to have been abducted by aliens, sometimes repeatedly. The truth is far more horrific. Humans are abducted, researched and monitored. The best specimens have genetic material extracted. Women have human-alien hybrid fetuses implanted, and then removed several months later. Who knows what sinister motives the aliens have?"
+  STR_ALIEN_ALLOYS_UFOPEDIA: "Alien craft are constructed from special alloys with unique properties. They are extremely light and durable, and can be molded by electro-magnetic methods. This material can be reproduced and used in many kinds of manufacturing processes."
+  STR_ELERIUM_115_UFOPEDIA: "This element has the unusual property of generating anti-matter power when bombarded with certain particles. This creates gravity waves and other forms of energy. It is not naturally found in our solar system and cannot be reproduced."
+  STR_ALIEN_ORIGINS_UFOPEDIA: "It is clear that we are fighting a losing battle on earth. The alien hordes are overwhelming in number. The best we can do is slow down their progress. The only hope for humanity is to tackle the aliens at their source. Our research seems to indicate a nearby base of operations within our solar system. Aliens indicate this place to be the center of an ancient civilization that pre-dates human history. We must locate this place as soon as possible. However, we need to capture and interrogate an alien leader to gain more detailed information. The larger UFOs probably contain at least one Alien leader."
+  STR_THE_MARTIAN_SOLUTION_UFOPEDIA: "Our research now points to Mars as the base of alien operations. The base is well hidden, and contains all the manufacturing and cloning facilities to fuel the infiltration of earth. It also seems to contain a controlling computer of some kind that controls the whole operation. It seems that the hive-like alien society has some kind of 'queen bee'. This is their fundamental weakness - if we can eliminate the 'brain' then the body will die. We must step up our research efforts before it is too late. In order to progress we must capture the highest ranking aliens - the commanders - which only reside in alien bases and battleships."
+  STR_CYDONIA_OR_BUST_UFOPEDIA: "It is now clear that the alien hordes are being controlled from an underground base in Cydonia - which is an unusual area of Mars featuring five sided pyramids and a large formation resembling a human face. Cydonian civilization once flourished on Mars many millions of years ago, but we do not know why it died out, or what the connection is with the latest alien activity there. Whatever the explanation we must send an expedition to Cydonia. This is the only way that we can defeat the aliens. We must destroy the controlling master 'brain'. We will need an Avenger craft equipped with the most awesome destructive power at our disposal. There is nothing more we can learn here - we must await the outcome of the Cydonian assault."
+  STR_CENTER_ON_SITE_TIME_5_SECONDS: "CENTER ON SITE-TIME=5 Secs"
+  STR_CANCEL_UC: "CANCEL"
+  STR_NONE: "None"
+  STR_UNKNOWN: "Unknown"
+  STR_POOR: "Poor"
+  STR_AVERAGE: "Average"
+  STR_GOOD: "Good"
+  STR_EXCELLENT: "Excellent"
+  STR_BUILD_NEW_BASE_UC: "BUILD NEW BASE"
+  STR_BASE_INFORMATION: "BASE INFORMATION"
+  STR_EQUIP_CRAFT: "EQUIP CRAFT"
+  STR_BUILD_FACILITIES: "BUILD FACILITIES"
+  STR_RESEARCH: "RESEARCH"
+  STR_MANUFACTURE: "MANUFACTURE"
+  STR_TRANSFER_UC: "TRANSFER"
+  STR_PURCHASE_RECRUIT: "PURCHASE/RECRUIT"
+  STR_SACK: "SACK"
+  STR_SELL_SACK_UC: "SELL/SACK"
+  STR_GEOSCAPE_UC: "GEOSCAPE"
+  STR_NAME: "Name"
+  STR_AREA: "Area"
+  STR_BUILD_NEW_BASE: "Build New Base"
+  STR_CANCEL: "Cancel"
+  STR_COST_UC: "COST>"
+  STR_CONSTRUCTION_TIME_UC: "CONSTRUCTION TIME>"
+  STR_DAY:
+    one: "{N} day"
+    other: "{N} days"
+  STR_HOUR:
+    one: "{N} hour"
+    other: "{N} hours"
+  STR_MAINTENANCE_UC: "MAINTENANCE>"
+  STR_OK: "OK"
+  STR_INSTALLATION: "Installation"
+  STR_CURRENT_RESEARCH: "CURRENT RESEARCH"
+  STR_SCIENTISTS_AVAILABLE: "Scientists Available>{ALT}{0}"
+  STR_SCIENTISTS_ALLOCATED: "Scientists Allocated>{ALT}{0}"
+  STR_LABORATORY_SPACE_AVAILABLE: "Laboratory Space Available>{ALT}{0}"
+  STR_RESEARCH_PROJECT: "RESEARCH PROJECT"
+  STR_SCIENTISTS_ALLOCATED_UC: "SCIENTISTS ALLOCATED"
+  STR_PROGRESS: "PROGRESS"
+  STR_NEW_PROJECT: "New Project"
+  STR_CANCEL_PROJECT: "CANCEL PROJECT"
+  STR_NEW_RESEARCH_PROJECTS: "NEW RESEARCH PROJECTS"
+  STR_SCIENTISTS_AVAILABLE_UC: "SCIENTISTS AVAILABLE>{ALT}{0}"
+  STR_LABORATORY_SPACE_AVAILABLE_UC: "LABORATORY SPACE AVAILABLE>{ALT}{0}"
+  STR_INCREASE: "Increase"
+  STR_DECREASE: "Decrease"
+  STR_START_PROJECT: "START PROJECT"
+  STR_CURRENT_PRODUCTION: "CURRENT PRODUCTION"
+  STR_ENGINEERS_AVAILABLE: "Engineers Available>{ALT}{0}"
+  STR_ENGINEERS_ALLOCATED: "Engineers Allocated>{ALT}{0}"
+  STR_WORKSHOP_SPACE_AVAILABLE: "Workshop Space Available>{ALT}{0}"
+  STR_CURRENT_FUNDS: "Current Funds>{ALT}{0}"
+  STR_ITEM: "ITEM"
+  STR_ENGINEERS__ALLOCATED: "Engineers Allocated"
+  STR_UNITS_PRODUCED: "Units Produced"
+  STR_TOTAL_TO_PRODUCE: "Total to Produce"
+  STR_COST__PER__UNIT: "Cost{NEWLINE}per{NEWLINE}Unit"
+  STR_DAYS_HOURS_LEFT: "Days/Hours Left"
+  STR_NEW_PRODUCTION: "New Production"
+  STR_PRODUCTION_ITEMS: "Production Items"
+  STR_CATEGORY: "CATEGORY"
+  STR_START_PRODUCTION: "START PRODUCTION"
+  STR_ENGINEER_HOURS_TO_PRODUCE_ONE_UNIT: "{0} Engineer hours to produce one unit"
+  STR_COST_PER_UNIT_: "Cost per unit>{ALT}{0}"
+  STR_WORK_SPACE_REQUIRED: "Work Space Required>{ALT}{0}"
+  STR_SPECIAL_MATERIALS_REQUIRED: "SPECIAL MATERIALS REQUIRED"
+  STR_ITEM_REQUIRED: "ITEM REQUIRED"
+  STR_UNITS_REQUIRED: "UNITS REQUIRED"
+  STR_UNITS_AVAILABLE: "UNITS AVAILABLE"
+  STR_STOP_PRODUCTION: "STOP PRODUCTION"
+  STR_ENGINEERS_AVAILABLE_UC: "ENGINEERS AVAILABLE>{ALT}{0}"
+  STR_WORKSHOP_SPACE_AVAILABLE_UC: "WORKSHOP SPACE AVAILABLE>{ALT}{0}"
+  STR_MONTHLY_PROFIT: "MONTHLY PROFIT>{ALT}{0}"
+  STR_INCREASE_UC: "INCREASE"
+  STR_DECREASE_UC: "DECREASE"
+  STR_UNITS_TO_PRODUCE: "Units to Produce"
+  STR_PURCHASE_HIRE_PERSONNEL: "Purchase/Hire Personnel"
+  STR_COST_OF_PURCHASES: "Cost of Purchases>{ALT}{0}"
+  STR_COST_PER_UNIT_UC: "COST PER UNIT"
+  STR_QUANTITY_UC: "QUANTITY"
+  STR_PERSONNEL_AVAILABLE_PERSONNEL_TOTAL: "PERSONNEL AVAILABLE:PERSONNEL TOTAL>"
+  STR_SOLDIERS: "Soldiers"
+  STR_SCIENTISTS: "Scientists"
+  STR_ENGINEERS: "Engineers"
+  STR_SPACE_USED_SPACE_AVAILABLE: "SPACE USED:SPACE AVAILABLE>"
+  STR_LIVING_QUARTERS: "Living Quarters"
+  STR_STORES: "Stores"
+  STR_LABORATORIES: "Laboratories"
+  STR_WORK_SHOPS: "Work Shops"
+  STR_HANGARS: "Hangars"
+  STR_SHORT_RANGE_DETECTION: "Short Range Detection"
+  STR_DEFENSE_STRENGTH: "Defense Strength"
+  STR_TRANSFERS_UC: "TRANSFERS"
+  STR_TRANSFERS: "Transfers"
+  STR_ARRIVAL_TIME_HOURS: "Arrival Time (hours)"
+  STR_COST_: "Cost>{ALT}{0}"
+  STR_AREA_: "Area>{ALT}{0}"
+  STR_BASE_NAME: "Base Name?"
+  STR_SELECT_POSITION_FOR_ACCESS_LIFT: "SELECT POSITION FOR ACCESS LIFT"
+  STR_TRANSFER: "Transfer"
+  STR_AMOUNT_TO_TRANSFER: "AMOUNT TO TRANSFER"
+  STR_SELECT_DESTINATION_BASE: "Select Destination Base"
+  STR_COST: "Cost"
+  STR_VICTORY_1: "As you enter the chamber you see the alien brain - the object of your quest. Before you can fire it communicates to you via a screen at its base. It implores you to listen to its arguments for survival before you make the decision to pull the trigger..."
+  STR_VICTORY_2: "The brain speaks: 'Many millions of years ago the planet you call Mars was alive. This life was brought to a barren planet by our civilization as it was to yours. For millions of years we have visited your planet and genetically developed your species. You cannot kill us, you are part of us..."
+  STR_VICTORY_3: "Here is the center of Martian civilization - the pyramids built millions of years before yours - by a species which is your ancestor. No planet is beyond our reach. This power could be yours before long. All we ask is your co-operation..."
+  STR_GAME_OVER_1: "The aliens attempt to exterminate all humanity, destroying cities and poisoning the air and sea. The resistance of earth armies is futile in the face of vastly superior technology. Surviving generations suffer terrible mutations as they flee alien destruction. They are rounded up into slave camps to help transform earth into an alien colony which is part of some unknown empire."
+  STR_GAME_OVER_2: "The knowledge gained through the X-Com project is lost forever. You have failed to save the earth."
+  STR_VICTORY_4: "The alien brain is interrupted by a burst of hot plasma, and the entire alien force is defeated."
+  STR_VICTORY_5: "Once the aliens have lost Mars they have lost the earth. Before long the X-Com research allows humanity to flourish once more, and claim Mars for itself. The alien menace has gone, but for how long, no one knows..."
+  STR_YOU_HAVE_FAILED: "You have failed to stop the alien onslaught. One by one the funding nations sign pacts with aliens promising technology, prosperity and peace. However it soon becomes clear that the aliens have other plans..."
+  STR_TOTAL_UC: "TOTAL"
+  STR_INCOME: "Income"
+  STR_EXPENDITURE: "Expenditure"
+  STR_MAINTENANCE: "Maintenance"
+  STR_BALANCE: "Balance"
+  STR_UFO_ACTIVITY_IN_AREAS: "UFO Activity in Areas"
+  STR_UFO_ACTIVITY_IN_COUNTRIES: "UFO Activity in Countries"
+  STR_XCOM_ACTIVITY_IN_AREAS: "X-Com Activity in Areas"
+  STR_XCOM_ACTIVITY_IN_COUNTRIES: "X-Com Activity in Countries"
+  STR_FINANCE: "Finance"
+  STR_DATE_FIRST: "{0}st"
+  STR_DATE_SECOND: "{0}nd"
+  STR_DATE_THIRD: "{0}rd"
+  STR_DATE_FOURTH: "{0}th"
+  STR_FINANCE_THOUSANDS: "$1000's"
+  STR_NOT_ENOUGH_SPECIAL_MATERIALS_TO_PRODUCE_ITEM_AT_BASE: "Not enough special materials to produce{NEWLINE}{0}{NEWLINE}at{NEWLINE}{1}"
+  STR_NOT_ENOUGH_MONEY_TO_PRODUCE_ITEM_AT_BASE: "Not enough money to produce{NEWLINE}{0}{NEWLINE}at{NEWLINE}{1}"
+  STR_PRODUCTION_OF_ITEM_AT_BASE_IS_COMPLETE: "Production of{NEWLINE}{0}{NEWLINE}at{NEWLINE}{1}{NEWLINE}is complete"
+  STR_CONSTRUCTION_OF_FACILITY_AT_BASE_IS_COMPLETE: "Construction of{NEWLINE}{0}{NEWLINE}at{NEWLINE}{1}{NEWLINE}is complete"
+  STR_OK_5_SECONDS: "OK - 5 secs"
+  STR_RESEARCH_COMPLETED: "Research Completed"
+  STR_VIEW_REPORTS: "VIEW REPORTS"
+  STR_WE_CAN_NOW_RESEARCH: "We can now research"
+  STR_WE_CAN_NOW_PRODUCE: "We can now produce"
+  STR_SUNDAY: "SUNDAY"
+  STR_MONDAY: "MONDAY"
+  STR_TUESDAY: "TUESDAY"
+  STR_WEDNESDAY: "WEDNESDAY"
+  STR_THURSDAY: "THURSDAY"
+  STR_FRIDAY: "FRIDAY"
+  STR_SATURDAY: "SATURDAY"
+  STR_NOT_ENOUGH_ITEM_TO_REFUEL_CRAFT_AT_BASE: "Not enough {0} to refuel {1} at {2}"
+  STR_NOT_ENOUGH_ITEM_TO_REARM_CRAFT_AT_BASE: "Not enough {0} to rearm {1} at {2}"
+  STR_UFO_IS_NOT_RECOVERED: "UFO is not recovered"
+  STR_UFO_IS_RECOVERED: "UFO is recovered"
+  STR_CRAFT_IS_LOST: "Craft is lost"
+  STR_TERROR_CONTINUES: "Terror continues"
+  STR_ALIENS_DEFEATED: "Aliens defeated"
+  STR_BASE_IS_LOST: "Base is lost"
+  STR_BASE_IS_SAVED: "Base is saved"
+  STR_ALIEN_BASE_STILL_INTACT: "Alien Base still intact"
+  STR_ALIEN_BASE_DESTROYED: "Alien Base destroyed"
+  STR_ALIENS_KILLED: "ALIENS KILLED"
+  STR_ALIEN_CORPSES_RECOVERED: "ALIEN CORPSES RECOVERED"
+  STR_LIVE_ALIENS_RECOVERED: "LIVE ALIENS RECOVERED"
+  STR_ALIEN_ARTIFACTS_RECOVERED: "ALIEN ARTIFACTS RECOVERED"
+  STR_ALIEN_BASE_CONTROL_DESTROYED: "ALIEN BASE CONTROL DESTROYED"
+  STR_CIVILIANS_KILLED_BY_ALIENS: "CIVILIANS KILLED BY ALIENS"
+  STR_CIVILIANS_KILLED_BY_XCOM_OPERATIVES: "CIVILIANS KILLED BY X-COM OPERATIVES"
+  STR_CIVILIANS_SAVED: "CIVILIANS SAVED"
+  STR_XCOM_OPERATIVES_KILLED: "X-COM OPERATIVES KILLED"
+  STR_XCOM_OPERATIVES_MISSING_IN_ACTION: "X-COM OPERATIVES MISSING IN ACTION"
+  STR_TANKS_DESTROYED: "TANKS DESTROYED"
+  STR_XCOM_CRAFT_LOST: "X-COM CRAFT LOST"
+  STR_UFO_RECOVERY: "UFO RECOVERY"
+  STR_ALIEN_BASE_RECOVERY: "ALIEN BASE RECOVERY"
+  STR_BASE_UNDER_ATTACK: "{0} under attack!"
+  STR_BASE_DEFENSES_INITIATED: "BASE DEFENSES INITIATED"
+  STR_GRAV_SHIELD_REPELS_UFO: "GRAV SHIELD REPELS UFO!"
+  STR_FIRING: "FIRING"
+  STR_HIT: "HIT!"
+  STR_UFO_DESTROYED: "UFO DESTROYED!"
+  STR_MISSED: "MISSED!"
+  STR_SELL_ITEMS_SACK_PERSONNEL: "Sell Items/Sack Personnel"
+  STR_VALUE_OF_SALES: "VALUE OF SALES> {ALT}{0}"
+  STR_FUNDS: "FUNDS> {ALT}{0}"
+  STR_SELL_SACK: "Sell/Sack"
+  STR_VALUE: "Value"
+  STR_CRAFT_: "CRAFT> {ALT}{0}"
+  STR_CRAFTNAME: "{0}-{1}"
+  STR_UFO_CRASH_RECOVERY: "UFO CRASH RECOVERY"
+  STR_UFO_CRASH_RECOVERY_BRIEFING: "Exercise caution - There may be operatives in the UFO or around the crash site. Mission will be successful when all enemy units have been eliminated or neutralized. Recovery of UFO remains, artifacts and alien corpses can then be initiated. To abort the mission return X-Com operatives to transport vehicle and click on the 'Abort Mission' icon."
+  STR_UFO_GROUND_ASSAULT: "UFO GROUND ASSAULT"
+  STR_UFO_GROUND_ASSAULT_BRIEFING: "Explore landing site and, if possible, gain entry to the UFO. Mission will be successful when all enemy units have been eliminated or neutralized. Recovery of UFO, artifacts and alien corpses can then be initiated. To abort the mission return X-Com operatives to transport vehicle and click on the 'Abort Mission' icon."
+  STR_BASE_DEFENSE: "BASE DEFENSE"
+  STR_BASE_UC_: "BASE> {0}"
+  STR_BASE_DEFENSE_BRIEFING: "An Alien vessel has landed nearby. Our base is in severe danger. As per standard procedure all non-combat personnel and X-Com craft have been evacuated. Alien units will enter the base via hangar doors or the access lift. Defend the base and its vital installations at all costs - this is a fight to the death. If you click on the 'abort mission' icon you will concede defeat and lose the base."
+  STR_ALIEN_BASE_ASSAULT: "ALIEN BASE ASSAULT"
+  STR_ALIEN_BASE_ASSAULT_BRIEFING: "X-Com operatives have gained entrance to an alien base. The control center must be destroyed to render the base inoperative. The mission will terminate when all enemies are eliminated, or when your squad has returned to the green exit area (click on the 'abort mission' icon to escape)."
+  STR_CYDONIA_BRIEFING: "You have arrived in Cydonia. You gain entry to a large underground complex near the Martian Sphinx. You must destroy the Alien Brain that controls all alien activity. The fate of humanity is in your hands...."
+  STR_TERROR_MISSION: "TERROR MISSION"
+  STR_TERROR_MISSION_BRIEFING: "Mission will be successful when all enemy units have been eliminated or neutralized. You must attempt to save the lives of any civilians in the area by neutralizing the alien menace. To abort the mission return X-Com operatives to transport vehicle and click on the 'Abort Mission' icon."
+  STR_NO_FREE_HANGARS_FOR_CRAFT_PRODUCTION: "NO FREE HANGARS FOR CRAFT PRODUCTION!{SMALLLINE}Each craft assigned to a base, transferred to a base, purchased or constructed uses one hangar. Build a new hangar or transfer a craft to another base."
+  STR_NO_FREE_HANGARS_FOR_PURCHASE: "NO FREE HANGARS FOR PURCHASE!{SMALLLINE}Each craft assigned to a base, transferred to a base, purchased or constructed uses one hangar. Build a new hangar or transfer a craft to another base."
+  STR_NO_FREE_HANGARS_FOR_TRANSFER: "NO FREE HANGARS FOR TRANSFER!{SMALLLINE}Each craft assigned to a base, transferred to a base, purchased or constructed uses one hangar. Build a new hangar or transfer a craft to another base."
+  STR_CANNOT_BUILD_HERE: "CANNOT BUILD HERE!{SMALLLINE}You must build next to an existing base facility."
+  STR_NO_FREE_ACCOMODATION: "NO FREE ACCOMMODATION!{SMALLLINE}The destination base does not have enough space in living quarters."
+  STR_NOT_ENOUGH_WORK_SPACE: "NOT ENOUGH WORK SPACE AVAILABLE!{SMALLLINE}Build a new workshop or reduce work on other projects."
+  STR_NOT_ENOUGH_MONEY: "NOT ENOUGH MONEY!"
+  STR_NOT_ENOUGH_STORE_SPACE: "NOT ENOUGH STORE SPACE!{SMALLLINE}Build a new store facility or transfer existing stores to other bases."
+  STR_NOT_ENOUGH_LIVING_SPACE: "NOT ENOUGH LIVING SPACE!{SMALLLINE}Build new living quarters or transfer personnel to other bases."
+  STR_LAUNCH_INTERCEPTION: "LAUNCH INTERCEPTION"
+  STR_CRAFT: "CRAFT"
+  STR_STATUS: "STATUS"
+  STR_BASE: "BASE"
+  STR_READY: "READY"
+  STR_OUT: "OUT"
+  STR_REPAIRS: "REPAIRS"
+  STR_REFUELLING: "REFUELING"
+  STR_REARMING: "REARMING"
+  STR_TARGET: "TARGET: {0}"
+  STR_WAY_POINT: "WAY POINT"
+  STR_ARE_YOU_SURE_CYDONIA: "Are you sure you want to send this craft on a mission to Cydonia?"
+  STR_YES: "YES"
+  STR_NO: "NO"
+  STR_SELECT_DESTINATION: "SELECT DESTINATION"
+  STR_CYDONIA: "CYDONIA"
+  STR_SELECT_SITE_FOR_NEW_BASE: "SELECT SITE FOR NEW BASE"
+  STR_RETURN_TO_BASE: "RETURN TO BASE"
+  STR_SELECT_NEW_TARGET: "SELECT NEW TARGET"
+  STR_PATROL: "PATROL"
+  STR_STATUS_: "STATUS>{ALT}{0}"
+  STR_DAMAGED_RETURNING_TO_BASE: "DAMAGED - RETURNING TO BASE"
+  STR_LOW_FUEL_RETURNING_TO_BASE: "LOW FUEL - RETURNING TO BASE"
+  STR_MISSION_COMPLETE_RETURNING_TO_BASE: "MISSION COMPLETE - RETURNING TO BASE"
+  STR_PATROLLING: "PATROLLING"
+  STR_TAILING_UFO: "TAILING UFO"
+  STR_INTERCEPTING_UFO: "INTERCEPTING UFO-{0}"
+  STR_RETURNING_TO_BASE: "RETURNING TO BASE"
+  STR_DESTINATION_UC_: "DESTINATION: {0}"
+  STR_BASE_UC: "BASE>{ALT}{0}"
+  STR_SPEED_: "SPEED>{ALT}{0}"
+  STR_MAXIMUM_SPEED_UC: "MAXIMUM SPEED>{ALT}{0}{ALT}"
+  STR_ALTITUDE_: "ALTITUDE>{ALT}{0}"
+  STR_VERY_LOW: "VERY LOW"
+  STR_LOW_UC: "LOW"
+  STR_HIGH_UC: "HIGH"
+  STR_VERY_HIGH: "VERY HIGH"
+  STR_FUEL: "FUEL>{ALT}{0}"
+  STR_WEAPON_ONE: "WEAPON-1>{ALT}{0}"
+  STR_NONE_UC: "NONE"
+  STR_ROUNDS_: "ROUNDS>{ALT}{0}"
+  STR_WEAPON_TWO: "WEAPON-2>{ALT}{0}"
+  STR_INTERCEPTION_CRAFT: "INTERCEPTION CRAFT"
+  STR_BASE_: "Base>{0}"
+  STR_NAME_UC: "NAME"
+  STR_AMMO_: "AMMO>{ALT}{0}"
+  STR_CREW: "CREW"
+  STR_EQUIPMENT_UC: "EQUIPMENT"
+  STR_ARMOR: "ARMOR"
+  STR_MAX: "MAX>{ALT}{0}"
+  STR_ROOKIE: "Rookie"
+  STR_SQUADDIE: "Squaddie"
+  STR_SERGEANT: "Sergeant"
+  STR_CAPTAIN: "Captain"
+  STR_COLONEL: "Colonel"
+  STR_COMMANDER: "Commander"
+  STR_SELECT_SQUAD_FOR_CRAFT: "Select Squad for {0}"
+  STR_SORT_BY: "SORT BY..."
+  STR_ORIGINAL_ORDER: "ORIGINAL ORDER"
+  STR_MISSIONS2: "MISSIONS"
+  STR_KILLS2: "KILLS"
+  STR_WOUND_RECOVERY2: "WOUND RECOVERY"
+  STR_SPACE_AVAILABLE: "SPACE AVAILABLE>{ALT}{0}"
+  STR_SPACE_USED: "SPACE USED>{ALT}{0}"
+  STR_SPACE_USED_UC: "SPACE USED"
+  STR_RANK: "RANK"
+  STR_WOUNDED: "WOUNDED"
+  STR_EQUIPMENT_FOR_CRAFT: "Equipment for {0}"
+  STR_DEFENSE_VALUE: "Defense Value"
+  STR_HIT_RATIO: "Hit Ratio"
+  STR_CRAFT_READY_TO_LAND_NEAR_DESTINATION: "{0}{ALT}{NEWLINE}ready to{NEWLINE}land near{NEWLINE}{ALT}{1}"
+  STR_BEGIN_MISSION: "Begin Mission?"
+  STR_SELECT_ARMAMENT: "Select Armament"
+  STR_AMMUNITION_AVAILABLE: "AMMUNITION AVAILABLE"
+  STR_ARMAMENT: "ARMAMENT"
+  STR_NOT_AVAILABLE: "N.A."
+  STR_SELECT_ARMOR_FOR_SOLDIER: "SELECT ARMOR FOR{NEWLINE}{0}"
+  STR_TYPE: "TYPE"
+  STR_PERSONAL_ARMOR_UC: "PERSONAL ARMOR"
+  STR_POWER_SUIT_UC: "POWER SUIT"
+  STR_FLYING_SUIT_UC: "FLYING SUIT"
+  STR_SELECT_ARMOR: "Select Armor"
+  STR_NORTH: "NORTH"
+  STR_NORTH_EAST: "NORTH EAST"
+  STR_EAST: "EAST"
+  STR_SOUTH_EAST: "SOUTH EAST"
+  STR_SOUTH: "SOUTH"
+  STR_SOUTH_WEST: "SOUTH WEST"
+  STR_WEST: "WEST"
+  STR_NORTH_WEST: "NORTH WEST"
+  STR_SELECT_ACTION: "SELECT ACTION"
+  STR_CONTINUE_INTERCEPTION_PURSUIT: "CONTINUE INTERCEPTION PURSUIT"
+  STR_PURSUE_WITHOUT_INTERCEPTION: "PURSUE WITHOUT INTERCEPTION"
+  STR_VERY_LARGE: "VERY LARGE"
+  STR_LARGE: "LARGE"
+  STR_MEDIUM_UC: "MEDIUM"
+  STR_SMALL: "SMALL"
+  STR_VERY_SMALL: "VERY SMALL"
+  STR_GROUNDED: "GROUND"
+  STR_DETECTED: "Detected"
+  STR_SIZE_UC: "SIZE"
+  STR_ALTITUDE: "ALTITUDE"
+  STR_HEADING: "HEADING"
+  STR_SPEED: "SPEED"
+  STR_CENTER_ON_UFO_TIME_5_SECONDS: "CENTER ON UFO-TIME=5 Secs"
+  STR_TRACKING_LOST: "TRACKING LOST"
+  STR_REDIRECT_CRAFT: "REDIRECT CRAFT"
+  STR_GO_TO_LAST_KNOWN_UFO_POSITION: "GO TO LAST KNOWN UFO POSITION"
+  STR_UFO_: "UFO-{0}"
+  STR_ALIEN_BASE_: "ALIEN BASE-{0}"
+  STR_CRASH_SITE_: "CRASH SITE-{0}"
+  STR_LANDING_SITE_: "LANDING SITE-{0}"
+  STR_WAY_POINT_: "WAY POINT-{0}"
+  STR_TERROR_SITE: "TERROR SITE-{0}"
+  STR_CRAFT_HAS_REACHED_DESTINATION: "{0}{NEWLINE}has reached{NEWLINE}{1}"
+  STR_NOW_PATROLLING: "Now patrolling"
+  STR_ALIEN_ORIGINS: "Alien Origins"
+  STR_THE_MARTIAN_SOLUTION: "The Martian Solution"
+  STR_CYDONIA_OR_BUST: "Cydonia or Bust"
+  STR_UFOPAEDIA: "UFOpedia"
+  STR_XCOM_CRAFT_ARMAMENT: "X-COM CRAFT & ARMAMENT"
+  STR_HEAVY_WEAPONS_PLATFORMS: "HEAVY WEAPONS PLATFORMS"
+  STR_WEAPONS_AND_EQUIPMENT: "WEAPONS AND EQUIPMENT"
+  STR_ALIEN_ARTIFACTS: "ALIEN ARTIFACTS"
+  STR_BASE_FACILITIES: "BASE FACILITIES"
+  STR_ALIEN_LIFE_FORMS: "ALIEN LIFE FORMS"
+  STR_ALIEN_RESEARCH_UC: "ALIEN RESEARCH"
+  STR_UFO_COMPONENTS: "UFO COMPONENTS"
+  STR_UFOS: "UFOs"
+  STR_SELECT_ITEM: "SELECT ITEM"
+  STR_ACCELERATION: "ACCELERATION>{ALT}{0}{ALT}"
+  STR_FUEL_CAPACITY: "FUEL CAPACITY>{ALT}{0}{ALT}"
+  STR_WEAPON_PODS: "WEAPON PODS>{ALT}{0}{ALT}"
+  STR_DAMAGE_CAPACITY_UC: "DAMAGE CAPACITY>{ALT}{0}{ALT}"
+  STR_CARGO_SPACE: "CARGO SPACE>{ALT}{0}{ALT}"
+  STR_HWP_CAPACITY: "HWP CAPACITY>{ALT}{0}{ALT}"
+  STR_DAMAGE: "Damage"
+  STR_RANGE: "Range"
+  STR_KILOMETERS: "{0} km"
+  STR_ACCURACY: "Accuracy"
+  STR_RE_LOAD_TIME: "Re-load time"
+  STR_SECONDS: "{0}s"
+  STR_DAMAGE_ARMOR_PIERCING: "ARMOR PIERCING"
+  STR_DAMAGE_INCENDIARY: "INCENDIARY"
+  STR_DAMAGE_HIGH_EXPLOSIVE: "HIGH EXPLOSIVE"
+  STR_DAMAGE_LASER_BEAM: "LASER BEAM"
+  STR_DAMAGE_PLASMA_BEAM: "PLASMA BEAM"
+  STR_DAMAGE_STUN: "STUN"
+  STR_DAMAGE_MELEE: "MELEE"
+  STR_DAMAGE_ACID: "ACID"
+  STR_DAMAGE_SMOKE: "SMOKE"
+  STR_SHOT_TYPE: "SHOT TYPE"
+  STR_ACCURACY_UC: "ACCURACY"
+  STR_TIME_UNIT_COST: "TU COST"
+  STR_DAMAGE_UC: "DAMAGE"
+  STR_AMMO: "AMMO"
+  STR_SHOT_TYPE_AUTO: "Auto"
+  STR_SHOT_TYPE_SNAP: "Snap"
+  STR_SHOT_TYPE_AIMED: "Aimed"
+  STR_CONSTRUCTION_TIME: "Construction Time"
+  STR_CONSTRUCTION_COST: "Construction Cost"
+  STR_MAINTENANCE_COST: "Maintenance Cost"
+  STR_LOW: "Low"
+  STR_MEDIUM: "Medium"
+  STR_HIGH: "High"
+  STR_CRAFT_WEAPON: "Craft Weapon"
+  STR_CRAFT_AMMUNITION: "Craft Ammunition"
+  STR_HEAVY_WEAPONS_PLATFORM: "Heavy Weapons Platform"
+  STR_WEAPON: "Weapon"
+  STR_AMMUNITION: "Ammunition"
+  STR_EQUIPMENT: "Equipment"
+  STR_ALIEN_CORPSE: "Alien Corpse"
+  STR_UFO_COMPONENT: "UFO component"
+  STR_PERSONAL_ARMOR: "Personal Armor"
+  STR_RAW_MATERIALS: "Raw Materials"
+  STR_HWP_CANNON_SHELLS: "HWP Cannon Shells"
+  STR_ALIEN: "Alien"
+  STR_SECTOID: "Sectoid"
+  STR_SNAKEMAN: "Snakeman"
+  STR_ETHEREAL: "Ethereal"
+  STR_MUTON: "Muton"
+  STR_FLOATER: "Floater"
+  STR_CELATID: "Celatid"
+  STR_SILACOID: "Silacoid"
+  STR_CHRYSSALID: "Chryssalid"
+  STR_ZOMBIE: "Zombie"
+  STR_REAPER: "Reaper"
+  STR_SECTOPOD: "Sectopod"
+  STR_CYBERDISC: "Cyberdisc"
+  STR_LIVE_COMMANDER: "Commander"
+  STR_LIVE_LEADER: "Leader"
+  STR_LIVE_ENGINEER: "Engineer"
+  STR_LIVE_MEDIC: "Medic"
+  STR_LIVE_NAVIGATOR: "Navigator"
+  STR_LIVE_SOLDIER: "Soldier"
+  STR_LIVE_TERRORIST: "Terrorist"
+  STR_FLOATER_SOLDIER: "Floater Soldier"
+  STR_FLOATER_NAVIGATOR: "Floater Navigator"
+  STR_FLOATER_MEDIC: "Floater Medic"
+  STR_FLOATER_ENGINEER: "Floater Engineer"
+  STR_FLOATER_LEADER: "Floater Leader"
+  STR_FLOATER_COMMANDER: "Floater Commander"
+  STR_SECTOID_SOLDIER: "Sectoid Soldier"
+  STR_SECTOID_NAVIGATOR: "Sectoid Navigator"
+  STR_SECTOID_MEDIC: "Sectoid Medic"
+  STR_SECTOID_ENGINEER: "Sectoid Engineer"
+  STR_SECTOID_LEADER: "Sectoid Leader"
+  STR_SECTOID_COMMANDER: "Sectoid Commander"
+  STR_SNAKEMAN_SOLDIER: "Snakeman Soldier"
+  STR_SNAKEMAN_NAVIGATOR: "Snakeman Navigator"
+  STR_SNAKEMAN_ENGINEER: "Snakeman Engineer"
+  STR_SNAKEMAN_LEADER: "Snakeman Leader"
+  STR_SNAKEMAN_COMMANDER: "Snakeman Commander"
+  STR_MUTON_SOLDIER: "Muton Soldier"
+  STR_MUTON_NAVIGATOR: "Muton Navigator"
+  STR_MUTON_ENGINEER: "Muton Engineer"
+  STR_ETHEREAL_SOLDIER: "Ethereal Soldier"
+  STR_ETHEREAL_LEADER: "Ethereal Leader"
+  STR_ETHEREAL_COMMANDER: "Ethereal Commander"
+  STR_CYBERDISC_TERRORIST: "Cyberdisc Terrorist"
+  STR_REAPER_TERRORIST: "Reaper Terrorist"
+  STR_CHRYSSALID_TERRORIST: "Chryssalid Terrorist"
+  STR_CELATID_TERRORIST: "Celatid Terrorist"
+  STR_SILACOID_TERRORIST: "Silacoid Terrorist"
+  STR_SECTOPOD_TERRORIST: "Sectopod Terrorist"
+  STR_UFO_POWER_SOURCE: "UFO Power Source"
+  STR_UFO_NAVIGATION: "UFO Navigation"
+  STR_UFO_CONSTRUCTION: "UFO Construction"
+  STR_ALIEN_FOOD: "Alien Food"
+  STR_ALIEN_REPRODUCTION: "Alien Reproduction"
+  STR_ALIEN_ENTERTAINMENT: "Alien Entertainment"
+  STR_ALIEN_SURGERY: "Alien Surgery"
+  STR_EXAMINATION_ROOM: "Examination Room"
+  STR_ALIEN_ALLOYS: "Alien Alloys"
+  STR_ALIEN_HABITAT: "Alien Habitat"
+  STR_POWER_SUIT: "Power Suit"
+  STR_FLYING_SUIT: "Flying Suit"
+  STR_HWP_ROCKETS: "HWP Rockets"
+  STR_HWP_FUSION_BOMB: "HWP Fusion Bomb"
+  STR_LASER_WEAPONS: "Laser Weapons"
+  STR_NEW_FIGHTER_CRAFT: "New Fighter Craft"
+  STR_NEW_FIGHTER_TRANSPORTER: "New Fighter-Transporter"
+  STR_ULTIMATE_CRAFT: "Ultimate Craft"
+  STR_LASER_PISTOL: "Laser Pistol"
+  STR_LASER_RIFLE: "Laser Rifle"
+  STR_HEAVY_LASER: "Heavy Laser"
+  STR_LASER_CANNON: "Laser Cannon"
+  STR_PLASMA_CANNON: "Plasma Cannon"
+  STR_FUSION_MISSILE: "Fusion Missile"
+  STR_LASER_DEFENSE: "Laser Defense"
+  STR_PLASMA_DEFENSE: "Plasma Defense"
+  STR_FUSION_DEFENSE: "Fusion Defense"
+  STR_GRAV_SHIELD: "Grav Shield"
+  STR_MIND_SHIELD: "Mind Shield"
+  STR_PSI_LAB: "Psi-Lab"
+  STR_MOTION_SCANNER: "Motion Scanner"
+  STR_MEDI_KIT: "Medi-Kit"
+  STR_TANK_CANNON: "Tank/Cannon"
+  STR_TANK_ROCKET_LAUNCHER: "Tank/Rocket Launcher"
+  STR_TANK_LASER_CANNON: "Tank/Laser Cannon"
+  STR_HOVERTANK_PLASMA: "Hovertank/Plasma"
+  STR_HOVERTANK_LAUNCHER: "Hovertank/Launcher"
+  STR_STINGRAY_LAUNCHER: "Stingray Launcher"
+  STR_AVALANCHE_LAUNCHER: "Avalanche Launcher"
+  STR_CANNON: "Cannon"
+  STR_FUSION_BALL_LAUNCHER: "Fusion Ball Launcher"
+  STR_PLASMA_BEAM: "Plasma Beam"
+  STR_STINGRAY_MISSILES: "Stingray Missiles"
+  STR_AVALANCHE_MISSILES: "Avalanche Missiles"
+  STR_CANNON_ROUNDS_X50: "Cannon Rounds(x50)"
+  STR_FUSION_BALL: "Fusion Ball"
+  STR_SOLDIER: "Soldier"
+  STR_SCIENTIST: "Scientist"
+  STR_ENGINEER: "Engineer"
+  STR_NORTH_AMERICA: "North America"
+  STR_ARCTIC: "Arctic"
+  STR_ANTARCTICA: "Antarctica"
+  STR_SOUTH_AMERICA: "South America"
+  STR_EUROPE: "Europe"
+  STR_NORTH_AFRICA: "North Africa"
+  STR_SOUTHERN_AFRICA: "Southern Africa"
+  STR_CENTRAL_ASIA: "Central Asia"
+  STR_SOUTH_EAST_ASIA: "South East Asia"
+  STR_SIBERIA: "Siberia"
+  STR_AUSTRALASIA: "Australasia"
+  STR_PACIFIC: "Pacific"
+  STR_NORTH_ATLANTIC: "North Atlantic"
+  STR_SOUTH_ATLANTIC: "South Atlantic"
+  STR_INDIAN_OCEAN: "Indian Ocean"
+  STR_ALIEN_RESEARCH: "Alien Research"
+  STR_ALIEN_HARVEST: "Alien Harvest"
+  STR_ALIEN_ABDUCTION: "Alien Abduction"
+  STR_ALIEN_INFILTRATION: "Alien Infiltration"
+  STR_ALIEN_BASE: "Alien Base"
+  STR_ALIEN_TERROR: "Alien Terror"
+  STR_ALIEN_RETALIATION: "Alien Retaliation"
+  STR_ALIEN_SUPPLY: "Alien Supply"
+  STR_MAXIMUM_SPEED: "Maximum Speed"
+  STR_HYPER_WAVE_DECODER_UC: "HYPER-WAVE DECODER"
+  STR_SKYRANGER: "SKYRANGER"
+  STR_LIGHTNING: "LIGHTNING"
+  STR_AVENGER: "AVENGER"
+  STR_INTERCEPTOR: "INTERCEPTOR"
+  STR_FIRESTORM: "FIRESTORM"
+  STR_UFO: "UFO"
+  STR_STINGRAY: "STINGRAY"
+  STR_AVALANCHE: "AVALANCHE"
+  STR_CANNON_UC: "CANNON"
+  STR_FUSION_BALL_UC: "FUSION BALL"
+  STR_LASER_CANNON_UC: "LASER CANNON"
+  STR_PLASMA_BEAM_UC: "PLASMA BEAM"
+  STR_DAMAGE_CAPACITY: "Damage Capacity"
+  STR_WEAPON_POWER: "Weapon Power"
+  STR_WEAPON_RANGE: "Weapon Range"
+  STR_ACCESS_LIFT: "Access Lift"
+  STR_LABORATORY: "Laboratory"
+  STR_WORKSHOP: "Workshop"
+  STR_SMALL_RADAR_SYSTEM: "Small Radar System"
+  STR_LARGE_RADAR_SYSTEM: "Large Radar System"
+  STR_MISSILE_DEFENSES: "Missile Defenses"
+  STR_GENERAL_STORES: "General Stores"
+  STR_ALIEN_CONTAINMENT: "Alien Containment"
+  STR_LASER_DEFENSES: "Laser Defenses"
+  STR_PLASMA_DEFENSES: "Plasma Defenses"
+  STR_FUSION_BALL_DEFENSES: "Fusion Ball Defenses"
+  STR_PSIONIC_LABORATORY: "Psionic Laboratory"
+  STR_HYPER_WAVE_DECODER: "Hyper-wave Decoder"
+  STR_HANGAR: "Hangar"
+  STR_USA: "USA"
+  STR_RUSSIA: "RUSSIA"
+  STR_UK: "UK"
+  STR_FRANCE: "FRANCE"
+  STR_GERMANY: "GERMANY"
+  STR_ITALY: "ITALY"
+  STR_SPAIN: "SPAIN"
+  STR_CHINA: "CHINA"
+  STR_JAPAN: "JAPAN"
+  STR_INDIA: "INDIA"
+  STR_BRAZIL: "BRAZIL"
+  STR_AUSTRALIA: "AUSTRALIA"
+  STR_NIGERIA: "NIGERIA"
+  STR_SOUTH_AFRICA: "SOUTH AFRICA"
+  STR_EGYPT: "EGYPT"
+  STR_CANADA: "CANADA"
+  STR_TANK: "Tank"
+  STR_CIVILIAN: "Civilian"
+  STR_JAN: "Jan"
+  STR_FEB: "Feb"
+  STR_MAR: "Mar"
+  STR_APR: "Apr"
+  STR_MAY: "May"
+  STR_JUN: "Jun"
+  STR_JUL: "Jul"
+  STR_AUG: "Aug"
+  STR_SEP: "Sep"
+  STR_OCT: "Oct"
+  STR_NOV: "Nov"
+  STR_DEC: "Dec"
+  STR_INTERNATIONAL_RELATIONS: "International Relations"
+  STR_COUNTRY: "Country"
+  STR_FUNDING: "Funding"
+  STR_CHANGE: "Change"
+  STR_WEAPON_SYSTEMS: "WEAPON SYSTEMS"
+  STR_HWPS: "HWPs"
+  STR_DAMAGE_UC_: "DAMAGE>{ALT}{0}"
+  STR_ACCESS_LIFT_UFOPEDIA: "The access lift allows equipment and personnel to be transferred into or out of an underground base. It is always the first facility to be constructed on a new site. The lift area is vulnerable to intrusion from any potential hostile force."
+  STR_LIVING_QUARTERS_UFOPEDIA: "Each accommodation block provides for up to 50 personnel. The facility provides basic recreation, food and sleeping areas."
+  STR_LABORATORY_UFOPEDIA: "Up to 50 scientists can work in a laboratory facility. Laboratories are equipped with the latest technology for research into materials, biochemistry and cosmology. There is privileged access to the best research labs throughout the world, including military establishments."
+  STR_WORKSHOP_UFOPEDIA: "A workshop contains all the equipment necessary to manufacture equipment based on designs from the science labs. Up to 50 engineers can occupy a workshop, although items under construction will also consume some space."
+  STR_SMALL_RADAR_SYSTEM_UFOPEDIA: "A small detection system has an effective radar range of 300 nautical miles and is linked to satellite systems for ground search. Each system has a 10% chance of detecting an average sized object every 30 minutes."
+  STR_LARGE_RADAR_SYSTEM_UFOPEDIA: "A large detection system has an effective range of 450 nautical miles and is linked to satellite systems for ground search. Each system has a 20% chance of detecting an average sized object every 30 minutes."
+  STR_MISSILE_DEFENSES_UFOPEDIA: "Missile defenses provide some protection against incursion by hostile craft which are attempting to land near the base."
+  STR_GENERAL_STORES_UFOPEDIA: "All equipment, weapons systems, munitions, recovered material and Heavy Weapons Platforms are placed in stores, including equipment assigned to craft in hangars."
+  STR_ALIEN_CONTAINMENT_UFOPEDIA: "Living aliens are likely to require a special habitat to maintain their life systems. The containment facility can keep up to 10 alien life forms in self-contained units."
+  STR_LASER_DEFENSES_UFOPEDIA: "Laser defenses provide protection against incursion by hostile craft."
+  STR_PLASMA_DEFENSES_UFOPEDIA: "Plasma beam defenses provide powerful and efficient protection against incursion by hostile craft."
+  STR_FUSION_BALL_DEFENSES_UFOPEDIA: "Fusion missiles provide the most effective defense against alien attacks. These missiles create an anti-matter implosion which destroys everything within a specific radius."
+  STR_GRAV_SHIELD_UFOPEDIA: "The Gravity shield repels alien craft attempting to land near the base long enough for all defense systems to fire again. In practice this will double the effectiveness of any defense systems at your base."
+  STR_MIND_SHIELD_UFOPEDIA: "Since alien craft rely on brain waves to detect human presence then the most effective counter measure is to shield brain waves from the base. This facility will drastically reduce the chances of detection by alien craft."
+  STR_PSIONIC_LABORATORY_UFOPEDIA: "The psionics lab can assess the psionic potential of all soldiers at the base and give them the necessary training to utilize their psionic skills. Each lab can train up to ten soldiers. Training is allocated at the end of each month. Psionic skills used in conjunction with a Psi-amp can be used for psionic attacks during combat."
+  STR_HYPER_WAVE_DECODER_UFOPEDIA: "Alien communications rely on a supra-dimensional wave which travels almost instantaneously. The decoder facility intercepts UFO transmissions and decodes the information. This will show the type of UFO, the alien race and the type of activity."
+  STR_HANGAR_UFOPEDIA: "Each hangar can accommodate one craft. There are facilities for maintenance, refueling and repair of X-Com craft. Each craft stationed at a base must have a free hangar assigned to it which cannot be used by other craft, even if the assigned craft is out on a mission."
+  STR_PISTOL_UFOPEDIA: "The standard issue X-Com pistol is a high powered semi-automatic with a 12 round capacity."
+  STR_RIFLE_UFOPEDIA: "This highly accurate sniper rifle has laser guided sights and takes 6.7mm ammunition in 20 round clips."
+  STR_HEAVY_CANNON_UFOPEDIA: "The heavy cannon is a devastating, but cumbersome, weapon. Its versatility comes from the fact that it can take three types of ammunition - armor piercing, incendiary and high explosive."
+  STR_AUTO_CANNON_UFOPEDIA: "The auto-cannon combines the versatility and power of a heavy cannon with a faster fire rate."
+  STR_ROCKET_LAUNCHER_UFOPEDIA: "The rocket launcher is a laser guided system which can fire three different sizes of missile."
+  STR_LASER_PISTOL_UFOPEDIA: "The laser pistol is an effective implementation of new technology. It has the convenience of a pistol with faster and more accurate firing."
+  STR_LASER_RIFLE_UFOPEDIA: "The laser rifle is a more powerful and accurate version of the earlier pistol design."
+  STR_HEAVY_LASER_UFOPEDIA: "The heavy laser is cumbersome, but extremely effective."
+  STR_GRENADE_UFOPEDIA: "This standard issue grenade has an accurate and sophisticated timer for precision control."
+  STR_SMOKE_GRENADE_UFOPEDIA: "Smoke grenades are useful for providing cover in exposed combat situations. Use with care because they can benefit the enemy as well."
+  STR_PROXIMITY_GRENADE_UFOPEDIA: "A proximity grenade can be thrown like an ordinary grenade but is triggered by nearby movement after it lands. Great skill and care is required to use these devices properly."
+  STR_HIGH_EXPLOSIVE_UFOPEDIA: "This explosive should only be used for demolition purposes. Keep personnel clear of demolition sites."
+  STR_MOTION_SCANNER_UFOPEDIA: "This sophisticated device uses a variety of detectors and advanced computer algorithms to identify moving enemy units. However, it requires some practice to use effectively. Click on the motion scanner icon on the tactical display. Select 'Use Scanner' from the menu. The Scanner display shows an arrow in the center which is the direction the soldier is facing (North is at the top). The flashing blobs show units which have moved recently. Large units, or fast moving units, will produce larger blobs. Static units will not be detected."
+  STR_MEDI_KIT_UFOPEDIA: "The medi-kit combines a healing facility with pain killers and stimulants. In order to use the medi-kit you must face towards the soldier requiring treatment. If the soldier is stunned you must stand over the body. Click on the medi-kit icon and select 'use medi-kit' from the menu.{NEWLINE}HEALING> Red body parts show fatal wounds. Click on a body part that is wounded. Click on the 'Heal' button. One fatal wound will be cured and some health restored.{NEWLINE}STIMULANT> This will restore energy and revive unconscious (stunned) soldiers. In order to revive an unconscious soldier you must stand directly over the body.{NEWLINE}PAIN KILLER> This will restore the morale of wounded soldiers up to an amount equivalent to the soldier's lost health."
+  STR_PSI_AMP_UFOPEDIA: "The Psi-amp can only be used by soldiers with psionic skill. During combat, click on the Psi-amp, select the type of attack, and select a target unit with the cursor. There are two types of psionic attack:{NEWLINE}PANIC UNIT> If the attack is successful it will reduce the target's morale and may cause it to panic.{NEWLINE}MIND CONTROL> If this is successful then you will gain immediate control of the enemy unit as if it was one of your own. It is more difficult to be successful with this type of attack."
+  STR_STUN_ROD_UFOPEDIA: "This device can only be used in close combat, but will stun a living organism without killing it by using electric shocks."
+  STR_MIND_PROBE_UFOPEDIA: "The mind probe is an alien communication device which is used to take information directly from brain waves. X-Com units can use this device in combat to display an alien's characteristics. Click on the mind probe and the 'use' option. Then click on an alien with the cursor."
+  STR_PLASMA_PISTOL_UFOPEDIA: "Plasma Pistols are a lethal alien weapon based on accelerating particles from within a minute anti-gravity field."
+  STR_PLASMA_RIFLE_UFOPEDIA: "This is a devastatingly powerful weapon based on accelerating particles from within a minute anti-gravity field."
+  STR_HEAVY_PLASMA_UFOPEDIA: "This is a devastatingly powerful weapon based on accelerating particles from within a minute anti-gravity field."
+  STR_BLASTER_LAUNCHER_UFOPEDIA: "This is an alien guided missile launcher which fires powerful 'blaster bombs'. When you click to fire the weapon it will generate 'way points' for the blaster bomb to follow. When you have positioned enough way points click on the special launch icon."
+  STR_SMALL_LAUNCHER_UFOPEDIA: "A small launcher which fires stun bombs. Very useful for capturing live aliens."
+  STR_ALIEN_GRENADE_UFOPEDIA: "This device works in the same way as a terrestrial grenade - except that it is more powerful."
+  STR_SMALL_SCOUT: "Small Scout"
+  STR_MEDIUM_SCOUT: "Medium Scout"
+  STR_LARGE_SCOUT: "Large Scout"
+  STR_HARVESTER: "Harvester"
+  STR_ABDUCTOR: "Abductor"
+  STR_TERROR_SHIP: "Terror ship"
+  STR_BATTLESHIP: "Battleship"
+  STR_SUPPLY_SHIP: "Supply ship"
+  STR_RATING: "RATING> {0}"
+  STR_RATING_TERRIBLE: "TERRIBLE!"
+  STR_RATING_POOR: "POOR!"
+  STR_RATING_OK: "OK"
+  STR_RATING_GOOD: "GOOD!"
+  STR_RATING_EXCELLENT: "EXCELLENT!"
+  STR_SCORE: "SCORE"
+  STR_XCOM_PROJECT_MONTHLY_REPORT: "X-COM PROJECT MONTHLY REPORT"
+  STR_MONTH: "Month> {ALT}{0} {1}"
+  STR_COUNCIL_IS_GENERALLY_SATISFIED: "The council of funding nations is generally satisfied with your progress so far."
+  STR_COUNCIL_IS_VERY_PLEASED: "The council of funding nations is very pleased with your excellent progress. Keep up the good work."
+  STR_COUNCIL_IS_DISSATISFIED: "The council of funding nations is dissatisfied with your performance. You must improve your effectiveness in dealing with the alien menace or risk termination of the project."
+  STR_YOU_HAVE_NOT_SUCCEEDED: "You have not succeeded in dealing with the alien invasion and the council of funding nations has regrettably decided to terminate the project. Each nation shall deal with the problem as they see fit. We can only hope that we can come to some accommodation with these apparently hostile forces, and that the general population will come to terms with the alien visitors."
+  STR_COUNTRY_IS_PARTICULARLY_PLEASED: "{0} is particularly pleased with your ability to deal with the localized threat and has agreed to increase its funding."
+  STR_COUNTRIES_ARE_PARTICULARLY_HAPPY: "{0} are particularly happy with your progress in dealing with local alien incursion and have agreed to increase their funding."
+  STR_COUNTRIES_COMMA: "{0}, {1}"
+  STR_COUNTRIES_AND: "{0} and {1}"
+  STR_COUNTRY_IS_UNHAPPY_WITH_YOUR_ABILITY: "{0} is unhappy with your ability to deal with alien activity in its territory and has decided to reduce its financial commitment."
+  STR_COUNTRIES_ARE_UNHAPPY_WITH_YOUR_ABILITY: "{0} are unhappy with your ability to deal with alien activity in their territory and have decided to reduce their funding."
+  STR_KNOTS: "{0} knots"
+  STR_COUNTRY_HAS_SIGNED_A_SECRET_PACT: "{0} has signed a secret pact with unknown alien forces and has withdrawn from the project."
+  STR_COUNTRIES_HAVE_SIGNED_A_SECRET_PACT: "{0} have signed a secret pact with unknown alien forces and have withdrawn from the project."
+  STR_MONTHLY_RATING: "Monthly Rating> {ALT}{0}{ALT} {1}"
+  STR_FUNDING_CHANGE: "Funding change> {ALT}{0}"
+  STR_COUNCIL_REDUCE_DEBTS: "The funding council is not happy with your financial position. You must reduce your debts below $1 million or the project will be terminated."
+  STR_HYPER_WAVE_TRANSMISSIONS_ARE_DECODED: "HYPER-WAVE TRANSMISSIONS ARE DECODED"
+  STR_CRAFT_TYPE: "CRAFT TYPE"
+  STR_RACE: "RACE"
+  STR_MISSION: "MISSION"
+  STR_ZONE: "ZONE"
+  STR_ALLOCATE_RESEARCH: "Allocate Research"
+  STR_ALLOCATE_MANUFACTURE: "Allocate Manufacture"
+  STR_NEW_YORK: "New York"
+  STR_WASHINGTON: "Washington"
+  STR_LOS_ANGELES: "Los Angeles"
+  STR_MONTREAL: "Montreal"
+  STR_HAVANA: "Havana"
+  STR_MEXICO_CITY: "Mexico City"
+  STR_CHICAGO: "Chicago"
+  STR_VANCOUVER: "Vancouver"
+  STR_DALLAS: "Dallas"
+  STR_BRASILIA: "Brasilia"
+  STR_BOGOTA: "Bogota"
+  STR_BUENOS_AIRES: "Buenos Aires"
+  STR_SANTIAGO: "Santiago"
+  STR_RIO_DE_JANEIRO: "Rio De Janeiro"
+  STR_LIMA: "Lima"
+  STR_CARACAS: "Caracas"
+  STR_LONDON: "London"
+  STR_PARIS: "Paris"
+  STR_BERLIN: "Berlin"
+  STR_MOSCOW: "Moscow"
+  STR_ROME: "Rome"
+  STR_MADRID: "Madrid"
+  STR_BUDAPEST: "Budapest"
+  STR_LAGOS: "Lagos"
+  STR_CAIRO: "Cairo"
+  STR_CASABLANCA: "Casablanca"
+  STR_PRETORIA: "Pretoria"
+  STR_NAIROBI: "Nairobi"
+  STR_CAPE_TOWN: "Cape Town"
+  STR_KINSHASA: "Kinshasa"
+  STR_ANKARA: "Ankara"
+  STR_DELHI: "Delhi"
+  STR_KARACHI: "Karachi"
+  STR_BAGHDAD: "Baghdad"
+  STR_TEHRAN: "Tehran"
+  STR_BOMBAY: "Bombay"
+  STR_CALCUTTA: "Calcutta"
+  STR_TOKYO: "Tokyo"
+  STR_BEIJING: "Beijing"
+  STR_BANGKOK: "Bangkok"
+  STR_MANILA: "Manila"
+  STR_SEOUL: "Seoul"
+  STR_SINGAPORE: "Singapore"
+  STR_JAKARTA: "Jakarta"
+  STR_SHANGHAI: "Shanghai"
+  STR_HONG_KONG: "Hong Kong"
+  STR_NOVOSIBIRSK: "Novosibirsk"
+  STR_CANBERRA: "Canberra"
+  STR_WELLINGTON: "Wellington"
+  STR_MELBOURNE: "Melbourne"
+  STR_PERTH: "Perth"
+  STR_PSI_TRAINING: "Psi Training"
+  STR_PSIONIC_TRAINING: "PSIONIC TRAINING"
+  STR_REMAINING_PSI_LAB_CAPACITY: "Remaining Psi-lab capacity> {ALT}{0}"
+  STR_PSIONIC__STRENGTH: "Psionic{NEWLINE}Strength"
+  STR_PSIONIC_SKILL_IMPROVEMENT: "Psionic Skill{NEWLINE}/Improvement"
+  STR_PSI_AMP: "Psi-Amp"
+  STR_IN_TRAINING: "In{NEWLINE}Training?"
+  STR_TARGETTED_BY: "TARGETTED BY:"
+  STR_WEAPONS_CREW_HWPS: "WEAPONS/{NEWLINE}CREW/HWPs"
+  STR_IS_LOW_ON_FUEL_RETURNING_TO_BASE: "is low on fuel,{NEWLINE}returning to base"
+  STR_SOLDIER_LIST: "Soldier List"
+  STR_RANK_: "RANK> {ALT}{0}"
+  STR_MISSIONS: "MISSIONS> {ALT}{0}"
+  STR_KILLS: "KILLS> {ALT}{0}"
+  STR_WOUND_RECOVERY: "WOUND RECOVERY> {ALT}{0}"
+  STR_TIME_UNITS: "TIME UNITS"
+  STR_STAMINA: "STAMINA"
+  STR_HEALTH: "HEALTH"
+  STR_BRAVERY: "BRAVERY"
+  STR_REACTIONS: "REACTIONS"
+  STR_FIRING_ACCURACY: "FIRING ACCURACY"
+  STR_THROWING_ACCURACY: "THROWING ACCURACY"
+  STR_STRENGTH: "STRENGTH"
+  STR_PSIONIC_STRENGTH: "PSIONIC STRENGTH"
+  STR_PSIONIC_SKILL: "PSIONIC SKILL"
+  STR_NEW_RANK: "NEW RANK"
+  STR_PROMOTIONS: "Promotions"
+  STR_SOLDIERS_UC: "SOLDIERS"
+  STR_TANK_CANNON_UFOPEDIA: "Automated Heavy Weapons Platforms are designed to complement an X-Com squad. The combination of high fire power and strong armor makes these units valuable for open terrain fire fights. Make sure that there are sufficient cannon shells in your stores to re-arm tanks. They are armed automatically when you assign them to a squad."
+  STR_TANK_ROCKET_LAUNCHER_UFOPEDIA: "This automated Heavy Weapons Platform is armed with powerful rockets. This will be devastating for any alien foe. Make sure your stores are kept supplied with HWP rockets."
+  STR_TANK_LASER_CANNON_UFOPEDIA: "Laser weapons are a useful addition for HWPs. It combines heavy firepower with no ammunition restrictions."
+  STR_HOVERTANK_PLASMA_UFOPEDIA: "Alien technology has given the HWP a new lease of life. The added maneuverability of air travel and the power of plasma beams is a lethal combination."
+  STR_HOVERTANK_LAUNCHER_UFOPEDIA: "This hovertank has a fusion ball launcher that is capable of immense devastation. Use it with great care. You will have to manufacture the fusion balls to keep these HWPs fully armed. A fusion ball is an intelligent guided weapon. In order to fire it you select a number of 'way points' with the cursor and then click on the launch icon to fire the fusion ball."
+  STR_HEAVY_PLASMA_CLIP_UFOPEDIA: "This compact device is used as ammunition for a Heavy Plasma Gun. It contains a small quantity of Elerium."
+  STR_PLASMA_RIFLE_CLIP_UFOPEDIA: "This small object is used as a power source for a Plasma Rifle - a medium powered alien weapon. Contains a small quantity of Elerium."
+  STR_PLASMA_PISTOL_CLIP_UFOPEDIA: "Power source for the small alien Plasma Pistol. Contains Elerium - the source of all alien power."
+  STR_STUN_BOMB_UFOPEDIA: "The Stun Bomb is used for capturing live human specimens, but it can also be used against most alien races. It is fired from a Small Launcher."
+  STR_ALIEN_RESEARCH_UFOPEDIA: "The alien research mission is used for collecting basic data on earth and its inhabitants. Small vehicles are predominantly used, with occasional landings in deserted areas. This type of alien activity poses the least threat to X-Com, with little concern from governments or the public."
+  STR_ALIEN_HARVEST_UFOPEDIA: "The aliens have many uses for earth's fauna. Animals are abducted secretly, and returned with various organs removed. Cattle mutilations are predominantly reported along with UFO sightings. This type of alien activity causes great concern for governments and considerable anxiety amongst the population. This type of activity occurs mainly in farming land. The theory behind the 'alien harvest' suggests that alien races originally 'seeded' the planet with its flora and fauna, and now they have returned to reap the harvest they have sown."
+  STR_ALIEN_ABDUCTION_UFOPEDIA: "This is the most insidious form of alien activity. The abduction by aliens is widely reported, despite the aliens' attempts to erase the experience from their victims' memories. Abductees report being subject to humiliating physical examinations, including impregnation of alien fetuses and bizarre genetic experiments. The purpose behind this activity appears to be linked to genetic mutation and manipulation of the aliens' own genetic material. This activity causes great alarm, and occurs in populated areas or cities"
+  STR_ALIEN_INFILTRATION_UFOPEDIA: "Earth governments can be infiltrated by alien agents which are human in appearance. This can result in official contact between aliens and governments at the highest level. The climax of this activity is characterized by intense UFO activity in the vicinity of major cities. The aliens will attempt to sign a pact with an earth government by offering knowledge of their superior technology. In return the government will allow the aliens to conduct their activity unhindered. This alien mission represents the worst threat to X-Com. If a government agrees to a pact then its funding will cease."
+  STR_ALIEN_BASE_UFOPEDIA: "Aliens will construct secret underground bases in remote locations. After some initial reconnaissance flights some intense UFO activity will occur as the base is being built. These bases are known to contain experimental labs for human abductees, and supplies for further activity in the region. The presence of alien bases will generate a large amount of reported alien activity without the presence of UFOs. In order to locate a base an X-Com craft must patrol an area for a few hours to stand some chance of detection."
+  STR_ALIEN_TERROR_UFOPEDIA: "When the aliens terrorize a city they will deploy some special forces with awesome powers. Civilians will be directly threatened, and governments will be forced to evacuate whole areas. The main purpose behind this activity is to generate sufficient public hysteria so that governments will threaten the X-Com project."
+  STR_ALIEN_RETALIATION_UFOPEDIA: "If X-Com interceptors are being particularly successful in shooting down UFOs then the aliens may take some retaliatory action. This could result in a direct attack against an X-Com base. However, the aliens have to find an X-Com base in order to attack it, and provided UFOs are kept away then there should be little danger of an assault."
+  STR_ALIEN_SUPPLY_UFOPEDIA: "Once an alien base is constructed then it is resupplied on a regular basis by a special supply vessel. If one of these vessels is detected while landing then it is certain that an alien base is nearby."
+  STR_SMALL_SCOUT_UFOPEDIA: "This tiny craft is primarily used for reconnaissance or research. It normally precedes larger vessels at the start of an alien mission."
+  STR_MEDIUM_SCOUT_UFOPEDIA: "A medium sized scout vessel that poses little threat to earth forces. Normally appears before larger vessels during missions."
+  STR_LARGE_SCOUT_UFOPEDIA: "The largest alien scout craft is a general purpose vessel that is used in all types of alien mission."
+  STR_HARVESTER_UFOPEDIA: "The harvester has a trap door in its base and is equipped with lifting gear to haul up cattle or other beasts. Laser cutters are used to extract the desired material and the carcass is dumped on the ground. There are also storage containers for body parts."
+  STR_ABDUCTOR_UFOPEDIA: "This vessel is equipped with an examination room for performing horrific experiments on human subjects. The victim is normally paralyzed by telepathic powers, but remains conscious while on the operating table."
+  STR_TERROR_SHIP_UFOPEDIA: "The terror ship has a containment facility for large alien terror weapons or creatures. It is used to transport these alien terrorists into populated areas."
+  STR_BATTLESHIP_UFOPEDIA: "The battleship is the largest and most powerful alien craft. It is normally the primary alien mission craft, equipped with powerful weapons and numerous crew members."
+  STR_SUPPLY_SHIP_UFOPEDIA: "The supply vessel is used during the construction of alien bases or for supplying existing bases. It carries alien food containers and reproduction chambers."
+  STR_DISMANTLE: "Dismantle"
+  STR_FACILITY_IN_USE: "FACILITY IN USE"
+  STR_CANNOT_DISMANTLE_FACILITY: "CANNOT DISMANTLE FACILITY!{SMALLLINE}All base facilities must be linked to the access lift."
+  STR_TRANSFER_ITEMS_TO: "Transfer Items to {0}"
+  STR_NO_ALIEN_CONTAINMENT_FOR_TRANSFER: "NO ALIEN CONTAINMENT FOR TRANSFER!{SMALLLINE}Live aliens need an alien containment facility in order to survive."
+  STR_AMOUNT_AT_DESTINATION: "AMOUNT AT{NEWLINE}DESTINATION"
+  STR_ALIEN_DIES_NO_ALIEN_CONTAINMENT_FACILITY: "Alien dies as there is no alien containment facility"
+  STR_NO_FREE_ACCOMODATION_CREW: "NO FREE ACCOMMODATION!{SMALLLINE}The destination base does not have enough space in the living quarters for the crew assigned to the craft."
+  STR_NOT_ENOUGH_STORE_SPACE_FOR_CRAFT: "NOT ENOUGH STORE SPACE!{SMALLLINE}The destination base does not have enough store space for the equipment assigned to the craft."
+  STR_ITEMS_ARRIVING: "Items Arriving"
+  STR_DESTINATION_UC: "DESTINATION"
+  STR_PISTOL: "Pistol"
+  STR_PISTOL_CLIP: "Pistol Clip"
+  STR_RIFLE: "Rifle"
+  STR_RIFLE_CLIP: "Rifle Clip"
+  STR_HEAVY_CANNON: "Heavy Cannon"
+  STR_HC_AP_AMMO: "HC-AP Ammo"
+  STR_HC_HE_AMMO: "HC-HE Ammo"
+  STR_HC_I_AMMO: "HC-I Ammo"
+  STR_AUTO_CANNON: "Auto-Cannon"
+  STR_AC_AP_AMMO: "AC-AP Ammo"
+  STR_AC_HE_AMMO: "AC-HE Ammo"
+  STR_AC_I_AMMO: "AC-I Ammo"
+  STR_ROCKET_LAUNCHER: "Rocket Launcher"
+  STR_SMALL_ROCKET: "Small Rocket"
+  STR_LARGE_ROCKET: "Large Rocket"
+  STR_INCENDIARY_ROCKET: "Incendiary Rocket"
+  STR_GRENADE: "Grenade"
+  STR_SMOKE_GRENADE: "Smoke Grenade"
+  STR_PROXIMITY_GRENADE: "Proximity Grenade"
+  STR_HIGH_EXPLOSIVE: "High Explosive"
+  STR_STUN_ROD: "Stun Rod"
+  STR_HEAVY_PLASMA: "Heavy Plasma"
+  STR_HEAVY_PLASMA_CLIP: "Heavy Plasma Clip"
+  STR_PLASMA_RIFLE: "Plasma Rifle"
+  STR_PLASMA_RIFLE_CLIP: "Plasma Rifle Clip"
+  STR_PLASMA_PISTOL: "Plasma Pistol"
+  STR_PLASMA_PISTOL_CLIP: "Plasma Pistol Clip"
+  STR_BLASTER_LAUNCHER: "Blaster Launcher"
+  STR_BLASTER_BOMB: "Blaster Bomb"
+  STR_SMALL_LAUNCHER: "Small Launcher"
+  STR_STUN_BOMB: "Stun Bomb"
+  STR_ALIEN_GRENADE: "Alien Grenade"
+  STR_ELERIUM_115: "Elerium-115"
+  STR_MIND_PROBE: "Mind Probe"
+  STR_SECTOID_CORPSE: "Sectoid Corpse"
+  STR_SNAKEMAN_CORPSE: "Snakeman Corpse"
+  STR_ETHEREAL_CORPSE: "Ethereal Corpse"
+  STR_MUTON_CORPSE: "Muton Corpse"
+  STR_FLOATER_CORPSE: "Floater Corpse"
+  STR_CELATID_CORPSE: "Celatid Corpse"
+  STR_SILACOID_CORPSE: "Silacoid Corpse"
+  STR_CHRYSSALID_CORPSE: "Chryssalid Corpse"
+  STR_REAPER_CORPSE: "Reaper Corpse"
+  STR_SECTOPOD_CORPSE: "Sectopod Corpse"
+  STR_CYBERDISC_CORPSE: "Cyberdisc Corpse"
+  STR_NOT_ENOUGH_AMMO_TO_ARM_HWP: "Not enough ammunition to arm HWP{SMALLLINE}Each HWP requires {0} {1}."
+  STR_NOT_ENOUGH_EQUIPMENT_TO_FULLY_RE_EQUIP_SQUAD: "Not enough equipment to fully re-equip squad"
+  STR_MARS_CYDONIA_LANDING: "Mars: Cydonia Landing"
+  STR_MARS_CYDONIA_LANDING_BRIEFING: "Your Avenger craft has landed in the region of Cydonia on the surface of Mars. Our information indicates that one of the pyramid constructions contains a green access lift to an underground complex. Once you have assembled all your soldiers in the lift area click on the 'abort mission' icon to continue to the next stage."
+  STR_MARS_THE_FINAL_ASSAULT: "Mars: The Final Assault"
+  STR_MARS_THE_FINAL_ASSAULT_BRIEFING: "The pyramid lift takes your battle weary soldiers deep below the planet's surface. They arrive in the heart of a large complex of tunnels and chambers. The alien brain is hidden somewhere in the labyrinth. It must be destroyed if the earth is to be saved from alien enslavement.{NEWLINE}{NEWLINE}Good Luck!"
+  STR_YOU_NEED_TO_RESEARCH_ITEM_TO_PRODUCE_ITEM: "You will need to research a{NEWLINE}{0}{NEWLINE}in order to produce the{NEWLINE}{1}"
+  STR_THE_ALIENS_HAVE_DESTROYED_THE_UNDEFENDED_BASE: "The aliens have destroyed the undefended base {0}"
+  STR_XCOM_AGENTS_HAVE_LOCATED_AN_ALIEN_BASE_IN_REGION: "X-Com agents have located an alien base in {0}"
+  STR_STANDOFF: "STANDOFF"
+  STR_CAUTIOUS_ATTACK: "CAUTIOUS ATTACK"
+  STR_STANDARD_ATTACK: "STANDARD ATTACK"
+  STR_AGGRESSIVE_ATTACK: "AGGRESSIVE ATTACK"
+  STR_DISENGAGING: "DISENGAGING"
+  STR_UFO_HIT: "UFO HIT!"
+  STR_UFO_CRASH_LANDS: "UFO CRASH LANDS!"
+  STR_MINIMISE_AT_STANDOFF_RANGE_ONLY: "Minimize at Standoff Range Only"
+  STR_UFO_RETURN_FIRE: "UFO RETURNS FIRE!"
+  STR_INTERCEPTOR_DAMAGED: ">>> INTERCEPTOR DAMAGED <<<"
+  STR_INTERCEPTOR_DESTROYED: ">>> INTERCEPTOR DESTROYED <<<"
+  STR_UFO_OUTRUNNING_INTERCEPTOR: "UFO OUTRUNNING INTERCEPTOR!"
+  STR_ALIENS_TERRORISE: "ALIENS TERRORIZE"
+  STR_LONG_RANGE_DETECTION: "Long Range Detection"
+  STR_STORES_UC: "STORES"
+  STR_DIFFICULTY_LEVEL: "Difficulty Level"
+  STR_INTERCEPT: "INTERCEPT"
+  STR_BASES: "BASES"
+  STR_GRAPHS: "GRAPHS"
+  STR_UFOPAEDIA_UC: "UFOPEDIA"
+  STR_OPTIONS_UC: "OPTIONS"
+  STR_FUNDING_UC: "FUNDING"
+  STR_5_SECONDS: "5 Secs"
+  STR_1_MINUTE: "1 Min"
+  STR_5_MINUTES: "5 Mins"
+  STR_30_MINUTES: "30 Mins"
+  STR_1_HOUR: "1 Hour"
+  STR_1_DAY: "1 Day"
+  STR_XCOM_PERFORMANCE_ROSTER: "X-Com Performance Roster"
+  STR_ENTER_NAME: "Enter Name"
+  STR_PERFORMANCE_RATING: "Performance Rating"
+  STR_VICTORY_DATE: "Victory Date"
+  STR_ELECTRO_FLARE: "Electro-flare"
+  STR_ELECTRO_FLARE_UFOPEDIA: "This compact device produces a bright flare light when it is thrown. This will highlight enemy units in the vicinity of the electro-flare during night time missions."
+  STR_MONTHLY_COSTS: "Monthly Costs"
+  STR_CRAFT_RENTAL: "Craft Rental"
+  STR_SALARIES: "Salaries"
+  STR_BASE_MAINTENANCE: "Base maintenance"
+  STR_COST_PER_UNIT: "Cost per unit"
+  STR_QUANTITY: "Quantity"
+  STR_TOTAL: "Total"
+  STR_IN_PSIONIC_TRAINING: "In Psionic Training"
+  STR_BLASTER_BOMB_UFOPEDIA: "This device is a highly explosive missile that has an intelligent guidance system. It is fired from a Blaster Launcher."
+  STR_FRONT_ARMOR: "Front Armor"
+  STR_LEFT_ARMOR: "Left Armor"
+  STR_RIGHT_ARMOR: "Right Armor"
+  STR_REAR_ARMOR: "Rear Armor"
+  STR_UNDER_ARMOR: "Under Armor"
+  STR_ROUNDS: "Rounds"
+  STR_UNIT: "UNIT> {0}"
+  STR_ENERGY: "ENERGY"
+  STR_MORALE: "MORALE"
+  STR_ARMOR_: "ARMOR> {0}"
+  STR_FRONT_ARMOR_UC: "FRONT ARMOR"
+  STR_LEFT_ARMOR_UC: "LEFT ARMOR"
+  STR_RIGHT_ARMOR_UC: "RIGHT ARMOR"
+  STR_REAR_ARMOR_UC: "REAR ARMOR"
+  STR_SKILLS: "SKILLS> {0}"
+  STR_LEVEL: "LEVEL> {0}"
+  STR_HEAD: "HEAD"
+  STR_TORSO: "TORSO"
+  STR_RIGHT_ARM: "RIGHT ARM"
+  STR_LEFT_ARM: "LEFT ARM"
+  STR_RIGHT_LEG: "RIGHT LEG"
+  STR_LEFT_LEG: "LEFT LEG"
+  STR_PAIN_KILLER: "PAIN KILLER"
+  STR_STIMULANT: "STIMULANT"
+  STR_HEAL: "HEAL"
+  STR_TIME_UNITS_SHORT: "TU>{ALT}{0}"
+  STR_WEIGHT: "Weight>{ALT}{0}/{1}"
+  STR_REACTIONS_SHORT: "React>{ALT}{0}"
+  STR_PSIONIC_SKILL_SHORT: "P.Skill>{ALT}{0}"
+  STR_PSIONIC_STRENGTH_SHORT: "P.Str>{ALT}{0}"
+  STR_ALIEN_ARTIFACT: "Alien Artifact"
+  STR_AMMO_ROUNDS_LEFT: "AMMO:{NEWLINE}ROUNDS{NEWLINE}LEFT={ALT}{0}"
+  STR_MEDI_KIT_QUANTITIES_LEFT: "Pain>{ALT}{0}{ALT}{NEWLINE}Stim>{ALT}{1}{ALT}{NEWLINE}Heal>{ALT}{2}"
+  STR_THROW: "Throw"
+  STR_AUTO_SHOT: "Auto Shot"
+  STR_SNAP_SHOT: "Snap Shot"
+  STR_AIMED_SHOT: "Aimed Shot"
+  STR_STUN: "Stun"
+  STR_PRIME_GRENADE: "Prime Grenade"
+  STR_USE_SCANNER: "Use Scanner"
+  STR_USE_MEDI_KIT: "Use Medi-kit"
+  STR_LAUNCH_MISSILE: "Launch Missile"
+  STR_ACCURACY_SHORT: "Acc>{ALT}{0}"
+  STR_NOT_ENOUGH_TIME_UNITS: "Not Enough Time Units!"
+  STR_NOT_ENOUGH_ENERGY: "Not Enough Energy!"
+  STR_NO_ROUNDS_LEFT: "No Rounds left!"
+  STR_NO_AMMUNITION_LOADED: "No Ammunition Loaded!"
+  STR_WRONG_AMMUNITION_FOR_THIS_WEAPON: "Wrong Ammunition for this Weapon!"
+  STR_WEAPON_IS_ALREADY_LOADED: "Weapon is already loaded!"
+  STR_NO_LINE_OF_FIRE: "No Line of Fire!"
+  STR_GRENADE_IS_ACTIVATED: "Grenade is Activated!"
+  STR_GRENADE_IS_DEACTIVATED: "Grenade De-activated!"
+  STR_THERE_IS_NO_ONE_THERE: "There is no one there!"
+  STR_UNABLE_TO_USE_ALIEN_ARTIFACT_UNTIL_RESEARCHED: "Unable to use alien artifact until researched!"
+  STR_OUT_OF_RANGE: "Out of Range!"
+  STR_UNABLE_TO_THROW_HERE: "Unable to throw here!"
+  STR_SET_TIMER: "Set Timer"
+  STR_HIDDEN_MOVEMENT: "HIDDEN MOVEMENT"
+  STR_TURN: "TURN> {0}"
+  STR_SIDE: "SIDE> {0}"
+  STR_PRESS_BUTTON_TO_CONTINUE: "Press button to continue"
+  STR_MIND_CONTROL: "Mind Control"
+  STR_PANIC_UNIT: "Panic Unit"
+  STR_MORALE_ATTACK_SUCCESSFUL: "Morale Attack Successful"
+  STR_MIND_CONTROL_SUCCESSFUL: "Mind Control Successful"
+  STR_HAS_GONE_BERSERK_MALE: "{0}{NEWLINE}has gone Berserk"
+  STR_HAS_GONE_BERSERK_FEMALE: "{0}{NEWLINE}has gone Berserk"
+  STR_HAS_PANICKED_MALE: "{0}{NEWLINE}has Panicked"
+  STR_HAS_PANICKED_FEMALE: "{0}{NEWLINE}has Panicked"
+  STR_XCOM: "X-Com"
+  STR_ALIENS: "Aliens"
+  STR_RIGHT_HAND: "RIGHT HAND"
+  STR_LEFT_HAND: "LEFT HAND"
+  STR_RIGHT_SHOULDER: "RIGHT SHOULDER"
+  STR_LEFT_SHOULDER: "LEFT SHOULDER"
+  STR_BACK_PACK: "BACK PACK"
+  STR_BELT: "BELT"
+  STR_IS_UNDER_ALIEN_CONTROL_MALE: "{0}{NEWLINE}is under alien control"
+  STR_IS_UNDER_ALIEN_CONTROL_FEMALE: "{0}{NEWLINE}is under alien control"
+  STR_HAS_BECOME_UNCONSCIOUS_MALE: "{0}{NEWLINE}has become unconscious"
+  STR_HAS_BECOME_UNCONSCIOUS_FEMALE: "{0}{NEWLINE}has become unconscious"
+  STR_HAS_DIED_FROM_A_FATAL_WOUND_MALE: "{0}{NEWLINE}has died from a fatal wound"
+  STR_HAS_DIED_FROM_A_FATAL_WOUND_FEMALE: "{0}{NEWLINE}has died from a fatal wound"
+  STR_USE_MIND_PROBE: "Use Mind Probe"
+  STR_FATAL_WOUNDS: "FATAL WOUNDS"
+  STR_UNDER_ARMOR_UC: "UNDER ARMOR"
+  STR_TIME_UNITS_RESERVED_FOR_SNAP_SHOT: "Time Units reserved for Snap Shot"
+  STR_TIME_UNITS_RESERVED_FOR_AUTO_SHOT: "Time Units reserved for Auto Shot"
+  STR_TIME_UNITS_RESERVED_FOR_AIMED_SHOT: "Time Units reserved for Aimed Shot"
+  STR_TIME_UNITS_RESERVED_FOR_KNEELING: "Time Units reserved for Kneeling"
+  STR_TIME_UNITS_RESERVED_FOR_KNEELING_AND_FIRING: "TUs reserved for Kneeling and Firing"
+  STR_UNITS_IN_CRAFT:
+    one: "{N} Unit in X-Com Craft"
+    other: "{N} Units in X-Com Craft"
+  STR_UNITS_OUTSIDE:
+    one: "{N} Unit left outside"
+    other: "{N} Units left outside"
+  STR_UNITS_IN_ENTRANCE:
+    one: "{N} Unit in Entrance"
+    other: "{N} Units in Entrance"
+  STR_UNITS_IN_EXIT:
+    one: "{N} Unit in Target Exit"
+    other: "{N} Units in Target Exit"
+  STR_ABORT_MISSION_QUESTION: "Abort Mission?"
+  STR_CORPSE: "Corpse"
+  STR_UNLOAD_CRAFT: "Unload"
+  STR_HAS_BEEN_KILLED_MALE: "{0}{NEWLINE}has been killed"
+  STR_HAS_BEEN_KILLED_FEMALE: "{0}{NEWLINE}has been killed"
+  STR_HIT_MELEE: "Hit"
+  STR_GROUND: "GROUND"
+  STR_LIVING_QUARTERS_PLURAL: "Living Quarters"
+  STR_LIST_ITEM: "ITEM"
+  STR_PERSONAL_ARMOR_UFOPEDIA: "Using the newly discovered Alien Alloys, this new armor gives our men a fighting chance against the alien threat."
+  STR_POWER_SUIT_UFOPEDIA: "A powerful new protection for soldiers, this armor is powered by an Elerium energy source and greatly amplifies the speed and strength of the wearer, it offers the best protection yet for combat troops."
+  STR_FLYING_SUIT_UFOPEDIA: "An enhanced version of the Power Suit, incorporating alien anti-gravity navigation technology to allow full freedom of movement across the battlefield."
+  STR_ALL_ALIENS_KILLED_IN_CRASH: "All Aliens killed in crash,{NEWLINE}Auto recovery initiated"
+  STR_RESET: "Reset"
+  STR_MEMORIAL: "Memorial"
+  STR_DATE_UC: "DATE"
+  STR_SOLDIERS_RECRUITED_UC: "SOLDIERS RECRUITED>{ALT}{0}"
+  STR_SOLDIERS_LOST_UC: "SOLDIERS LOST>{ALT}{0}"
+  MAP_CULTA: "Farm"
+  MAP_FOREST: "Forest"
+  MAP_JUNGLE: "Jungle"
+  MAP_MOUNT: "Mountain"
+  MAP_DESERT: "Desert"
+  MAP_POLAR: "Polar"
+  MAP_URBAN: "City"
+  MAP_UBASE: "Alien Base"
+  MAP_XBASE: "X-Com Base"
+  MAP_MARS: "Mars"
+  STR_MIXED: "Mixed"
+  STR_REMOVE_SELECTED: "Remove Selected"
+  STR_LIVE_ALIENS: "Live{NEWLINE}Specimens"
+  STR_DEAD_ALIENS: "Rejected{NEWLINE}Specimens"
+  STR_UNDER_INTERROGATION: "Being{NEWLINE}Studied"
+  STR_CONTAINMENT_EXCEEDED: "ALIEN CONTAINMENT LIMITS EXCEEDED!{SMALLLINE}Insufficient containment space at {0}. You must remove excess aliens from containment (who will then die)."
+  STR_MANAGE_CONTAINMENT: "Manage Alien Containment"
+  STR_STORAGE_EXCEEDED: "STORAGE SPACE EXCEEDED!{SMALLLINE}Insufficient storage space at {0}. You must sell off excess items."
+  STR_GO_TO_BASE: "Go to Base"
+  STR_MELEE_ACCURACY: "MELEE ACCURACY"
+  STR_SELL_PRODUCTION: "SELL"
+  STR_BOTH_HANDS_MUST_BE_EMPTY: "Both hands must be empty!"
+  STR_NOT_ENOUGH_ITEMS_FOR_TEMPLATE: "Not enough items to copy template!"
+  STR_UNLOAD_WEAPON: "Unload weapon"
+  STR_ALL_ITEMS: "All Items"
+  STR_NO_MORE_EQUIPMENT_ALLOWED:
+    one: "NO MORE EQUIPMENT ALLOWED ON BOARD!{SMALLLINE}You are only allowed to take a maximum of {N} item of equipment on this craft."
+    other: "NO MORE EQUIPMENT ALLOWED ON BOARD!{SMALLLINE}You are only allowed to take a maximum of {N} items of equipment on this craft."
+  STR_CONTROL_CENTER_DESTROYED: "{SMALLLINE}CONTROL CENTER DESTROYED{NEWLINE}Make your way to the entrance and abort."
+  STR_XCOM_BASE_CANNOT_BE_BUILT: "X-Com facilities cannot be built underwater"
+  STR_LEVEL_SHORT: "{0}"
+  STR_PERSONNEL: "Personnel"
+  STR_CRAFT_ARMAMENT: "Craft & Armament"
+  STR_COMPONENTS: "Components"
+  STR_SOLDIERS_RECRUITED: "Soldiers recruited"
+  STR_SOLDIERS_LOST: "Soldiers lost"
+  STR_TOTAL_UFOS: "UFOs detected"
+  STR_TOTAL_ALIEN_BASES: "Alien bases discovered"
+  STR_PSIONIC_STRENGTH_ABBREVIATION: "PST"
+  STR_PSIONIC_SKILL_ABBREVIATION: "PSK"
+  FEMALE_CIVILIAN: "Civilian, Female"
+  MALE_CIVILIAN: "Civilian, Male"
+  CYBERDISC_WEAPON: "Cyberdisc Weapon"
+  REAPER_WEAPON: "Reaper Weapon"
+  CHRYSSALID_WEAPON: "Chryssalid Weapon"
+  CELATID_WEAPON: "Celatid Weapon"
+  SILACOID_WEAPON: "Silacoid Weapon"
+  SECTOPOD_WEAPON: "Sectopod Weapon"
+  ZOMBIE_WEAPON: "Zombie Weapon"
+  ALIEN_PSI_WEAPON: "Alien Psi Weapon"
+
+#=================== Basescape ===================
+#SoldierAvatarState.cpp
+  STR_AVATAR_NAME_1: "#01 Male, Blonde"
+  STR_AVATAR_NAME_2: "#02 Male, Brown hair"
+  STR_AVATAR_NAME_3: "#03 Male, Asian"
+  STR_AVATAR_NAME_4: "#04 Male, African"
+  STR_AVATAR_NAME_5: "#05 Female, Blonde"
+  STR_AVATAR_NAME_6: "#06 Female, Brown hair"
+  STR_AVATAR_NAME_7: "#07 Female, Asian"
+  STR_AVATAR_NAME_8: "#08 Female, African"
+#=================== Battlescape ===================
+#InventoryState.cpp
+  STR_PSI_SHORT: "PSI>{ALT}{0}/{1}"
+#=================== Geoscape ===================
+#DogfightState.cpp
+  STR_EVASIVE_MANEUVERS: "EVASIVE MANEUVERS"
+  STR_UFO_DESTROYED_BY_SPLASHDOWN: "UFO DESTROYED BY SPLASHDOWN!"
+  STR_UFO_SURVIVED_SPLASHDOWN: "UFO SURVIVED SPLASHDOWN!"
+#GeoscapeState.cpp
+  STR_UFO_HAS_LANDED: "UFO has landed at{NEWLINE}{0}"
+#SelectMusicTrackState.cpp
+  GMGEO1: "Geoscape Track #1"
+  GMGEO2: "Geoscape Track #2"
+  GMTACTIC: "Battlescape Track"
+#==================================================================================================================
+  STR_SHOT_TYPE_AUTO: "Auto (x{0})"
+  tip_accel: 'accel<br><br>Craft''s disengage speed based on its acceleration (if possible):
+    <ul><li> 0-2 = half speed;</li> <li> 3-5 = normal speed;</li> <li> 6-8 = +50% to
+    speed;</li> <li> 9+ = double speed.</li></ul>'
+  tip_allowLanding: allowLanding<br><br>Should this craft be able to start a Battlescape
+    mission?
+  tip_autoPatrol: autoPatrol<br><br>Should this craft automatically return to its patrol
+    destination after refueling?
+  tip_avoidBonus: avoidBonus<br><br>Flat bonus percentage to dodge chances against enemy
+    fire.
+  tip_costRent: costRent<br><br>Amount of money spent monthly for renting this craft.
+    If set to 0, the craft is not on rental and won't count towards hideout maintenance.
+  tip_damageMax: damageMax<br><br>Maximum amount of damage this vessel can take. If
+    the vessel takes 50% damage, it crash lands. If it takes 100% damage, it is destroyed.
+  tip_fixedWeapons: fixedWeapons<br><br>A list with fixed built-in craft weapons.
+  tip_forceShowInMonthlyCosts: forceShowInMonthlyCosts<br><br>Forces this craft type
+    to appear in Monthly Costs breakdown, even if not present at the hideout.
+  tip_fuelMax: fuelMax<br><br>Maximum amount of fuel this craft can carry. Crafts use
+    up fuel based on their speed while traveling.
+  tip_hitBonus: hitBonus<br><br>Flat bonus percentage to hit chances of all equipped
+    weapons. X-Piratez default value is 15 (counts as 0).
+  tip_maxAltitude: maxAltitude<br><br>Maximum altitude (0-4) this craft can dogfight
+    to.
+  tip_pilots: pilots<br><br>How many pilots are required to pilot this craft. <ul><li>
+    pilots are also soldiers and will be fighting in the Battlescape;</li> <li> pilots
+    give bonuses/penalties to the craft performance in the Dogfights (based on their
+    skills);</li> <li> pilots gain experience via Dogfights;</li> <li> you can manually
+    assign pilots to the craft; if you don't want to, they can be assigned automatically.</li></ul>
+  tip_powerBonus: powerBonus<br><br>Multiplier for the power of craft weapons, e.g.
+    20 = weapons' power increased to 120% of their original power, -20 = decreased to
+    80%.
+  tip_radarChance: radarChance<br><br>Chance (0-100%) to detect an enemy object that
+    enters the range of the radar.
+  tip_radarRange: radarRange<br><br>Maximum radar detection range, in nautical miles.
+  tip_refuelItem: refuelItem<br><br>Item required for refueling this craft. If no item
+    is specified, the craft uses human fuel.
+  tip_refuelRate: refuelRate<br><br>Amount of fuel restored every 30 mins while refueling
+    in hideout. If specified, a refuelItem is spent each time.
+  tip_repairRate: repairRate<br><br>Amount of damage restored every hour while Repairing
+    in hideout.
+  tip_score: 'score<br><br>Score gained when this craft is destroyed:invs: <ul><li>
+    for enemy crafts - half this score if it crash lands;</li> <li> for player''s crafts
+    - score lost when this craft is destroyed.</li></ul>'
+  tip_shieldBleedThrough: shieldBleedThrough<br><br>Defines the percent of damage that
+    passes the shield when it goes down. A value of 0 means that with even just 1 shield
+    point, any single hit will be blocked, while 100 means 100% of the damage left after
+    the shield blocks it will go on to damage the craft.
+  tip_shieldCapacity: shieldCapacity<br><br>Maximum shield capacity.
+  tip_shieldRecharge: 'shieldRecharge<br><br>Defines the percent chance of recharging
+    a point of shielding per game second (GS) during a Dogfight. Values under 100 are
+    the percent chance, for over 100, every +100 means an automatic +1 to shields per
+    GS.<br><br>Thus shieldRecharge: 250 means +2 shields/GS, with a 50% chance of +1
+    more.'
+  tip_shieldRechargeInGeoscape: shieldRechargeInGeoscape<br><br>Similar to shieldRecharge,
+    but acts every 5 seconds in the Geoscape. Giving it a value of -1 means instant
+    recharge as soon as 5 seconds pass.
+  tip_soldiers: soldiers<br><br>Amount of soldiers this craft can carry.
+  tip_spacecraft: spacecraft<br><br>Can this craft go to Cydonia?
+  tip_speedMax: speedMax<br><br>Maximum speed in nautical miles.<br><br>Player's crafts
+    travel at max speed when flying and half speed when patrolling.
+  tip_sprite: sprite<br><br>A two-dimensional bitmap that is used to draw video game
+    graphics.
+  tip_undetectable: undetectable<br><br>Can this object be detected by enemy bases and
+    enemy hunter-killers?
+  tip_vehicles: vehicles<br><br>Amount of auxiliary units this craft can carry.
+  tip_weaponStrings: weaponStrings<br><br>A list describing the craft's weapon slots
+    (up to 4 slots).
+  tip_weaponTypes: weaponTypes<br><br>A list defining compatible weapon types for this
+    craft type. Up to 4 slots, and each slot can have up to 4 compatible weapon types.
+  tip_weapons: weapons<br><br>Amount of craft weapons this craft can equip.
+  tip_ammoMax: ammoMax<br><br>Maximum amount of ammo this weapon can carry.
+  tip_clip: clip<br><br>Item required to rearm this weapon.
+  tip_launcher: launcher<br><br>Item required to equip this weapon.
+  tip_projectileSpeed: projectileSpeed<br><br>Speed of the weapon projectile in dogfights.
+  tip_projectileType: 'projectileType<br><br>Type of the weapon projectile, used for
+    the projectile sprite in dogfights: <ul><li> 0 = Stingray;</li> <li> 1 = Avalanche;</li>
+    <li> 2 = Cannon;</li> <li> 3 = Fusion Ball;</li> <li> 4 = Laser Cannon;</li> <li>
+    5 = Plasma Beam.</li></ul>'
+  tip_rearmRate: rearmRate<br><br>Amount of ammo restored every hour while the craft
+    is Rearming in hideout.
+  tip_reloadAggressive: reloadAggressive<br><br>Time this weapon takes to fire between
+    each shot in Ramming Speed Mode.
+  tip_reloadCautious: reloadCautious<br><br>Time this weapon takes to fire between each
+    shot in Long Range Mode.
+  tip_reloadStandard: reloadStandard<br><br>Time this weapon takes to fire between each
+    shot in Full Broadside Mode.
+  tip_shieldDamageModifier: shieldDamageModifier<br><br>Defines the percent of power
+    that a weapon does to shields.
+  tip_sound: sound<br><br>Sound ID from GEO.CAT played when this weapon fires.
+  tip_weaponType: weaponType<br><br>Used to limit certain weapons/accessories to certain
+    craft weapon slots.
+  tip_alertSound: alertSound<br><br>Sound played when this vessel is detected, from
+    GEO.CAT.
+  tip_breakOffTime: breakOffTime<br><br>Minimum amount of time for the vessel to be
+    able to break off of a dogfight.
+  tip_craftCustomDeploy: craftCustomDeploy<br><br>Overrides the deployment data used
+    during the Battlescape generation, when the vessel crashes or lands.
+  tip_huntAlertSound: huntAlertSound<br><br>Sound played when this type of vessel starts
+    hunting player's craft, from GEO.CAT.
+  tip_huntBehavior: 'huntBehavior<br><br>Algorithm to use when considering retreating
+    from the dogfight: <ul><li> 0 = flee when losing;</li> <li> 1 = never flee, never
+    crash (is destroyed instead of crashing);</li> <li> 2 = random preference (0 or
+    1) determined at spawn.</li></ul>'
+  tip_huntMode: 'huntMode<br><br>Algorithm to use when prioritizing targets: <ul><li>
+    0 = prefer hunting your interceptors;</li> <li> 1 = prefer hunting your transports;</li>
+    <li> 2 = random preference (0 or 1) determined at spawn.</li></ul>'
+  tip_hunterKillerPercentage: hunterKillerPercentage<br><br>The chance (0-100%) to become
+    a hunter-killer vessel upon spawning.
+  tip_marker: marker<br><br>Sprite ID from GlobeMarkers spritesheet, used for drawing
+    flying craft icon on the globe.
+  tip_markerCrash: markerCrash<br><br>Sprite ID from GlobeMarkers spritesheet, used
+    for drawing crashed craft icon on the globe.
+  tip_markerLand: markerLand<br><br>Sprite ID from GlobeMarkers spritesheet, used for
+    drawing landed craft icon on the globe.
+  tip_missilePower: missilePower<br><br>Only relevant for retaliation vessels. If not
+    shot down during the Hideout defense, it will destroy some buildings or even the
+    whole Hideout (without ground mission!). <ul><li> -1 = destroy everything;</li>
+    <li> 0 = disabled (not a missile);</li> <li> N = destroy N 1x1 buildings or equivalent.</li></ul>
+  tip_missionCustomDeploy: missionCustomDeploy<br><br>Overrides the deployment data
+    used during the Battlescape generation, when the vessel spawns a mission site.
+  tip_missionScore: missionScore<br><br>Negative points awarded each half hour the vessel
+    is airborne, and twice this value when landed.
+  tip_modSprite: modSprite<br><br>Sprite used to draw this vessel in the dogfight view
+    and BootyPedia.
+  tip_raceBonus: raceBonus<br><br>Modifies or overrides the craft stats per crew.
+  tip_range: range<br><br>Maximum range of a craft weapon in dogfights.
+  tip_reload: reload<br><br>Time the vessel's weapon takes to fire between each shot.
+  tip_sightRange: sightRange<br><br>The radius in which this vessel or building can
+    detect enemy Hideouts (in nautical miles).
+  tip_unmanned: Unmanned enemy vessels (e.g. missiles, drones, etc.) cannot crash land
+    after dogfight and cannot be forced to land by a tractor beam. They fight until
+    0% HP (not 50% HP).
+  tip_armor: armor <ul><li>For items - how much damage is needed to destroy this item
+    on the ground.</li> <li>For ships - amount of blocked damage per hit.</li></ul>
+  tip_stats: stats<br><br>Battlescape stats of this unit.
+  tip_allowInv: allowInv<br><br>Can the inventory of this armor be accessed or not?
+  tip_allowsKneeling: allowsKneeling<br><br>Does this armor allow kneeling?
+  tip_allowsMoving: allowsMoving<br><br>Does this armor allow moving?
+  tip_allowsRunning: allowsRunning<br><br>Does this armor allow running?
+  tip_allowsStrafing: allowsStrafing<br><br>Does this armor allow strafing?
+  tip_alwaysVisible: alwaysVisible<br><br>When set to true, the unit will always be
+    visible to the player.
+  tip_antiCamouflageAtDark: antiCamouflageAtDark<br><br>Cancels enemy camouflage by
+    a specified amount (of tiles) during darkness. Cannot increase visibility beyond
+    the usual. Corresponds to SPOT parameter.
+  tip_antiCamouflageAtDay: antiCamouflageAtDay<br><br>Cancels enemy camouflage by a
+    specified amount (of tiles) during the day. Cannot increase visibility beyond the
+    usual. Corresponds to SPOT parameter.
+  tip_bleedImmune: bleedImmune<br><br>Is this unit immune to bleeding?
+  tip_builtInWeapons: builtInWeapons<br><br>Can't be removed from the inventory.
+  tip_camouflageAtDark: camouflageAtDark<br><br>Makes the unit wearing this armor less
+    visible during darkness.<br><br>Positive numbers set absolute distance (e.g. 7 means
+    that unit is visible from 7 tiles away), corresponds to INVIS parameter.<br><br>Negative
+    numbers set relative distance (e.g. -10 means that unit is visible from a distance
+    that is 10 tiles shorter than usual), corresponds to CAMO parameter.<br><br>Cannot
+    decrease visibility below 1 tile.
+  tip_camouflageAtDay: camouflageAtDay<br><br>Makes the unit wearing this armor less
+    visible during the day.<br><br>Positive numbers set absolute distance (e.g. 7 means
+    that unit is visible from 7 tiles away), corresponds to INVIS parameter.<br><br>Negative
+    numbers set relative distance (e.g. -10 means that unit is visible from a distance
+    that is 10 tiles shorter than usual), corresponds to CAMO parameter.<br><br>Cannot
+    decrease visibility below 1 tile.
+  tip_constantAnimation: constantAnimation<br><br>Nuff said.
+  tip_corpseBattle: corpseBattle<br><br>List of string IDs of the corpse items generated
+    when a unit wearing this armor is killed/stunned on the Battlescape.
+  tip_corpseGeo: corpseGeo<br><br>Corpse item recovered in Debriefing.
+  tip_createsMeleeThreat: createsMeleeThreat<br><br>Is this unit capable of CQC (close
+    quarters combat)?
+  tip_deathFrames: deathFrames<br><br>Number of 'death frames' = sprites in the death
+    animation sequence.
+  tip_drawBubbles: drawBubbles<br><br>True for units that breathe underwater.
+  tip_drawingRoutine: 'drawingRoutine<br><br>Drawing routine used to put together the
+    body parts in the unit''s spriteSheet: <ul><li> 0 = Soldier, Sectoid;</li> <li>
+    1 = Floater;</li> <li> 2 = HWP;</li> <li> 3 = Cyberdisk;</li> <li> 4 = Civilian,
+    Ethereal;</li> <li> 5 = Sectopod, Reaper;</li> <li> 6 = Snakeman;</li> <li> 7 =
+    Chryssalid;</li> <li> 8 = Silacoid;</li> <li> 9 = Celatid;</li> <li> 10 = Muton;</li>
+    <li> 11 = Submersible Weapons Systems;</li> <li> 12 = Hallucinoid;</li> <li> 13
+    = Aquanauts;</li> <li> 14 = Calcinite, Deep One, Gillman, Lobster Man, Tasoth;</li>
+    <li> 15 = Aquatoid;</li> <li> 16 = Bio-Drone;</li> <li> 17 = TFTD Civilians type
+    A and Zombie_(TFTD);</li> <li> 18 = TFTD Civilians type B;</li> <li> 19 = Tentaculat;</li>
+    <li> 20 = Triscene;</li> <li> 21 = Xarquid;</li> <li> 22 = Inverted Cyberdisc (propulsion
+    animation on top).</li></ul>'
+  tip_fearImmune: fearImmune<br><br>Is this unit immune to morale loss (and psiVision)?
+  tip_forcedTorso: forcedTorso<br><br>Soldier sprites have female and male torsos. Some
+    armors reuse these sprites for flying/non flying torso without difference between
+    genders. <ul><li> 0 = use gender-specific torso;</li> <li> 1 = use male torso;</li>
+    <li> 2 = use female torso.</li></ul>
+  tip_heatVision: heatVision<br><br>Allows seeing better through smoke. Percentage (0-100%)
+    value defining how much smoke is ignored.
+  tip_ignoresMeleeThreat: ignoresMeleeThreat<br><br>Is this unit immune to CQC (close
+    quarters combat)?
+  tip_loftempsSet: loftempsSet<br><br>The bigger this number - the bigger is unit's
+    hitbox.
+  tip_meleeDodge: meleeDodge<br><br>Formulae (sum of terms) for melee dodge chance.
+  tip_meleeDodgeBackPenalty: meleeDodgeBackPenalty<br><br>Defines the penalty to unit's
+    melee dodge ability (see meleeDodge) when attacked from behind. Defined as percentage,
+    e.g. 0.7 = 70%.<br><br>The full penalty applies from behind, from sides the penalty
+    is adjusted accordingly. There is no penalty for frontal assault.
+  tip_moveSound: moveSound<br><br>Sound ID from BATTLE.CAT played when this unit moves.
+  tip_movementType: 'movementType<br><br>Type of movement provided by this armor: <ul><li>
+    0 = Walking;</li> <li> 1 = Flying;</li> <li> 2 = Sliding (no walking animation);</li>
+    <li> 3 = Floating (fly underwater, walk on the surface);</li> <li> 4 = Sinking (walk
+    underwater, fly on the surface).</li></ul>'
+  tip_overKill: overKill<br><br>Defines how much damage (over the maximum HP) is needed
+    to vaporize/disintegrate a unit upon hit. Defined as percentage, e.g. 0.6 = 60%
+    of maximum HP. <ul><li> If a unit is disintegrated, it will have a different death
+    animation and it will not leave any corpse.</li> <li> Weapons can be configured
+    to cause disintegration or not.</li></ul
+  tip_painImmune: painImmune<br><br>Is this unit immune to stun damage? By default all
+    weapons with damageType=6 (stun) will ignore this parameter.
+  tip_personalLight: personalLight<br><br>Intensity of the personal light for the unit
+    wearing this armor.
+  tip_psiDefence: psiDefence<br><br>Formulae (sum of terms) for psi defense value.
+  tip_psiVision: psiVision<br><br>Allow 'seeing' through walls. Units with this armor
+    can sense enemies that are 'psiVision' tiles (or less) away.<br><br>Cannot sense
+    enemies that are fearImmune.
+  tip_specialWeapon: specialWeapon<br><br>Built-in weapon that does not block the inventory.
+    Instead it is accessed via a special icon.
+  tip_spriteSheet: spriteSheet<br><br>Sprite sheet used to draw a unit wearing this
+    armor.
+  tip_storeItem: storeItem<br><br>The item that represents this armor in hideout stores
+    for equipping.
+  tip_turnBeforeFirstStep: turnBeforeFirstStep<br><br>If enabled, the cost of turning
+    at the beginning of the walking sequence will always be considered.
+  tip_turnCost: turnCost<br><br>How many TUs does it cost to make a 45 degree turn.
+  tip_units: units<br><br>List of soldier types this armor applies to.
+  tip_visibilityAtDark: visibilityAtDark<br><br>How far tiles can the unit wearing this
+    armor see during darkness.
+  tip_visibilityAtDay: visibilityAtDay<br><br>How far tiles can the unit wearing this
+    armor see during the day.
+  tip_zombiImmune: zombiImmune<br><br>This setting works for 1x1 units only. 2x2 units
+    are always immune.
+  tip_cost: 'cost <ul><li> Research context: number of man-days (on average, the final
+    time will be 50-150% this value) required to complete this project.</li> <li> Manufacture
+    context: monetary deduction per production.</li> <li> NOTE: ''Cost'' in research
+    & manufacture context are DIFFERENT numbers!</li></ul>'
+  tip_ArmorEffectiveness: ArmorEffectiveness<br><br>How effective is a unit's front/side/rear/bottom
+    armor against this damage. 1.0 is 100%.
+  tip_FireBlastCalc: FireBlastCalc<br><br>Vanilla fire/incendiary blast radius has a
+    special formula. This option turns it on/off.
+  tip_FireThreshold: FireThreshold<br><br>How much damage is needed to set a unit or
+    a tile on fire.
+  tip_FixRadius: 'FixRadius<br><br>A blast radius: <ul><li> -1 = dynamic blast radius;</li>
+    <li> 0 = no blast radius;</li> <li> 1+ = fixed blast radius.</li></ul>'
+  tip_IgnoreDirection: IgnoreDirection<br><br>Should the damage calculation ignore from
+    which direction the projectile came? Used for example for smoke or fire.
+  tip_IgnoreOverKill: IgnoreOverKill<br><br>Disables overkill damage, i.e. units won't
+    get vaporized/disintegrated when killed (by a hit doing a lot more damage than necessary
+    to kill).
+  tip_IgnorePainImmunity: IgnorePainImmunity<br><br>Some units are immune to pain/stun
+    (see painImmune on Armor). This allows you to ignore such immunity. Used for example
+    on Stun damage.
+  tip_IgnoreSelfDestruct: IgnoreSelfDestruct<br><br>Killing using this damage prevents
+    self-destruct (e.g. of Cyberdisc). Used for example on HE, Stun or Melee damage.
+  tip_RadiusEffectiveness: RadiusEffectiveness<br><br>If FixRadius = -1, the blast radius
+    is not fixed, but dynamically calculated from Power (incl. Power bonus). This is
+    a factor for such calculation.
+  tip_RadiusReduction: RadiusReduction<br><br>How much explosion Power decreases with
+    distance from the center.
+  tip_RandomHealth: RandomHealth<br><br>Should the calculation above be randomized?
+  tip_RandomStun: RandomStun<br><br>Should the stun effect be randomized?
+  tip_RandomType: |
+    <ul><li> 0 = default vanilla behavior dependent on damageType</li>
+    <li> 1 = 0-200% spread</li>
+    <li> 2 = 50-150% spread</li>
+    <li> 3 = flat damage equal to power</li>
+    <li> 4 = random damage in range defined by <b>fireDamageRange</b></li>
+    <li> 5 = no damage</li>
+    <li> 6 = 0-200% spread (2 dice roll), i.e. 0-100% + 0-100%</li>
+    <li> 7 = 50-200% spread</li></ul>
+  RandomType_0: "(default vanilla behavior dependent on damageType)"
+  RandomType_1: "(0-200% spread)"
+  RandomType_2: "(50-150% spread)"
+  RandomType_3: "(flat damage equal to power)"
+  RandomType_4: "(random damage in range defined by fireDamageRange)"
+  RandomType_5: "(no damage)"
+  RandomType_6: "(0-200% spread (2 dice roll), i.e. 0-100% + 0-100%)"
+  RandomType_7: "(50-200% spread)"
+  tip_RandomWound: RandomWound<br><br>Determines how many fatal wounds should be inflicted.
+    TRUE is equal to vanilla calculations.
+  tip_ResistType: ResistType<br><br>A damage type, i.e. what resistance of the target
+    unit's armor is applied. Same values like damageType.
+  tip_SmokeThreshold: SmokeThreshold<br><br>How much damage is needed to create smoke
+    on a tile.
+  tip_ToArmor: ToArmor<br><br>How much of the primary damage (Power x RandomType) is
+    applied to the unit's armor after armor is considered.
+  tip_ToArmorPre: ToArmorPre<br><br>How much of the primary damage (Power x RandomType)
+    is applied to the unit's armor before armor is considered.
+  tip_ToEnergy: ToEnergy<br><br>How much of the primary damage (Power x RandomType)
+    is applied to the unit's energy.
+  tip_ToHealth: ToHealth<br><br>How much of the primary damage (Power x RandomType)
+    is applied to the unit's health.
+  tip_ToItem: ToItem<br><br>How much of the primary damage (Power x RandomType) is applied
+    to items.
+  tip_ToMorale: ToMorale<br><br>How much of the primary damage (Power x RandomType)
+    is applied to the unit's morale.
+  tip_ToStun: ToStun<br><br>How much of the primary damage (Power x RandomType) is applied
+    to the unit's stun level.
+  tip_ToTile: ToTile<br><br>How much of the primary damage (Power x RandomType) is applied
+    to the terrain.
+  tip_ToTime: ToTime<br><br>How much of the primary damage (Power x RandomType) is applied
+    to the unit's TUs.
+  tip_ToWound: ToWound<br><br>Determines how many fatal wounds should be inflicted.
+    1.0 is equal to vanilla calculations.
+  tip_accuracyAimed: accuracyAimed<br><br>The base accuracy (in percent) applied to
+    a soldier's Firing Accuracy when firing an Aimed shot.
+  tip_accuracyAuto: accuracyAuto<br><br>The base accuracy (in percent) applied to a
+    soldier's Firing Accuracy when firing an Auto shot.
+  tip_accuracyCloseQuarters: accuracyCloseQuarters<br><br>The base accuracy (in percent)
+    applied when checking CQC (close quarters combat) score.
+  tip_accuracyMelee: accuracyMelee<br><br>The base accuracy (in percent) applied to
+    a soldier's Melee Accuracy when doing a Melee attack.
+  tip_accuracyMultiplier: accuracyMultiplier<br><br>Formulae (sum of terms) defining
+    the skills (i.e. various units stats) affecting the unit's accuracy when using this
+    item in Aimed/Snap/Auto shots and in Psi attacks (Panic/MindControl/Use).
+  tip_accuracySnap: accuracySnap<br><br>The base accuracy (in percent) applied to a
+    soldier's Firing Accuracy when firing a Snap shot.
+  tip_accuracyThrow: accuracyThrow<br><br>The base accuracy (in percent) applied when
+    throwing items.
+  tip_accuracyUse: accuracyUse<br><br>The accuracy bonus (in flat percent) applied during
+    special psi attacks.
+  tip_aimRange: aimRange<br><br>Maximum effective range with this weapon before which
+    range-based dropoff occurs.
+  tip_arcingShot: arcingShot<br><br>Does this weapon fire in an arc?
+  tip_attraction: attraction<br><br>Represents how likely an alien is to pick up this
+    item. Values below 5 will be ignored (by design).
+  tip_autoRange: autoRange<br><br>Maximum effective range with auto shot before which
+    range-based dropoff occurs.
+  tip_autoShots: autoShots<br><br>How many auto shots does this weapon fire.
+  tip_battleType: battleType<br><br>Defines the item's behavior in the Battlescape.
+    <ul><li> 0 = None (Geoscape-only item);</li> <li> 1 = Firearm;</li> <li> 2 = Ammo;</li>
+    <li> 3 = Melee;</li> <li> 4 = Grenade;</li> <li> 5 = Proximity Grenade;</li> <li>
+    6 = Medi-Kit;</li> <li> 7 = Motion Scanner;</li> <li> 8 = Mind Probe;</li> <li>
+    9 = Psi-Amp;</li> <li> 10 = Electro-flare;</li> <li> 11 = Corpse.</li></ul>
+  tip_bigSprite: bigSprite<br><br>Sprite ID from BIGOBS.PCK used to draw this item in
+    a unit's inventory and Bootypedia.
+  tip_blastRadius: 'blastRadius<br><br>A blast radius: <ul><li> -1 = dynamic blast radius;</li>
+    <li> 0 = no blast radius;</li> <li> 1+ = fixed blast radius.</li></ul>'
+  tip_blockBothHands: blockBothHands<br><br>Does this weapon block both hands? If true,
+    you cannot use this weapon while holding anything in the offhand.
+  tip_bulletSpeed: bulletSpeed<br><br>How much faster (or slower, if you use a negative
+    number) is a projectile fired from this weapon compared to the average.
+  tip_bulletSprite: bulletSprite<br><br>Sprite ID used to draw this weapon's projectile
+    on the Battlescape. <ul><li> 0 = Rocket Launcher;</li> <li> 1 = Pistol;</li> <li>
+    2 = Rifle;</li> <li> 3 = Auto Cannon;</li> <li> 4 = Heavy Cannon;</li> <li> 5 =
+    Laser Pistol;</li> <li> 6 = Laser Rifle;</li> <li> 7 = Heavy Laser;</li> <li> 8
+    = Plasma;</li> <li> 9 = Small Launcher;</li> <li> 10 = Blaster Launcher.</li></ul>
+  tip_categories: categories<br><br>A list of categories this item belongs to.
+  tip_clipSize: clipSize<br><br>The amount of ammo stored in each weapon clip. If -1
+    is specified, this weapon has infinite ammo.
+  tip_closeQuartersMultiplier: closeQuartersMultiplier<br><br>Same as accuracyMultiplier,
+    but used for CQC scoring.
+  tip_compatibleAmmo: compatibleAmmo<br><br>List of the ammo items that can be loaded
+    on this weapon. If none are specified, the weapon doesn't need ammo.
+  tip_costAimed: costAimed<br><br>Defines the aimed shot cost. Positive numbers are
+    taken, negative are given.
+  tip_costAuto: costAuto<br><br>Defines the auto shot cost. Positive numbers are taken,
+    negative are given.
+  tip_costBuy: costBuy<br><br>Amount of Dolaros required to make a deal.
+  tip_costMelee: costMelee<br><br>Defines the melee attack cost. Positive numbers are
+    taken, negative are given.
+  tip_costMindControl: costMindControl<br><br>Defines the use cost for Mind Control
+    skill. Positive numbers are taken, negative are given.
+  tip_costPanic: costPanic<br><br>Defines the use cost for Panic skill. Positive numbers
+    are taken, negative are given.
+  tip_costPrime: costPrime<br><br>Defines the priming cost for this item. Positive numbers
+    are taken, negative are given.
+  tip_costSell: costSell<br><br>Amount of Dolaros required to make a deal.
+  tip_costSnap: costSnap<br><br>Defines the snap shot cost. Positive numbers are taken,
+    negative are given.
+  tip_costThrow: costThrow<br><br>Defines the throwing cost for this item. Positive
+    numbers are taken, negative are given.
+  tip_costUnprime: costUnprime<br><br>Defines the unpriming cost for this item. Positive
+    numbers are taken, negative are given.
+  tip_costUse: costUse<br><br>Defines the use cost for this skill. Positive numbers
+    are taken, negative are given.
+  tip_damageBonus: damageBonus<br><br>Formulae for additional weapon power bonus (not
+    damage bonus!). Defined as a sum of polynomials of up to third degree with various
+    unit stats as parameters.
+  tip_damageType: damageType<br><br>What type of damage does this weapon do.
+  tip_defaultInventorySlot: defaultInventorySlot<br><br>An inventory slot where a fixedWeapon
+    should be placed when it is created.
+  tip_dropoff: dropoff<br><br>The value by which the accuracy lowers for each tile after
+    (or before) the thresholds above.
+  tip_experienceTrainingMode: experienceTrainingMode<br><br>Defines which skill(s) should
+    improve when the soldiers gain experience by hitting enemy units (or healing fatal
+    wounds of any units).
+  tip_explosionHitSound: explosionHitSound<br><br>Sound ID from BATTLE.CAT played when
+    explosion happens. Can be a list with multiple options. If not specified, default
+    explosion sound is used.
+  tip_fireSound: fireSound<br><br>Sound ID from BATTLE.CAT played when this weapon fires.
+    In OXCE, can be a list with multiple options.
+  tip_fixedWeapon: fixedWeapon<br><br>Is this weapon fixed (cannot be dropped from the
+    Inventory)? (it's part of a unit, e.g. tanks and terrorist units)
+  tip_fixedWeaponShow: fixedWeaponShow<br><br>Should the fixed weapon be drawn on the
+    unit in the Battlescape or not? Normally, the weapon is not drawn (for example Reaper
+    or Cyberdisc weapon... because it's a part of the unit itself), but in mods you
+    may have for example fixed weapons on certain armors, which you want to display
+    as normal 'carried' weapons.
+  tip_flatMelee: 'flatMelee<br><br>Extended way of defining if the cost of item use
+    is flat or in percentage. '
+  tip_flatRate: flatRate<br><br>If true, then TU costs for this weapon are a flat rate
+    (instead of a percentage of unit TUs).
+  tip_floorSprite: floorSprite<br><br>Sprite ID from FLOOROB.PCK used to draw this item
+    on the floor of a Battlescape tile.
+  tip_fuseType: fuseType<br><br>Defines how item priming works. <ul><li> -3 = no priming.
+    Flares always glow if defaultBehavior is true;</li> <li> -2 = can be primed (without
+    timer). Proxies work normally. Grenades explode instantly after throwing. Flares
+    glow only after priming;</li> <li> -1 = can be primed (for manually specified amount
+    of turns). Grenades explode after set time. Proxies and flares disappear after set
+    time;</li> <li> 0-63 = Can be primed (for fixed amount of turns).</li></ul>
+  tip_handSprite: handSprite<br><br>Sprite ID from HANDOB.PCK used to draw this item
+    on a soldier's hand in the Battlescape.
+  tip_heal: heal<br><br>Amount of heals contained in a Medi-Kit.
+  tip_healthRecovery: healthRecovery<br><br>Amount of Health recovered by each heal
+    of a Medi-Kit.
+  tip_hiddenOnMinimap: hiddenOnMinimap<br><br>Is the item visible on the minimap?
+  tip_hitAnimation: hitAnimation<br><br>Sprite ID from SMOKE.PCK used to draw the weapon's
+    'hit explosion'.
+  tip_hitAnimFrames: 'hitAnimFrames<br><br>Allows overriding number of frames for hitAnimation.
+    Defaults are: <ul><li> bullet impact animations = 10 frames;</li> <li> melee/psi
+    animations = 4 frames;</li> <li> explosion animations = 8 frames.</li></ul>'
+  tip_hitMissSound: hitMissSound<br><br>Sound ID from BATTLE.CAT played when this weapon
+    misses a Psi attack (Use/Panic/MindControl). Can be a list with multiple options.
+  tip_hitSound: hitSound<br><br>Sound ID from BATTLE.CAT played when this weapon hits
+    a target. In OXCE, can be a list with multiple options.
+  tip_ignoreInBaseDefense: ignoreInBaseDefense<br><br>Items marked with this flag will
+    not appear in the Base Defense mission.
+  tip_ignoreInCraftEquip: ignoreInCraftEquip<br><br>Items marked with this flag will
+    not appear in Craft Inventory Equipment screen.
+  tip_invHeight: invHeight<br><br>Item height in a unit's inventory (in grid units).
+  tip_invWidth: invWidth<br><br>Item width in a unit's inventory (in grid units).
+  tip_isConsumable: isConsumable<br><br>Will this medikit be automatically refilled
+    at the base (false)? Or will it disappear after the mission, if used at least once
+    (true)?
+  tip_isExplodingInHands: isExplodingInHands<br><br>Does the item explode also when
+    still in a unit's inventory?
+  tip_kneelBonus: kneelBonus<br><br>15% bonus would be encoded as '115' (i.e. 100 +
+    15), meaning you will use the weapon at 115% of its usual accuracy.
+  tip_listOrder: listOrder<br><br>Sort order in various lists (research, manufacture,
+    craft equipment etc.
+  tip_liveAlien: liveAlien<br><br>Does this item represent a live creature?
+  tip_LOSRequired: LOSRequired<br><br>Does this item require line of sight? (only applies
+    to mind probes and Psi rods)
+  tip_manaRecovery: manaRecovery<br><br>Amount of Freshness recovered by each stimulant
+    of a Medi-Kit.
+  tip_maxRange: maxRange<br><br>Maximum range at which this weapon can operate.
+  tip_medikitActionName: medikitActionName<br><br>Name of the use action in the action
+    menu.
+  tip_medikitTargetImmune: medikitTargetImmune<br><br>Is it possible to use the medikit
+    on units that cannot bleed (true)? Or only on other units (false)?
+  tip_medikitTargetMatrix: 'medikitTargetMatrix<br><br>Says what targets are allowed
+    for a medikit item. It is a composite attribute (a bit map), individual parts: <ul><li>
+    1 = friendly on the ground;</li> <li> 2 = friendly standing;</li> <li> 4 = neutral
+    on the ground;</li> <li> 8 = neutral standing;</li> <li> 16 = hostile on the ground;</li>
+    <li> 32 = hostile standing.</li></ul>So, for emample... <ul><li> 0 = cannot use
+    on anyone;</li> <li> 3 (1+2) = can use only on friendlies;</li> <li> 31 (1+2+4+8+16)
+    = can use on everyone except on standing hostiles/enemies;</li> <li> 63 = can use
+    on everyone;</li> <li> etc.</li></ul>'
+  tip_medikitTargetSelf: medikitTargetSelf<br><br>TRUE = it is possible to use the medikit
+    on oneself. FALSE = only other units can be the targets.
+  tip_medikitType: 
+    <ul><li> 0 = All functions</li>
+    <li> 1 = Heal only</li>
+    <li> 2 = Stimulant only</li>
+    <li> 3 = Painkiller only</li></ul>
+  tip_meleeAnimation: meleeAnimation<br><br>Sprite ID from HIT.PCK played when this
+    weapon hits a target with melee.
+  tip_meleeBonus: meleeBonus<br><br>Formulae for additional weapon melee power bonus
+    (not damage bonus!). Defined as a sum of polynomials of up to third degree with
+    various unit stats as parameters. Applies to secondary melee attacks.
+  tip_meleeHitSound: meleeHitSound<br><br>Sound ID from BATTLE.CAT played when this
+    weapon hits a target with melee. In OXCE, can be a list with multiple options.
+  tip_meleeMultiplier: meleeMultiplier<br><br>Formulae (sum of terms) defining the skills
+    (i.e. various units stats) affecting the unit's accuracy when using this item for
+    primary and secondary melee attacks.
+  tip_meleePower: meleePower<br><br>Damage this weapon will do when using melee. This
+    only applies to Firearms, and is only available as stun damage.
+  tip_meleeSound: meleeSound<br><br>Sound ID from BATTLE.CAT played when this weapon
+    attacks a target with melee. In OXCE, can be a list with multiple options.
+  tip_meleeType: meleeType<br><br>Default damage type for secondary melee attack.
+  tip_minRange: minRange<br><br>Range-based dropoff will work in reverse for ranges
+    below this.
+  tip_monthlyMaintenance: monthlyMaintenance<br><br>Monthly maintenance cost of items
+    in Stores. For example your tanks could have a small monthly maintenance cost.
+  tip_monthlySalary: monthlySalary<br><br>Monthly salary of slaves, workers and other
+    employees represented as items in Stores.
+  tip_noLOSAccuracyPenalty: noLOSAccuracyPenalty<br><br>The penalty (in percent) to
+    accuracy applied when attacking a unit or a tile outside of LOS.
+  tip_oneHandedPenalty: oneHandedPenalty<br><br>Applies when there is an item in the
+    unit's another hand. E.g. 70 means 30% penalty, that is accuracy will be 70% of
+    normal.
+  tip_painKiller: painKiller<br><br>Amount of painkillers contained in a Medi-Kit.
+  tip_painKillerRecovery: painKillerRecovery<br><br>Strength of the pain killers (1.0
+    = 100%). Linear factor affecting vanilla morale recovery (based on lost health).
+  tip_power: power<br><br>Weapon power. Usually corresponds to weapon's average damage.
+    For some weapons/items, it determines the range (e.g. for incendiary or smoke).
+  tip_powerRangeReduction: powerRangeReduction<br><br>Weapon's power dropoff per tile
+    beyond effective range.
+  tip_powerRangeThreshold: powerRangeThreshold<br><br>Number of tiles defining the effective
+    range (i.e. range with no power reduction). Beyond this range power reduction is
+    applied.
+  tip_primeActionMessage: primeActionMessage<br><br>Message for the player informing
+    about the priming of an item.
+  tip_primeActionName: primeActionName<br><br>Name of the prime action in the action
+    menu.
+  tip_prisonType: prisonType<br><br>What type of prison facility can accommodate a unit.
+    This parameter must be the same for both the facility and the unit.
+  tip_psiAttackName: psiAttackName<br><br>Besides panic attack and mind control, weapons
+    of psi-amp type can have also a third type of attack, bound to 'use' attributes
+    (for example costUse). This attribute defines what should be the name of such attack
+    in the action menu.
+  tip_psiRequired: psiRequired<br><br>Does using this item require psi skill > 0 ? Items
+    of battleType=9 (psi-amps) have this flag set to true by default.
+  tip_recover: recover<br><br>Is this item recoverable? (gets transported to the hideout
+    on mission success).
+  tip_recoveryPoints: recoveryPoints<br><br>Score gained for recovering this booty.
+  tip_reloadSound: reloadSound<br><br>Sound ID from BATTLE.CAT played when this weapon
+    is reloaded. Can be a list with multiple options. If not specified, default reload
+    sound is used.
+  tip_requiresBuy: requiresBuy<br><br>A list of research topics required to be able
+    to buy this item. You can use the item even if the requirements are not met... you
+    just can't buy it.
+  tip_shotgunBehavior: shotgunBehavior<br><br>Defined on an ammunition type as 1 or
+    0, default 0, determines whether or not the new spread calculation will be used
+    (= 1)
+  tip_shotgunChoke: 'shotgunChoke<br><br>Defined on a weapon type and used only for
+    shotgunBehavior: true, acts as a percent modifier to the ''accuracy'' of the pellets.
+    0 gives maximum possible spread regardless of the shotgunSpread value.'
+  tip_shotgunPellets: shotgunPellets<br><br>Number of projectiles fired per unit of
+    ammunition.
+  tip_shotgunSpread: shotgunSpread<br><br>Defined on an ammunition type, this is approximatley
+    the percent of pellets after the first that will hit the same tile/target as the
+    first.
+  tip_size: size <ul><li>Space occupied by this item in the Stores;</li> <li>size of
+    the vessel;</li> <li>size of the unit wearing this armor, in Battlescape grid units.
+    1 means 1x1 unit, 2 means 2x2 unit, other sizes are not supported;</li> <li>size
+    of the facility, in grid units. Every facility is square, so a size of 1 means 1x1,
+    2 means 2x2, etc.</li></ul>
+  tip_snapRange: snapRange<br><br>Maximum effective range with snap shot before which
+    range-based dropoff occurs.
+  tip_spawnUnitFaction: spawnUnitFaction <ul><li> -1 = same faction as item user;</li>
+    <li> 0 = yellow team (player);</li> <li> 1 = blue team (enemy);</li> <li> 2 = red
+    team (civilians).</li></ul>
+  tip_specialIconSprite: specialIconSprite<br><br>Sprite ID from SPICONS.DAT used to
+    draw this item when used as specialWeapon (in Armor definition).
+  tip_specialType: specialType<br><br>MCD value in map files to which this item corresponds
+    for mission recovery.
+  tip_specialUseEmptyHand: specialUseEmptyHand<br><br>Whether this specialWeapon is
+    used when clicking on the empty hand slot in soldier's inventory. Used for punching/kicking
+    with bare hands :)
+  tip_sprayWaypoints: sprayWaypoints<br><br>Waypoints for autoshots in multiple directions.<br>Once
+    the auto shot is selected, hold the CTRL+SHIFT and point the first target. Release
+    CTRL+SHIFT and point the rest of targets.
+  tip_stimulant: stimulant<br><br>Amount of stimulants contained in a Medi-Kit.
+  tip_strengthApplied: strengthApplied<br><br>Add the attacking unit's strength to this
+    weapon's damage.
+  tip_stunRecovery: stunRecovery<br><br>Amount of Stun removed by each stimulant of
+    a Medi-Kit.
+  tip_supportedInventorySections: supportedInventorySections<br><br>A list of inventory
+    slots, where this item can be (manually) placed.
+  tip_throwMultiplier: throwMultiplier<br><br>Formulae (sum of terms) defining the skills
+    (i.e. various units stats) affecting the unit's accuracy when throwing this item.
+  tip_transferTime: transferTime<br><br>For transferring & purchasing items, hiring
+    your personnel and also awaiting your Hands after trainings.
+  tip_tuAimed: tuAimed<br><br>The percentage (0-100%) of Time Units (from the unit's
+    total) required to fire an aimed shot.
+  tip_tuAuto: tuAuto<br><br>The percentage (0-100%) of Time Units (from the unit's total)
+    required to fire an auto shot.
+  tip_tuLoad: tuLoad<br><br>Amount of Time Units required to load this item. In OXCE,
+    when loading a weapon, you need to additionally pay the cost of moving the ammo
+    from its current inventory slot into a hand slot! Consider that when balancing reload
+    costs.
+  tip_tuMelee: tuMelee<br><br>The percentage (0-100%) of Time Units (from the unit's
+    total) required to do a melee attack.
+  tip_turretType: 'turretType<br><br>Sprite ID from TANKS.PCK of the turret to assign
+    to this tank: <ul><li> 0 = Tank/Cannon</li> <li> 1 = Tank/Rocket Launcher</li> <li>
+    2 = Tank/Laser Cannon</li> <li> 3 = Hovertank/Plasma</li> <li> 4 = Hovertank/Launcher</li></ul>'
+  tip_tuSnap: tuSnap<br><br>The percentage (0-100%) of Time Units (from the unit's total)
+    required to fire a snap shot.
+  tip_tuUse: tuUse<br><br>Amount of Time Units required to use this item (for non-offensive
+    items). It's a flat rate if flatRate is true, otherwise it's a percentage (0-100%).
+  tip_twoHanded: twoHanded<br><br>If true, incurs an accuracy penalty if used with both
+    hands occupied.
+  tip_unprimeActionName: unprimeActionName<br><br>Name of the un-prime action in the
+    action menu.
+  tip_vaporColor: vaporColor<br><br>The color offset to use for the vapor trail.
+  tip_ColorSurface: ColorSurface<br><br>The color offset to use for the vapor trail
+    (for surface deployments, i.e. non-underwater).
+  tip_vaporDensity: vaporDensity<br><br>The vapor cloud density (number of particles)
+    for the vapor trail.
+  tip_vaporDensitySurface: vaporDensitySurface<br><br>The vapor cloud density (number
+    of particles) for the vapor trail (for surface deployments, i.e. non-underwater).
+  tip_vaporProbability: vaporProbability<br><br>The vapor cloud probability (0-100%)
+    for the vapor trail.
+  tip_vaporProbabilitySurface: vaporProbabilitySurface<br><br>The vapor cloud probability
+    (0-100%) for the vapor trail (for surface deployments, i.e. non-underwater).
+  tip_waypoints: waypoints<br><br>Gives the integer number of waypoints the weapon can
+    use. (eg. Blaster Launcher).
+  tip_weight: weight<br><br>Weight occupied by this item in a soldier's inventory. The
+    abstract value needed to adjust the game balance.
+  tip_woundRecovery: woundRecovery<br><br>Amount of Fatal Wounds treated by each heal.
+  tip_zombieUnit: zombieUnit<br><br>String ID of the unit used for zombification (eg.
+    Chrysallids turn units into Zombies).
+  tip_aliens: aliens<br><br>Amount of live creatures this facility can contain.
+  tip_buildCost: buildCost<br><br>Amount of money spent to build this facility in the
+    hideout.
+  tip_buildCostItems: buildCostItems<br><br>Items needed to build a facility / Items
+    'refunded' when the facility is dismantled.
+  tip_buildTime: buildTime<br><br>Amount of days it takes for this facility to be built.
+  tip_canBeBuiltOver: canBeBuiltOver<br><br>Can this facility be built over?
+  tip_crafts: crafts<br><br>Amount of vessels this facility can contain.
+  tip_defense: defense<br><br>Offensive power provided by this base defense against
+    attacking vessels.
+  tip_destroyedFacility: destroyedFacility<br><br>String ID of the destroyed version
+    of this building. Destruction can happen either in Hideout Defense mission or via
+    enemy missiles/bombardment.
+  tip_hitRatio: hitRatio<br><br>Chance (0-100) of the base defense hitting an attacking
+    vessels.
+  tip_hyper: hyper<br><br>Is this building a Hyperwave Decoder? Displays extra information
+    for detected objects.
+  tip_labs: labs<br><br>Amount of lab space this facility provides for your favorite~
+    specialists ♪.
+  tip_leavesBehindOnSell: leavesBehindOnSell<br><br>A facility to leave behind a dismantled
+    facility (must be of the same size); or a list of 1x1 facilities to fill in the
+    old facility's place.
+  tip_lift: lift<br><br>Is this facility an Access Lift? All base facilities must be
+    connected to the lift.
+  tip_manaRecoveryPerDay: manaRecoveryPerDay<br><br>How much freshness does the facility
+    recover per day. The facility setting is NOT cumulative, more facilities don't provide
+    more regen. If there are multiple facilities of different type with different regen
+    rate, the best (highest) regen rate is used.
+  tip_mapName: mapName<br><br>Map associated to this facility in Battlescape base defenses.
+  tip_maxAllowedPerBase: maxAllowedPerBase<br><br>Maximum number of facilities of this
+    type allowed to be built per hideout.
+  tip_mind: mind<br><br>Reduces the chance of finding your hideout.
+  tip_missileAttraction: missileAttraction<br><br>A weight (i.e. not a percentage) of
+    how likely will alien missiles/bombardments hit this type of facility.
+  tip_monthlyCost: monthlyCost<br><br>Amount of money spent monthly for the maintenance
+    of this facility.
+  tip_personnel: personnel<br><br>Amount of Hands, Brainers and, well... Runts these
+    quarters can contain.
+  tip_provideBaseFunc: provideBaseFunc<br><br>A list of services this facility provides
+    after being built.
+  tip_psiLabs: psiLabs<br><br>Amount of crew space this facility provides for Psi
+    training.
+  tip_refundValue: refundValue<br><br>Amount of money refunded when the facility is
+    dismantled.
+  tip_removalTime: removalTime<br><br>How long facilities left behind when this one
+    is sold should take to build.
+  tip_rightClickActionType: rightClickActionType<br><br>Which screen should open when
+    R-clicking on this facility in the base view? <ul><li> 0 = OpenXcom default;</li>
+    <li> 1 = Prison;</li> <li> 2 = Manufacturing;</li> <li> 3 = Research;</li> <li>
+    4 = Martial Training;</li> <li> 5 = Psi Training;</li> <li> 6 = Barracks;</li>
+    <li> 7 = Market;</li> <li> other = go to Geoscape.</li></ul>
+  tip_sickBayAbsoluteBonus: sickBayAbsoluteBonus<br><br>How much additional HP is healed
+    per day. Without such facilities = 1 HP per day. If absolute bonus = 0.66 --> 1.66
+    HP per day.
+  tip_sickBayRelativeBonus: sickBayRelativeBonus<br><br>How much additional HP is healed
+    per day. Without such facilities = 1 HP per day. If relative bonus = 13 --> 1 HP
+    + 13% of unit's max HP per day.
+  tip_spriteFacility: spriteFacility<br><br>Sprite ID from BASEBITS.PCK used to draw
+    the facility's contents in the Basescape and UFOpaedia. Drawn on top of spriteShape.
+    Not required for buildings size 2 or larger.
+  tip_spriteShape: spriteShape<br><br>Sprite ID from BASEBITS.PCK used to draw the facility's
+    outer shape in the Basescape and UFOpaedia.
+  tip_storage: storage<br><br>Amount of storage space (for items) this facility provides.
+  tip_storageTiles: storageTiles<br><br>A list of tile positions where to place items
+    in this facility's storage.
+  tip_trainingRooms: trainingRooms<br><br>Amount of crew space this facility provides
+    for combat/martial training.
+  tip_workshops: workshops<br><br>Amount of workshop space this facility provides for
+    manufacture projects.
+  tip_points: points<br><br>Score earned for completing this project.
+  tip_lookup: lookup<br><br>Article that'll be displayed as a project's result.
+  tip_needItem: needItem<br><br>Does this project require an item of the same name?
+  tip_destroyItem: destroyItem<br><br>Will this item be destroyed (removed from stores)
+    after research is finished?
+  tip_spawnedItem: spawnedItem<br><br>Item to be added to hideout stores, when the research
+    is completed.
+  tip_category: category<br><br>The category this manufacturing project belongs to.
+  tip_producedItems: producedItems<br><br>List of items manufactured per production.
+  tip_refund: refund<br><br>Whether the resources needed for a project should be refunded
+    when a project is cancelled before completion.
+  tip_requiredItems: requiredItems<br><br>List of items required and consumed per production.
+  tip_requires: requires<br><br>List of topics that must be researched to unlock this
+    project.
+  tip_requiresBaseFunc: requiresBaseFunc<br><br>A list of services required (in the
+    given base) to be able to start this project.
+  tip_space: space<br><br>Amount of Workshop space required to begin this project.
+  tip_time: time<br><br>Number of man-hours required per production.
+  tip_spawnedPersonType: spawnedPersonType<br><br>Allows to 'manufacture' soldiers,
+    scientists and engineers.
+  tip_aggression: aggression<br><br>The higher the value, the more ruthless the unit,
+    the more likely to make a frontal/melee assault. Less aggressive units tend to set
+    up ambushes.
+  tip_aggroSound: aggroSound<br><br>Sound ID from BATTLE.CAT played when this unit aggros.
+  tip_berserkSound: berserkSound<br><br>Sound ID from BATTLE.CAT played when this unit
+    berserks. A list of sound IDs can be used too.
+  tip_builtInWeaponSets: builtInWeaponSets<br><br>A set of lists of weapons this unit
+    can come pre-equipped with.
+  tip_canSurrender: canSurrender<br><br>Surrendered enemies will be taken to your hideout
+    as prisoners.
+  tip_capturable: capturable<br><br>Can this unit be captured alive? Units which cannot
+    be captured alive are insta-killed when they fall unconscious.
+  tip_civilianRecoveryType: civilianRecoveryType<br><br>Gets the type of staff (soldier/engineer/scientists)
+    or type of item to be recovered when a civilian is saved.
+  tip_deathSound: deathSound<br><br>Sound ID from BATTLE.CAT played when this unit dies.
+  tip_energyRecovery: energyRecovery<br><br>Energy recovered by the unit each turn.
+  tip_floatHeight: floatHeight<br><br>Distance between the bottom of this unit and the
+    ground. Armor settings take precedence over unit settings.
+  tip_intelligence: intelligence<br><br>The higher the value, the longer this unit remembers
+    player troops between turns.
+  tip_isLeeroyJenkins: 'isLeeroyJenkins<br>Unit marked as ''leeroy'' must have a melee
+    weapon (and be able to use it). It will completely ignore vanilla AI ''decision
+    making'' and run around until it spots someone and then charge at the nearest target
+    (if multiple spotted).<br>Charge is mostly vanilla/OXCE, with the following differences:
+    <ul><li>ignore remaining TUs (charge even if not enough TUs to attack now);</li>
+    <li>ignore dangerous tiles (grenades? pfff!);</li> <li>ignore OXCE melee dodge (leeroy
+    is not intelligent enough to attack from behind).</li></ul>'
+  tip_kneelHeight: kneelHeight<br><br>Height of this unit when kneeling. Armor settings
+    take precedence over unit settings.
+  tip_livingWeapon: livingWeapon<br><br>If yes, it ignores any weapon loadout associated
+    with its rank in the alien deployment and only attacks with a weapon derived from
+    its name.
+  tip_meleeWeapon: meleeWeapon<br><br>This unit's built-in melee weapon (e.g. Lobsterman's
+    Claws). Does not appear in the inventory.
+  tip_panicSound: panicSound<br><br>Sound ID from BATTLE.CAT played when this unit panics.
+    A list of sound IDs can be used too.
+  tip_psiWeapon: psiWeapon<br><br>This unit's built-in psi weapon. Ignored if the unit
+    doesn't have any psi skill. Does not appear in the inventory.
+  tip_race: race<br><br>Nuff said.
+  tip_rank: rank<br><br>Every rank has its own equipment sets.
+  tip_sniper: sniper<br><br>Determines the chances of firing from out of LOS on spotted
+    units.
+  tip_spawnUnit: spawnUnit<br><br>The unit used to respawn on death (e.g. Zombies respawn
+    as Chrysallids).
+  tip_specab: 'specab<br><br>Special ability of this unit: <ul><li>0 = None;</li> <ul><li>1
+    = Explodes on Death (Requires power and blastRadius properties to be set on the
+    corpse);</li> <ul><li>2 = Burns Floor;</li> <ul><li>3 = Burns Floor and explodes
+    on Death.</li></ul>'
+  tip_spotter: spotter<br><br>Determines how many turns sniper AI units can act on this
+    unit seeing your troops.
+  tip_standHeight: standHeight<br><br>Armor settings take precedence over unit settings.
+  tip_value: value<br><br>Score that is awarded for killing this unit.
+  tip_everyItemList: everyItemList<br><br>A list of item IDs. When this event pops up
+    they are all transferred to the main Hideout (within 1 hour).
+  tip_everyMultiItemList: everyMultiItemList<br><br>A list of item IDs and their quantities.
+    When this event pops up they are all transferred to the main Hideout (within 1 hour).
+  tip_funds: funds<br><br>How much money is awarded to pirates when this event pops
+    up.
+  tip_researchList: researchList<br><br>A list of research topic IDs. One (from the
+    not-yet-discovered) is randomly selected when this event pops up and granted for
+    free.
+  tip_spawnedPersons: spawnedPersons<br><br>Number of spawned persons.
+  tip_startingConditions: Various pre-conditions and limitations applied before a certain
+    Battlescape mission.
+  tip_tags: OXCE offers the ability to use a custom scripting language to modify game
+    logic on certain places via script hooks. Yankes is not only the author of this
+    scripting language but this is also its name.
+  tip_users: List of characters this armor applies to.
+  tip_armors: What outfits & armors this item is associated with?
+  tip_compatibleWeaponsList: List of the weapons that can be used with this ammo.
+  tip_componentOf: What quantity of this item is needed to manufacture an item from
+    this list?
+  tip_chanceSum: Total amount of possible results.
+  tip_spawnedBy: The project you need to finish to spawn this item or unit.
+  tip_manufacture: What production project creates this item and in what quantity?
+  tip_accuracy: For each firing mode, multiply the chance on the first line by skill or formula on the second line
+  tip_randomItems: Random manufacture result
+  tip_kneeling: Accuracy when kneeled
+  tip_2handOnly: Requires both hands to use
+  tip_1handPenalty: Accuracy multiplier when used onehanded
+  tip_accPerTile: accuracy dropoff per tile
+  tip_profitPerHour: Profit is calculated using sell cost of resources, including fabrication cost, but ignoring runt wages, workshop upkeep and difficulty
+
+  ARMOR_ENERGY_SHIELD_CAPACITY: Shield strength
+  ARMOR_ENERGY_SHIELD_PER_TURN: Shield regen
+  ARMOR_ENERGY_SHIELD_FLASH_COLOR: Shield flash color
+  ARMOR_ENERGY_SHIELD_TYPE: Shield type
+  commendationWith: with
+  killCriteria2: Criteria
+  experienceTrainingMode0: default algorithm -- if nothing is specified
+  experienceTrainingMode1: train melee
+  experienceTrainingMode2: train melee 50% chance
+  experienceTrainingMode3: train melee 33% chance
+  experienceTrainingMode4: train firing
+  experienceTrainingMode5: train firing 50% chance
+  experienceTrainingMode6: train firing 33% chance
+  experienceTrainingMode7: train throwing
+  experienceTrainingMode8: train throwing 50% chance
+  experienceTrainingMode9: train throwing 33% chance
+  experienceTrainingMode10: train firing and throwing
+  experienceTrainingMode11: train firing or throwing (coinflip)
+  experienceTrainingMode12: train reactions
+  experienceTrainingMode13: train reactions and melee
+  experienceTrainingMode14: train reactions and firing
+  experienceTrainingMode15: train reactions and throwing
+  experienceTrainingMode16: train reactions or melee (coinflip)
+  experienceTrainingMode17: train reactions or firing (coinflip)
+  experienceTrainingMode18: train reactions or throwing (coinflip)
+  experienceTrainingMode19: train bravery
+  experienceTrainingMode20: train bravery x2
+  experienceTrainingMode21: train bravery and reactions
+  experienceTrainingMode22: train bravery or reactions (coinflip)
+  experienceTrainingMode23: train bravery or reactions (coinflip) x2
+  experienceTrainingMode24: train psi strength
+  experienceTrainingMode25: train psi strength x2
+  experienceTrainingMode26: train psi skill
+  experienceTrainingMode27: train psi skill x2
+  experienceTrainingMode28: train psi strength and psi skill
+  experienceTrainingMode29: train psi strength and psi skill x2
+  experienceTrainingMode30: train psi strength or psi skill (coinflip)
+  experienceTrainingMode31: train psi strength or psi skill (coinflip) x2
+  experienceTrainingMode32: train nothing
+  tip_maxRuns: For missions - this mission type can only execute this number of times, -1 for infinite.
+  tip_avoidRepeats: This is used to ensure different coordinates for this mission. It means "store an array of x previous coordinates, and don't use them again"
+  tip_reveal: Show all names untranslated. Click to toggle.
+  tip_refresh: Purge the cache and reload mod data from files.
+  tip_fundingBase: Country's base funding, in thousands. The starting funding can be anywhere between 1x and 2x the base funding.
+  tip_fundingCap: Country's funding cap, in thousands. Once a country reaches this maximum, it will no longer increase its funding.
+  'true': ✔️
+  'false': ❌
+  tip_true: TRUE
+  tip_false: FALSE
+  ACADEMY_CRUISE: Academy cruise
+  AIRCAR_RACE: Yello's Aircar Rally
+  CITY: City
+  CITY_STEALTH: City stealth
+  DISC_DUEL: Disc duel
+  EMANSION: Mansion invasion
+  EXO: Exosuits only
+  GAL_PARTY: Gal party
+  GROUND_OR_UNDETECTABLE: Ground or undetectable vessels
+  HIDEOUT: Hideout defense
+  HUMAN_FEMALES: Human females
+  MOSTLY_HARMLESS: Mostly harmless weapons
+  NOGALSNOTANKS: No gals, no tanks
+  NOHEAVYARMOREXCEPTFLYING: No heavy armor except flying
+  NOHELMET: Exposed faces only
+  NOHELMET_INFILTRATION_MAX6: Exposed faces only + small group
+  NOLANDTANKS: No land tanks
+  PLAINCLOTHES_INFILTRATION: Plain clothes infiltration
+  PRISON: Prison
+  RETICULAN_DUNGEON: Reticulan dungeon
+  SEA: Sea
+  SEA_SURFACE: Sea surface
+  SHADOWLANDS_1: Shadowlands
+  SHADOWLANDS_NOSTUFF: Shadowlands, no equip
+  SPACE: Space
+  SPACE_FREIGHTER: Space Freighter
+  STONEAGE: Stone age
+  UNDERGROUND: Underground
+  UNDERGROUND_TIGHT: Tight underground
+  WEAKRACESNOTANKS: Weak races, no tanks
+  WEAK_FEMALES_NOTANKS: Weak females, no tanks
+  accel: Acceleration
+  allowLanding: Landing allowed?
+  avoidBonus: Avoidance bonus
+  costRent: Rent cost
+  damageMax: Damage capacity
+  fuelMax: Fuel capacity
+  hitBonus: Hit bonus
+  maxAltitude: Maximum altitude
+  pilots: Pilots
+  radarChance: Radar chance
+  radarRange: Radar range
+  refuelItem: Refuel item
+  refuelRate: Refuel rate
+  repairRate: Repair rate
+  shieldBleedThrough: Shield bleed-through
+  shieldCapacity: Shield capacity
+  shieldRecharge: Shield recharge (combat)
+  shieldRechargeInGeoscape: Shield recharge (globe)
+  soldiers: Crew
+  spacecraft: Spacecraft?
+  speedMax: Maximum speed
+  sprite: Sprite
+  startingConditions: Starting conditions
+  undetectable: Undetectable?
+  vehicles: Auxilia
+  weaponStrings: Weapon names
+  weaponTypes: Allowed weapon types
+  weapons: Weapons
+  ammoMax: Maximum ammo
+  clip: Clip
+  launcher: Launcher
+  projectileSpeed: Projectile speed
+  projectileType: Projectile type
+  rearmRate: Rearming rate
+  reloadAggressive: Reload aggressive
+  reloadCautious: Reload cautious
+  reloadStandard: Reload standard
+  shieldDamageModifier: Shield damage modifier
+  sound: Firing sound
+  weaponType: Weapon type
+  alertSound: Alert sound
+  breakOffTime: Break-off time
+  craftCustomDeploy: UFO deployment
+  'hitBonus:': Hit bonus
+  huntBehavior: Hunt behavior
+  huntMode: Hunt mode
+  hunterKillerPercentage: Hunter-killer chance
+  missionCustomDeploy: Mission deployment
+  missionScore: Mission score
+  modSprite: Dogfight image
+  raceBonus: Crew bonus
+  reload: Reload time
+  unmanned: Unmanned mode
+  armor: Armor
+  damageModifier: Damage modifiers
+  stats: Stats
+  bravery: Bravery
+  firing: Firing
+  melee: Melee
+  reactions: Reactions
+  stamina: Energy
+  strength: Strength
+  throwing: Throwing
+  tu: TU
+  recovery: Recovery
+  energyCurrent: Energy current
+  flatHundred: "*100"
+  flatOne: " "
+  health: Health
+  mana: Freshness
+  healthCurrent: Health current
+  healthNormalized: Health normalized
+  manaNormalized: Freshness normalized
+  morale: Morale
+  moraleCurrent: Morale current
+  stun: Stun
+  stunCurrent: Stun current
+  stunNormalized: Stun normalized
+  allowInv: Inventory allowed?
+  allowsKneeling: Kneeling allowed?
+  allowsMoving: Allows moving?
+  allowsRunning: Running allowed?
+  allowsStrafing: Strafing allowed?
+  alwaysVisible: Always visible?
+  antiCamouflageAtDark: Anticamouflage at night
+  antiCamouflageAtDay: Anticamouflage at day
+  bleedImmune: Immune to bleeding?
+  builtInWeapons: Built-in items
+  camouflageAtDark: Camouflage at night
+  camouflageAtDay: Camouflage at day
+  constantAnimation: Constant animation?
+  corpseBattle: Corpse (battlescape)
+  corpseGeo: Corpse (geoscape)
+  createsMeleeThreat: Produces CQC mechanics?
+  drawBubbles: Draw bubbles?
+  drawingRoutine: Drawing routine
+  fearImmune: Immune to morale loss?
+  forcedTorso: Forced torso
+  heatVision: Thermal vision, %
+  ignoresMeleeThreat: Ignores CQC mechanics?
+  loftempsSet: Hitbox
+  meleeDodge: Melee dodge
+  meleeDodgeBackPenalty: Melee dodge penalty
+  moveSound: Movement sound
+  movementType: Movement type
+  overKill: Overkill coefficient
+  painImmune: Immune to stun?
+  personalLight: Lights
+  psiVision: SENSE
+  specialWeapon: Special weapon
+  spriteSheet: Sprite sheet
+  storeItem: Stored as
+  tags: Tags
+  turnBeforeFirstStep: Turn before first step
+  turnCost: Turn cost
+  units: Units
+  users: Users
+  visibilityAtDark: Visibility at night
+  visibilityAtDay: Visibility at day
+  zombiImmune: Immune to zombifying?
+  mode: Attack type
+  accuracy: Accuracy
+  cost: Cost
+  energy: Energy
+  damage: Damage
+  Wgt: Weight
+  ArmorEffectiveness: Armor effectiveness
+  FireBlastCalc: Vanilla fire effects?
+  FireThreshold: Set-on-fire threshold
+  FixRadius: Blast radius
+  IgnoreDirection: Ignore direction
+  IgnoreOverKill: Ignore overkill
+  IgnorePainImmunity: Ignore stun immunity
+  IgnoreSelfDestruct: Ignore self-destruct
+  RadiusReduction: Damage reduction/tile
+  RandomHealth: Random health damage?
+  RandomStun: Random stun damage?
+  RandomType: Calculation type
+  RandomWound: Vanilla random wounds?
+  ResistType: Resist type
+  SmokeThreshold: Make smoke threshold
+  ToArmor: Armor damage multiplier
+  ToArmorPre: Armor pre-damage multiplier
+  ToEnergy: Energy damage multiplier
+  ToHealth: Health damage multiplier
+  ToItem: Item damage multiplier
+  ToMorale: Morale damage multiplier
+  ToStun: Stun damage multiplier
+  ToTile: Terrain damage multiplier
+  ToTime: TU damage multiplier
+  ToWound: Wound count multiplier
+  range: Attack range
+  accuracyAimed: Aimed shot accuracy
+  accuracyAuto: Auto shot accuracy
+  accuracyCloseQuarters: Close quarters combat accuracy
+  accuracyMelee: Melee accuracy
+  accuracyMultiplier: Firing accuracy multiplier
+  accuracySnap: Snap shot accuracy
+  accuracyThrow: Throwing accuracy
+  aimRange: Aimed shot range
+  arcingShot: Arcing trajectory?
+  attraction: Attraction
+  autoRange: Auto shot range
+  autoShots: Number of auto shots
+  battleType: Item type
+  battleType0: Geoscape-only
+  battleType1: Firearm
+  battleType2: Ammo
+  battleType3: Melee
+  battleType4: Grenade
+  battleType5: Proximity Grenade
+  battleType6: Medi-Kit
+  battleType7: Motion Scanner
+  battleType8: Mind Probe
+  battleType9: Psi-Amp
+  battleType10: Electro-flare
+  battleType10: Misc
+  bigSprite: Inventory sprite
+  blastRadius: Blast radius (OXC)
+  blockBothHands: Blocks both hands?
+  bulletSpeed: Bullet speed
+  bulletSprite: Bullet sprite
+  categories: Categories
+  clipSize: Clip size
+  compatibleAmmo: Compatible ammo
+  compatibleWeapons: Compatible weapons
+  componentOf: Component of
+  costAimed: Aimed shot cost
+  costBuy: Buy cost
+  costMelee: Melee cost
+  costPrime: Priming cost
+  costSell: Sell cost
+  costSnap: Snap shot cost
+  costThrow: Throwing cost
+  costUnprime: Unpriming cost
+  costUse: Action cost
+  damageBonus: Damage bonus
+  damageType: Damage type
+  defaultInventorySlot: Default inventory slot
+  dropoff: Accuracy dropoff/tile
+  experienceTrainingMode: Experience mode
+  explosionHitSound: Explosion hit sound
+  fireSound: Firing sound
+  fixedWeapon: Fixed?
+  fixedWeaponShow: Fixed and shown?
+  flatMelee: Flat melee cost?
+  flatRate: Flat TU cost?
+  floorSprite: On-floor sprite
+  fuseType: Fuse type
+  handSprite: In-hands sprite
+  heal: Heal uses
+  healthRecovery: Health recovery
+  hitAnimFrames: Hit animation frames
+  hitAnimation: Hit animation
+  hitSound: Hit sound
+  ignoreInBaseDefense: Ignored in Hideout defense?
+  invHeight: Inventory height
+  invWidth: Inventory width
+  isConsumable: Consumable?
+  isExplodingInHands: Exploding in hands?
+  kneelBonus: Kneel bonus multiplier, %
+  listOrder: List order
+  liveAlien: Living creature?
+  LOSRequired: LOS required?
+  maxRange: Maximum range
+  medikitTargetMatrix: Medikit target matrix
+  medikitTargetSelf: Use on self?
+  medikitType: Medikit type
+  meleeAnimation: Melee animation
+  meleeBonus: Melee power bonus
+  meleeHitSound: Melee hit sound
+  meleeMultiplier: Melee accuracy multiplier
+  meleePower: Melee power
+  meleeSound: Melee sound
+  meleeType: Melee damage type
+  minRange: Minimum range
+  monthlyMaintenance: Monthly maintenance
+  monthlySalary: Monthly salary
+  noLOSAccuracyPenalty: No-sight penalty multiplier
+  oneHandedPenalty: One-hand use penalty
+  painKiller: Painkiller uses
+  painKillerRecovery: Painkiller strength
+  power: Power
+  powerRangeReduction: Power reduction/tile
+  powerRangeThreshold: Power reduction threshold
+  primeActionMessage: Prime action message
+  primeActionName: Prime action name
+  prisonType: Prison type
+  recover: Booty?
+  recoveryPoints: Infamy for item
+  reloadSound: Reload sound
+  requires: Tech required
+  requiresBuy: Tech required to buy
+  shotgunChoke: Shotgun choke
+  size: Size
+  snapRange: Snap shot range
+  spawnedBy: Spawned by
+  spawnUnitFaction: Spawn unit faction
+  specialType: MCD type
+  sprayWaypoints: Spray shot waypoints
+  stimulant: Stim uses
+  strengthApplied: Strength applied?
+  stunRecovery: Stun recovery
+  throwMultiplier: Throwing accuracy multiplier
+  transferTime: Hours to transfer
+  tuAimed: Aimed shot TU cost, %
+  tuAuto: Auto shot TU cost, %
+  tuLoad: Reload TU cost
+  tuMelee: Melee TU cost
+  tuSnap: Snap shot TU cost, %
+  tuUse: Use TU cost
+  twoHanded: Two-handed?
+  unprimeActionName: Unprime action name
+  vaporColorSurface: Vapor color on surface
+  vaporDensitySurface: Vapor density on surface
+  vaporProbabilitySurface: Vapor probability on surface
+  weight: Weight
+  woundRecovery: Wound healing
+  aliens: Living creatures holding capacity
+  buildCost: Build cost
+  buildCostItems: Materials
+  buildTime: Build time (days)
+  canBeBuiltOver: Can be built-over?
+  defense: Defense power
+  destroyedFacility: Destroyed building
+  hitRatio: Hit ratio
+  hyper: Is Hyperwave Decoder?
+  labs: Workspace for Brainers
+  leavesBehindOnSell: Leaves after dismantle
+  lift: Is Access Lift?
+  mapName: Mapblock
+  maxAllowedPerBase: Maximum allowed per Hideout
+  mind: Is a Mind Shield?
+  missileAttraction: Bombardment priority
+  monthlyCost: Monthly maintenance
+  personnel: Living space
+  provideBaseFunc: Provides services
+  refundValue: Refund value
+  removalTime: Days for dismantle
+  rightClickActionType: Right-click action
+  sickBayAbsoluteBonus: Healing speed bonus (absolute)
+  sickBayRelativeBonus: Healing speed bonus (relative)
+  storage: Storage space
+  storageTiles: Storage coordinates
+  trainingRooms: Gym capacity
+  workshops: Workspace for Runts
+  points: Infamy points
+  lookup: Report
+  needItem: Item required?
+  destroyItem: Item will be lost?
+  spawnedItem: Item created
+  category: Category
+  producedItems: Produced items
+  refund: Refund available?
+  requiredItems: items required
+  space: Workspace required
+  spawnedPersonType: Person joining
+  aggression: Aggression
+  berserkSound: Berserk sound
+  canSurrender: Can surrender?
+  capturable: Capturable?
+  civilianRecoveryType: Reward for rescue
+  energyRecovery: Energy recovery
+  floatHeight: Float height
+  intelligence: Intelligence
+  isLeeroyJenkins: Is Leeroy Jenkins?
+  kneelHeight: Kneel height
+  livingWeapon: Living weapon?
+  meleeWeapon: Melee weapon
+  panicSound: Panic sound
+  race: Faction
+  sniper: Chance of firing on spotted units
+  specab: Special ability
+  spotter: Spotter (turns)
+  standHeight: Stand height
+  value: Value
+  dependencies: 'Depends on:'
+  seeAlso: 'Item required:'
+  requiresBaseFunc: 'Services required:'
+  freeFrom: 'Get for free from:'
+  leadsTo: 'Leads to:'
+  unlocks: 'Unlocks:'
+  unlockBy: 'Unlocked by:'
+  disables: 'Disables:'
+  getOneFree: 'Gives one for free:'
+  manufacture: 'Manufacturing process:'
+  randomProducedItems: Random production!
+  providedBy: Provided by
+  allowsManufacture: Allows manufacture
+  allowsResearching: Allows researching
+  allowsBuilding: Allows building
+  prisonType1: Prison
+  prisonType2: Kennel
+  STR_STARCON_GROUND_OR_UNDETECTABLE: Ground or undetectable vessels
+  STR_STARCON_ACADEMY_CRUISE: Academy cruise
+  STR_STARCON_SPACE_FREIGHTER: Space Freighter
+  STR_STARCON_NOLANDTANKS: No land tanks
+  STR_STARCON_NOHEAVYARMOREXCEPTFLYING: No heavy armor except flying
+  STR_STARCON_UNDERGROUND: Underground
+  STR_STARCON_UNDERGROUND_TIGHT: Tight underground
+  STR_STARCON_SEA_SURFACE: Sea surface
+  STR_STARCON_AIRCAR_RACE: Yello's Aircar Rally
+  STR_STARCON_DISC_DUEL: Disc duel
+  STR_STARCON_PRISON: Prison
+  STR_STARCON_GAL_PARTY: Gal party
+  STR_STARCON_HUMAN_FEMALES: Human females
+  STR_STARCON_WEAK_FEMALES_NOTANKS: Weak females, no tanks
+  STR_STARCON_NOGALSNOTANKS: No gals, no tanks
+  STR_STARCON_WEAKRACESNOTANKS: Weak races, no tanks
+  STR_STARCON_RETICULAN_DUNGEON: Reticulan dungeon
+  STR_STARCON_MOSTLY_HARMLESS: Mostly harmless weapons
+  STR_STARCON_PLAINCLOTHES_INFILTRATION: Plain clothes infiltration
+  STR_STARCON_NOHELMET_INFILTRATION_MAX6: Exposed faces only + small group
+  STR_STARCON_NOHELMET: Exposed faces only
+  STR_STARCON_CITY: City
+  STR_STARCON_CITY_STEALTH: City stealth
+  STR_STARCON_EMANSION: Mansion invasion
+  STR_STARCON_STONEAGE: Stone age
+  STR_STARCON_SHADOWLANDS_1: Shadowlands
+  STR_STARCON_SHADOWLANDS_NOSTUFF: Shadowlands, no equip
+  STR_STARCON_SEA: Sea
+  STR_STARCON_SPACE: Space
+  STR_STARCON_EXO: Exosuits only
+  STR_STARCON_HIDEOUT: Hideout defense
+  rank: Rank
+  tuCurrent: Current TU
+  weaponType0: Light
+  weaponType1: Heavy
+  weaponType2: Missile
+  weaponType3: Bomb
+  weaponType4: Divebomb
+  weaponType5: Ground
+  weaponType6: AA
+  weaponType7: Battery
+  weaponType9: Shadowtech
+  weaponType10: Cloaking
+  weaponType11: Fixed  
+  About XPedia: About
+  TU: TU
+  A-Z: A-Z
+  en-US:
+  aboutexport: Export as a single file. Will take some seconds to complete. Exported HTML can work by itself anywhere, but open it from the OXCE root directory if you want images.
+  FACTION_HOSTILE: enemi(es)
+  FACTION_NEUTRAL: civilian(s)
+  FACTION_PLAYER: alli(es)
+  STATUS_DEAD: kill
+  STATUS_UNCONSCIOUS: knock out
+  STATUS_PANICKED: psi-panick
+  STATUS_TURNING: mind control
+  BT_NONE: Misc
+  STR_RULESET_REFERENCE: Ruleset Reference Nightly (OpenXcom)
+  STR_PALETTE_CONVERTER: Palette Converter

@@ -1,0 +1,607 @@
+en-US:
+  STR_DLC_0: ALL PEOPLE DIFFERENT
+  STR_DLC_0_UFOPEDIA: This mod changes the stats of most enemy units (including manned
+    vehicles) within small limits to introduce an additional element of randomness into
+    tactical missions.<br/>ATTENTION! The specified version of the sub-mod corresponds
+    to the version of X-Piratez for which it was created. It is compatible with the
+    same version of the game and all newer ones, but with the older versions use it
+    only at your own risk.
+  STR_DLC_1: X-PIRATEZ LOCALIZATION PATCH (RU)
+  STR_DLC_1_UFOPEDIA: Some fixes for RU X-Piratez localization that can't be made via
+    Transifex. There are also some cosmetic graphic effects here.
+  STR_DLC_2: SCOLDING PARROT
+  STR_DLC_2_UFOPEDIA: 'An additional attack for the pirate parrot: Polly can scold her
+    target, dealing damage to TU and Morale. Parrot voice actor: Lynch.'
+  STR_DLC_3: X-PIRATEZ ART COLLECTION
+  STR_DLC_3_UFOPEDIA: Illustrations for the X-Piratez Universe by various authors. Art
+    to the masses!<br/><br/>If you are the author of one of these arts and do not want
+    it to be in this collection, contact Kato_guardian on the X-Piratez discord. The
+    link is on the home page of this site.
+  STR_DLC_4: ADDITIONAL RECRUITMENTS
+  STR_DLC_4_UFOPEDIA: 'The mod adds three new civilians to the game: Battle Girl (Peasant),
+    Ambitious Lokk''Naar and Desperate Bugeye. If they survive to the end of the mission,
+    they will join the pirates (each of them has their own motivation and starting bonuses).'
+  dlc_id: Download link -->
+  region: Region
+  ssize: Archive size
+  version: Version
+  zzauthor: Author
+  CITIES: CITIES (LORE+)
+  STR_NEW_YORK_UFOPEDIA: They say that Technocracy data centers in Doom Harbor can be
+    seen from space. That's an exaggeration, of course, but the sight is breathtaking
+    nonetheless. This is the nexus of all Technocracy processing capacity, clearly its
+    inner sanctum. One can only guess the huge amounts of data these supercomputers
+    are processing on a daily basis. Some gals believe that the Technocracy central
+    control core is located there, and if one could hack into it, one would be able
+    to override every single last one of their cyborgs. Even if that was truly the case,
+    the Technocracy core can't be approached by air, land, or sea - the defenses here
+    are exactly that tight.
+  STR_WASHINGTON_UFOPEDIA: Not much is known about this place - less than one would
+    want to know, yet still more than what is known about other Technocracy cities.
+    They say that a significant part of the Gate is one colossal concentration camp
+    for the criminals, the dissidents and the downtrodden, as well as for everyone who
+    wound up in the wrong place at the wrong time. It's obvious that all of these poor
+    souls are converted into cyborgs, but no one knows what kind of cyborgs they become,
+    which makes discussions about this place even more dread-provoking. Some rumours
+    suggest something far more simple, and those people are simply drowned in the Tomac
+    river that flows through the city. They also say that the former country that became
+    the Technocracy in the 20th century was the first on its continent to surrender
+    to the invaders, hence the city's name.
+  STR_LOS_ANGELES_UFOPEDIA: 'The Boneyard was once the world''s capital of entertainment
+    and used to have another name, something to the tune of ''fallen angels''. That
+    would make perfect sense if one would consider the Star Gods to be angels. Angels
+    did indeed fall on the city of sinners and burned it down in nuclear flame, turning
+    the megalopolis into a huge charred graveyard. Nowadays this city, bustling and
+    bright, is a far cry from an ashen waste. The humongous cinemas of Hollywood, the
+    panoramic screens of Beverley Hills, the busy beaches of Saint Monica. Locals, sharp
+    set on a glamorous life, flock to this place to either become world-class stars,
+    or die an inglorious death. This is how day-to-day life looks here: the commoners
+    play democracy using a voting system, while the Hubblogists render justice in the
+    night. Simple as that.'
+  STR_MONTREAL_UFOPEDIA: The outstanding feature of this city is a black, almost obsidian
+    tower dominating the surrounding landscape. No one knows the true purpose of this
+    tower, or even its origins. Legends have it that Star Gods have granted this tower
+    to Canadia for some immeasurably valuable service rendered. Some say that this tower
+    was erected by the Technocracy on behalf of the Star Gods; others insist that this
+    majestic monument stands watch against the threat of Technocracy incursion, while
+    serving as a beacon for ships. In a rather peculiar anecdote, a Guild Freighter
+    crashed into the tower back in 2597. The tower remained unscathed, while the ship
+    was reduced to rubble.
+  STR_HAVANA_UFOPEDIA: A terrible place, its name fully deserved. Six centuries ago
+    this area was bombarded heavily with experimental alien weapons. No one can tell
+    for sure what kind of weaponry was used, but the consequences are plainly visible
+    to this day. Bitter Coast is a reeking poisonous ruin dotted with shell craters
+    and teeming with mutated creatures. The sentients here are dragging on with their
+    wretched existence. Non-mutants are a very rare sight here, usually represented
+    by raiding parties from the Academy, Church, Mercenaries, the Guild, and sometimes
+    bandits or rich lunatics on a safari. The eponymous city is an exception, more of
+    an outpost and a refueling base than a city. The settlement is protected by a special
+    dome that keeps the environmental hazards and mutants at bay. The Empire doesn't
+    visit this place often, although sometimes slaves undeserving of a merciful execution
+    are being dropped off here.
+  STR_MEXICO_CITY_UFOPEDIA: A colossal edifice of a ziggurat, its stories, adorned with
+    gold and bas reliefs, serve as a foundation for a militarist society with a very
+    strict hierarchy. The higher the story, the greater the social rank of its dwellers.
+    This is not a place for weaklings - the art of war is taught here from early childhood,
+    and those who fail to keep up descend to the lower stories that make Site slums
+    look like high-end resorts. The populace is taught to worship the aztec ancestors
+    and the Emperor, who is claimed to be their descendant. Praising one's higher-ups
+    is seen as the right thing to do, and punishment for not doing as they tell is incredibly
+    swift and brutal - also a tribute to the ancestors' ways.
+  STR_CHICAGO_UFOPEDIA: In times of yore this was one of the biggest cities on Earth.
+    Nowadays it's one of the largest Technocracy industrial centres, but one can only
+    guess its true scale, as the 'Cracy usually places many manufacturing facilities
+    underground. Although, this too is a guess, because not even the Star Gods are likely
+    to know the full state of events in the cyberlands.
+  STR_VANCOUVER_UFOPEDIA: A large city, yet as boring and sleepy as one could imagine.
+    The port is the only part of the city displaying some activity, especially when
+    some Deep Ones crawl ashore for trophies. Yet even they become dull and languid
+    around these parts, lacking their legendary ferocity, and the city garrison shoots
+    them off in a mundane and monotone fashion. These invasions happen three or four
+    times a year. So it goes in here.
+  STR_DALLAS_UFOPEDIA: Dallas D.C., the Sun City. Almost every square inch of unoccupied
+    space here is covered with solar cells. This can be a dazzling sight on a sunny
+    day and is why everyone on the street wears sunglasses. These sunglasses are also
+    distributed amongst the slave population, with the local slave market being the
+    biggest on the planet and offering workforce for every conceivable task, be it sex
+    work, construction, or agricultural labor. The local ranchers' fields stretch for
+    many miles around Dallas and someone must tend to them. Not that the local moneybags
+    like shopping far from home.
+  STR_HOPE_AND_DESPAIR_UFOPEDIA: Hopetown and Despairville are two twin cities with
+    their own distinct populations. The Council of Mages of the Dominion dictate that
+    happy people should live in pleasant, joy-inspiring locales and people prone to
+    doldrums should live in an appropriately miserable environment. On their thirteenth
+    birthday, each Dominionite (barring those to be sacrificed) is sent to one of these
+    cities to be trained in a profession matching their personality type. The training
+    takes about five years, and during that time the citizen is treated with magic (or
+    chems) that make changing their personality impossible. It's unclear why the Dominion
+    engages in this sort of stuff, but it's clearly very sinister. The residents don't
+    seem to mind, though.
+  STR_BOGOTA_UFOPEDIA: The Warped Stone is, true to its name, a huge twisted mountain
+    whose caves house a large military base mostly used as a training camp for the Red
+    Revolution's Military. There's space enough to teach all recruits everything a soldier
+    worth their salt should know, from guerilla tactics to piloting aircrafts. Speaking
+    of which, the local air force is not to be trifled with. It consists of at least
+    20 Ordinators, and the RRM is rumored to even have an honest-to-goodness Battleship.
+    That's probably lies though.
+  STR_BUENOS_AIRES_UFOPEDIA: This city is distinguished by its special layout and acoustic
+    properties. The Circus of Silence is built in such a way that each district is an
+    almost perfect ring. Within them are spaces about four-to-six-hundred meters wide,
+    inside of which no sound can escape. From space it looks like the fabled crop circles
+    of yore. Our guess is that this is all part of some grandiose ritual that the mage-kings
+    of the Dominion are preparing, or have already performed, or is being performed
+    over some long period of time, unbeknownst to their subjects.
+  STR_SANTIAGO_UFOPEDIA: The Star Gods are not too fond of the idea of honoring the
+    locals who perished 600 years ago in the battle for Earth. They tried to oppose
+    this tradition at first, but eventually they let it slide. That enabled the Memorial
+    of the Earth, or Memoria de la Terra to be built - a sanctum city founded in memory
+    of a civilization long gone. Local clergy holds the power here, whereas the Pact
+    rules only in name. Pre-war memory permeates this city - mutants are not welcome
+    here, as there weren't any before the war.
+  STR_LIMA_UFOPEDIA: The Purgatory. Limbo. This place has many names, yet all hold the
+    same meaning. Most of the city is a high security prison that holds everyone who
+    for one reason or another ran afoul of the government, yet didn't merit a death
+    sentence. Most prisoners are here for espionage on behalf of Dominion. Rumor has
+    it that Humanist vessels sometimes show up here and haul some prisoners away, to
+    unknown places and fates. Yet another oddity here is a Deep Ones camp whose purpose
+    is also still unknown.
+  STR_CARACAS_UFOPEDIA: There is no quieter place in the whole Revolution. This tower
+    is an immense crypt where millions of souls reside in silent torment, ever watchful
+    for occasional wanderers. Although, some of its residents are living, caretakers
+    for this cyclopean monument and company for the spectres. This city is not as overtly
+    patriotic as other Revolution settlements, if only for the sake of not stirring
+    up that phantasmal hornets' nest. Should even a single voice anger them, millions
+    will answer - and there will be no military parades in the Revolution after that.
+  STR_LONDON_UFOPEDIA: 'Spectral: city of light, city of gates. Not the worst place
+    to live if you get used to the daily risk of death, as well as the shrill whistles
+    of engines and constant cannon fire. Plus, you can get yourself a clockwork butler
+    who''ll clean up your pad, do your shopping, and drag you home drunk from the pub.
+    Just make sure that he brings you home, and not into some hellportal or into the
+    crosshairs of a gun turret. It''s actually quite beautiful here: brass platings,
+    spinning cogs, peculiar mechanisms - it resembles more of a musical box than a city.
+    Especially when nothing is crawling out of the portals, and you pay no mind to the
+    slum-dwellers who are forced to turn the gears.'
+  STR_PARIS_UFOPEDIA: Sometimes it feels like this city is shrouded in eternal night.
+    The climate catastrophes of the last six hundred years are reflected in Syndicate
+    City, in which it is always stormy, always pouring, and saved from flooding only
+    by a system of advanced storm drains. It's a city of neon lights, cybernetic strangers,
+    alleyways filled with trash, and the echoes of distant gunfire. There's little for
+    us to do here without a big gun, and we better look both ways so as to not end up
+    as another body ditched on the side of the road.
+  STR_BERLIN_UFOPEDIA: The capital of Blackmarch, which owes its name not to a lax standard
+    of morals but to the democratic nature of its local laws. This city is the seat
+    of the Parliament of Blackmarch, which embodies the legislative power of the state,
+    as well as all key educational and military establishments. Students and cadets
+    reside in dormitories without any distinction between the two. It's inexplicable
+    how soldiers-to-be manage to remain disciplined in such lenient conditions, but
+    the locals claim it's precisely because the discipline is not forced upon them.
+  STR_MOSCOW_UFOPEDIA: The capital of the Autonomy, which doesn't care about the other
+    settlements within the country so long as they pay the proper taxes and fees. And
+    in the event that the other settlements decide to teach the haughty Citadel a lesson,
+    the city is well fortified against external threats. In theory, they'd be capable
+    of standing against even the Star Gods for about three hours. The Black Citadel
+    acquired its name after one such punitive action, in which almost the entire city
+    was razed and the walls of the ancient castle in its center were blackened with
+    Hellerium soot. After the armistice, it was decided that the walls would not be
+    washed and would remain a memorial to the victims of the war.
+  STR_ROME_UFOPEDIA: Nowadays, nothing remains here to remind us that the most powerful
+    nuke blew up this city several centuries ago. Ground Zero is a conflux of luxury
+    mansions, noisy fun-fairs, small shops and drinking establishments of all kinds,
+    and the main venue for conferences of the governing nobility. Overall, it's a great
+    place to spend your money, if you have any in comparsion with most Romanica's population.
+    But this city has a dark side, and I'm not talking about the usual fare of political
+    hitjobs the city's known for. Some say that the nuke didn't quite destroy everything
+    that lived here before...
+  STR_MADRID_UFOPEDIA: An enormous industrial hub where power is divided between the
+    largest corporations of the Eurosyndicate. Much of the city is dedicated to giant
+    automated factory complexes. It's said that some machines here are so monstrous
+    in their size and appearance that they can drive a person insane, particularly due
+    to the sinister noises they emit (hence the name of this place).
+  STR_BUDAPEST_UFOPEDIA: A city-fortress that strikes the imagination with its militarization.
+    Absolutely everything in this place is subordinated to the Blackmarch army - you
+    can't even sneeze without military authorization. That's no exaggeration, you'll
+    be jailed with charges of sternutation - what if you're a spy sending some prearranged
+    signal? The city has an unbelievable stockpile of weaponry, but they won't sell
+    any of it on the spot - everything goes towards the front, everything towards victory.
+    This inhospitable place should be visited with caution, as the locals might load
+    you into a field gun in the event of a surprise attack.
+  STR_LAGOS_UFOPEDIA: Thousands of years ago, the legends state that a battle took place
+    here between an evil god and a nameless titan. The giant savior fatally wounded
+    the god, but in his death throes he destroyed the titan, leaving only the giant's
+    now-petrified hand. A city was built around the hand, which is treated like a local
+    sanctuary of some sort, as well as a nice place to rest in the shade during hot
+    summer days.
+  STR_CAIRO_UFOPEDIA: The capital of the Theban Hive truly resembles a hive by how crowded
+    it is. And in the shadow of the Silver Pyramid, residence of the the Queen Bee herself,
+    you really do feel like just an insect - with the eyes of dozens of spies on you
+    at all times. The best word to describe Thebes might be... sublime. The polyfoil-topped
+    lightweight structures surrounding the monolithic Pyramid forms an unimaginable
+    architectural ensemble, which, as the saying goes, is a view to die for. Which might
+    just end up happening - do something wrong in view of the Hive's soldiers and the
+    punishment will be quick and brutal.
+  STR_CASABLANCA_UFOPEDIA: Well, it's no longer right to say that it's completely abandoned,
+    but for a few centuries it was a haunted place spoken of in hushed whispers by peasants
+    from nearby regions. They said that four-hundred years ago, every living soul in
+    the city (which had a different name, of course) just vanished in one moment. Megapol,
+    the Academy, and even the Star Gods were at a loss to explain the disappearance.
+    This legend still excites the minds of many and gives rise to one conspiracy theory
+    after another. Nowadays you have archaeologists and tourists poking about, as well
+    as the ever-present merchants who make a living off of them. It's a neat place to
+    visit, though the story is pretty creepy...
+  STR_PRETORIA_UFOPEDIA: Neutral ground for all of the warlords and their armies, housing
+    a huge black altar in the center. Upon it sacrifices are made for luck in looting,
+    races, battles, experiments, and so on. Human sacrifices, of course. The usual sacrifices
+    are prisoners captured in raids from whom no fine ransom can be gotten due to their
+    condition or the welfare of their loved ones. When prisoners are scarce, delinquent
+    gang members are used. If they run out of those as well, the sacrifices are chosen
+    from volunteers and, you know, 'volunteers'. Long story short, if the altar needs
+    sacrifices, it's gonna get them.
+  STR_NAIROBI_UFOPEDIA: This densely populated city grows organically in every direction,
+    into the sky and down into the earth, displaying heaps of structures and contraptions
+    which are sometimes literally duct taped together. The poor flock here from all
+    over Africa, and as there has never been any plan or layout, it's easy to get lost
+    on the ever-shifting streets. Local taxi drivers would be genius navigators and
+    pathfinders - orienting yourself in a place like this demands an superhuman sense
+    of direction.
+  STR_CAPE_TOWN_UFOPEDIA: 'A brief description of this place would be ''a gigantic hellhole''
+    - but that doesn''t convey the true scale of it. One day, the center of the city
+    literally went down the drain. The reason isn''t clear, but the hole has a perfectly
+    circular shape and is clearly not a product of natural causes. Once, Academy researchers
+    sent down a drone installed with video recording equipment. It covered twenty kilometers
+    before suddenly vanishing, not having fired a shot. The recording was heavily distorted
+    due to interference, but at several points words could be heard in an unidentified
+    language, as well as what would later be identified as screams for help. By decree
+    of the local warlord the abyss was walled off and locals were prohibited to approach
+    it under penalty of death. The cordon around the wall serves a double purpose: to
+    stop those who approach the abyss, and those who try to escape it.'
+  STR_KINSHASA_UFOPEDIA: 'A large city in Africa, notorious for frequent Dark One assaults.
+    It''s unknown what lures the demon-possessed here. The locals have plenty of theories,
+    some crazier than others: from dark artifacts to a natural portal to Hell somewhere
+    beneath the city. Nobody is enthusiastic enough to discover the truth, as anybody
+    who can leave Pandemonium does so at the first opportunity.'
+  STR_ANKARA_UFOPEDIA: Wraithbane is a truly inhospitable place for anyone who doesn't
+    fit into the worldview of the local rulers. As luck would have it, the rulers profess
+    a religion that resembles that of the Church of Sirius, but slightly more radical.
+    Yet their faith only privileges those of the human race, which in their view includes
+    only purebloods, and only certain types of purebloods. Mutants are scarce here and
+    inhabit ruins in the suburbs, as well as the slums and sewers. Also, VooDoo is strictly
+    prohibited here. Even a fellow with even a little latent magical potential is branded
+    as a heretic and violently executed. We oughta nuke this place someday, Cap'n.
+  STR_DELHI_UFOPEDIA: The Forbidden Caves are a network of karst caves located near
+    a small town of the same name. In the old days people disappeared in these caves
+    all the time, but today there's a bunch of well-explored tunnels that are relatively
+    safe so long as you're armed and in a group of five. Travel companies are not responsible
+    for anyone who decides to go off the trail and explore the cave alone.
+  STR_KARACHI_UFOPEDIA: Stonekeep is literally a stone keep. The local tribe that built
+    the keep wasn't particularly inspired when naming it, but they've become quite civilized
+    over the last few centuries and are doing just fine nowadays. The sturdy walls prevent
+    the ubiquitous Deep One raids, and the city plays nice with all the big factions.
+  STR_BAGHDAD_UFOPEDIA: 'From time immemorial this city has been an important cultural
+    and scientific center that defined the development of the surrounding region. There
+    is a university here, where anyone can receive a decent education (if they can afford
+    it). The Academy tolerates this due to the campuses''s remoteness, political protection,
+    and according to some, its usefulness - despite Academicians'' claims that they
+    have no use for the ''obselete knowledge'' stored there. Current provost and chief
+    archivist: Omar al-Musalim.'
+  STR_TEHRAN_UFOPEDIA: The Maze is a special place. Only here, to ensure a bountiful
+    harvest each year, peasants sacrifice themselves to the bloodthirsty monstrosity
+    known as the Gynotaur, who dwells within the huge labyrinth nearby. According to
+    legend, it's a huge creature with the head of a bull, the body of a man, and the
+    tits of an Uber. It's unknown if it actually exists, but nobody ever returns from
+    the labyrinth.
+  STR_BOMBAY_UFOPEDIA: Named after the monument to the nameless goddess who mourns for
+    the victims of the bloodthirsty, nuke-happy dictator Sunil Gandhi. Sunil came to
+    power during the invasion, and under his rule the country resisted the Star Gods
+    for eight years, becoming the most loyal ally of 'Russia.' His systems of denunciations
+    and proscriptions allowed Gandhi to cleanse society of people he disliked in record
+    time (what his standards were isn't clear), and those deemed acceptable were interned
+    in factories to develop their homeland's military strength. When the tyrant and
+    murderer Gandhi got whacked, many wept with happiness. Shortly after they wept from
+    an unprecedented period of genocide and bloodshed directed by the Star Gods, but
+    good luck finding that in the history books.
+  STR_CALCUTTA_UFOPEDIA: One should be especially cautious in the Gardens of Delight,
+    because an overdose of delight might cause headaches, vomiting, hallucinations and
+    death. This is due to the predominance of alien vegetation brought to Earth during
+    the invasion. While the locals are used to the flowers' aromas, visitors to the
+    city often struggle for air, and there have been numerous fatalities. So don't pop
+    into a local arboretum without some kind of rebreather. In the 24th century, the
+    gardens were burned down by the extremist Muy Gontag, but since then they've regrown
+    and are more impressive than ever.
+  STR_TOKYO_UFOPEDIA: The only city in Fuso. Beautiful, rich, and technologically advanced,
+    it stands in stark contrast to the rest of the country. The Oriental flavor can
+    be tasted in the air. Local zaibatsu rule their districts with iron fists, while
+    the Emperor maintains the balance between the conglomerates so that the city may
+    flourish. All young adventurers who aspire to become shoguns make their way here
+    to work under a corporation. Plenty of them don't last a day, but those who do often
+    become truly dangerous warriors. Think twice before confronting them. As you could
+    guess, the sunrises here are a sight to see.
+  STR_BEIJING_UFOPEDIA: The government of the Central Province is seated here, and since
+    the authorities consider the ordinary people no better than the dirt under their
+    heels, only a select few can enter the city walls. There is still a high level of
+    radiation in the area so the aristocracy resides underground, leaving the contaminated
+    surface to their servants. Before you enter the underground chambers, you will be
+    thoroughly searched in every possible place, in ways you wouldn't think of. The
+    overlords of the Central Province fear for their lives, and for good reason. Though,
+    at the first sight of real trouble they'd call the Star Gods for help, so perhaps
+    their paranoia is a bit excessive.
+  STR_BANGKOK_UFOPEDIA: Six hundred years ago, a great battle took place here between
+    several Earth armies and the Star Gods. Some reports suggest this was the final
+    battle of the invasion. We all know how that ended. Nowadays it's a big slum where
+    residents make a living digging up rare items and artifacts from the battlefield,
+    which are still valuable on the Black Market six centuries later. Some of those
+    goods could probably be found in our vaults.
+  STR_MANILA_UFOPEDIA: The center of the criminal underworld. Literally, as the whole
+    city is built underground, and the unaware can wander around the seemingly deserted
+    island for as long as can be - or as long as the guards let them. But those invited
+    inside will find themselves in a neon world of eternal night, glamour, and of course,
+    big money. Arenas, casinos, brothels that can serve clients with any requests. But
+    don't dare visit the forbidden District 12, where drug lords house their labs and
+    production facilities.
+  STR_SEOUL_UFOPEDIA: The Astral Bridge is a rather unique city, as it's built upon
+    giant pillars elevating the second story to fifty meters above sea level. While
+    the ground level is just as toxic as the rest of the Central Province, the quality
+    of life above is remarkably better. It goes without saying that the base of the
+    city is home to the destitute and mutants of all kinds. A lottery is held across
+    the Central Province regularly, the prize being tickets for relocation to the Astral
+    Bridge, and this has proven a powerful tool to placate the masses. But of course,
+    nobody actually wins.
+  STR_SINGAPORE_UFOPEDIA: The most reputable place to live in the Pirate Straits. It's
+    even preserved its pre-war name, which tells you something about its prestige. Singapore
+    is a showpiece of a city, with the largest percentage of pureblood citizens. Many
+    global factions unofficially maintain their representative offices here. All in
+    all, Singapore doesn't look like a city in which nearly everything is in the tight
+    grip of the mafia. But as you know, looks can be deceiving.
+  STR_JAKARTA_UFOPEDIA: Don't be deceived - the 'palace' is a pile of rubble in the
+    center which consists entirely of destroyed buildings and other wrecks. But freedom
+    here is dime a dozen - total anarchy reigns in the city, which isn't unusual for
+    the Pirate Straits. To say that here every man lives for himself is still a bit
+    of an exaggeration, but the level of organizing doesn't exceed 'gang on gang.' But
+    if your gang has a lot of numbers and you do organize well, it's doubtful anybody
+    will try to mess with you.
+  STR_SHANGHAI_UFOPEDIA: Strictly speaking, it's a hill, not a rock. And not that high,
+    but a hundred meters is a hundred meters, and people of the Central Province sure
+    do love their lofty names! At the top is the magnificent palace of the local prince
+    that, according to some, was built in ancient times and managed to survive the invasion.
+    By the 25th century the radioactivity of the area had cleared up enough that people
+    were able to resettle, but the average life expectancy here is short, even for the
+    Central Province. At least the local rice fields return record harvests! The noble
+    and well-off, however, prefer to buy the food the Guild imports from cleaner places.
+  STR_HONG_KONG_UFOPEDIA: 'Stench, scum, darkness. In a beauty contest for slums, the
+    Blasphemous Port would place dead last. Clean food, clean water, and clean air are
+    valuable commodities here; human life is considerably cheaper. One can rub up against
+    plenty of shady characters here, willing to do anything for a hit of crack or a
+    couple of chips. Many have wondered why this place hasn''t been completely leveled
+    at some point, but the answer is obvious: somebody in a high place is making a mint
+    off of it.'
+  STR_NOVOSIBIRSK_UFOPEDIA: An autonomy within the Autonomy. Legends speak of this city
+    as a cradle of science and progress, but nowadays there's hardly anything left to
+    be called science, and absolutely no trace of the city's history of rebellious mages.
+    Around 2186 the Star Gods determined that the local magical community had forgotten
+    their place, and, with the blessing of the Solar Governor, obliterated the city.
+    Only its name survived. Since then, no witches have been seen in the city that once
+    made them its namesake. Although... it's whispered that somewhere in the suburbs
+    there is an underground magic market, hidden so deeply that it'd be useless to try
+    to find it on our own.
+  STR_CANBERRA_UFOPEDIA: In a country such as the Death Realms, you'd think a 'secret
+    arena' would be an oxymoron. This one in particular is a double-oxymoron since the
+    Secret Arena hosts an entire city around it. In general, it's hard to figure out
+    what the hell the people here are talking about. The titular arena is secret because
+    magic, energy weapons, and other dirty tricks are permitted.
+  STR_WELLINGTON_UFOPEDIA: 'This coastal town is clearly a pirate bay. Loud, crowded,
+    and lively, with two pirate lords in charge: Tal and Smal. The former is in charge
+    of war and defense; the latter running trade and the economy. Their partnership
+    allowed the creation of a prosperous city-state where anyone who doesn''t want to
+    live under the yoke of the Star Gods can find real freedom and a job to their heart''s
+    content. Also, there''s a real zoo, where we can see such exotic beasts like lieons,
+    evilphants, spitcupines, spearrows, and even the feargaroo.'
+  STR_MELBOURNE_UFOPEDIA: To Death Realmers, Terminus is a sacred city. It's here that
+    Jesus Reist, the legendary gladiator revered as a deity, won his victories. A prodigious
+    cross-shaped temple was built in his honor, shaped to resemble the weapon he fought
+    with. Among local peasants it's widely believed that one day the reincarnation of
+    Jesus Reist will walk the earth. She will be the only survivor of a nightmarish
+    battle, born in a distant land to uncertain parents, and will lead the people against
+    the Star Gods to wipe them from the face of the earth. Cap'n, isn't that you?
+  STR_PERTH_UFOPEDIA: It's obvious that dying in the Death Realms is easy, but that's
+    especially true in Devil's Lair. On the surface, the city is what passes for ordinary.
+    But some weird devil shit happens frequently in the catacombs below, such as gravitational
+    anomalies, optical illusions, and otherworldly screams that drive people mad. Electronics
+    go crazy and recordings get distorted. Fortunately for the local peasants, none
+    of this phenomena has been detected above the catacombs in the past five centuries
+    of observation.
+  STR_HELSINKI_UFOPEDIA: 'Should you find yourself in Hel, you''ll definitely need a
+    hazmat suit, or at least a gas mask. The reason: the stench of fish that saturates
+    every single thing here. Buildings, vehicles, trees, pedestrians; even the local
+    hoes stink of fish. Only the elites don''t reek, but they still give off the faint
+    scent of seafood. Alas, it''s apparently the unavoidable cost for the city''s wealth,
+    which is based on deep sea fishing.'
+  STR_CONSTANTINE_UFOPEDIA: 'Constantine is the biggest trade hub in Europe. This is
+    largely due to the stewardship of one of Romanica''s oldest aristocratic families.
+    The Family (yeah, with a capital) survived the invasion and subsequent decline of
+    civilization. Despite its power, the Family is in a rather difficult position: although
+    even the Guild and the Black Market cozy up to them (an incredible feat for an earthbound
+    organization), the rest of the Romanic aristocracy see them as collaborators and
+    traitors. None of this is said openly, however. Under the current order of things,
+    everybody''s happy, and if it''s ruined - nobody wants to know what will come next.'
+  STR_KARAGAND_UFOPEDIA: The Crossroads is a commercial oasis in the vast Central Asian
+    desert. Most roads, if not all, lead here; you can find almost any goods on the
+    market, even those prohibited by the Star Gods. For obvious reasons, the black market
+    items are not advertised. It's generally a great place to sell our loot since it's
+    easy to get to.
+  STR_KARAKORUM_UFOPEDIA: The capital-fortress of the desert's proud rulers. You can
+    refuel the ship, replenish your supplies, have a hearty chat, and have a couple
+    shots of kumiss. But in general, you ought to steer clear of this place as Turanians
+    are unpredictable folks. From the top of the tower you can get a breathtaking view
+    of the desert, but dress warmly - the nights are very cold.
+  STR_VLADIVOSTOK_UFOPEDIA: Due to some unexplained anomaly, this city is always as
+    bright as mid-day, earning its name of Northern Lights. Another question is the
+    land on which it stands - both Fuso and the Autonomy claim it as their own sovereign
+    territory. There are frequent scraps between Fusanese recon squads and the Autonomous
+    Border Forces in the city's outskirts. Due to the former's poverty and the latter's
+    remoteness, their skirmishes look more like a knife fight in a bar than an armed
+    conflict between nations.
+  STR_JERUSALEM_UFOPEDIA: The Most Ancient City on the Planet - that's what everybody
+    says about it. Even in official media, which tends to be pretty serious. It's difficult
+    for us to consider how much of it has changed, even in comparison to the Invasion
+    period. There are still a lot of old, old buldings and sculptures here, and the
+    whole city gives the impression of a museum. Only the Hive's soldiers spoil the
+    scenery a bit, but a true connoisseur won't even notice them. Plus, they protect
+    the ancient sites from looting. Speaking of which... well, it'd be great loot, but
+    security here's so tough that it's off the table.
+  STR_HOPE_AND_DESPAIR: Hopetown & Despairville
+  STR_INDEPENDENT_CITIES: INDEPENDENT CITIES
+  STR_INDEPENDENT_CITIES_UFOPEDIA: Not every city on our planet obeys the local governments.
+    Some of them are powerful enough to pursue their own goals and keep independence
+    (but only from local govts, not the Star Gods). Some places are too miserable and
+    creepy to live in, so no sane government would like to have them within their borders.
+    Anyway, looks like we have to visit those cities from time to time for various reasons.
+    Keep in mind that our efforts in kicking the Big Three’s asses and protecting free
+    mutants from tyranny will still be monitored in such places, Cap'n.
+  STR_POSTCARD: COLLECTIBLE CARDS
+  STR_POSTCARD_UFOPEDIA: A set of a dozen colorful postcards with cityscapes. Educational
+    info is written on the back of each card for wealthy tourists and fans of official
+    history. The fine print on the bottom states that they were all printed in Mr. DZ's
+    publishing house. Also there is some gibberish, consisting of random numbers and
+    letters separated by dots. We took the effort to input this into the computer...
+    and found ourselves in the deep realms of the Ethyrnet, where anonymous truth crusaders
+    archive mysterious and unofficial facts about our world’s history.
+  M0: M0 Reyi
+  M1: M1 Gudrun
+  M2: M2 Pippy
+  M3: M3 Moonlite
+  F0: F0 Meg
+  F1: F1 Cherry
+  F2: F2 Frosty
+  F3: F3 Bria
+  M4: M4 Red
+  M5: M5 Sandra
+  M6: M6 Honey
+  M7: M7 Roxy
+  F4: F4 Lynda
+  F5: F5 Brigitte
+  F6: F6 Zoe
+  F7: F7 Denise
+  M8: M8 Rave
+  M9: M9 Sandy
+  M10: M10 Burst
+  M11: M11 Jet
+  F8: F8 Lucy
+  F9: F9 Audrey
+  F10: F10 Chloe
+  F11: F11 Skink
+  M12: M12 Ava
+  M13: M13 Nastassia
+  M14: M14 Scar
+  M15: M15 Punk
+  F12: F12 Hannah
+  F13: F13 Violet
+  F14: F14 Halle
+  F15: F15 One-Eye
+  M16: M16 Julia
+  M17: M17 Ember
+  M18: M18 Annette
+  M19: M19 Brianna
+  F16: F16 Ruby
+  F17: F17 Charise
+  F18: F18 Yennifer
+  F19: F19 Fria
+  M20: M20 Tart
+  M21: M21 Griseld
+  M22: M22 Vicky
+  M23: M23 Athena
+  F20: F20 Rena
+  F21: F21 Amber
+  F22: F22 Teesha
+  F23: F23 Blaze
+  M24: M24 Alice
+  M25: M25 Grunt
+  M26: M26 Tina
+  M27: M27 Juanita
+  F24: F24 Cleo
+  F25: F25 Luna
+  F26: F26 Kuroko
+  F27: F27 Norna
+  M28: M28 Etoile
+  M29: M29 Saya
+  M30: M30 Yesebel
+  M31: M31 Doc
+  F28: F28 Hermione
+  F29: F29 Daisy
+  F30: F30 Arachne
+  F31: F31 Lucretia
+  M32: M32 Irina
+  M33: M33 Lily
+  M34: M34 Shayla
+  M35: M35 Trouble
+  F32: F32 April
+  F33: F33 Miku
+  F34: F34 Panther
+  F35: F35 Judge
+  M36: M36 Falcon
+  M37: M37 Neon
+  M38: M38 Shade
+  M39: M39 Hoku
+  F36: F36 Kathy
+  F37: F37 Melody
+  F38: F38 Valerie
+  F39: F39 Aisha
+  M40: M40 Dandy
+  M41: M41 Karen
+  M42: M42 Animal
+  M43: M43 Patsy
+  F40: F40 Ysabell
+  F41: F41 Zhora
+  F42: F42 Cyra
+  F43: F43 Gypsy
+  M44: M44 Poison
+  M45: M45 Lisa
+  M46: M46 Senya
+  M47: M47 Uhura
+  F44: F44 Akemi
+  F45: F45 Grace
+  F46: F46 Birdie
+  F47: F47 Wolf
+  M48: M48 Socrates
+  M49: M49 Nagato
+  M50: M50 Claire
+  M51: M51 Core
+  F48: F48 Regna
+  F49: F49 Marilla
+  F50: F50 Bella
+  F51: F51 Switch
+  M52: M52 Monk
+  M53: M53 Bullet
+  M54: M54 Chen
+  M55: M55 Fury
+  F52: F52 Tabitha
+  F53: F53 Bunny
+  F54: F54 Mace
+  F55: F55 Countess
+  M56: M56 Samara
+  M57: M57 Medussy
+  M58: M58 Jakk
+  M59: M59 Shark
+  F56: F56 Thunder
+  F57: F57 Virtuoso
+  F58: F58 Se7en
+  F59: F59 Lucifine
+  tip_hitMissSound: hitMissSound<br><br>Sound ID from BATTLE.CAT played when this weapon
+    misses a VooDoo attack (Use/Panic/MindControl). Can be a list with multiple options.
+  tip_LOSRequired: LOSRequired<br><br>Does this item require line of sight? (only applies
+    to mind probes and VooDoo rods)
+  tip_psiLabs: psiLabs<br><br>Amount of crew space this facility provides for VooDoo
+    training.
+  tip_rightClickActionType: rightClickActionType<br><br>Which screen should open when
+    R-clicking on this facility in the base view? <ul><li> 0 = OpenXcom default;</li>
+    <li> 1 = Prison;</li> <li> 2 = Manufacturing;</li> <li> 3 = Research;</li> <li>
+    4 = Martial Training;</li> <li> 5 = VooDoo Training;</li> <li> 6 = Barracks;</li>
+    <li> 7 = Market;</li> <li> other = go to Geoscape.</li></ul>
+  psiSkill: VooDoo skill
+  psiStrength: VooDoo power
+  psiDefence: VooDoo defense
+  hitMissSound: VooDoo miss sound
+  psiAttackName: VooDoo attack name
+  psiRequired: VooDoo required?
+  psiLabs: VooDoo classes
+  psiWeapon: VooDoo weapon
+  psi: VooDoo
+  

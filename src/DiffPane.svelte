@@ -9,6 +9,7 @@
    */
   import { Tr } from "./Components";
   import { rul } from "./Ruleset";
+  import { enumPrefix } from "./compareDiff";
   import { createEventDispatcher } from "svelte";
 
   /**@type {import("./compareDiff").Diff}*/
@@ -26,6 +27,21 @@
   /** Same show-identical rule for the dedicated blocks. */
   const visible = (block, same) =>
     !block ? [] : same ? block.rows : block.rows.filter((r) => r.differs);
+
+  /**
+   * Stat sections with their rows filtered the same way, dropping any section
+   * left with nothing to show.
+   */
+  $: statSections = !diff
+    ? []
+    : (diff.sections || [])
+        .map((sec) => ({
+          ...sec,
+          rows: showSame ? sec.rows : sec.rows.filter((r) => r.differs),
+        }))
+        .filter((sec) => sec.rows.length);
+
+  $: anyStatRows = statSections.some((sec) => sec.rows.length);
 
   $: resistRows = visible(diff && diff.resistances, showSame);
   $: reqRows = visible(diff && diff.requirements, showSame);
@@ -51,6 +67,18 @@
     e.stopPropagation();
     const target = decodeURI(href.substring(2));
     if (target && rul.article(target)) dispatch("pick", target);
+  }
+
+  /**
+   * Language key for an enum value, or null when the mod has no string for it.
+   * Falling back to the number keeps an unmapped value honest - rul.tr would
+   * otherwise hand back a mangled "experience Training Mode33".
+   */
+  function enumKey(key, v) {
+    const prefix = enumPrefix(key);
+    if (!prefix || v == null) return null;
+    const k = prefix + v;
+    return rul.lang && k in rul.lang ? k : null;
   }
 
   function num(v) {
@@ -150,7 +178,15 @@
               {#each cols as col}
                 <td>{col ? col.title : "‒"}</td>
               {/each}
-              {#if pair}<td class="diff-delta-col">Δ</td>{/if}
+              {#if pair}
+                <td class="diff-delta-col">
+                  Δ
+                  {#if cols[1] && cols[0]}
+                    <span class="diff-delta-subject">{cols[1].title}</span>
+                    <span class="diff-delta-base">vs {cols[0].title}</span>
+                  {/if}
+                </td>
+              {/if}
             </tr>
             {#if anyAmmo}
               <tr class="diff-ammo-row">
@@ -195,6 +231,12 @@
                       <td class={cellClass(row, i)}>
                         {#if !group.present[i]}
                           <span class="diff-absent">‒</span>
+                        {:else if row.kind == "enum"}
+                          {#if enumKey(row.key, v)}
+                            <Tr s={enumKey(row.key, v)} />
+                          {:else}
+                            <em class="num">{num(v)}</em>
+                          {/if}
                         {:else if row.kind == "number"}
                           <em class="num">{num(v)}</em>
                         {:else if v == null}
@@ -215,7 +257,7 @@
             {/each}
           {/if}
 
-          {#if diff.resistances}
+          {#if resistRows.length}
             <tbody>
               <tr class="diff-group">
                 <td colspan={cols.length + (pair ? 2 : 1)}>
@@ -244,7 +286,60 @@
             </tbody>
           {/if}
 
-          {#if diff.requirements}
+          <tbody>
+            {#each statSections as section}
+              <tr class="diff-group">
+                <td colspan={cols.length + (pair ? 2 : 1)}>
+                  {section.icon}
+                  <Tr s={section.label} />
+                </td>
+              </tr>
+              {#each section.rows as row}
+              <tr class:diff-same={!row.differs}>
+                <td class="diff-key-col"><Tr s={row.key} /></td>
+                {#each row.values as v, i}
+                  <td class={cellClass(row, i)}>
+                    {#if v == null}
+                      <span class="diff-absent">‒</span>
+                    {:else if row.kind == "enum"}
+                      {#if enumKey(row.key, v)}
+                        <Tr s={enumKey(row.key, v)} />
+                      {:else}
+                        <em class="num">{num(v)}</em>
+                      {/if}
+                    {:else if row.kind == "number"}
+                      <em class="num">{num(v)}</em>
+                    {:else if row.kind == "bool"}
+                      <span style="color:{v ? 'lime' : 'red'}">{v ? "✔" : "✘"}</span>
+                    {:else if row.kind == "list"}
+                      <span class="diff-list">
+                        {#each asList(v) as item, j}
+                          {#if j > 0}<span class="list-divider">&nbsp;·&nbsp;</span>{/if}
+                          <span class:diff-unique={row.uniques[i] && row.uniques[i].has(item)}>
+                            <Tr s={"" + item} simple={true} />
+                          </span>
+                        {/each}
+                      </span>
+                    {:else}
+                      <Tr s={"" + v} simple={true} />
+                    {/if}
+                  </td>
+                {/each}
+                {#if pair}
+                  <td class={"diff-delta-col " + deltaClass(row)}>{delta(row)}</td>
+                {/if}
+              </tr>
+              {/each}
+            {/each}
+            {#if !anyStatRows && !resistRows.length && !reqRows.length}
+              <tr>
+                <td colspan={cols.length + (pair ? 2 : 1)} class="compare-empty">
+                  <Tr s="No differences" />
+                </td>
+              </tr>
+            {/if}
+          </tbody>
+          {#if reqRows.length}
             <tbody>
               <tr class="diff-group">
                 <td colspan={cols.length + (pair ? 2 : 1)}>
@@ -253,7 +348,13 @@
               </tr>
               {#each reqRows as row}
                 <tr class:diff-same={!row.differs}>
-                  <td class="diff-key-col"><Tr s={row.key} /></td>
+                  <td class="diff-key-col">
+                    <Tr s={row.key} />{#if row.linked}<span
+                        class="diff-via"
+                        title="From the linked item this article stores or produces">
+                        ↗</span
+                      >{/if}
+                  </td>
                   {#each row.values as v, i}
                     <td class={row.differs ? "" : ""}>
                       {#if v == null}
@@ -279,52 +380,6 @@
             </tbody>
           {/if}
 
-          <tbody>
-            {#if (diff.attacks || diff.resistances || diff.requirements) && rows.length}
-              <tr class="diff-group">
-                <td colspan={cols.length + (pair ? 2 : 1)}>
-                  ☰ <Tr s="Stats" />
-                </td>
-              </tr>
-            {/if}
-            {#each rows as row}
-              <tr class:diff-same={!row.differs}>
-                <td class="diff-key-col"><Tr s={row.key} /></td>
-                {#each row.values as v, i}
-                  <td class={cellClass(row, i)}>
-                    {#if v == null}
-                      <span class="diff-absent">‒</span>
-                    {:else if row.kind == "number"}
-                      <em class="num">{num(v)}</em>
-                    {:else if row.kind == "bool"}
-                      <span style="color:{v ? 'lime' : 'red'}">{v ? "✔" : "✘"}</span>
-                    {:else if row.kind == "list"}
-                      <span class="diff-list">
-                        {#each asList(v) as item, j}
-                          {#if j > 0}<span class="list-divider">&nbsp;·&nbsp;</span>{/if}
-                          <span class:diff-unique={row.uniques[i] && row.uniques[i].has(item)}>
-                            <Tr s={"" + item} simple={true} />
-                          </span>
-                        {/each}
-                      </span>
-                    {:else}
-                      <Tr s={"" + v} simple={true} />
-                    {/if}
-                  </td>
-                {/each}
-                {#if pair}
-                  <td class={"diff-delta-col " + deltaClass(row)}>{delta(row)}</td>
-                {/if}
-              </tr>
-            {/each}
-            {#if !rows.length && !resistRows.length && !reqRows.length}
-              <tr>
-                <td colspan={cols.length + (pair ? 2 : 1)} class="compare-empty">
-                  <Tr s="No differences" />
-                </td>
-              </tr>
-            {/if}
-          </tbody>
         </table>
       {/if}
     </div>

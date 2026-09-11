@@ -29,6 +29,15 @@
   let highlight = true;
   let showSame = false;
   let diffCollapsed = false;
+  /** Difference summary beside the panes instead of beneath them. */
+  let diffSide = false;
+  /**
+   * Size of the difference summary, in px. Two values because the two layouts
+   * size along different axes - carrying one over to the other would make the
+   * pane a sliver or a wall the first time you flip.
+   */
+  let diffHeight = 260;
+  let diffWidth = 420;
   let narrow = false;
   let activeTab = 0;
   let syncing = false;
@@ -134,6 +143,69 @@
     pane.step(e.key == "ArrowRight" ? 1 : -1);
   }
 
+  /**
+   * Side-by-side only makes sense when there is width to spare, so on a narrow
+   * screen the tabbed layout wins and the toggle is disabled.
+   */
+  $: sideActive = diffSide && !narrow;
+
+  const MIN_DIFF = 90;
+
+  let dragging = false;
+
+  /**
+   * Drag the splitter. Both layouts put the summary last, so in each case the
+   * pane grows as the pointer moves *towards* the panes - up, or left.
+   */
+  function startDrag(e) {
+    if (diffCollapsed) return;
+    dragging = true;
+    const vertical = sideActive;
+    const start = vertical ? e.clientX : e.clientY;
+    const startSize = vertical ? diffWidth : diffHeight;
+    const bounds = containerEl ? containerEl.getBoundingClientRect() : null;
+    // Leave at least MIN_DIFF for the panes as well, so neither side can be
+    // dragged out of existence.
+    const limit = bounds
+      ? (vertical ? bounds.width : bounds.height) + startSize - MIN_DIFF
+      : 2000;
+
+    // Not essential - the window listeners below do the real work - and it
+    // throws on some synthetic/stale pointer ids, which would abort the drag.
+    try {
+      e.target.setPointerCapture && e.target.setPointerCapture(e.pointerId);
+    } catch (err) {}
+
+    const move = (ev) => {
+      const delta = start - (vertical ? ev.clientX : ev.clientY);
+      const next = Math.max(MIN_DIFF, Math.min(limit, startSize + delta));
+      if (vertical) diffWidth = next;
+      else diffHeight = next;
+    };
+    const up = () => {
+      dragging = false;
+      window.removeEventListener("pointermove", move);
+      window.removeEventListener("pointerup", up);
+      window.removeEventListener("pointercancel", up);
+    };
+    window.addEventListener("pointermove", move);
+    window.addEventListener("pointerup", up);
+    window.addEventListener("pointercancel", up);
+    e.preventDefault();
+  }
+
+  /** Keyboard resizing, so the splitter is not mouse-only. */
+  function onSplitKey(e) {
+    const step = e.shiftKey ? 48 : 12;
+    let d = 0;
+    if (sideActive) d = e.key == "ArrowLeft" ? step : e.key == "ArrowRight" ? -step : 0;
+    else d = e.key == "ArrowUp" ? step : e.key == "ArrowDown" ? -step : 0;
+    if (!d) return;
+    e.preventDefault();
+    if (sideActive) diffWidth = Math.max(MIN_DIFF, diffWidth + d);
+    else diffHeight = Math.max(MIN_DIFF, diffHeight + d);
+  }
+
   let mq;
   function onMedia(e) {
     narrow = e.matches;
@@ -146,6 +218,9 @@
       if (typeof p.highlight == "boolean") highlight = p.highlight;
       if (typeof p.showSame == "boolean") showSame = p.showSame;
       if (typeof p.diffCollapsed == "boolean") diffCollapsed = p.diffCollapsed;
+      if (typeof p.diffSide == "boolean") diffSide = p.diffSide;
+      if (typeof p.diffHeight == "number") diffHeight = p.diffHeight;
+      if (typeof p.diffWidth == "number") diffWidth = p.diffWidth;
     } catch (e) {}
   }
 
@@ -158,6 +233,9 @@
         highlight,
         showSame,
         diffCollapsed,
+        diffSide,
+        diffHeight,
+        diffWidth,
       });
     } catch (e) {}
   }
@@ -168,7 +246,7 @@
   loadPrefs();
   prefsLoaded = true;
 
-  $: savePrefs(syncScroll, highlight, showSame, diffCollapsed);
+  $: savePrefs(syncScroll, highlight, showSame, diffCollapsed, diffSide, diffHeight, diffWidth);
 
   onMount(() => {
     if (autofocus >= 0) focusedPane = autofocus;
@@ -209,6 +287,17 @@
       title="Sync scrolling"
       on:click={() => (syncScroll = !syncScroll)}>⇅</button
     >
+    <button
+      class="compare-tool"
+      class:compare-tool-on={sideActive}
+      disabled={narrow}
+      title={narrow
+        ? "Not enough width for a side panel"
+        : diffSide
+        ? "Differences below the panes"
+        : "Differences beside the panes"}
+      on:click={() => (diffSide = !diffSide)}>▤</button
+    >
 
     {#if narrow}
       <span class="stretcher" />
@@ -234,7 +323,8 @@
     {/if}
   </div>
 
-  <div class="compare-container" bind:this={containerEl}>
+  <div class="compare-body" class:compare-body-side={sideActive}>
+    <div class="compare-container" bind:this={containerEl}>
     {#each ids as id, i (i)}
       {#if i > 0}
         <div class="compare-divider" />
@@ -262,16 +352,41 @@
     {/each}
   </div>
 
-  <div class="compare-diff-slot" class:compare-hidden={narrow && activeTab !== "diff"}>
-    <DiffPane
-      {diff}
-      {highlight}
-      bind:showSame
-      collapsed={diffCollapsed && !narrow}
-      on:collapse={() => (diffCollapsed = !diffCollapsed)}
-      on:highlight={(e) => (highlight = e.detail)}
-      on:ammo={onAmmo}
-      on:pick={(e) => setId(narrow ? (activeTab === "diff" ? focusedPane : activeTab) : focusedPane, e.detail)}
-    />
+    {#if !diffCollapsed && !(narrow && activeTab !== "diff")}
+      <!-- svelte-ignore a11y-no-noninteractive-element-to-interactive-role -->
+      <div
+        class="compare-splitter"
+        class:compare-splitter-side={sideActive}
+        class:compare-splitter-dragging={dragging}
+        role="separator"
+        tabindex="0"
+        aria-orientation={sideActive ? "vertical" : "horizontal"}
+        title="Drag to resize"
+        on:pointerdown={startDrag}
+        on:keydown={onSplitKey}
+      />
+    {/if}
+
+    <div
+      class="compare-diff-slot"
+      class:compare-hidden={narrow && activeTab !== "diff"}
+      style={diffCollapsed || (narrow && !sideActive)
+        ? ""
+        : sideActive
+        ? `flex: 0 0 ${diffWidth}px;`
+        : `flex: 0 0 ${diffHeight}px;`}
+    >
+      <DiffPane
+        {diff}
+        {highlight}
+        bind:showSame
+        collapsed={diffCollapsed && !narrow}
+        on:collapse={() => (diffCollapsed = !diffCollapsed)}
+        on:highlight={(e) => (highlight = e.detail)}
+        on:ammo={onAmmo}
+        on:pick={(e) =>
+          setId(narrow ? (activeTab === "diff" ? focusedPane : activeTab) : focusedPane, e.detail)}
+      />
+    </div>
   </div>
 </div>

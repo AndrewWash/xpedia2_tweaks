@@ -1769,3 +1769,133 @@ tr.diff-row > td:first-child {
 .diff-table td a:hover {
   border-bottom-style: solid;
 }
+
+.diff-via {
+  opacity: 0.6;
+  font-size: 85%;
+  margin-left: 0.25em;
+  cursor: help;
+}
+
+/* --- compare: layout body, side-by-side summary, draggable splitter --- */
+
+.compare-body {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  min-height: 0;
+  min-width: 0;
+}
+
+.compare-body-side {
+  flex-direction: row;
+}
+
+/* Explicit flex-basis is set inline from the drag state, so the old viewport
+   cap would fight it. */
+.compare-body .diff-pane {
+  max-height: none;
+}
+
+.compare-body-side .diff-pane {
+  border-top: none;
+  border-left: solid 2px var(--border);
+}
+
+.compare-splitter {
+  flex: 0 0 6px;
+  background: var(--border);
+  opacity: 0.5;
+  cursor: row-resize;
+  touch-action: none;
+}
+
+.compare-splitter-side {
+  cursor: col-resize;
+}
+
+.compare-splitter:hover,
+.compare-splitter:focus,
+.compare-splitter-dragging {
+  opacity: 1;
+  outline: none;
+}
+
+/* Keep the pointer from selecting article text mid-drag. */
+.compare-splitter-dragging {
+  user-select: none;
+}
+
+.diff-delta-subject {
+  display: block;
+  font-weight: bold;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 12rem;
+}
+
+.diff-delta-base {
+  display: block;
+  font-weight: normal;
+  opacity: 0.6;
+  font-size: 85%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 12rem;
+}
+
+@media screen and (max-width: 720px) {
+  /* Tabs take over below this width, so the summary is never a side panel. */
+  .compare-body,
+  .compare-body-side {
+    flex-direction: column;
+  }
+  .compare-splitter {
+    display: none;
+  }
+}
+
+/* Flex items default to min-width:auto, so a wide diff table would override the
+   basis set by the splitter and push the panes off screen. */
+.compare-body > .compare-container,
+.compare-body > .compare-diff-slot,
+.compare-body .diff-pane {
+  min-width: 0;
+}
+
+/* Side-by-side gives the summary height but takes away width, so let the stat
+   names wrap instead of holding the column open at their full nowrap length. */
+.compare-body-side .diff-table {
+  font-size: 92%;
+}
+
+.compare-body-side .diff-table td {
+  padding: 0.1rem 0.25rem;
+}
+
+.compare-body-side .diff-key-col {
+  white-space: normal;
+  max-width: 9rem;
+}
+
+.compare-body-side .diff-delta-col {
+  white-space: normal;
+}
+
+.compare-body-side .diff-delta-subject,
+.compare-body-side .diff-delta-base {
+  white-space: normal;
+  max-width: 7rem;
+}
+
+.compare-body-side .diff-ammo {
+  max-width: 8rem;
+}
+
+/* Long "a · b · c" values are the last thing holding the columns wide. */
+.compare-body-side .diff-list {
+  display: inline-block;
+  max-width: 9rem;
+}

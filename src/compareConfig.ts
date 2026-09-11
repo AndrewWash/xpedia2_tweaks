@@ -77,6 +77,13 @@ export const SKIP_FIELDS = [
   "craftInventoryTile",
   "deployment",
   "mapBlocks",
+  // The corpse an armour leaves is an item id, never something you weigh up
+  // when choosing between two of them. Delete either line to get it back.
+  "corpseBattle",
+  "corpseGeo",
+  // A backlink listing every map the thing can turn up on. Ruleset.ts writes it
+  // onto items, units and enviroEffects via crosslink().
+  "terrains",
 ];
 
 /**
@@ -207,7 +214,15 @@ export const FORCE_FIELDS = [
   "requiresBuyBaseFunc",
   "dependencies",
   "getOneFree",
+  "getOneFreeProtected",
   "unlocks",
+  "unlocksMissions",
+  "disables",
+  "unlockedResearch",
+  "researchList",
+  "interruptResearch",
+  "requiredCommendations",
+  "requiredPreviousTransformations",
   "requiredItems",
   "producedItems",
   "damageModifier",
@@ -222,25 +237,113 @@ export const FORCE_FIELDS = [
  * The label each one gets is in REQUIREMENT_LABELS below.
  */
 export const REQUIREMENT_FIELDS = [
+  // gating - what you must have done first
   "requires",
   "dependencies",
-  "getOneFree",
-  "unlocks",
   "requiresBuy",
   "requiresBaseFunc",
   "requiresBuyBaseFunc",
+  "requiredCommendations",
+  "requiredPreviousTransformations",
+  // consequences - what having it opens up
+  "getOneFree",
+  "getOneFreeProtected",
+  "unlocks",
+  "unlocksMissions",
+  "unlockedResearch",
+  "researchList",
+  "interruptResearch",
+  "disables",
 ];
+
+/**
+ * Single-target links to follow when an entry has no prerequisites of its own.
+ *
+ * Each field here must hold exactly ONE id. That restriction is the whole point:
+ * following a fan-out backlink such as `item.manufacture` pulls in every project
+ * that happens to output the item - lootboxes, casino coupons - and would
+ * cheerfully report a laser rifle as requiring STR_GAMBLING.
+ *
+ * `armor.storeItem` is 1:1 - it is the item you actually wear - so the research
+ * gating that item is exactly the research gating the armour. Without this, the
+ * 496 wearable armours show no research at all: the armour record carries none
+ * (only 29 of 969 have `requires`) and most have no same-id research entry
+ * either. It all lives on the store item.
+ *
+ * Rows found through a link are marked with ↗ so a linked item's prerequisite is
+ * never mistaken for the article's own. The entry's own value always wins; a
+ * link is only consulted when the entry and its same-id siblings have nothing.
+ */
+export const REQUIREMENT_VIA_FIELDS = ["storeItem"];
+
+/**
+ * Also read requirements off the pedia Article object, `rul.article(id)`.
+ *
+ * Articles are a separate collection from items/armors/research and are not in
+ * KINDS, because they carry no stats to diff - but each one has its own
+ * `requires`, and that is the field behind the "Research required:" line the
+ * article page prints. For a lot of entries it is the only place the information
+ * lives: 338 of 969 armour articles have one, where only 29 armour *records* do.
+ *
+ * Self-referential values (requires == the article's own id) are ignored, which
+ * is exactly what the article page does with them.
+ */
+export const REQUIREMENTS_FROM_ARTICLE = true;
 
 /** Display labels for the requirement rows. Falls back to the raw key. */
 export const REQUIREMENT_LABELS: { [k: string]: string } = {
   requires: "STR_RESEARCH_REQUIRED",
   dependencies: "STR_DEPENDS_ON",
   getOneFree: "STR_GIVES_ONE_FOR_FREE",
+  getOneFreeProtected: "STR_GIVES_ONE_FOR_FREE",
   unlocks: "STR_UNLOCKS",
   requiresBuy: "STR_RESEARCH_REQUIRED_TO_BUY",
   requiresBaseFunc: "STR_SERVICES_REQUIRED",
   requiresBuyBaseFunc: "STR_SERVICES_REQUIRED_TO_BUY",
+  disables: "STR_DISABLES",
 };
+
+/**
+ * Numeric fields that are really enumerations, mapped to the language-key prefix
+ * that names each value.
+ *
+ * `experienceTrainingMode: 13` is not the number thirteen, it is "train
+ * reactions and melee". The labels already ship in xpedia's own language file as
+ * experienceTrainingMode0 … experienceTrainingMode32, which is how the article
+ * page renders it; this just points the comparison at the same strings.
+ *
+ * A field listed here shows its label instead of the raw number and gets no
+ * delta and no better/worse colouring - the arithmetic difference between two
+ * enum ids is meaningless, and "+7 (+54%)" on a training mode is nonsense.
+ *
+ * To add one: find the prefix in mods/xpedia/Language/en-US.yml, where the keys
+ * are <prefix><number>, and put the ruleset field name on the left. If a value
+ * has no matching string the raw number is shown, so a partial map is safe.
+ */
+export const ENUM_FIELDS: { [field: string]: string } = {
+  experienceTrainingMode: "experienceTrainingMode",
+  // damageAlter.RandomType - the damage spread. Labels are RandomType_0 … _7.
+  RandomType: "RandomType_",
+};
+
+/**
+ * Fields holding a damage type as a number.
+ *
+ * These are not <prefix><number> lang keys like ENUM_FIELDS - the number indexes
+ * the `damageTypes` table in Ruleset.ts, which yields a STR_DAMAGE_* key that the
+ * mod then names. So "6" becomes STR_DAMAGE_STUN becomes whatever XPiratez calls
+ * it. Same resolution the attack table already uses, just applied to the plain
+ * stat rows so the two agree.
+ *
+ * A value that is already a name is left alone, and an index with no entry in
+ * the table falls back to the raw number.
+ */
+export const DAMAGE_TYPE_FIELDS = [
+  "damageType",
+  "damageTypes",
+  "meleeType",
+  "ResistType",
+];
 
 /**
  * Armour resistance block. `damageModifier` is one multiplier per damage type,
@@ -271,3 +374,352 @@ export const RESISTANCE_HIDE_NEUTRAL = true;
  * the difference summary.
  */
 export const AMMO_DAMAGE_FIELDS = ["damage", "damageType", "damageBonus"];
+
+/**
+ * How the flat stat list is grouped and ordered.
+ *
+ * Before this existed the stats were one long list sorted by "biggest relative
+ * difference first", which answered "what differs most" but scattered related
+ * fields all over - ToTile at the top and FixRadius forty rows below it, and the
+ * per-mode accuracy/TU numbers stranded at the bottom, far from the attack
+ * tables that restate them.
+ *
+ * Now every stat row lands in the FIRST section below whose patterns match it,
+ * so section order here is priority order. A section with no visible rows is not
+ * drawn at all, which is why this list can cover weapons, armour, craft and
+ * facilities at once - a given comparison only lights up the handful that apply.
+ *
+ * Patterns are matched against the full flattened key ("damageAlter.ToTile") and
+ * "*" is a wildcard, so "damageAlter.*" takes the whole family and "accuracy*"
+ * takes accuracySnap, accuracyAimed and friends. Within a section, rows come out
+ * in the order their pattern is listed here - that is what puts ToTile next to
+ * FixRadius - and rows caught by the same wildcard fall back to alphabetical.
+ *
+ * To move a row: find the pattern catching it and move it, or add its exact name
+ * to the section you want (exact names should go before the wildcards that would
+ * otherwise swallow them). To hide it entirely use SKIP_FIELDS instead.
+ */
+export const STAT_SECTIONS: {
+  label: string;
+  icon: string;
+  fields: string[];
+}[] = [
+  {
+    // Sits directly under the per-attack ⚔ tables. Those already break damage
+    // down by firing mode; these are the weapon-wide numbers behind them.
+    label: "Damage",
+    icon: "💥",
+    fields: [
+      "power",
+      "meleePower",
+      "damageType",
+      "meleeType",
+      "damageTypes",
+      "autoShots",
+      "shotgunPellets",
+      "shotgun*",
+      "clipSize",
+      "tuLoad",
+      "compatibleAmmo",
+      "compatibleWeapons",
+      "damageBonus.*",
+      "meleeBonus.*",
+    ],
+  },
+  {
+    // The fields the user sees restated at the bottom of a weapon article -
+    // pulled up here so they sit with the attack tables rather than after them.
+    label: "Accuracy & TU cost",
+    icon: "🎯",
+    fields: [
+      // Listed in firing-mode order so this reads the same way as the ⚔ tables
+      // above it, rather than alphabetically.
+      "accuracySnap",
+      "accuracyAimed",
+      "accuracyAuto",
+      "accuracyMelee",
+      "accuracyThrow",
+      "accuracyUse",
+      "accuracyCloseQuarters",
+      "accuracy*",
+      "tuSnap",
+      "tuAimed",
+      "tuAuto",
+      "tuMelee",
+      "tuThrow",
+      "tuUse",
+      "tu*",
+      "costSnap.time",
+      "costSnap.energy",
+      "costAimed.time",
+      "costAimed.energy",
+      "costAuto.time",
+      "costAuto.energy",
+      "costMelee.time",
+      "costMelee.energy",
+      "costThrow.time",
+      "costThrow.energy",
+      "costUse.time",
+      "costUse.energy",
+      "cost*.time",
+      "cost*.energy",
+      "flat*",
+      "flatRate",
+      "accuracyMultiplier.*",
+      "meleeMultiplier.*",
+      "throwMultiplier.*",
+      "kneelBonus",
+      "oneHandedPenalty",
+      "noLOSAccuracyPenalty",
+      "experienceTrainingMode",
+    ],
+  },
+  {
+    label: "Range",
+    icon: "📏",
+    fields: [
+      "maxRange",
+      "aimRange",
+      "snapRange",
+      "autoRange",
+      "throwRange",
+      "*Range",
+      "dropoff",
+      "powerRangeThreshold",
+      "powerRangeReduction",
+      "bulletSpeed",
+      "explosionSpeed",
+      "sprayWaypoints",
+    ],
+  },
+  {
+    // ToTile and FixRadius belong side by side: one says how hard the hit chews
+    // terrain, the other says how wide. Order below runs roughly "what it does
+    // to a unit" -> "what it does to the map" -> flags.
+    label: "Damage effects",
+    icon: "🧪",
+    fields: [
+      "damageAlter.RandomType",
+      "damageAlter.ArmorEffectiveness",
+      "damageAlter.ToArmorPre",
+      "damageAlter.ToArmor",
+      "damageAlter.ToHealth",
+      "damageAlter.ToStun",
+      "damageAlter.ToWound",
+      "damageAlter.RandomWound",
+      "damageAlter.ToMorale",
+      "damageAlter.ToEnergy",
+      "damageAlter.ToTime",
+      "damageAlter.ToMana",
+      "damageAlter.ToItem",
+      "damageAlter.ToTile",
+      "damageAlter.FixRadius",
+      "damageAlter.FireThreshold",
+      "damageAlter.SmokeThreshold",
+      "damageAlter.*",
+      "meleeAlter.*",
+    ],
+  },
+  {
+    label: "Carrying",
+    icon: "🎒",
+    fields: [
+      "weight",
+      "size",
+      "invSize",
+      "invWidth",
+      "invHeight",
+      "twoHanded",
+      "blockBothHands",
+      "fixedWeapon",
+      "builtIn",
+      "isConsumable",
+      "supportedInventorySections",
+      "allowInv",
+    ],
+  },
+  {
+    label: "Protection",
+    icon: "🛡",
+    fields: [
+      "frontArmor",
+      "sideArmor",
+      "rearArmor",
+      "underArmor",
+      "armor",
+      "armor.*",
+      "psiDefence.*",
+      "meleeDodge",
+      "meleeDodge.*",
+      "meleeDodge*",
+      "loftempsSet",
+      "overKill",
+      "*Immune",
+      "shieldCapacity",
+      "shieldRecharge",
+      "shieldBleedThrough",
+    ],
+  },
+  {
+    label: "Unit stats",
+    icon: "📊",
+    fields: ["stats.*", "tags.*"],
+  },
+  {
+    label: "Vision & stealth",
+    icon: "👁",
+    fields: [
+      "visibilityAtDay",
+      "visibilityAtDark",
+      "camouflageAtDay",
+      "camouflageAtDark",
+      "antiCamouflageAtDay",
+      "antiCamouflageAtDark",
+      "heatVision",
+      "psiVision",
+      "personalLight",
+      "*Camouflage*",
+      "*Vision*",
+    ],
+  },
+  {
+    label: "Movement",
+    icon: "🏃",
+    fields: [
+      "movementType",
+      "forcedTorso",
+      "moveCost.*",
+      "turnCost",
+      "turnBeforeFirstStep",
+      "allowsMoving",
+      "allowsRunning",
+      "allowsKneeling",
+      "allowsStrafing",
+      "allowedIn",
+      "forbiddenIn",
+      "startingConditions",
+    ],
+  },
+  {
+    label: "Craft performance",
+    icon: "🚀",
+    fields: [
+      "speedMax",
+      "accel",
+      "damageMax",
+      "fuelMax",
+      "refuelRate",
+      "refuelItem",
+      "repairRate",
+      "maxAltitude",
+      "spacecraft",
+      "allowLanding",
+      "hitBonus",
+      "avoidBonus",
+      "soldiers",
+      "vehicles",
+      "pilots",
+      "weapons",
+      "maxLargeUnits",
+      "weaponTypes",
+      "weaponStrings",
+      "allWeaponTypes",
+      "fixedWeapons",
+      "useAllStartTiles",
+    ],
+  },
+  {
+    label: "Base facility",
+    icon: "🏗",
+    fields: [
+      "buildCost",
+      "buildTime",
+      "monthlyCost",
+      "refundValue",
+      "removalTime",
+      "maxAllowedPerBase",
+      "canBeBuiltOver",
+      "buildOverFacilities",
+      "leavesBehindOnSell",
+      "destroyedFacility",
+      "provideBaseFunc",
+      "storage",
+      "storageTiles",
+      "workshops",
+      "labs",
+      "psiLabs",
+      "trainingRooms",
+      "personnel",
+      "aliens",
+      "prisonType",
+      "defense",
+      "hitRatio",
+      "missileAttraction",
+      "mapName",
+      "mind",
+      "mindPower",
+      "manaRecoveryPerDay",
+      "*Recovery",
+      "sickBay*",
+    ],
+  },
+  {
+    label: "Detection",
+    icon: "📡",
+    fields: ["radarRange", "radarChance", "sightRange", "hyper", "undetectable", "mind"],
+  },
+  {
+    label: "Cost & recovery",
+    icon: "💰",
+    fields: [
+      "costBuy",
+      "costSell",
+      "costRent",
+      "costUnprime",
+      "monthlySalary",
+      "monthlyMaintenance",
+      "transferTime",
+      "recoveryTime",
+      "recover",
+      "recoveryPoints",
+      "loot",
+      "attraction",
+      "score",
+      "cost",
+      "time",
+      "requiredItems.*",
+      "producedItems.*",
+    ],
+  },
+  {
+    // Pointers at other articles rather than numbers about this one.
+    label: "Related entries",
+    icon: "🔗",
+    fields: [
+      "categories",
+      "commendations",
+      "armors",
+      "users",
+      "units",
+      "ufos",
+      "manufacture",
+      "manufacture.*",
+      "componentOf",
+      "componentOf.*",
+      "spawnedBy",
+      "spawnedBy.*",
+      "heldBy",
+      "heldBy.*",
+      "storeItem",
+      "builtInWeapons",
+      "specialWeapon",
+      "selfDestructItem",
+      "liveAlien",
+      "zombieUnit",
+      "spawnUnit",
+    ],
+  },
+];
+
+/** Section for anything no STAT_SECTIONS entry claims. Always last. */
+export const STAT_SECTION_OTHER = { label: "Other", icon: "☰" };

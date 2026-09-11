@@ -24,7 +24,13 @@ import {
   FLATTEN_DEPTH,
   FORCE_FIELDS,
   REQUIREMENT_FIELDS,
+  REQUIREMENT_VIA_FIELDS,
+  REQUIREMENTS_FROM_ARTICLE,
   REQUIREMENT_LABELS,
+  ENUM_FIELDS,
+  STAT_SECTIONS,
+  STAT_SECTION_OTHER,
+  DAMAGE_TYPE_FIELDS,
   RESISTANCE_FIELD,
   RESISTANCE_HIDE_NEUTRAL,
   RESISTANCE_SCALE,
@@ -46,6 +52,46 @@ export function directionOf(key: string): number {
   if (key in DIRECTION) return DIRECTION[key];
   const tail = key.substring(key.lastIndexOf(".") + 1);
   return DIRECTION[tail] || 0;
+}
+
+/**
+ * Language-key prefix for an enum field, or null. Understands dotted keys the
+ * same way directionOf does.
+ */
+export function enumPrefix(key: string): string {
+  if (!key) return null;
+  if (key in ENUM_FIELDS) return ENUM_FIELDS[key];
+  const tail = key.substring(key.lastIndexOf(".") + 1);
+  return ENUM_FIELDS[tail] || null;
+}
+
+const DAMAGE_TYPE_FIELD = new Set(DAMAGE_TYPE_FIELDS);
+
+/** True for a field whose numbers index the damageTypes table. */
+function isDamageTypeField(key: string): boolean {
+  if (!key) return false;
+  if (DAMAGE_TYPE_FIELD.has(key)) return true;
+  return DAMAGE_TYPE_FIELD.has(key.substring(key.lastIndexOf(".") + 1));
+}
+
+/**
+ * Turn a damage type index into its STR_DAMAGE_* key, which Tr then names.
+ *
+ * Left alone when it is not a number - the attack table resolves damageType
+ * before we ever see it, and re-mapping a name would throw it away.
+ */
+function damageTypeValue(v: any): any {
+  const isNum =
+    typeof v == "number" || (typeof v == "string" && v !== "" && !isNaN(+v));
+  if (!isNum) return v;
+  const name = damageTypes[+v];
+  return name == null ? v : name;
+}
+
+function mapDamageTypes(v: any): any {
+  if (v == null) return v;
+  if (Array.isArray(v)) return v.map(damageTypeValue);
+  return damageTypeValue(v);
 }
 
 function skipKey(key: string): boolean {
@@ -119,21 +165,67 @@ export function allEntries(id: string): any[] {
 }
 
 /**
- * First non-empty value for `key` across every entry sharing this id.
+ * The pedia Article for an id, as a requirement source, or null.
  *
- * Deliberately limited to the id's own entries. Following backlinks such as
- * item.manufacture was tried and reverted: that list contains every project
- * that happens to output the item - lootboxes, casino coupons - so it would
- * cheerfully report a laser rifle as requiring STR_GAMBLING.
+ * Only its `requires` matters here; a self-referential value is dropped the same
+ * way the article page drops it. See REQUIREMENTS_FROM_ARTICLE.
  */
-function fieldAcross(col: Col, key: string): any[] {
-  if (!col) return null;
-  for (const e of col.entries) {
+function articleSource(id: string): any {
+  if (!REQUIREMENTS_FROM_ARTICLE || typeof rul.article != "function") return null;
+  let art = null;
+  try {
+    art = rul.article(id);
+  } catch (e) {
+    return null;
+  }
+  if (!art || art.requires == null) return null;
+  const list = (Array.isArray(art.requires) ? art.requires : [art.requires]).filter(
+    (r) => r && r != id
+  );
+  return list.length ? { requires: list } : null;
+}
+
+/** Every requirement source for an id: its entries, then its pedia article. */
+function sourcesFor(id: string): any[] {
+  const art = articleSource(id);
+  return art ? [...allEntries(id), art] : allEntries(id);
+}
+
+/** First non-empty value for `key` among a set of entries, as a list. */
+function firstValue(entries: any[], key: string): any[] {
+  for (const e of entries) {
     const v = e[key];
     if (v == null) continue;
+    // Some armours write `requires` as a bare string rather than a list.
     const list = Array.isArray(v) ? v : [v];
     if (list.length) return list;
   }
+  return null;
+}
+
+/**
+ * First non-empty value for `key`, looked for on every entry sharing this id
+ * and then, only if those have nothing, through the single-target links in
+ * REQUIREMENT_VIA_FIELDS. `linked` says which of the two it came from.
+ *
+ * Note the links are strictly 1:1 (see REQUIREMENT_VIA_FIELDS) - following a
+ * fan-out backlink was tried and reverted because it attributed a casino
+ * coupon's prerequisites to whatever the coupon could produce.
+ */
+function fieldAcross(col: Col, key: string): { list: any[]; linked: boolean } {
+  if (!col) return null;
+
+  const own = firstValue(col.entries, key);
+  if (own) return { list: own, linked: false };
+
+  for (const e of col.entries)
+    for (const viaField of REQUIREMENT_VIA_FIELDS) {
+      const targetId = e[viaField];
+      if (!targetId || typeof targetId != "string") continue;
+      const via = firstValue(sourcesFor(targetId), key);
+      if (via) return { list: via, linked: true };
+    }
+
   return null;
 }
 
@@ -160,7 +252,7 @@ export function resolve(id: string): Col {
         entry,
         fields,
         ammoOptions: ammoOptionsFor(entry),
-        entries: allEntries(id),
+        entries: sourcesFor(id),
       };
     }
   }
@@ -180,7 +272,7 @@ function sameValue(a: any, b: any): boolean {
 export type Row = {
   key: string;
   values: any[];
-  kind: "number" | "bool" | "list" | "string";
+  kind: "number" | "bool" | "list" | "string" | "enum";
   differs: boolean;
   rel: number;
   dir: number;
@@ -189,9 +281,15 @@ export type Row = {
   uniques: Set<any>[];
   delta: number;
   pct: number;
+  /** Value came from a linked entry rather than this one - see fieldAcross. */
+  linked: boolean;
 };
 
 function makeRow(key: string, values: any[], dir?: number): Row {
+  // Resolve damage type indices to names up front, so everything downstream -
+  // differs, uniques, rendering - works on the names rather than the numbers.
+  if (isDamageTypeField(key)) values = values.map(mapDamageTypes);
+
   const present = values.filter((v) => v != null);
   const numeric =
     present.length > 0 &&
@@ -199,6 +297,8 @@ function makeRow(key: string, values: any[], dir?: number): Row {
       (v) => typeof v == "number" || (typeof v == "string" && v !== "" && !isNaN(+v))
     );
   const list = present.some((v) => Array.isArray(v));
+  // An enum is stored as a number but must never be treated as a quantity.
+  const isEnum = !list && numeric && enumPrefix(key) != null;
 
   let differs = false;
   for (let i = 1; i < values.length; i++)
@@ -209,6 +309,8 @@ function makeRow(key: string, values: any[], dir?: number): Row {
     values,
     kind: list
       ? "list"
+      : isEnum
+      ? "enum"
       : numeric
       ? "number"
       : typeof present[0] == "boolean"
@@ -222,6 +324,7 @@ function makeRow(key: string, values: any[], dir?: number): Row {
     uniques: [],
     delta: null,
     pct: null,
+    linked: false,
   };
 
   if (row.kind == "number") {
@@ -421,12 +524,84 @@ function buildRequirements(cols: Col[]) {
 
   const rows = [];
   for (const key of REQUIREMENT_FIELDS) {
-    const values = cols.map((c) => fieldAcross(c, key));
-    if (!values.some((v) => v != null)) continue;
-    rows.push(makeRow(requirementLabel(key), values, 0));
+    const found = cols.map((c) => fieldAcross(c, key));
+    if (!found.some((f) => f != null)) continue;
+    const values = found.map((f) => (f ? f.list : null));
+    // ↗ marks a row where a column had to reach through a link (an armour's
+    // store item, say) to find the requirement, rather than owning it directly.
+    const row = makeRow(requirementLabel(key), values, 0);
+    row.linked = found.some((f) => f && f.linked);
+    rows.push(row);
   }
   if (!rows.length) return null;
   return { rows };
+}
+
+/**
+ * Pattern -> RegExp, with "*" as the only wildcard. Built once at module load;
+ * the patterns are static config so there is nothing to invalidate.
+ */
+function patternToRegExp(pattern: string): RegExp {
+  const escaped = pattern
+    .replace(/[.+?^${}()|[\]\\]/g, "\\$&")
+    .replace(/\*/g, ".*");
+  return new RegExp("^" + escaped + "$", "i");
+}
+
+const SECTION_MATCHERS = STAT_SECTIONS.map((sec) => ({
+  label: sec.label,
+  icon: sec.icon,
+  patterns: sec.fields.map(patternToRegExp),
+}));
+
+export type StatSection = {
+  label: string;
+  icon: string;
+  rows: Row[];
+};
+
+/**
+ * Drop each row into the first section that claims it, preserving the order the
+ * patterns are declared in - that is what keeps related stats adjacent instead
+ * of scattered by the old biggest-difference-first sort.
+ *
+ * Rows caught by the same wildcard are ordered alphabetically so a family like
+ * damageAlter.* comes out stable and predictable.
+ */
+function buildSections(rows: Row[]): StatSection[] {
+  const buckets = SECTION_MATCHERS.map(() => [] as { row: Row; rank: number }[]);
+  const other: { row: Row; rank: number }[] = [];
+
+  for (const row of rows) {
+    let placed = false;
+    for (let i = 0; i < SECTION_MATCHERS.length && !placed; i++) {
+      const patterns = SECTION_MATCHERS[i].patterns;
+      for (let j = 0; j < patterns.length; j++)
+        if (patterns[j].test(row.key)) {
+          buckets[i].push({ row, rank: j });
+          placed = true;
+          break;
+        }
+    }
+    if (!placed) other.push({ row, rank: 0 });
+  }
+
+  const order = (list: { row: Row; rank: number }[]) =>
+    list
+      .sort((a, b) => (a.rank != b.rank ? a.rank - b.rank : a.row.key < b.row.key ? -1 : 1))
+      .map((e) => e.row);
+
+  const out: StatSection[] = [];
+  for (let i = 0; i < SECTION_MATCHERS.length; i++)
+    if (buckets[i].length)
+      out.push({
+        label: SECTION_MATCHERS[i].label,
+        icon: SECTION_MATCHERS[i].icon,
+        rows: order(buckets[i]),
+      });
+  if (other.length)
+    out.push({ ...STAT_SECTION_OTHER, rows: order(other) });
+  return out;
 }
 
 export type Diff = {
@@ -439,6 +614,8 @@ export type Diff = {
   differing: number;
   /** Rows across every block, for the "n/m" count in the header. */
   total: number;
+  /** The flat stat rows, grouped and ordered by STAT_SECTIONS. */
+  sections: StatSection[];
   attacks: any[];
   /** Per-damage-type armour resistances, or null when no column is an armour. */
   resistances: { rows: Row[]; present: boolean[] };
@@ -465,6 +642,7 @@ export function buildDiff(ids: string[], ammoSel: string[] = []): Diff {
     kindsMatch,
     kinds,
     rows: [],
+    sections: [],
     differing: 0,
     total: 0,
     resistances: null,
@@ -503,12 +681,9 @@ export function buildDiff(ids: string[], ammoSel: string[] = []): Diff {
     )
     .filter((r) => r.values.some((v) => v != null));
 
-  // Biggest relative gaps first - that is the answer to "what actually differs".
-  rows.sort((a, b) => {
-    if (a.differs != b.differs) return a.differs ? -1 : 1;
-    if (b.rel != a.rel) return b.rel - a.rel;
-    return a.key < b.key ? -1 : 1;
-  });
+  // No global sort any more: buildSections below groups these by subject and
+  // orders them within each group. Sorting by size of difference here read well
+  // for a single row but tore apart families like damageAlter.*.
 
   const resistances = buildResistances(cols);
   const requirements = buildRequirements(cols);
@@ -527,7 +702,10 @@ export function buildDiff(ids: string[], ammoSel: string[] = []): Diff {
     diffKeys.add(RESISTANCE_FIELD);
   if (requirements)
     for (const key of REQUIREMENT_FIELDS) {
-      const values = cols.map((c) => fieldAcross(c, key));
+      const values = cols.map((c) => {
+        const f = fieldAcross(c, key);
+        return f ? f.list : null;
+      });
       if (values.some((v) => v != null) && !values.every((v) => sameValue(v, values[0])))
         diffKeys.add(key);
     }
@@ -549,6 +727,7 @@ export function buildDiff(ids: string[], ammoSel: string[] = []): Diff {
     kindsMatch,
     kinds,
     rows,
+    sections: buildSections(rows),
     differing,
     total,
     resistances,

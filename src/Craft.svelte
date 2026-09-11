@@ -17,7 +17,7 @@
       first:["speedMax","soldiers"],
       exclude:["type", "battlescapeTerrainData", "craftInventoryTile", "deployment"]
     }).all as [key, prop]}
-    <tr>
+    <tr data-key={key}>
       <td><Value val={key} /></td>
       <td>        
         {#if "weaponStrings" == key}

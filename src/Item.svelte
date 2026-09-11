@@ -257,7 +257,7 @@
     {:else if key == "componentOf"}
       <SecondaryTable text={key}><Value val={prop} /></SecondaryTable>
     {:else}
-      <tr>
+      <tr data-key={key}>
         <td><Value val={key} capital={true} /></td>
         <td class="item-right-column">
           {#if ["damageBonus", "meleeBonus", "accuracyMultiplier", "meleeMultiplier", "closeQuartersMultiplier"].includes(key)}

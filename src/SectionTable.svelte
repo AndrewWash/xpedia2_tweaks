@@ -9,6 +9,7 @@
     Tr,
     invisible,
     divider,
+    rul,
   } from "./Components";
   import { onMount } from "svelte";
   import PaginatedList from "./PaginatedList.svelte";
@@ -28,6 +29,26 @@
   let sortField;
   let filterId = "";
   let sortDescending = false;
+
+  /**
+   * Rows ticked for comparison. A section table is where the question "which of
+   * these thirty items is best" actually starts, so picking two here and hitting
+   * Compare is the shortest path to an answer. Writing the hash is enough - App
+   * picks it up through onhashchange.
+   */
+  const MAX_COMPARE = 4;
+  let compareSel = [];
+
+  function toggleCompare(id) {
+    if (compareSel.includes(id)) compareSel = compareSel.filter((c) => c != id);
+    else if (compareSel.length < MAX_COMPARE) compareSel = [...compareSel, id];
+  }
+
+  function goCompareSelected() {
+    let ids = [...compareSel];
+    while (ids.length < 2) ids.push("");
+    window.location.hash = "##COMPARE::" + ids.join("::");
+  }
 
   onMount(() => {});
 
@@ -180,9 +201,30 @@
   />
 </p>
 
+{#if compareSel.length}
+  <p class="compare-bar">
+    <span>⇄ <Tr s="Compare" />:</span>
+    {#each compareSel as id, i}
+      {@html divider(i)}
+      <span class="compare-chip" on:click={() => toggleCompare(id)}
+        >{@html rul.tr(id)} ✕</span
+      >
+    {/each}
+    <button
+      class="compare-go"
+      disabled={compareSel.length < 2}
+      on:click={goCompareSelected}><Tr s="Compare" /></button
+    >
+    <button class="compare-go" on:click={() => (compareSel = [])}
+      ><Tr s="Clear" /></button
+    >
+  </p>
+{/if}
+
 <PaginatedList items={sorted} let:paginatedItems>
   <table class="section-table">
     <thead>
+      <td class="st-compare-col" title="Tick rows to compare">⇄</td>
       {#each shownFields as field}
         <td
           id={"thead " + field}
@@ -213,6 +255,15 @@
       {#each paginatedItems as entry}
         <!-- svelte-ignore component-name-lowercase -->
         <tr>
+          <td class="st-compare-col">
+            <input
+              type="checkbox"
+              checked={compareSel.includes(entry.id)}
+              disabled={!compareSel.includes(entry.id) &&
+                compareSel.length >= MAX_COMPARE}
+              on:change={() => toggleCompare(entry.id)}
+            />
+          </td>
           {#each shownFields as field}
             <td class="st-{field}"
               ><Value nobr={20} key={field} val={entry.sortField(field, true)} /></td

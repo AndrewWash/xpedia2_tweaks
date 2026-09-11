@@ -19,7 +19,7 @@
   </tr>
   {#each sortFirstLast(entry, {first:["spriteShape"], exclude:["spriteFacility"]}).all as [key, prop]}
     {#if !['type', 'battlescapeTerrainData', 'craftInventoryTile', 'deployment'].includes(key)}
-      <tr>
+      <tr data-key={key}>
         <td class="padding-right">
           <Value val={key}/>
         </td>

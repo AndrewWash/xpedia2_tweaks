@@ -169,7 +169,7 @@
   </tr>
 
   {#each sortFirstLast( entry, { exclude: ["recovery", "type", "layersDefinition", "spriteFaceColor", "spriteHairColor", "spriteUtileColor", "spriteFaceGroup", "spriteHairGroup", "spriteUtileGroup", "customArmorPreviewIndex", "dollSprites", "layersDefaultPrefix", "frontArmor", "sideArmor", "rearArmor", "underArmor", "spriteInv", "armor", "damageModifier", "stats"], first: ["builtInWeapons", "size"] } ).all as [key, prop]}
-    <tr>
+    <tr data-key={key}>
       <td>
         <Value val={key} />
       </td>

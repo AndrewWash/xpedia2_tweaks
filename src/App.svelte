@@ -14,6 +14,7 @@
     tableSections,
   } from "./Components";
   import Article from "./Article.svelte";
+  import Compare from "./Compare.svelte";
   import CogAnimation from "./CogAnimation.svelte";
   import { afterUpdate, onMount, setContext } from "svelte";
   import {
@@ -49,6 +50,11 @@
   let searching = false;
   let saveLoaded = false;
   let sortArticles = false;
+  let compareMode = false;
+  /** Compare pane contents, in pane order. Two by default, up to four. */
+  let compareIds = ["", ""];
+  /** Pane to drop the cursor into when compare opens, or -1. */
+  let compareAutofocus = -1;
 
   let isTouch = "ontouchstart" in window;
   let lang;
@@ -138,6 +144,41 @@
     window.location.hash = "##" + id;
   }
 
+  function compareHash() {
+    return "##COMPARE::" + compareIds.join("::");
+  }
+
+  function goCompare() {
+    if (compareMode) {
+      // Leaving compare drops you back on whatever the focused pane was showing,
+      // falling back to the first non-empty pane.
+      let back = compareIds.filter((id) => id)[0];
+      goTo(back || "HOME");
+      return;
+    }
+    // Entering from an article prefills the first pane with it, so all you have
+    // to do is search for the thing you want to compare it against.
+    if (article) {
+      compareIds = [article.id, ...compareIds.slice(1)];
+      compareAutofocus = 1;
+    } else {
+      compareAutofocus = 0;
+    }
+    window.location.hash = compareHash();
+  }
+
+  /** Open compare directly with `left` and `right` - used by shift-clicking a link. */
+  function goCompareWith(left, right) {
+    compareIds = [left || "", right || ""];
+    compareAutofocus = -1;
+    window.location.hash = compareHash();
+  }
+
+  function onCompareChange(e) {
+    compareIds = e.detail;
+    window.location.hash = compareHash();
+  }
+
   let searchinInProgres;
 
   async function checkHash() {
@@ -145,6 +186,23 @@
     let hash = decodeURI(document.location.hash);
     if (hash.substring(0, 2) != "##") return;
     id = hash.substring(2);
+
+    // Compare mode: ##COMPARE::A::B[::C[::D]] (ids optional, two or more panes).
+    // Handled before the generic "::" query split below.
+    if (id.substring(0, 7) == "COMPARE") {
+      compareMode = true;
+      let parts = id.split("::").slice(1);
+      while (parts.length < 2) parts.push("");
+      compareIds = parts.slice(0, 4);
+      // Guard so repeated compare hash updates don't invalidate `article`
+      // (a key dependency) and tear down the Compare component, which would
+      // wipe an in-progress search in the pane you're not changing.
+      if (article) article = null;
+      found = null;
+      searching = false;
+      return;
+    }
+    compareMode = false;
 
     if (id == "HOME") {
       query = "";
@@ -239,10 +297,52 @@
       : articles;
 
   document.addEventListener("keydown", (event) => {
+    // Compare owns its own arrow handling - it routes them to the focused pane.
+    if (compareMode) return;
     const keyName = event.key;
     if (keyName == "ArrowRight") nextArticle(1);
     if (keyName == "ArrowLeft") nextArticle(-1);
   });
+
+  /**
+   * Shift-click (or middle-click) any link to open it in compare against the
+   * article you are currently reading. Makes compare something you fall into
+   * mid-read rather than a mode you have to remember exists.
+   */
+  function compareFromLink(event) {
+    if (compareMode) return; // panes handle their own shift-clicks
+    let el = event.target;
+    while (el && el.tagName != "A") el = el.parentNode;
+    if (!el || el.tagName != "A") return;
+
+    let href = el.getAttribute("href") || "";
+    if (href.substring(0, 2) != "##") return;
+
+    let target = decodeURI(href.substring(2));
+    let dd = target.indexOf("::");
+    if (dd != -1) target = target.substring(0, dd);
+    if (!target || !rul.article(target)) return;
+
+    event.preventDefault();
+    event.stopPropagation();
+    if (article && article.id != target) goCompareWith(article.id, target);
+    else goCompareWith(target, "");
+  }
+
+  document.addEventListener(
+    "click",
+    (e) => {
+      if (e.shiftKey && e.button == 0) compareFromLink(e);
+    },
+    true
+  );
+  document.addEventListener(
+    "auxclick",
+    (e) => {
+      if (e.button == 1) compareFromLink(e);
+    },
+    true
+  );
 
   /*onSwipe(document.body, (right) => {
     if (right) nextArticle(1);
@@ -404,6 +504,17 @@
         👁
       </div>
 
+      <div
+        class="navbar-button {compareMode ? 'reveal-lock' : ''}"
+        id="compare-button"
+        title={compareMode
+          ? "Leave compare"
+          : "Compare (shift-click any link to compare against this page)"}
+        on:click={goCompare}
+      >
+        <nobr>⇄<span class="on-wide">&nbsp;<Tr s="Compare" /></span></nobr>
+      </div>
+
       <div class="stretcher on-wide" />
 
       {#if !packedData}
@@ -484,7 +595,7 @@
       </div>
     </nav>
 
-    {#if seeSide}
+    {#if seeSide && !compareMode}
       <nav class="sidebar">
         <button
           class="side-sort-button"
@@ -525,19 +636,34 @@
       </nav>
     {/if}
 
-    <button
-      class="side-hide-button"
-      on:click={(e) => {
-        if (e.button == 0) seeSide = !seeSide;
-        saveState();
-      }}
-      style={seeSide ? "" : "left:1em;"}
-    >
-      <span style="font-size:150%">≡</span>
-    </button>
+    {#if !compareMode}
+      <button
+        class="side-hide-button"
+        on:click={(e) => {
+          if (e.button == 0) seeSide = !seeSide;
+          saveState();
+        }}
+        style={seeSide ? "" : "left:1em;"}
+      >
+        <span style="font-size:150%">≡</span>
+      </button>
+    {/if}
 
-    <div class="main" id="main" style={seeSide ? "" : "padding-left:1rem;"}>
-      {#if query && searching}
+    <div
+      class="main"
+      id="main"
+      class:main-compare={compareMode}
+      style={seeSide && !compareMode ? "" : "padding-left:1rem;"}
+    >
+      {#if compareMode}
+        <Compare
+          ids={compareIds}
+          {sortArticles}
+          autofocus={compareAutofocus}
+          on:change={onCompareChange}
+          on:open={(e) => goTo(e.detail)}
+        />
+      {:else if query && searching}
         Searching "
         <em>{query}</em>
         ":

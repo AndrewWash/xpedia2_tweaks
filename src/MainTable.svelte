@@ -31,7 +31,7 @@
       <!-- svelte-ignore empty-block -->
       {#if key[0] == "_"}
       {:else if special.includes(key)}
-      <tr>
+      <tr data-key={key}>
         <td><Value val={key} capital={true}/></td><td>
           <slot {key} {prop}></slot>
         </td>
@@ -40,7 +40,7 @@
         <slot name="wide"></slot>
       {:else}
         {#if prop != null && !(prop.length == 0)}
-          <tr>
+          <tr data-key={key}>
             <td><Value val={key} capital={true}/></td><td>
               <Value val={prop} key={key}/>
             </td>

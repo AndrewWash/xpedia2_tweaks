@@ -23,6 +23,36 @@
   $: pair = cols.length == 2;
   $: rows = diff ? (showSame ? diff.rows : diff.rows.filter((r) => r.differs)) : [];
 
+  /** Same show-identical rule for the dedicated blocks. */
+  const visible = (block, same) =>
+    !block ? [] : same ? block.rows : block.rows.filter((r) => r.differs);
+
+  $: resistRows = visible(diff && diff.resistances, showSame);
+  $: reqRows = visible(diff && diff.requirements, showSame);
+
+  /** Only show the ammo picker row when some column actually loads a clip. */
+  $: anyAmmo =
+    diff && diff.ammo
+      ? cols.some((c, i) => (c && c.ammoOptions && c.ammoOptions.length) || diff.ammo[i])
+      : false;
+
+  /**
+   * A prerequisite link must not navigate the whole app - that would drop you
+   * out of compare and lose the comparison. Send it to the focused pane
+   * instead, where that pane's own back button can undo it.
+   */
+  function onBodyClick(e) {
+    let el = e.target;
+    while (el && el.tagName != "A") el = el.parentNode;
+    if (!el || el.tagName != "A") return;
+    const href = el.getAttribute("href") || "";
+    if (href.substring(0, 2) != "##") return;
+    e.preventDefault();
+    e.stopPropagation();
+    const target = decodeURI(href.substring(2));
+    if (target && rul.article(target)) dispatch("pick", target);
+  }
+
   function num(v) {
     if (v == null) return "‒";
     const n = +v;
@@ -71,7 +101,7 @@
 
     {#if diff && diff.ready}
       <span class="diff-count">
-        {diff.differing}/{diff.rows.length}
+        {diff.differing}/{diff.total}
       </span>
     {/if}
 
@@ -94,7 +124,8 @@
   </div>
 
   {#if !collapsed}
-    <div class="diff-body">
+    <!-- svelte-ignore a11y-click-events-have-key-events -->
+    <div class="diff-body" on:click|capture={onBodyClick}>
       {#if !diff || !diff.ready}
         <div class="compare-empty">
           {#if diff && diff.unknown.length}
@@ -121,6 +152,32 @@
               {/each}
               {#if pair}<td class="diff-delta-col">Δ</td>{/if}
             </tr>
+            {#if anyAmmo}
+              <tr class="diff-ammo-row">
+                <td class="diff-key-col"><Tr s="Ammo" /></td>
+                {#each cols as col, i}
+                  <td>
+                    {#if col && col.ammoOptions && col.ammoOptions.length > 1}
+                      <select
+                        class="diff-ammo"
+                        value={diff.ammo[i] || ""}
+                        on:change={(e) =>
+                          dispatch("ammo", { index: i, id: e.target.value })}
+                      >
+                        {#each col.ammoOptions as a}
+                          <option value={a}>{rul.tr(a)}</option>
+                        {/each}
+                      </select>
+                    {:else if diff.ammo[i]}
+                      <span class="diff-ammo-fixed">{@html rul.tr(diff.ammo[i])}</span>
+                    {:else}
+                      <span class="diff-absent">‒</span>
+                    {/if}
+                  </td>
+                {/each}
+                {#if pair}<td class="diff-delta-col" />{/if}
+              </tr>
+            {/if}
           </thead>
 
           {#if diff.attacks}
@@ -158,8 +215,72 @@
             {/each}
           {/if}
 
+          {#if diff.resistances}
+            <tbody>
+              <tr class="diff-group">
+                <td colspan={cols.length + (pair ? 2 : 1)}>
+                  🛡 <Tr s="Resistances" />
+                </td>
+              </tr>
+              {#each resistRows as row}
+                <tr class:diff-same={!row.differs}>
+                  <td class="diff-key-col"><Tr s={row.key} /></td>
+                  {#each row.values as v, i}
+                    <td class={cellClass(row, i)}>
+                      {#if !diff.resistances.present[i]}
+                        <span class="diff-absent">‒</span>
+                      {:else if v == null}
+                        ‒
+                      {:else}
+                        <em class="num">{num(v)}%</em>
+                      {/if}
+                    </td>
+                  {/each}
+                  {#if pair}
+                    <td class={"diff-delta-col " + deltaClass(row)}>{delta(row)}</td>
+                  {/if}
+                </tr>
+              {/each}
+            </tbody>
+          {/if}
+
+          {#if diff.requirements}
+            <tbody>
+              <tr class="diff-group">
+                <td colspan={cols.length + (pair ? 2 : 1)}>
+                  🔬 <Tr s="Requirements" />
+                </td>
+              </tr>
+              {#each reqRows as row}
+                <tr class:diff-same={!row.differs}>
+                  <td class="diff-key-col"><Tr s={row.key} /></td>
+                  {#each row.values as v, i}
+                    <td class={row.differs ? "" : ""}>
+                      {#if v == null}
+                        <span class="diff-absent">‒</span>
+                      {:else}
+                        <span class="diff-list">
+                          {#each asList(v) as item, j}
+                            {#if j > 0}<span class="list-divider">&nbsp;·&nbsp;</span>{/if}
+                            <span
+                              class:diff-unique={row.uniques[i] &&
+                                row.uniques[i].has(item)}
+                            >
+                              <a href={"##" + item}>{@html rul.tr(item)}</a>
+                            </span>
+                          {/each}
+                        </span>
+                      {/if}
+                    </td>
+                  {/each}
+                  {#if pair}<td class="diff-delta-col" />{/if}
+                </tr>
+              {/each}
+            </tbody>
+          {/if}
+
           <tbody>
-            {#if diff.attacks && rows.length}
+            {#if (diff.attacks || diff.resistances || diff.requirements) && rows.length}
               <tr class="diff-group">
                 <td colspan={cols.length + (pair ? 2 : 1)}>
                   ☰ <Tr s="Stats" />
@@ -196,7 +317,7 @@
                 {/if}
               </tr>
             {/each}
-            {#if !rows.length}
+            {#if !rows.length && !resistRows.length && !reqRows.length}
               <tr>
                 <td colspan={cols.length + (pair ? 2 : 1)} class="compare-empty">
                   <Tr s="No differences" />

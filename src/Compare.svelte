@@ -11,6 +11,7 @@
   import ComparePane from "./ComparePane.svelte";
   import DiffPane from "./DiffPane.svelte";
   import { buildDiff } from "./compareDiff";
+  import { MAX_PANES } from "./compareConfig";
   import { createEventDispatcher, onMount, onDestroy } from "svelte";
 
   export let ids = ["", ""];
@@ -20,7 +21,6 @@
   export let autofocus = -1;
 
   const dispatch = createEventDispatcher();
-  const MAX_PANES = 4;
 
   let containerEl;
   let paneRefs = [];
@@ -32,8 +32,43 @@
   let narrow = false;
   let activeTab = 0;
   let syncing = false;
+  /**
+   * Clip loaded in each pane, parallel to `ids`. Deliberately kept out of the
+   * hash: it is a "what if" knob you flick while reading, not part of what the
+   * comparison *is*, and it resets sensibly to the first compatible clip.
+   */
+  let ammoSel = [];
 
-  $: diff = buildDiff(ids);
+  let ammoFor = [];
+
+  /**
+   * Drop a pane's clip when that pane switches to a different article, so the
+   * choice cannot leak onto an unrelated weapon in the same slot.
+   *
+   * Done in a function rather than inline so this only re-runs when `ids`
+   * changes - a `$:` block that both read and wrote `ammoSel` would retrigger
+   * on its own assignment.
+   */
+  function syncAmmo(next) {
+    let changed = next.length != ammoFor.length;
+    const kept = next.map((id, i) => {
+      if (ammoFor[i] === id) return ammoSel[i];
+      changed = true;
+      return undefined;
+    });
+    if (changed) ammoSel = kept;
+    ammoFor = [...next];
+  }
+
+  $: syncAmmo(ids);
+
+  $: diff = buildDiff(ids, ammoSel);
+
+  function onAmmo(e) {
+    const next = [...ammoSel];
+    next[e.detail.index] = e.detail.id;
+    ammoSel = next;
+  }
   $: if (focusedPane >= ids.length) focusedPane = ids.length - 1;
   $: if (typeof activeTab == "number" && activeTab >= ids.length)
     activeTab = ids.length - 1;
@@ -235,6 +270,8 @@
       collapsed={diffCollapsed && !narrow}
       on:collapse={() => (diffCollapsed = !diffCollapsed)}
       on:highlight={(e) => (highlight = e.detail)}
+      on:ammo={onAmmo}
+      on:pick={(e) => setId(narrow ? (activeTab === "diff" ? focusedPane : activeTab) : focusedPane, e.detail)}
     />
   </div>
 </div>

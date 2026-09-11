@@ -144,7 +144,7 @@
       </div>
     </td>
   </tr>
-  <tr>
+  <tr data-key="damageModifier">
     <td colspan="2">
       <div class="flex-horisontal" style="max-width: 95vw;">
         <div class="armor-column armor-column-resists">

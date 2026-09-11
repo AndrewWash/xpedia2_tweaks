@@ -13,6 +13,7 @@
   } from "./Components";
   import { onMount } from "svelte";
   import PaginatedList from "./PaginatedList.svelte";
+  import { MAX_PANES } from "./compareConfig";
   import { allFieldValuesOf } from "./util";
 
   /**@type {any[]}*/ export let entries;
@@ -36,7 +37,7 @@
    * Compare is the shortest path to an answer. Writing the hash is enough - App
    * picks it up through onhashchange.
    */
-  const MAX_COMPARE = 4;
+  const MAX_COMPARE = MAX_PANES;
   let compareSel = [];
 
   function toggleCompare(id) {

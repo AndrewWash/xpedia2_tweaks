@@ -1899,3 +1899,588 @@ tr.diff-row > td:first-child {
   display: inline-block;
   max-width: 9rem;
 }
+
+/* ===== Damage calculator ===== */
+
+.dmg-wrap {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+}
+
+.dmg-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.3rem 0.5rem;
+  border-bottom: solid 2px var(--border);
+  flex: 0 0 auto;
+  flex-wrap: wrap;
+}
+
+.dmg-tab {
+  background: none;
+  color: inherit;
+  border: 1px solid var(--border);
+  font-family: inherit;
+  font-size: 100%;
+  padding: 0.2em 0.7em;
+  cursor: pointer;
+}
+
+.dmg-tab:hover {
+  background: var(--hover);
+}
+
+.dmg-tab-on {
+  background: var(--table-header);
+  font-weight: bold;
+}
+
+.dmg-note {
+  opacity: 0.6;
+  font-size: 85%;
+}
+
+.dmg-body {
+  display: flex;
+  flex-direction: row;
+  flex: 1 1 auto;
+  min-height: 0;
+  min-width: 0;
+}
+
+.dmg-side {
+  flex: 0 0 16rem;
+  min-width: 0;
+  overflow: auto;
+  padding: 0.5rem;
+  border-right: solid 2px var(--border);
+}
+
+.dmg-main {
+  flex: 1 1 auto;
+  min-width: 0;
+  min-height: 0;
+  overflow: auto;
+  padding: 0.5rem 0.75rem;
+}
+
+.dmg-block {
+  margin-bottom: 1rem;
+}
+
+.dmg-block header {
+  font-weight: bold;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 0.35rem;
+  padding-bottom: 0.15rem;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.dmg-block header .dmg-mini {
+  margin-left: auto;
+}
+
+.dmg-block header .dmg-mini + .dmg-mini {
+  margin-left: 0;
+}
+
+.dmg-input {
+  width: 100%;
+  background: var(--background);
+  color: inherit;
+  border: 1px solid var(--border);
+  font-family: inherit;
+  font-size: 95%;
+  padding: 0.15em 0.3em;
+  margin-bottom: 0.3rem;
+  box-sizing: border-box;
+}
+
+.dmg-list {
+  height: auto;
+}
+
+.dmg-num {
+  width: 5rem;
+  text-align: right;
+}
+
+.dmg-row {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin-bottom: 0.2rem;
+}
+
+.dmg-row > span:first-child {
+  flex: 0 0 5.5rem;
+  opacity: 0.8;
+  font-size: 90%;
+}
+
+.dmg-stat > span:first-child {
+  flex: 1 1 auto;
+}
+
+.dmg-cap {
+  opacity: 0.45;
+  font-size: 85%;
+  white-space: nowrap;
+}
+
+.dmg-check {
+  display: block;
+  font-size: 90%;
+  margin-bottom: 0.15rem;
+  cursor: pointer;
+}
+
+.dmg-mini {
+  background: none;
+  color: inherit;
+  border: 1px solid var(--border);
+  font-family: inherit;
+  cursor: pointer;
+  padding: 0.1em 0.5em;
+}
+
+.dmg-mini:hover:not(:disabled) {
+  background: var(--hover);
+}
+
+.dmg-mini:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+.dmg-wide {
+  width: 100%;
+  margin-bottom: 0.35rem;
+}
+
+.dmg-io {
+  display: flex;
+  gap: 0.3rem;
+  margin-top: 0.4rem;
+}
+
+.dmg-file {
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+}
+
+.dmg-file input {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.dmg-hint {
+  opacity: 0.55;
+  font-size: 82%;
+  margin: 0.25rem 0;
+}
+
+.dmg-error {
+  color: #ff6b6b;
+  font-size: 85%;
+}
+
+.dmg-empty {
+  opacity: 0.6;
+  padding: 2rem 1rem;
+}
+
+.dmg-target h2 {
+  margin: 0.2rem 0;
+}
+
+.dmg-target-stats {
+  display: flex;
+  gap: 1rem;
+  opacity: 0.7;
+  font-size: 90%;
+  margin-bottom: 0.4rem;
+}
+
+.dmg-warn {
+  border: 1px solid var(--border);
+  background: var(--table-secondary);
+  padding: 0.35rem 0.5rem;
+  font-size: 88%;
+  margin: 0.3rem 0 0.6rem;
+}
+
+.dmg-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.dmg-table thead td {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background: var(--background);
+  border-bottom: solid 1px var(--border);
+  font-weight: bold;
+  text-align: center;
+  padding: 0.2rem 0.4rem;
+  white-space: nowrap;
+}
+
+.dmg-table td {
+  padding: 0.12rem 0.4rem;
+  text-align: center;
+}
+
+.dmg-table .dmg-name {
+  text-align: left;
+}
+
+.dmg-table tbody tr:hover > td {
+  background: var(--hover);
+}
+
+.dmg-click {
+  cursor: pointer;
+}
+
+.dmg-open > td {
+  background: var(--table-secondary);
+}
+
+.dmg-key {
+  font-weight: bold;
+}
+
+/* The effectiveness score. Bands are the anchor read back out: 50 is one full
+   turn to drop the target, so "good" is anything inside a turn, "fair" is one
+   to three, "poor" is worse than that and "none" never gets there. */
+.dmg-score {
+  font-weight: bold;
+  width: 2.5em;
+}
+
+/* How you would get this weapon in the loaded campaign: a count if you hold it,
+   otherwise buy/build. Only shown while the campaign filter is on. */
+.dmg-avail {
+  font-size: 80%;
+  opacity: 0.6;
+  margin-left: 0.35em;
+  white-space: nowrap;
+}
+
+/* Held, but there is no compatible clip in stores. */
+.dmg-avail-dry {
+  color: #ff9d5c;
+  opacity: 0.9;
+}
+
+.dmg-chip:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+/* A mode's own score, on the rows under its weapon's name. */
+.dmg-score-sub {
+  font-weight: normal;
+  opacity: 0.65;
+}
+
+.dmg-score-good {
+  color: #6ee36e;
+}
+
+.dmg-score-fair {
+  color: #e3c76e;
+}
+
+.dmg-score-poor {
+  color: #ff9d5c;
+}
+
+.dmg-score-none {
+  opacity: 0.35;
+}
+
+.dmg-immune {
+  color: #ff6b6b;
+}
+
+.dmg-detail > td {
+  padding: 0.3rem 0.6rem 0.6rem;
+  background: var(--table-secondary);
+}
+
+.dmg-modes {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 92%;
+}
+
+.dmg-modes thead td {
+  font-weight: bold;
+  opacity: 0.75;
+  border-bottom: 1px solid var(--border);
+  padding: 0.1rem 0.3rem;
+  text-align: center;
+}
+
+.dmg-modes td {
+  padding: 0.1rem 0.3rem;
+  text-align: center;
+}
+
+@media screen and (max-width: 720px) {
+  .dmg-body {
+    flex-direction: column;
+  }
+  .dmg-side {
+    flex: 0 0 auto;
+    border-right: none;
+    border-bottom: solid 2px var(--border);
+    max-height: 45vh;
+  }
+}
+
+.dmg-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.2rem;
+  margin-bottom: 0.35rem;
+}
+
+.dmg-chip {
+  background: none;
+  color: inherit;
+  border: 1px solid var(--border);
+  font-family: inherit;
+  font-size: 88%;
+  padding: 0.1em 0.4em;
+  cursor: pointer;
+}
+
+.dmg-chip:hover {
+  background: var(--hover);
+}
+
+.dmg-chip-on {
+  background: var(--table-header);
+  font-weight: bold;
+}
+
+.dmg-chip-n {
+  opacity: 0.5;
+  font-size: 88%;
+  margin-left: 0.2em;
+}
+
+/* Filters live on the weapons table, not in the sidebar - that is where you
+   are looking while scanning the list. */
+.dmg-filters {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  padding: 0.3rem 0;
+  margin-bottom: 0.3rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.dmg-filters .dmg-chips {
+  margin-bottom: 0;
+}
+
+.dmg-search {
+  width: 14rem;
+  margin-bottom: 0;
+}
+
+.dmg-inline {
+  display: inline-block;
+  margin-bottom: 0;
+  white-space: nowrap;
+}
+
+.dmg-sortable {
+  cursor: pointer;
+  user-select: none;
+}
+
+.dmg-sortable:hover {
+  background: var(--hover);
+}
+
+.dmg-sorted {
+  color: var(--em);
+}
+
+.dmg-arrow {
+  font-size: 80%;
+  margin-left: 0.15em;
+}
+
+/* --- damage calc: grouped mode rows, enemy stat header --- */
+
+/* A hairline above each weapon's first row ties its modes into one block. */
+.dmg-group-first > td {
+  border-top: 1px solid var(--border);
+}
+
+.dmg-table tbody tr:first-child > td {
+  border-top: none;
+}
+
+.dmg-submode {
+  opacity: 0.7;
+  font-size: 92%;
+}
+
+.dmg-modecount {
+  opacity: 0.45;
+  font-size: 80%;
+  margin-left: 0.4em;
+  white-space: nowrap;
+}
+
+.dmg-armors,
+.dmg-ustats {
+  display: inline-flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.dmg-armor {
+  opacity: 0.55;
+  white-space: nowrap;
+}
+
+.dmg-armor-on {
+  opacity: 1;
+  color: var(--em);
+}
+
+.dmg-resists {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.45rem;
+  font-size: 88%;
+  margin-bottom: 0.4rem;
+}
+
+.dmg-resist-label {
+  opacity: 0.55;
+}
+
+.dmg-resist {
+  white-space: nowrap;
+  border: 1px solid var(--border);
+  padding: 0 0.25em;
+}
+
+/* The resistance chips are the damage-type filter for the weapons table, so
+   they are buttons - these rules only undo what a button brings with it. */
+.dmg-resist-pick {
+  background: none;
+  color: inherit;
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  cursor: pointer;
+}
+
+.dmg-resist-pick:hover {
+  background: var(--hover);
+}
+
+.dmg-resist-on {
+  background: var(--table-header);
+  font-weight: bold;
+  border-color: currentColor;
+}
+
+/* Above 100% the armour takes extra damage from that type - that is good news
+   for the attacker, so it reads the same way as a "better" cell elsewhere. */
+.dmg-resist-weak b {
+  color: lime;
+}
+
+.dmg-resist-strong b {
+  color: #ff9d5c;
+}
+
+.dmg-sortnote {
+  opacity: 0.5;
+  font-size: 85%;
+  white-space: nowrap;
+}
+
+/* Distance is past this mode's effective range, so accuracy is taking the
+   per-tile dropoff. */
+.dmg-outofrange {
+  color: #ff9d5c;
+}
+
+/* The mode's own range is shown but is not what governs its accuracy - range
+   falloff is off, so the aimed range applies to every mode instead. */
+.dmg-offrange {
+  opacity: 0.4;
+  font-style: italic;
+}
+
+/* A toggle the active mod has taken out of the player's hands. */
+.dmg-check-locked {
+  opacity: 0.65;
+}
+
+/* --- damage calc: extra filters, multi-key sort, armour picker --- */
+
+.dmg-dtpick {
+  width: auto;
+  max-width: 13rem;
+  margin-bottom: 0;
+}
+
+.dmg-sortkey {
+  white-space: nowrap;
+}
+
+.dmg-sortkey .dmg-chip-n {
+  opacity: 0.75;
+}
+
+.dmg-arrow sup {
+  font-size: 70%;
+  opacity: 0.7;
+}
+
+.dmg-armorpick {
+  margin-bottom: 0.3rem;
+}
+
+.dmg-rowlabel {
+  display: block;
+  opacity: 0.8;
+  font-size: 90%;
+}
+
+/* Projectile count on a multi-pellet or multi-shot attack. */
+.dmg-hits {
+  opacity: 0.6;
+  font-size: 85%;
+  margin-left: 0.15em;
+}
+
+/* Pellets fired vs pellets expected to land on the target. */
+.dmg-landed {
+  color: #ff9d5c;
+  margin-left: 0.1em;
+}

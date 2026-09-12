@@ -15,6 +15,7 @@
   } from "./Components";
   import Article from "./Article.svelte";
   import Compare from "./Compare.svelte";
+  import DamageCalc from "./DamageCalc.svelte";
   import CogAnimation from "./CogAnimation.svelte";
   import { afterUpdate, onMount, setContext } from "svelte";
   import {
@@ -55,6 +56,9 @@
   let compareIds = ["", ""];
   /** Pane to drop the cursor into when compare opens, or -1. */
   let compareAutofocus = -1;
+  /** Damage calculator mode, and the enemy it is pointed at. */
+  let damageMode = false;
+  let damageTarget = "";
 
   let isTouch = "ontouchstart" in window;
   let lang;
@@ -144,6 +148,16 @@
     window.location.hash = "##" + id;
   }
 
+  function goDamage() {
+    if (damageMode) {
+      goTo("HOME");
+      return;
+    }
+    // Entering from a unit's article points the calculator straight at it.
+    window.location.hash =
+      "##DAMAGE" + (article && rul.units && rul.units[article.id] ? "::" + article.id : "");
+  }
+
   function compareHash() {
     return "##COMPARE::" + compareIds.join("::");
   }
@@ -189,6 +203,20 @@
 
     // Compare mode: ##COMPARE::A::B[::C[::D]] (ids optional, two or more panes).
     // Handled before the generic "::" query split below.
+    // Damage calculator: ##DAMAGE[::TARGET_ID]
+    if (id.substring(0, 6) == "DAMAGE") {
+      damageMode = true;
+      compareMode = false;
+      damageTarget = id.split("::")[1] || "";
+      // Same guard as compare: article is a {#key} dependency, so leaving it
+      // set would tear the component down on every hash write.
+      if (article) article = null;
+      found = null;
+      searching = false;
+      return;
+    }
+    damageMode = false;
+
     if (id.substring(0, 7) == "COMPARE") {
       compareMode = true;
       let parts = id.split("::").slice(1);
@@ -299,6 +327,8 @@
   document.addEventListener("keydown", (event) => {
     // Compare owns its own arrow handling - it routes them to the focused pane.
     if (compareMode) return;
+    // The calculator is a form; arrow keys belong to its number inputs.
+    if (damageMode) return;
     const keyName = event.key;
     if (keyName == "ArrowRight") nextArticle(1);
     if (keyName == "ArrowLeft") nextArticle(-1);
@@ -515,6 +545,15 @@
         <nobr>⇄<span class="on-wide">&nbsp;<Tr s="Compare" /></span></nobr>
       </div>
 
+      <div
+        class="navbar-button {damageMode ? 'reveal-lock' : ''}"
+        id="damage-button"
+        title={damageMode ? "Leave the damage calculator" : "Estimate damage against an enemy"}
+        on:click={goDamage}
+      >
+        <nobr>🎯<span class="on-wide">&nbsp;<Tr s="Damage" /></span></nobr>
+      </div>
+
       <div class="stretcher on-wide" />
 
       {#if !packedData}
@@ -595,7 +634,7 @@
       </div>
     </nav>
 
-    {#if seeSide && !compareMode}
+    {#if seeSide && !compareMode && !damageMode}
       <nav class="sidebar">
         <button
           class="side-sort-button"
@@ -636,7 +675,7 @@
       </nav>
     {/if}
 
-    {#if !compareMode}
+    {#if !compareMode && !damageMode}
       <button
         class="side-hide-button"
         on:click={(e) => {
@@ -652,10 +691,12 @@
     <div
       class="main"
       id="main"
-      class:main-compare={compareMode}
-      style={seeSide && !compareMode ? "" : "padding-left:1rem;"}
+      class:main-compare={compareMode || damageMode}
+      style={seeSide && !compareMode && !damageMode ? "" : "padding-left:1rem;"}
     >
-      {#if compareMode}
+      {#if damageMode}
+        <DamageCalc targetId={damageTarget} />
+      {:else if compareMode}
         <Compare
           ids={compareIds}
           {sortArticles}

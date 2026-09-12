@@ -84,6 +84,10 @@ export const SKIP_FIELDS = [
   // A backlink listing every map the thing can turn up on. Ruleset.ts writes it
   // onto items, units and enviroEffects via crosslink().
   "terrains",
+  // A backlink map of every recipe this item is an ingredient in. Flattens to
+  // one row per recipe (componentOf.STR_DISASSEMBLY_LASER_PISTOL and friends),
+  // which says nothing about the item itself.
+  "componentOf",
 ];
 
 /**
@@ -134,8 +138,11 @@ export const HIGHER_BETTER = [
   "autoShots", "shotgunPellets", "blastRadius", "meleePower",
   "energyRecovery", "healthRecovery", "stunRecovery", "moraleRecovery",
   "manaRecoveryPerDay", "sickBayAbsoluteBonus", "sickBayRelativeBonus",
-  "psiVision", "heatVision", "camouflageAtDark", "camouflageAtDay",
-  "visibilityAtDark", "visibilityAtDay", "throwRange",
+  "psiVision", "heatVision", "throwRange",
+  "visibilityAtDark", "visibilityAtDay",
+  // SPOT: tiles of enemy camouflage this unit cancels. Always positive in the
+  // ruleset, and more is plainly better.
+  "antiCamouflageAtDay", "antiCamouflageAtDark",
 ];
 
 /** Fields where a smaller number is the better one. Same rules as above. */
@@ -146,6 +153,10 @@ export const LOWER_BETTER = [
   "transferTime", "recoveryTime", "powerRangeReduction", "powerRangeThreshold",
   "dropoff", "invWidth", "invHeight", "oneHandedPenalty", "explosionSpeed",
   "refuelRate",
+  // Within one camouflage mode a lower number is stealthier: -23 conceals better
+  // than -12, and "seen at 12 tiles" beats "seen at 15". Across modes the row is
+  // left unranked - see SIGN_MODE_FIELDS.
+  "camouflageAtDay", "camouflageAtDark",
 ];
 
 /**
@@ -304,6 +315,32 @@ export const REQUIREMENT_LABELS: { [k: string]: string } = {
 };
 
 /**
+ * Fields where the SIGN of the number selects a different mode, so two values of
+ * opposite sign are not measuring the same thing and must not be ranked against
+ * each other.
+ *
+ * camouflageAtDay / camouflageAtDark are the case this exists for. OXCE's own
+ * tooltip:
+ *
+ *   <= 0  relative "CAMO"  - seen from |v| tiles nearer than usual (0 = no camo)
+ *    > 0  absolute "INVIS" - seen from exactly v tiles, whatever the usual is
+ *
+ * Within either mode a lower number is stealthier, which is why camouflageAt*
+ * sits in LOWER_BETTER. Across modes there is no answer: "23 tiles nearer than
+ * usual" versus "always seen at 15 tiles" depends entirely on what the spotter's
+ * usual range is, and that belongs to the unit doing the looking, not to either
+ * armour being compared. A row mixing signs therefore shows both numbers and no
+ * verdict, rather than a confident wrong one.
+ *
+ * (An earlier version of this file tried to normalise both modes onto a single
+ * "tiles you are visible from" scale by subtracting from maxViewDistance. That
+ * produced numbers like 39 for camouflageAtDark, implying you are spotted from
+ * 39 tiles away in the dark. The baseline is not a constant and it is not 40 at
+ * night, so the scale was fiction. Hence this narrower, honest approach.)
+ */
+export const SIGN_MODE_FIELDS = ["camouflageAtDay", "camouflageAtDark"];
+
+/**
  * Numeric fields that are really enumerations, mapped to the language-key prefix
  * that names each value.
  *
@@ -324,6 +361,33 @@ export const ENUM_FIELDS: { [field: string]: string } = {
   experienceTrainingMode: "experienceTrainingMode",
   // damageAlter.RandomType - the damage spread. Labels are RandomType_0 … _7.
   RandomType: "RandomType_",
+  // "Item type": 1 is a firearm, 2 ammo, 3 melee, and so on.
+  battleType: "battleType",
+  // Craft weapon hardpoint class: light, heavy, missile, bomb …
+  weaponType: "weaponType",
+  // Containment needed to hold a live prisoner.
+  prisonType: "prisonType",
+};
+
+/**
+ * Per-value label overrides for ENUM_FIELDS, used when the mod's own string is
+ * missing or wrong. Keyed by field, then by the numeric value.
+ *
+ * Only battleType needs this today, and only because of a typo upstream:
+ * mods/xpedia/Language/en-US.yml declares `battleType10` twice (lines 2148 and
+ * 2149). YAML keeps the last one, so "Electro-flare" is silently destroyed and
+ * `battleType11` never gets written at all - which left 312 corpse items showing
+ * a bare "11". The two names below come from the engine's own internalBattleTypes
+ * table (BT_FLARE, BT_CORPSE), not from guesswork.
+ *
+ * Fixing those two lines in the language file would make this entry redundant.
+ * It is kept here instead so the mod's data is left alone.
+ */
+export const ENUM_VALUE_LABELS: { [field: string]: { [value: string]: string } } = {
+  battleType: {
+    10: "Electro-flare",
+    11: "Corpse",
+  },
 };
 
 /**
@@ -373,7 +437,15 @@ export const RESISTANCE_HIDE_NEUTRAL = true;
  * picked defaults to the first compatible one and can be changed per column in
  * the difference summary.
  */
-export const AMMO_DAMAGE_FIELDS = ["damage", "damageType", "damageBonus"];
+export const AMMO_DAMAGE_FIELDS = [
+  "damage",
+  "damageType",
+  "damageBonus",
+  // Shotgun spread lives on the shell, not the gun: the Police Shotgun sets no
+  // shotgunPellets at all while its shells are 18 power x 7 pellets. Leaving
+  // this out made every ammo-fed shotgun report a seventh of its real damage.
+  "pellets",
+];
 
 /**
  * How the flat stat list is grouped and ordered.
@@ -404,6 +476,12 @@ export const STAT_SECTIONS: {
   icon: string;
   fields: string[];
 }[] = [
+  {
+    // What the thing *is*. Short, and first, because it frames everything below.
+    label: "Type",
+    icon: "🏷",
+    fields: ["battleType", "internalBattleType", "weaponType", "prisonType"],
+  },
   {
     // Sits directly under the per-attack ⚔ tables. Those already break damage
     // down by firing mode; these are the weapon-wide numbers behind them.
@@ -704,8 +782,6 @@ export const STAT_SECTIONS: {
       "ufos",
       "manufacture",
       "manufacture.*",
-      "componentOf",
-      "componentOf.*",
       "spawnedBy",
       "spawnedBy.*",
       "heldBy",

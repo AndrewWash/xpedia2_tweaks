@@ -27,7 +27,9 @@ import {
   REQUIREMENT_VIA_FIELDS,
   REQUIREMENTS_FROM_ARTICLE,
   REQUIREMENT_LABELS,
+  SIGN_MODE_FIELDS,
   ENUM_FIELDS,
+  ENUM_VALUE_LABELS,
   STAT_SECTIONS,
   STAT_SECTION_OTHER,
   DAMAGE_TYPE_FIELDS,
@@ -92,6 +94,31 @@ function mapDamageTypes(v: any): any {
   if (v == null) return v;
   if (Array.isArray(v)) return v.map(damageTypeValue);
   return damageTypeValue(v);
+}
+
+/**
+ * Hand-written label for one enum value, or null. Takes priority over the
+ * language file - see ENUM_VALUE_LABELS for why that is sometimes needed.
+ */
+export function enumOverrideLabel(key: string, value: any): string {
+  if (!key || value == null) return null;
+  const field = key in ENUM_VALUE_LABELS ? key : key.substring(key.lastIndexOf(".") + 1);
+  const map = ENUM_VALUE_LABELS[field];
+  return map && map[value] != null ? map[value] : null;
+}
+
+const SIGN_MODE_FIELD = new Set(SIGN_MODE_FIELDS);
+
+/** True for a field whose sign selects a mode - see SIGN_MODE_FIELDS. */
+function isSignModeField(key: string): boolean {
+  if (!key) return false;
+  if (SIGN_MODE_FIELD.has(key)) return true;
+  return SIGN_MODE_FIELD.has(key.substring(key.lastIndexOf(".") + 1));
+}
+
+/** Which mode a value is in: <= 0 is relative, > 0 absolute. */
+function signMode(v: number): number {
+  return v > 0 ? 1 : 0;
 }
 
 function skipKey(key: string): boolean {
@@ -283,6 +310,11 @@ export type Row = {
   pct: number;
   /** Value came from a linked entry rather than this one - see fieldAcross. */
   linked: boolean;
+  /**
+   * The values span more than one mode of a SIGN_MODE_FIELDS field, so they are
+   * not on a common scale. best/worst and the delta are suppressed.
+   */
+  mixedMode: boolean;
 };
 
 function makeRow(key: string, values: any[], dir?: number): Row {
@@ -325,6 +357,7 @@ function makeRow(key: string, values: any[], dir?: number): Row {
     delta: null,
     pct: null,
     linked: false,
+    mixedMode: false,
   };
 
   if (row.kind == "number") {
@@ -341,6 +374,19 @@ function makeRow(key: string, values: any[], dir?: number): Row {
     if (values.length == 2 && nums[0] != null && nums[1] != null) {
       row.delta = nums[1] - nums[0];
       row.pct = nums[0] == 0 ? null : (row.delta / Math.abs(nums[0])) * 100;
+    }
+
+    // Values from different modes are not on one scale, so any verdict drawn
+    // from them would be made up. Show the numbers, skip the judgement.
+    if (isSignModeField(key)) {
+      const modes = new Set(nums.filter((n) => n != null).map(signMode));
+      if (modes.size > 1) {
+        row.mixedMode = true;
+        row.best = -1;
+        row.worst = -1;
+        row.delta = null;
+        row.pct = null;
+      }
     }
   } else if (row.kind == "list") {
     // Mark the entries unique to each column so a cell can highlight them.
@@ -394,7 +440,7 @@ export function chosenAmmo(col: Col, picked: string): string {
  * across, leaving everything the gun does own (accuracy, TU, range, pellets)
  * alone. Without this every gun-vs-gun comparison shows an empty damage row.
  */
-function withAmmo(attack: any, ammoId: string) {
+export function withAmmo(attack: any, ammoId: string) {
   if (!attack || !ammoId) return attack;
   if (attack.damage != null) return attack; // weapon has its own damage
   const ammo = rul.items[ammoId];
@@ -410,10 +456,16 @@ function withAmmo(attack: any, ammoId: string) {
 
   const merged = Object.create(Object.getPrototypeOf(attack) || Object.prototype);
   Object.assign(merged, attack);
+  // Only reached for ammo-fed weapons, where the clip is authoritative for
+  // everything about the projectile - including how many of them there are.
   for (const f of AMMO_DAMAGE_FIELDS)
     if (shot[f] != null) merged[f] = shot[f];
   // The clip's damageAlter wins too - that is where ToHealth/ToStun live.
   if (shot.alter) merged.alter = Object.assign({}, attack.alter || {}, shot.alter);
+  // Pellet scatter is split across the two items: spread is a property of the
+  // shell, choke of the barrel (ProjectileFlyBState reads them from exactly
+  // those two places).
+  if (ammo.shotgunSpread != null) merged.shotgunSpread = ammo.shotgunSpread;
   merged.ammoFrom = ammoId;
   return merged;
 }

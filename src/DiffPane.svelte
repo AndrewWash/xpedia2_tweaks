@@ -9,7 +9,7 @@
    */
   import { Tr } from "./Components";
   import { rul } from "./Ruleset";
-  import { enumPrefix } from "./compareDiff";
+  import { enumPrefix, enumOverrideLabel } from "./compareDiff";
   import { createEventDispatcher } from "svelte";
 
   /**@type {import("./compareDiff").Diff}*/
@@ -232,7 +232,9 @@
                         {#if !group.present[i]}
                           <span class="diff-absent">‒</span>
                         {:else if row.kind == "enum"}
-                          {#if enumKey(row.key, v)}
+                          {#if enumOverrideLabel(row.key, v)}
+                            {enumOverrideLabel(row.key, v)}
+                          {:else if enumKey(row.key, v)}
                             <Tr s={enumKey(row.key, v)} />
                           {:else}
                             <em class="num">{num(v)}</em>
@@ -296,19 +298,38 @@
               </tr>
               {#each section.rows as row}
               <tr class:diff-same={!row.differs}>
-                <td class="diff-key-col"><Tr s={row.key} /></td>
+                <td class="diff-key-col">
+                  <Tr s={row.key} />{#if row.mixedMode}<span
+                      class="diff-via"
+                      title="These use different camouflage modes (relative vs absolute), so they are not on a common scale - no better/worse is shown"
+                      >⚠</span
+                    >{/if}
+                </td>
                 {#each row.values as v, i}
                   <td class={cellClass(row, i)}>
                     {#if v == null}
                       <span class="diff-absent">‒</span>
                     {:else if row.kind == "enum"}
-                      {#if enumKey(row.key, v)}
+                      {#if enumOverrideLabel(row.key, v)}
+                        {enumOverrideLabel(row.key, v)}
+                      {:else if enumKey(row.key, v)}
                         <Tr s={enumKey(row.key, v)} />
                       {:else}
                         <em class="num">{num(v)}</em>
                       {/if}
                     {:else if row.kind == "number"}
-                      <em class="num">{num(v)}</em>
+                      {#if row.compareValues}
+                        <em
+                          class="num"
+                          title="Seen from {num(row.compareValues[i])} tiles (ruleset value {num(v)})"
+                          >{num(row.compareValues[i])}</em
+                        >
+                        {#if num(row.compareValues[i]) !== num(v)}
+                          <span class="diff-raw">({num(v)})</span>
+                        {/if}
+                      {:else}
+                        <em class="num">{num(v)}</em>
+                      {/if}
                     {:else if row.kind == "bool"}
                       <span style="color:{v ? 'lime' : 'red'}">{v ? "✔" : "✘"}</span>
                     {:else if row.kind == "list"}

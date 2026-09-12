@@ -31,6 +31,32 @@ export type SaveInfo = {
   modified: number;
 };
 
+/**
+ * A soldier as the file states them, before any ruleset knowledge is applied.
+ *
+ * Kept deliberately dumb: this module parses, it does not interpret. Turning
+ * these into usable profiles - which needs the bonus tables and the armour
+ * stats - is damageSoldiers.soldiersFromSave.
+ */
+export type RawSoldier = {
+  /** Unique within the save: the file's ids are only unique per base. */
+  key: string;
+  name: string;
+  type: string;
+  /** currentStats verbatim. NOT the battle-time total - see soldiersFromSave. */
+  stats: { [k: string]: number };
+  rank: number;
+  armor: string;
+  /** Craft type id when aboard one, else "". */
+  craft: string;
+  /** Days until fit for duty. 0 when healthy. */
+  recovery: number;
+  /** Standing bonus names from transformationBonuses, repeated by their count. */
+  bonuses: string[];
+  /** Medals, which also carry bonuses via the commendation's own table. */
+  commendations: { name: string; level: number }[];
+};
+
 export type SaveState = {
   path: string;
   /** The save's own name, from the header document. */
@@ -44,6 +70,8 @@ export type SaveState = {
   /** Base count, so the UI can say what it summed. */
   bases: number;
   crafts: number;
+  /** The living roster, in file order. Excludes deadSoldiers by construction. */
+  crew: RawSoldier[];
 };
 
 /**
@@ -216,12 +244,23 @@ export function parseSave(text: string, path = ""): SaveState {
 
   const bases = Array.isArray(state.bases) ? state.bases : [];
   let crafts = 0;
-  for (const b of bases) {
+  const crew: RawSoldier[] = [];
+  for (let bi = 0; bi < bases.length; bi++) {
+    const b = bases[bi];
     if (!b || typeof b != "object") continue;
     add(b.items);
     for (const c of Array.isArray(b.crafts) ? b.crafts : []) {
       crafts++;
       add(c && c.items);
+    }
+    /**
+     * Only bases[].soldiers. `deadSoldiers` is a separate TOP-LEVEL key holding
+     * memorial records in the same shape - reading it would put casualties in
+     * the roster, so nothing here ever looks at it.
+     */
+    for (const sol of Array.isArray(b.soldiers) ? b.soldiers : []) {
+      const parsed = readSoldier(sol, bi);
+      if (parsed) crew.push(parsed);
     }
   }
 
@@ -233,6 +272,54 @@ export function parseSave(text: string, path = ""): SaveState {
     owned,
     bases: bases.length,
     crafts,
+    crew,
+  };
+}
+
+/** One soldier record, defensively. Returns null for anything unrecognisable. */
+function readSoldier(sol: any, baseIndex: number): RawSoldier {
+  if (!sol || typeof sol != "object") return null;
+  const name = typeof sol.name == "string" && sol.name ? sol.name : "Unnamed";
+
+  const stats: { [k: string]: number } = {};
+  const cur = sol.currentStats && typeof sol.currentStats == "object" ? sol.currentStats : {};
+  for (const k of Object.keys(cur)) {
+    const n = +cur[k];
+    if (!isNaN(n)) stats[k] = n;
+  }
+
+  /**
+   * A count per bonus name, so a bonus held twice counts twice. Flattened to a
+   * repeated list here rather than kept as a map, because summing a repeated
+   * list is the same code whichever source it came from.
+   */
+  const bonuses: string[] = [];
+  const tb = sol.transformationBonuses;
+  if (tb && typeof tb == "object")
+    for (const bonusName of Object.keys(tb)) {
+      const times = Math.max(1, Math.round(+tb[bonusName] || 1));
+      for (let i = 0; i < times; i++) bonuses.push(bonusName);
+    }
+
+  const commendations: { name: string; level: number }[] = [];
+  const list = sol.diary && Array.isArray(sol.diary.commendations) ? sol.diary.commendations : [];
+  for (const c of list) {
+    if (!c || typeof c != "object" || typeof c.commendationName != "string") continue;
+    commendations.push({ name: c.commendationName, level: Math.max(0, +c.decorationLevel || 0) });
+  }
+
+  return {
+    // Ids restart per base, so the base index keeps them unique across a save.
+    key: "sv" + baseIndex + "_" + (sol.id != null ? sol.id : name),
+    name,
+    type: typeof sol.type == "string" ? sol.type : "STR_SOLDIER",
+    stats,
+    rank: +sol.rank || 0,
+    armor: typeof sol.armor == "string" ? sol.armor : "",
+    craft: sol.craft && typeof sol.craft.type == "string" ? sol.craft.type : "",
+    recovery: +sol.recovery || 0,
+    bonuses,
+    commendations,
   };
 }
 

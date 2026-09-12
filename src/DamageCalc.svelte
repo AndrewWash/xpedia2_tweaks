@@ -33,14 +33,17 @@
     wearableArmors,
     exportSoldiers,
     importSoldiers,
+    soldiersFromSave,
   } from "./damageSoldiers";
   import { STAT_KEYS } from "./damageCalc";
   import { scoreBand, scoreTurns } from "./damageScore";
+  import { missionList, missionUnits, missionRows } from "./damageMissions";
   import { findSaves, stampSaves, sortSaves, loadSave } from "./damageSave";
   import {
     buildAvailability,
     passesAvailability,
     availabilityNote,
+    armorAvailable,
   } from "./damageAvailable";
   import { download } from "./exportPedia";
 
@@ -100,6 +103,17 @@
    *  things a gal chooses, and their power values swamp the ranking. */
   let includeFixed = false;
   let targetFilter = "";
+  /**
+   * Mission filter for the enemy list. "" means no restriction.
+   *
+   * Saves cross-referencing the pedia: pick the raid you are about to fly and
+   * the enemy list collapses to what can actually show up in it.
+   */
+  let missionId = "";
+  let missionFilter = "";
+  let allMissions = [];
+  /** Show the deployment's troop table in the enemy header. */
+  let showDeployment = false;
   let expandedId = "";
   let weaponId = "";
   let importError = "";
@@ -119,6 +133,29 @@
    * happily list every piece of loot you have never found. See damageAvailable.
    */
   let availMode = "off";
+
+  /**
+   * Where the soldier list comes from.
+   *
+   *   "save"    the real crew out of the chosen saved game, read-only stats
+   *   "manual"  the hand-entered profiles, which keep working exactly as before
+   *
+   * Flips to "save" on its own the first time a save with a crew is loaded -
+   * that is the mode you want by default once you have pointed it at a campaign -
+   * but never flips back, so choosing manual sticks.
+   */
+  let soldierSource = "manual";
+  let sourceTouched = false;
+  /** The crew as parsed. Never persisted: it belongs to the save, not to us. */
+  let saveCrew = [];
+  let crewFilter = "";
+  /**
+   * Armour tried out on a save soldier, keyed by soldier id. Kept apart from the
+   * crew itself so the parsed data stays a faithful copy of the save and the
+   * override can always be undone.
+   */
+  let crewArmor = {};
+  const CREW_ARMOR_PREF = "xpediaCrewArmor";
   let saveList = [];
   let savePath = "";
   let saveState = null;
@@ -134,7 +171,10 @@
   onMount(() => {
     allWeapons = weaponList();
     allTargets = targetList();
-    armorChoices = wearableArmors();
+    // Built once, like the weapon list: it walks every deployment in the mod.
+    const targetable = new Set(allTargets.map((t) => t.id));
+    allMissions = missionList((id) => targetable.has(id));
+    // armorChoices is now derived per soldier - see below.
     soldiers = loadSoldiers();
     if (!soldiers.length) soldiers = [blankSoldier("Gal")];
     currentId = soldiers[0].id;
@@ -171,6 +211,13 @@
       remembered = "";
     }
     if (remembered && saveList.some((x) => x.path == remembered)) savePath = remembered;
+
+    try {
+      const raw = JSON.parse(localStorage[CREW_ARMOR_PREF] || "{}");
+      if (raw && typeof raw == "object") crewArmor = raw;
+    } catch (e) {
+      crewArmor = {};
+    }
   }
 
   async function pickSave(path) {
@@ -194,12 +241,30 @@
     saveState = loaded;
   }
 
+  /**
+   * The crew, rebuilt when the save changes.
+   *
+   * Switches the pane to the save's soldiers the first time a crew appears -
+   * that is the point of loading a campaign - but only if the user has not
+   * already made a choice, so picking Manual sticks.
+   */
+  $: saveCrew = saveState ? soldiersFromSave(saveState.crew) : [];
+  $: if (saveCrew.length && !sourceTouched && soldierSource != "save") {
+    soldierSource = "save";
+  }
+  // Whatever list is showing, keep a valid selection in it.
+  $: if (roster.length && !roster.some((x) => x.id == currentId)) currentId = roster[0].id;
+
   /** Rebuilt only when the save or the weapon list changes, never per keystroke. */
   $: availability =
     saveState && allWeapons.length ? buildAvailability(allWeapons, saveState) : new Map();
 
-  /** Turning the filter on without a save chosen is a no-op, so load one. */
-  $: if (availMode != "off" && savePath && !saveState && !saveLoading) pickSave(savePath);
+  /**
+   * Load the chosen save eagerly. It used to wait until the availability filter
+   * was switched on, but the crew is worth having on its own - and at ~17ms a
+   * parse there is nothing to defer.
+   */
+  $: if (savePath && !saveState && !saveLoading && !saveError) pickSave(savePath);
 
   const AVAIL_MODES = [
     { id: "off", label: "Off", title: "Every weapon in the mod" },
@@ -218,15 +283,120 @@
     },
   ];
 
+  /**
+   * Only the armours THIS soldier can wear.
+   *
+   * Recomputed when the selection changes, because the allowed set is per
+   * soldier type - a plain gal has no business being offered "camo paint /cat".
+   */
+  $: armorChoices = wearableArmors(
+    current && current.fromSave ? current.fromSave.type : ""
+  ).filter(
+    (a) =>
+      // The campaign filter applies to what she can put ON as well as what she
+      // can pick up - offering a suit you do not own is the same lie either way.
+      // The armour actually worn always survives, so a soldier is never shown
+      // wearing something the list then denies exists.
+      armorAvailable(a.id, availMode, saveState) ||
+      (current && current.fromSave && a.id == current.fromSave.wornArmor)
+  );
   $: shownArmors = !armorFilter
     ? armorChoices
     : armorChoices.filter((a) =>
         a.title.toLowerCase().includes(armorFilter.trim().toLowerCase())
       );
 
-  $: current = soldiers.find((s) => s.id == currentId) || null;
+  /**
+   * The armours actually offered, always including the one being worn.
+   *
+   * The list is capped at 300 of ~540, and the cap silently ate the selection:
+   * a hybrid in STR_HYBRID_ARMOR_THINMAN_UC sorts past the cut, so the picker
+   * had no matching option and displayed "(none)" for a fully armoured gal.
+   * Worse, a select with no matching option can fire a change carrying "",
+   * which wrote an override that really did strip her armour.
+   */
+  $: armorOptions = (() => {
+    const list = shownArmors.slice(0, 300);
+    const worn = current && current.armor;
+    if (worn && !list.some((a) => a.id == worn))
+      return [{ id: worn, title: rul.tr(worn) + " (worn)" }, ...list];
+    return list;
+  })();
+
+  /** Whichever list is on show, filtered by the search box. */
+  $: roster = soldierSource == "save" ? saveCrew : soldiers;
+  $: shownRoster = crewFilter
+    ? roster.filter((s) => matchesSearch(s.name, crewFilter))
+    : roster;
+
+  /**
+   * The selected soldier, with any armour the user is trying out folded in.
+   *
+   * A save soldier is copied rather than mutated so saveCrew stays exactly what
+   * the file said - the override lives in crewArmor and can be dropped again.
+   */
+  $: current = (() => {
+    const list = shownRoster.length ? shownRoster : roster;
+    const base = list.find((s) => s.id == currentId) || list[0] || null;
+    if (!base || !base.fromSave) return base;
+    const chosen = crewArmor[base.id];
+    return { ...base, armor: chosen == null ? base.fromSave.wornArmor : chosen };
+  })();
   $: stats = current ? effectiveStats(current) : null;
-  $: caps = current ? statCaps("STR_SOLDIER") : {};
+  $: caps = current ? statCaps(current.fromSave ? current.fromSave.type : "STR_SOLDIER") : {};
+  /** Save soldiers show their real numbers; only manual profiles are editable. */
+  $: readOnlySoldier = !!(current && current.fromSave);
+
+  /**
+   * What the worn armour is doing to one stat, so the displayed total can be
+   * taken apart. The form shows the number the calculator actually uses -
+   * armour included - because you are almost never fighting in your underwear,
+   * and a Firing of 57 that is really 47 in a heavy suit is a lie.
+   *
+   * Reactive, and closed over its inputs, for the same reason `passing` is:
+   * Svelte tracks what an expression references, not what the functions it
+   * calls close over. As a plain function the deltas went stale - swapping a
+   * gal into Annihilator moved every stat while the little +5 beside them still
+   * described the Scout outfit she had taken off.
+   */
+  $: statDelta = ((cur, eff) => (k) => {
+    if (!cur || !eff) return 0;
+    return (+eff[k] || 0) - (+cur.stats[k] || 0);
+  })(current, stats);
+
+  /** What the armour <select> is bound to. Mirrors the current soldier. */
+  let armorPick = "";
+  $: armorPick = current ? current.armor : "";
+
+  function setArmor(id) {
+    if (!current) return;
+    // Picking something is the end of searching for it.
+    armorFilter = "";
+    if (current.fromSave) {
+      crewArmor = { ...crewArmor, [current.id]: id };
+      try {
+        localStorage[CREW_ARMOR_PREF] = JSON.stringify(crewArmor);
+      } catch (e) {
+        // Losing the override is not worth failing over.
+      }
+      return;
+    }
+    current.armor = id;
+    persist();
+  }
+
+  /** Put a save soldier's numbers into an editable profile you own. */
+  function copyToManual() {
+    if (!current || !current.fromSave) return;
+    const copy = blankSoldier(current.name);
+    for (const k of STAT_KEYS) copy.stats[k] = +current.stats[k] || 0;
+    copy.armor = current.armor;
+    soldiers = [...soldiers, copy];
+    soldierSource = "manual";
+    sourceTouched = true;
+    currentId = copy.id;
+    persist();
+  }
   $: target = targetId ? resolveTarget(targetId) : null;
   /**
    * A mod may take this choice away from the player. `fixedUserOptions` is
@@ -466,11 +636,36 @@
   /** How many weapons each damage type would leave, for the chip tooltips. */
   $: dtCount = dtOptions.reduce((acc, d) => ((acc[+d.id] = d.n), acc), {});
 
+  $: mission = missionId ? allMissions.find((m) => m.id == missionId) : null;
+
+  /**
+   * The units this mission can field, or null when nothing should be filtered.
+   *
+   * Null for a mission whose faction the ruleset does not pin down: filtering
+   * on an empty set would show no enemies at all, which is worse than showing
+   * every enemy and saying why.
+   */
+  $: missionRoster =
+    missionId && mission && !mission.unresolved ? missionUnits(missionId) : null;
+
+  $: deploymentRows = missionId && showDeployment ? missionRows(missionId) : [];
+
+  $: shownMissions = missionFilter
+    ? allMissions.filter((m) => matchesSearch(m.title, missionFilter))
+    : allMissions;
+
   // Same comma-separated behaviour as the weapon search, so "ninja, muton"
   // stands two enemies side by side in the one-weapon-vs-enemies view.
-  $: shownTargets = !targetFilter
-    ? allTargets
-    : allTargets.filter((t) => matchesSearch(t.title, targetFilter));
+  $: shownTargets = allTargets.filter(
+    (t) =>
+      (!missionRoster || missionRoster.has(t.id)) &&
+      (!targetFilter || matchesSearch(t.title, targetFilter))
+  );
+
+  // A mission narrowed the list out from under the current pick: move to one
+  // that is actually in it rather than leaving a stale enemy on screen.
+  $: if (missionRoster && targetId && !missionRoster.has(targetId))
+    targetId = shownTargets.length ? shownTargets[0].id : "";
 
   // Ranking every weapon is the expensive call; keep it to one reactive block.
   $: ranked =
@@ -1065,94 +1260,6 @@
 
   <div class="dmg-body">
     <aside class="dmg-side">
-      <section class="dmg-block">
-        <header>
-          Soldier
-          <button class="dmg-mini" title="Add a soldier" on:click={addSoldier}>+</button>
-          <button
-            class="dmg-mini"
-            title="Delete this soldier"
-            disabled={soldiers.length <= 1}
-            on:click={removeSoldier}>−</button
-          >
-        </header>
-
-        <select class="dmg-input" bind:value={currentId}>
-          {#each soldiers as s}
-            <option value={s.id}>{s.name}</option>
-          {/each}
-        </select>
-
-        {#if current}
-          <input class="dmg-input" bind:value={current.name} on:change={persist} />
-
-          <div class="dmg-armorpick">
-            <span class="dmg-rowlabel">Armour</span>
-            <input
-              class="dmg-input"
-              placeholder="Search armour…"
-              bind:value={armorFilter}
-            />
-            <select
-              class="dmg-input"
-              size={armorFilter ? 8 : 1}
-              bind:value={current.armor}
-              on:change={persist}
-            >
-              <option value="">(none)</option>
-              {#each shownArmors.slice(0, 300) as a}
-                <option value={a.id}>{@html a.title}</option>
-              {/each}
-            </select>
-            {#if armorFilter}
-              <span class="dmg-cap">{shownArmors.length} of {armorChoices.length}</span>
-            {/if}
-          </div>
-
-          <button class="dmg-mini dmg-wide" on:click={() => (editing = !editing)}>
-            {editing ? "Hide stats" : "Edit stats"}
-          </button>
-
-          {#if editing}
-            {#each STAT_KEYS as k}
-              <label class="dmg-row dmg-stat">
-                <span><Tr s={k} /></span>
-                <input
-                  class="dmg-input dmg-num"
-                  type="number"
-                  min="0"
-                  bind:value={current.stats[k]}
-                  on:change={persist}
-                />
-                {#if caps[k]}<span class="dmg-cap">/ {caps[k]}</span>{/if}
-              </label>
-            {/each}
-            <p class="dmg-hint">
-              Values may exceed the cap — armour and commendation bonuses genuinely do.
-            </p>
-          {/if}
-
-          {#if current.armor && stats}
-            <p class="dmg-hint">
-              Shown stats include the armour's bonuses.
-            </p>
-          {/if}
-
-          <div class="dmg-io">
-            <button
-              class="dmg-mini"
-              on:click={() => download("xpedia-soldiers.json", exportSoldiers(soldiers))}
-              >Export</button
-            >
-            <label class="dmg-mini dmg-file">
-              Import
-              <input type="file" accept="application/json,.json" on:change={onImport} />
-            </label>
-          </div>
-          {#if importError}<p class="dmg-error">{importError}</p>{/if}
-        {/if}
-      </section>
-
       <!-- Deliberately NOT cleared by "Clear filters": which campaign you are
            planning for is a context you set once, not a filter you shuffle. -->
       <section class="dmg-block">
@@ -1210,6 +1317,185 @@
           {:else if savePath}
             <p class="dmg-cap">Pick a mode to load this save.</p>
           {/if}
+        {/if}
+      </section>
+
+      <section class="dmg-block">
+        <header>
+          Soldier
+          <button
+            class="dmg-mini"
+            title="Add a manual soldier"
+            disabled={soldierSource == "save"}
+            on:click={addSoldier}>+</button
+          >
+          <button
+            class="dmg-mini"
+            title="Delete this manual soldier"
+            disabled={soldierSource == "save" || soldiers.length <= 1}
+            on:click={removeSoldier}>−</button
+          >
+        </header>
+
+        {#if saveCrew.length}
+          <div class="dmg-chips">
+            <button
+              class="dmg-chip"
+              class:dmg-chip-on={soldierSource == "save"}
+              title="The real crew from the chosen saved game"
+              on:click={() => {
+                soldierSource = "save";
+                sourceTouched = true;
+                currentId = "";
+              }}
+            >
+              From save <span class="dmg-chip-n">{saveCrew.length}</span>
+            </button>
+            <button
+              class="dmg-chip"
+              class:dmg-chip-on={soldierSource == "manual"}
+              title="Profiles you typed in yourself"
+              on:click={() => {
+                soldierSource = "manual";
+                sourceTouched = true;
+                currentId = "";
+              }}
+            >
+              Manual <span class="dmg-chip-n">{soldiers.length}</span>
+            </button>
+          </div>
+        {/if}
+
+        <!-- Same shape as the Enemy picker: a filter box over a real list box,
+             so a crew of forty is one scroll rather than a blind dropdown. -->
+        <input
+          class="dmg-input"
+          placeholder="Search soldiers… (comma-separate)"
+          bind:value={crewFilter}
+        />
+        <select class="dmg-input dmg-list" size={roster.length > 1 ? 8 : 2} bind:value={currentId}>
+          {#each shownRoster.slice(0, 200) as s}
+            <option value={s.id}>{s.name}{s.fromSave && s.fromSave.note ? " · " + s.fromSave.note : ""}</option>
+          {/each}
+        </select>
+        {#if crewFilter}
+          <span class="dmg-cap">{shownRoster.length} of {roster.length}</span>
+        {/if}
+
+        {#if current}
+          {#if !readOnlySoldier}
+            <input class="dmg-input" bind:value={current.name} on:change={persist} />
+          {/if}
+
+          <div class="dmg-armorpick">
+            <span class="dmg-rowlabel">Armour</span>
+            <input
+              class="dmg-input"
+              placeholder="Search armour…"
+              bind:value={armorFilter}
+            />
+            <!-- bind:value, not value=. A one-way value on a <select> is applied
+                 before its options finish re-rendering, so the moment the list
+                 changed (a filter, or the campaign mode trimming it) the browser
+                 found no matching option and fell back to "(none)" - showing a
+                 fully armoured gal as wearing nothing. -->
+            <select
+              class="dmg-input"
+              size={armorFilter ? 8 : 1}
+              bind:value={armorPick}
+              on:change={(e) => setArmor(e.target.value)}
+            >
+              <option value="">(none)</option>
+              {#each armorOptions as a}
+                <option value={a.id}>{@html a.title}</option>
+              {/each}
+            </select>
+            {#if armorFilter}
+              <span class="dmg-cap">{shownArmors.length} of {armorChoices.length}</span>
+            {/if}
+          </div>
+
+          <button class="dmg-mini dmg-wide" on:click={() => (editing = !editing)}>
+            {editing ? "Hide stats" : "Edit stats"}
+          </button>
+
+          {#if editing}
+            {#each STAT_KEYS as k}
+              <label class="dmg-row dmg-stat">
+                <span><Tr s={k} /></span>
+                <!-- Ahead of the box, and always present once a save soldier is
+                     selected even when the modifier is zero: an absent span
+                     would let rows with no armour effect slide their input left
+                     and break the column. -->
+                {#if readOnlySoldier}
+                  <span class="dmg-statdelta" class:dmg-statdown={statDelta(k) < 0}>
+                    {statDelta(k) ? (statDelta(k) > 0 ? "+" : "") + statDelta(k) : ""}
+                  </span>
+                {/if}
+                <input
+                  class="dmg-input dmg-num"
+                  class:dmg-readonly={readOnlySoldier}
+                  type="number"
+                  min="0"
+                  readonly={readOnlySoldier}
+                  tabindex={readOnlySoldier ? -1 : 0}
+                  title={readOnlySoldier && statDelta(k)
+                    ? current.stats[k] + " base " + (statDelta(k) > 0 ? "+" : "") + statDelta(k) + " from armour"
+                    : ""}
+                  value={readOnlySoldier ? (stats ? stats[k] : 0) : current.stats[k]}
+                  on:change={(e) => {
+                    if (readOnlySoldier) return;
+                    current.stats[k] = +e.target.value || 0;
+                    persist();
+                  }}
+                />
+                <!-- Always rendered, so a stat with no cap does not let the
+                     row above it collapse and knock the column out. -->
+                <span class="dmg-cap dmg-statcap">{caps[k] ? "/ " + caps[k] : ""}</span>
+              </label>
+            {/each}
+            {#if readOnlySoldier}
+              <p class="dmg-hint">
+                As they fight: from the save, with transformation and commendation
+                bonuses and the armour worn. Copy to manual to change them.
+              </p>
+              <button class="dmg-mini dmg-wide" on:click={copyToManual}>
+                Copy to manual
+              </button>
+            {:else}
+              <p class="dmg-hint">
+                Values may exceed the cap — armour and commendation bonuses genuinely do.
+              </p>
+            {/if}
+          {/if}
+
+          {#if current.fromSave && current.armor != current.fromSave.wornArmor}
+            <p class="dmg-hint">
+              Trying a different armour — worn in the save:
+              {@html current.fromSave.wornArmor
+                ? rul.tr(current.fromSave.wornArmor)
+                : "none"}.
+              <button
+                class="dmg-mini"
+                on:click={() => setArmor(current.fromSave.wornArmor)}>Reset</button
+              >
+            </p>
+          {:else if current.armor && stats}
+            <p class="dmg-hint">Shown stats include the armour's bonuses.</p>
+          {/if}
+
+          <div class="dmg-io">
+            <button
+              class="dmg-mini"
+              on:click={() => download("xpedia-soldiers.json", exportSoldiers(soldiers))}
+              >Export</button
+            >
+            <label class="dmg-mini dmg-file">
+              Import
+              <input type="file" accept="application/json,.json" on:change={onImport} />
+            </label>
+          </div>
+          {#if importError}<p class="dmg-error">{importError}</p>{/if}
         {/if}
       </section>
 
@@ -1274,6 +1560,40 @@
       </section>
 
       {#if view == "weapons"}
+        <section class="dmg-block">
+          <header>
+            Mission
+            {#if missionId}
+              <button
+                class="dmg-mini"
+                title="Show every enemy again"
+                on:click={() => {
+                  missionId = "";
+                  missionFilter = "";
+                }}>✕</button
+              >
+            {/if}
+          </header>
+          <input
+            class="dmg-input"
+            placeholder="Search missions…"
+            bind:value={missionFilter}
+          />
+          <select class="dmg-input dmg-list" size="6" bind:value={missionId}>
+            <option value="">(any mission — all enemies)</option>
+            {#each shownMissions.slice(0, 400) as m}
+              <option value={m.id}>{@html m.title} ({m.count})</option>
+            {/each}
+          </select>
+          {#if missionId}
+            <p class="dmg-cap">
+              Enemies resolved from the deployment's ranks, its reinforcement
+              waves and any follow-on stage. Script-spawned units and separate
+              hunt missions are not included.
+            </p>
+          {/if}
+        </section>
+
         <section class="dmg-block">
           <header>Enemy</header>
           <input
@@ -1360,6 +1680,69 @@
                 {/if}
               </div>
             {/if}
+            {#if mission}
+              <div class="dmg-missionbar">
+                <span class="dmg-missiontag">Mission</span>
+                <b>{@html mission.title}</b>
+                {#if mission.unresolved}
+                  <span class="dmg-cap"
+                    >faction varies — the ruleset does not say who runs this one, so the
+                    enemy list is not filtered</span
+                  >
+                {:else}
+                  <span class="dmg-cap">{mission.count} possible enemies</span>
+                {/if}
+                <button
+                  class="dmg-mini"
+                  title="Troop rows for this deployment: how many, and how many start outside the craft or building"
+                  on:click={() => (showDeployment = !showDeployment)}
+                >
+                  {showDeployment ? "Hide" : "Show"} deployment
+                </button>
+              </div>
+
+              {#if showDeployment}
+                <table class="dmg-deploy">
+                  <thead>
+                    <tr>
+                      <td>Spawns</td>
+                      <td class="num">Qty</td>
+                      <td
+                        class="num"
+                        title="Share of this group placed away from the craft or building, rather than inside it"
+                        >% outside</td
+                      >
+                      <td>When</td>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {#each deploymentRows as r}
+                      <tr>
+                        <td>
+                          {#if r.units.length}
+                            {@html r.units.map((u) => rul.tr(u)).join(", ")}
+                          {:else}
+                            <span class="dmg-cap">unknown — faction not fixed</span>
+                          {/if}
+                        </td>
+                        <td class="num">
+                          {r.low == r.high ? r.low : r.low + "–" + r.high}
+                        </td>
+                        <td class="num" class:dmg-outofrange={r.outside >= 50}>
+                          {r.outside}%
+                        </td>
+                        <td class="dmg-cap">
+                          {r.reinforcement ? "reinforcement" : "start"}{r.stage
+                            ? " · " + r.stage
+                            : ""}
+                        </td>
+                      </tr>
+                    {/each}
+                  </tbody>
+                </table>
+              {/if}
+            {/if}
+
             {#if target.shield}
               <p class="dmg-warn">
                 ⚠ This enemy has an energy shield ({target.shield.capacity} capacity,

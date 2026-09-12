@@ -2010,6 +2010,39 @@ tr.diff-row > td:first-child {
   text-align: right;
 }
 
+/* A stat read out of the save. It is not editable, and must not invite a click
+   by looking like the manual profile's fields. */
+.dmg-readonly {
+  opacity: 0.55;
+  border-style: dashed;
+  cursor: default;
+}
+
+/* What the worn armour is adding to, or taking off, that stat.
+   Sits to the LEFT of the input and holds a fixed width whether or not it has
+   anything to say, so every stat box lines up in one column. */
+.dmg-statdelta {
+  font-size: 85%;
+  color: #6ee36e;
+  width: 2.6em;
+  flex: 0 0 auto;
+  text-align: right;
+  white-space: nowrap;
+}
+
+.dmg-statdown {
+  color: #ff9d5c;
+}
+
+/* The cap after the box is the last variable-width thing in the row - "/ 5" and
+   "/ 150" are not the same size, and with the label flexing it was the cap that
+   decided where each input landed. Fixed so the whole column lines up. */
+.dmg-statcap {
+  width: 3em;
+  flex: 0 0 auto;
+  text-align: left;
+}
+
 .dmg-row {
   display: flex;
   align-items: center;
@@ -2023,8 +2056,16 @@ tr.diff-row > td:first-child {
   font-size: 90%;
 }
 
+/* The stat's name. Allowed to SHRINK rather than push: "VooDoo power" is wider
+   than every other label, and with `flex: 1 1 auto` its min-content width shoved
+   that one row's input 15px right and broke the column. Ellipsis keeps the
+   alignment safe for any label, including a longer translation. */
 .dmg-stat > span:first-child {
-  flex: 1 1 auto;
+  flex: 1 1 0;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .dmg-cap {
@@ -2415,6 +2456,36 @@ tr.diff-row > td:first-child {
 
 .dmg-resist-strong b {
   color: #ff9d5c;
+}
+
+/* The mission bar above the enemy header, and its troop breakdown. */
+.dmg-missionbar {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  font-size: 88%;
+  margin-bottom: 0.4rem;
+}
+
+.dmg-missiontag {
+  opacity: 0.55;
+}
+
+.dmg-deploy {
+  border-collapse: collapse;
+  margin-bottom: 0.5rem;
+  font-size: 88%;
+}
+
+.dmg-deploy td {
+  border: 1px solid var(--border);
+  padding: 0.05em 0.4em;
+}
+
+.dmg-deploy thead td {
+  background: var(--table-header);
+  font-weight: bold;
 }
 
 .dmg-sortnote {

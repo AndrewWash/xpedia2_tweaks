@@ -273,10 +273,25 @@ export function expectedHits(
  *   rank - a damage-bonus input on 12 weapons (the Laslock Shotgun's power
  *          scales with it: base 16 for a swabby, 31 for a Pirate Queen).
  *          Leaving it out silently zeroed the bonus on all of them.
+ *
+ * THE ORDER HERE IS THE ORDER THE FORM SHOWS. Every other use iterates rather
+ * than indexing, so this stays one list rather than a second display-order
+ * array that could quietly drift out of step when a stat is added.
  */
 export const STAT_KEYS = [
-  "tu", "stamina", "health", "bravery", "reactions", "firing",
-  "throwing", "strength", "psiStrength", "psiSkill", "melee", "mana", "rank",
+  "rank",
+  "tu",
+  "stamina", // Energy
+  "health",
+  "bravery",
+  "reactions",
+  "firing",
+  "throwing",
+  "melee",
+  "strength",
+  "mana", // Max Freshness
+  "psiStrength", // VooDoo Power
+  "psiSkill", // VooDoo Skill
 ];
 
 /**

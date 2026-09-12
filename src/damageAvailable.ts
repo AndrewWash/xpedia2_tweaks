@@ -140,6 +140,36 @@ export function buildAvailability(
   return out;
 }
 
+/**
+ * Whether an ARMOUR can be put on, under the chosen mode.
+ *
+ * An armour is stocked as an ordinary item named by its `storeItem`, so its
+ * availability is that item's - the same 1:1 link Compare already follows to
+ * find an armour's research requirements (REQUIREMENT_VIA_FIELDS).
+ *
+ * Two cases mean "always available" rather than "unavailable": no `storeItem`
+ * at all, and the explicit STR_NONE the mod uses for innate suits that cost you
+ * nothing to wear. 539 of 567 armours name a store item; the rest are free.
+ */
+export function armorAvailable(
+  armorId: string,
+  mode: AvailabilityMode,
+  save: SaveState
+): boolean {
+  if (mode == "off" || !save) return true;
+  const armor = rul.armors ? rul.armors[armorId] : null;
+  if (!armor) return true;
+
+  const store = armor.storeItem;
+  if (!store || store == "STR_NONE") return true;
+
+  if ((save.owned.get(store) || 0) > 0) return true;
+  if (mode == "stores") return false;
+
+  const item = rul.items ? rul.items[store] : null;
+  return canBuy(item, save.discovered) || canMake(item, save.discovered);
+}
+
 /** Does this weapon pass the chosen mode? */
 export function passesAvailability(
   id: string,

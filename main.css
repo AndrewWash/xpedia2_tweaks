@@ -2116,6 +2116,26 @@ tr.diff-row > td:first-child {
   display: inline-block;
 }
 
+/* The .sav picker sits under the campaign select, which has its own top
+   margin; without this the two touch. */
+.dmg-input + .dmg-file {
+  margin-top: 0.4rem;
+}
+
+/* Nudges the glyph onto the same optical baseline as the header text - it
+   sits high in most fonts. */
+.dmg-refresh {
+  line-height: 1;
+  padding-top: 0.1rem;
+}
+
+/* Drop a .sav anywhere on the Campaign panel. Worth being obvious about,
+   because for an exported page opened from a file it is the ONLY way in. */
+.dmg-block.dmg-dropping {
+  outline: 2px dashed var(--link);
+  outline-offset: 2px;
+}
+
 .dmg-file input {
   position: absolute;
   inset: 0;

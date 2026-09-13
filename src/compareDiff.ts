@@ -25,6 +25,7 @@ import {
   FORCE_FIELDS,
   REQUIREMENT_FIELDS,
   REQUIREMENT_VIA_FIELDS,
+  REQUIREMENT_VIA_CHAINS,
   REQUIREMENTS_FROM_ARTICLE,
   REQUIREMENT_LABELS,
   SIGN_MODE_FIELDS,
@@ -231,13 +232,18 @@ function firstValue(entries: any[], key: string): any[] {
 }
 
 /**
- * First non-empty value for `key`, looked for on every entry sharing this id
- * and then, only if those have nothing, through the single-target links in
- * REQUIREMENT_VIA_FIELDS. `linked` says which of the two it came from.
+ * First non-empty value for `key`, looked for on every entry sharing this id,
+ * then through the single-hop links in REQUIREMENT_VIA_FIELDS, and last through
+ * the multi-hop routes in REQUIREMENT_VIA_CHAINS. `linked` says whether it came
+ * from the entry itself or from somewhere it points at.
  *
- * Note the links are strictly 1:1 (see REQUIREMENT_VIA_FIELDS) - following a
- * fan-out backlink was tried and reverted because it attributed a casino
- * coupon's prerequisites to whatever the coupon could produce.
+ * Order matters: an entry's own value always wins, a one-hop link beats a
+ * two-hop one, and the chains are the last resort because each extra hop is
+ * another chance to attribute the wrong thing.
+ *
+ * Every link is strictly 1:1 - following a fan-out backlink was tried and
+ * reverted because it attributed a casino coupon's prerequisites to whatever
+ * the coupon could produce. followChain enforces the same rule per step.
  */
 function fieldAcross(col: Col, key: string): { list: any[]; linked: boolean } {
   if (!col) return null;
@@ -253,6 +259,55 @@ function fieldAcross(col: Col, key: string): { list: any[]; linked: boolean } {
       if (via) return { list: via, linked: true };
     }
 
+  for (const e of col.entries)
+    for (const chain of REQUIREMENT_VIA_CHAINS) {
+      const targetId = followChain(e, chain);
+      if (!targetId) continue;
+      const via = firstValue(sourcesFor(targetId), key);
+      if (via) return { list: via, linked: true };
+    }
+
+  return null;
+}
+
+/**
+ * Walk a REQUIREMENT_VIA_CHAINS route from one entry to an id, or null.
+ *
+ * Every step must resolve to EXACTLY ONE id. A list of one is fine - `users`
+ * and `spawnedBy` are lists that in practice hold a single entry - but a step
+ * with two or more is abandoned rather than guessed at, which is the same 1:1
+ * discipline REQUIREMENT_VIA_FIELDS keeps and for the same reason: attributing
+ * one unit's research to an armour three different units wear would be worse
+ * than showing nothing.
+ */
+function followChain(entry: any, chain: string[]): string {
+  let current: any[] = [entry];
+  for (let i = 0; i < chain.length; i++) {
+    /**
+     * Every entry sharing the id is searched, not just the first.
+     *
+     * Taking allEntries(id)[0] looked right and was wrong: KINDS puts `items`
+     * before `units`, and plenty of creatures have an item, a unit AND a
+     * research topic under one id - STR_GIANT_RAT_TERRORIST is all three. The
+     * first hit was then the item, which carries no `spawnedBy`, so the chain
+     * died one step from the answer.
+     */
+    let id: string = null;
+    for (const e of current) {
+      const v = e ? e[chain[i]] : null;
+      const one = Array.isArray(v) ? (v.length == 1 ? v[0] : null) : v;
+      if (one && typeof one == "string") {
+        id = one;
+        break;
+      }
+    }
+    if (!id) return null;
+    // The last step's value IS the target; earlier ones name entries to keep
+    // walking from.
+    if (i == chain.length - 1) return id;
+    current = allEntries(id);
+    if (!current.length) return null;
+  }
   return null;
 }
 

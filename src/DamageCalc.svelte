@@ -41,7 +41,7 @@
   import { STAT_KEYS } from "./damageCalc";
   import { scoreBand, scoreTurns } from "./damageScore";
   import { missionList, missionUnits, missionRows } from "./damageMissions";
-  import { findSaves, stampSaves, sortSaves, loadSave } from "./damageSave";
+  import { findSaves, stampSaves, sortSaves, loadSave, parseSave } from "./damageSave";
   import {
     buildAvailability,
     passesAvailability,
@@ -211,7 +211,12 @@
     } catch (e) {
       // Ordering will just be alphabetical.
     }
-    saveList = sortSaves(found);
+    // A rescan must not drop files the user handed us - they are not on disk
+    // and there is no way to find them again.
+    saveList = [
+      ...saveList.filter((x) => localSaves.has(x.path)),
+      ...sortSaves(found).filter((x) => !localSaves.has(x.path)),
+    ];
 
     let remembered = "";
     try {
@@ -229,6 +234,81 @@
     }
   }
 
+  /**
+   * Rescan for saves, and re-read the one already chosen.
+   *
+   * Cheap, because nothing about saves is cached: only the selected PATH is
+   * remembered, in localStorage. So this is not the navbar's "purge cache and
+   * reload" - that one wipes IndexedDB to re-read the mod rulesets and does
+   * nothing at all for saves. This picks up a game saved thirty seconds ago
+   * without touching the page.
+   */
+  let savesRefreshing = false;
+  async function refreshSaves() {
+    savesRefreshing = true;
+    const keep = savePath;
+    await discoverSaves();
+    // The file itself has almost certainly changed, not just the list.
+    if (keep && saveList.some((x) => x.path == keep)) await pickSave(keep);
+    savesRefreshing = false;
+  }
+
+  /**
+   * An exported HTML opened by double-click cannot reach the game folder AT
+   * ALL, and no amount of retrying will change that: `/user/` resolves to the
+   * drive root rather than the OpenXcom install, and browsers treat file:// as
+   * an opaque origin and refuse to fetch any file:// URL. A picked file is the
+   * only route, so say that instead of advising a rescan that cannot work.
+   */
+  const offlineFile = typeof location != "undefined" && location.protocol == "file:";
+
+  /**
+   * Read a .sav the user handed us, by picker or by drop.
+   *
+   * parseSave is already pure - loadSave is nothing but fetch + parseSave - so
+   * this needs no new parsing, only a different way of getting the text.
+   */
+  /** Saves handed to us as files, by path, since they cannot be re-fetched. */
+  const localSaves = new Map();
+
+  function readSavFile(file) {
+    if (!file) return;
+    saveError = "";
+    saveLoading = true;
+    const reader = new FileReader();
+    reader.onerror = () => {
+      saveLoading = false;
+      saveError = "Could not read that file";
+    };
+    reader.onload = () => {
+      saveLoading = false;
+      const parsed = parseSave(String(reader.result), file.name);
+      if (!parsed) {
+        saveError = "Could not read that save";
+        return;
+      }
+      saveState = parsed;
+      savePath = file.name;
+      // Keep the parsed result: there is no path to re-fetch a dropped file
+      // from, so pickSave has to be able to hand it back without touching the
+      // network.
+      localSaves.set(file.name, parsed);
+      // It is not on disk as far as the picker is concerned, so give it a row
+      // there too - otherwise the <select> would show nothing selected.
+      if (!saveList.some((x) => x.path == file.name))
+        saveList = [{ path: file.name, file: file.name, dir: "", modified: 0 }, ...saveList];
+    };
+    reader.readAsText(file);
+  }
+
+  let savDragOver = false;
+  function onSavDrop(e) {
+    e.preventDefault();
+    savDragOver = false;
+    const dt = e.dataTransfer;
+    readSavFile(dt && dt.files && dt.files[0]);
+  }
+
   async function pickSave(path) {
     savePath = path;
     saveState = null;
@@ -239,6 +319,11 @@
       // Losing the preference is not worth failing over.
     }
     if (!path) return;
+    // A file the user picked or dropped has no URL to fetch back.
+    if (localSaves.has(path)) {
+      saveState = localSaves.get(path);
+      return;
+    }
     saveLoading = true;
     const loaded = await loadSave(path);
     saveLoading = false;
@@ -1315,13 +1400,50 @@
     <aside class="dmg-side">
       <!-- Deliberately NOT cleared by "Clear filters": which campaign you are
            planning for is a context you set once, not a filter you shuffle. -->
-      <section class="dmg-block">
-        <header>Campaign</header>
+      <section
+        class="dmg-block"
+        class:dmg-dropping={savDragOver}
+        on:dragover|preventDefault={() => (savDragOver = true)}
+        on:dragleave={() => (savDragOver = false)}
+        on:drop={onSavDrop}
+      >
+        <header>
+          Campaign
+          {#if !offlineFile}
+            <button
+              class="dmg-mini dmg-refresh"
+              title="Rescan for saved games and re-read the selected one. Saves are never cached, so this picks up a game you just saved - no page reload needed."
+              disabled={savesRefreshing}
+              on:click={refreshSaves}>⭯</button
+            >
+          {/if}
+        </header>
         {#if !saveList.length}
-          <p class="dmg-cap">
-            No saved games found. This needs XPedia served from your OpenXcom folder
-            so it can read <code>user/&lt;mod&gt;/*.sav</code>.
-          </p>
+          {#if offlineFile}
+            <p class="dmg-cap">
+              This page was opened straight from a file, so it cannot read your
+              OpenXcom folder - browsers block that. Drop a
+              <code>.sav</code> anywhere on this panel, or pick one below.
+            </p>
+          {:else}
+            <p class="dmg-cap">
+              No saved games found. This needs XPedia served from your OpenXcom folder
+              so it can read <code>user/&lt;mod&gt;/*.sav</code> - or you can drop a
+              <code>.sav</code> on this panel.
+            </p>
+          {/if}
+          <label class="dmg-mini dmg-file">
+            Open a .sav…
+            <input type="file" accept=".sav,.asav" on:change={(e) => {
+              readSavFile(e.target.files && e.target.files[0]);
+              e.target.value = "";
+            }} />
+          </label>
+          {#if saveLoading}
+            <p class="dmg-cap">Reading save…</p>
+          {:else if saveError}
+            <p class="dmg-warn">⚠ {saveError}</p>
+          {/if}
         {:else}
           <select
             class="dmg-input"
@@ -1334,6 +1456,14 @@
               <option value={sv.path}>{sv.file.replace(/\.a?sav$/, "")}</option>
             {/each}
           </select>
+
+          <label class="dmg-mini dmg-file" title="Read a .sav from anywhere on disk. You can also drop one on this panel.">
+            Open a .sav…
+            <input type="file" accept=".sav,.asav" on:change={(e) => {
+              readSavFile(e.target.files && e.target.files[0]);
+              e.target.value = "";
+            }} />
+          </label>
 
           <div class="dmg-chips">
             {#each AVAIL_MODES as m}

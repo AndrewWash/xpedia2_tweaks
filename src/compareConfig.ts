@@ -288,6 +288,35 @@ export const REQUIREMENT_FIELDS = [
 export const REQUIREMENT_VIA_FIELDS = ["storeItem"];
 
 /**
+ * Longer routes from an entry to the thing that actually carries its research,
+ * for armours that have no `storeItem` because you do not wear them.
+ *
+ * A creature's armour is the Parrot case. `PARROT_ARMOR` has no storeItem, no
+ * requires, and its pedia article declares none either, so every link above
+ * dead-ends and the page shows no prerequisites at all - while the research is
+ * sitting one hop further on:
+ *
+ *   armors.PARROT_ARMOR .users                = [STR_PARROT_PIR]
+ *   units.STR_PARROT_PIR .civilianRecoveryType = STR_PARROT
+ *   items.STR_PARROT   -> manufacture.STR_PARROT.requires = [STR_ANIMAL_TAMING]
+ *
+ * Robo-Parrot only works today by luck: its ufopaedia entry happens to state a
+ * `requires` where the Parrot's does not.
+ *
+ * Each step names a field holding an id. The 1:1 rule from REQUIREMENT_VIA_FIELDS
+ * still applies and is enforced per step in followChain: a step yielding more
+ * than one id is abandoned rather than guessed at, so an armour worn by three
+ * different units contributes nothing instead of attributing one unit's tech to
+ * all of them. `users` and `spawnedBy` are lists that are almost always single.
+ *
+ * Ordered: civilianRecoveryType is the tighter signal, so it is tried first.
+ */
+export const REQUIREMENT_VIA_CHAINS = [
+  ["users", "civilianRecoveryType"],
+  ["users", "spawnedBy"],
+];
+
+/**
  * Also read requirements off the pedia Article object, `rul.article(id)`.
  *
  * Articles are a separate collection from items/armors/research and are not in

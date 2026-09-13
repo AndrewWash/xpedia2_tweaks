@@ -2024,12 +2024,26 @@ tr.diff-row > td:first-child {
 .dmg-statdelta {
   font-size: 85%;
   color: #6ee36e;
-  width: 2.6em;
+  /* Wide enough for the preview's arrowed form, which is the longest thing
+     this column ever holds. */
+  width: 3.1em;
   flex: 0 0 auto;
   text-align: right;
   white-space: nowrap;
 }
 
+/* Two classes on the first selector: on its own .dmg-statdown ties with
+   .dmg-statdelta on specificity and loses on source order, which would paint
+   every drop green. */
+/* The "=" a preview puts on an unchanged stat. Present so the eye can tell
+   "checked, no change" from "nothing rendered", but dimmed so it does not
+   read as a gain. */
+.dmg-statdelta.dmg-statsame {
+  color: inherit;
+  opacity: 0.3;
+}
+
+.dmg-statdelta.dmg-statdown,
 .dmg-statdown {
   color: #ff9d5c;
 }
@@ -2557,6 +2571,39 @@ tr.diff-row > td:first-child {
   margin-bottom: 0.3rem;
 }
 
+/* The picker and its undo on one line. The select takes the slack so the
+   button stays the same small size whatever the armour is called. */
+.dmg-armorrow {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.3rem;
+}
+
+.dmg-armorrow > select {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+/* Never `align-self: stretch`: with a search term typed the select becomes an
+   eight-row list box and the button stretched into a tall bar beside it. */
+.dmg-worn {
+  flex: 0 0 auto;
+  align-self: flex-start;
+  padding-block: 0.3rem;
+}
+
+/* The same figures as one line, for when the stat block is folded away.
+   The down colour needs the same two-class weight as the up one, or the
+   general rule wins on specificity and every drop reads as a gain. */
+.dmg-swapsum > span {
+  color: #6ee36e;
+  white-space: nowrap;
+}
+
+.dmg-swapsum > span.dmg-statdown {
+  color: #ff9d5c;
+}
+
 .dmg-rowlabel {
   display: block;
   opacity: 0.8;
@@ -2658,4 +2705,311 @@ tr.diff-row > td:first-child {
 
 .dmg-sightsteps li {
   margin-bottom: 0.1rem;
+}
+
+/* ---- Tech tree ------------------------------------------------------- */
+
+/* Miller columns. The whole point is that ancestors stay on screen, so this
+   scrolls horizontally and never wraps. */
+.tech-cols {
+  display: flex;
+  align-items: stretch;
+  gap: 0.4rem;
+  overflow-x: auto;
+  overflow-y: hidden;
+  flex: 1 1 auto;
+  padding-bottom: 0.3rem;
+}
+
+.tech-col {
+  display: flex;
+  flex-direction: column;
+  min-width: 15rem;
+  max-width: 20rem;
+  flex: 0 0 auto;
+  border: 1px solid var(--border);
+  overflow: hidden;
+}
+
+.tech-detail {
+  min-width: 17rem;
+}
+
+.tech-colhead {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-weight: bold;
+  padding: 0.2rem 0.3rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.tech-collist {
+  overflow-y: auto;
+  padding: 0.2rem;
+  flex: 1 1 auto;
+}
+
+.tech-row {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: none;
+  color: inherit;
+  padding: 0.12rem 0.2rem;
+  cursor: pointer;
+}
+
+.tech-row:hover {
+  background: var(--border);
+}
+
+.tech-row-on {
+  background: var(--border);
+  font-weight: bold;
+}
+
+.tech-rowname {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  flex: 1 1 auto;
+}
+
+.tech-group {
+  margin-top: 0.4rem;
+}
+
+.tech-group h5 {
+  margin: 0 0 0.15rem;
+  opacity: 0.7;
+  font-weight: normal;
+  text-transform: uppercase;
+  font-size: 85%;
+}
+
+.tech-caveats {
+  border-top: 1px dashed var(--border);
+  padding-top: 0.3rem;
+}
+
+.tech-star,
+.tech-starbtn.tech-starred {
+  color: var(--link);
+}
+
+.tech-starbtn {
+  margin-left: auto;
+}
+
+.dmg-linkish {
+  background: none;
+  border: none;
+  color: var(--link);
+  cursor: pointer;
+  padding: 0;
+  text-align: left;
+}
+
+.dmg-goalpath {
+  margin: 0.2rem 0;
+  padding-left: 1.2rem;
+  font-size: 90%;
+}
+
+/* Status dots. One glance tells you where a chain is blocked. */
+.dmg-dot {
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: 50%;
+  flex: 0 0 auto;
+  display: inline-block;
+  background: #777;
+}
+.dmg-dot-done { background: #4a4a4a; }
+.dmg-dot-inProgress { background: #ffc67c; }
+.dmg-dot-available { background: #7bd67b; }
+.dmg-dot-needsItem { background: #6fa8dc; }
+.dmg-dot-blocked { background: #b05555; }
+
+/* ---- Floating notepad ------------------------------------------------ */
+
+.notepad {
+  position: fixed;
+  z-index: 10000;
+  background: var(--background);
+  border: 1px solid var(--border);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+}
+
+.notepad-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.2rem;
+  padding: 0.15rem 0.3rem;
+  background: var(--border);
+  cursor: move;
+  user-select: none;
+}
+
+.notepad-title {
+  flex: 1 1 auto;
+  font-weight: bold;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.notepad-btn {
+  background: none;
+  border: none;
+  color: inherit;
+  cursor: pointer;
+  padding: 0 0.25rem;
+}
+
+.notepad-text {
+  background: var(--background);
+  color: inherit;
+  border: none;
+  resize: both;
+  padding: 0.3rem;
+  font: inherit;
+  min-width: 12rem;
+  min-height: 5rem;
+}
+
+.tech-todo {
+  list-style: none;
+  margin: 0.2rem 0 0;
+  padding: 0;
+  font-size: 90%;
+}
+
+.tech-todo li {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.1rem 0;
+}
+
+.tech-todoname {
+  flex: 1 1 auto;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Unstarred rows keep the star as a dim affordance rather than hiding it. */
+.tech-star {
+  opacity: 0.2;
+  cursor: pointer;
+}
+
+.tech-star:hover {
+  opacity: 0.7;
+}
+
+.tech-star.tech-starred {
+  opacity: 1;
+  color: var(--link);
+}
+
+/* Nothing in the tech view may grow the page: the columns and the side panel
+   each stay inside the window and scroll internally. Otherwise a deep chain
+   pushes the whole document down and the trail scrolls off the top. */
+.tech-body {
+  height: calc(100vh - 5.5rem);
+  min-height: 0;
+  overflow: hidden;
+}
+
+.tech-body > .dmg-side {
+  overflow-y: auto;
+  max-height: 100%;
+}
+
+.tech-body .tech-cols {
+  max-height: 100%;
+  min-height: 0;
+}
+
+.tech-body .tech-col {
+  max-height: 100%;
+  min-height: 0;
+}
+
+/* The article popup. Over the top rather than a navigation, so the column
+   trail behind it survives. */
+.tech-peek-back {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 10001;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1rem;
+}
+
+.tech-peek {
+  background: var(--background);
+  border: 1px solid var(--border);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.6);
+  display: flex;
+  flex-direction: column;
+  width: min(60rem, 92vw);
+  max-height: 88vh;
+  min-height: 0;
+}
+
+.tech-peek-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.25rem 0.4rem;
+  background: var(--border);
+  flex: 0 0 auto;
+}
+
+.tech-peek-title {
+  flex: 1 1 auto;
+  font-weight: bold;
+}
+
+.tech-peek-body {
+  overflow: auto;
+  padding: 0.5rem;
+  min-height: 0;
+}
+
+/* A title that opens its article rather than navigating. Styled as the heading
+   it replaces, not as a button. */
+.dmg-peekname {
+  background: none;
+  border: none;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+  padding: 0;
+  text-decoration: underline dotted;
+  text-underline-offset: 0.2em;
+}
+
+.dmg-peekname:hover {
+  color: var(--link);
+}
+
+/* A road not taken. Struck through rather than hidden, because knowing which
+   fork you closed is as useful as knowing which you took. */
+.dmg-dot-lockedOut { background: #6a3b3b; }
+
+.tech-locked {
+  text-decoration: line-through;
+  opacity: 0.6;
 }

@@ -16,6 +16,8 @@
   import Article from "./Article.svelte";
   import Compare from "./Compare.svelte";
   import DamageCalc from "./DamageCalc.svelte";
+  import TechTree from "./TechTree.svelte";
+  import Notepad from "./Notepad.svelte";
   import CogAnimation from "./CogAnimation.svelte";
   import { afterUpdate, onMount, setContext } from "svelte";
   import {
@@ -58,6 +60,8 @@
   let compareAutofocus = -1;
   /** Damage calculator mode, and the enemy it is pointed at. */
   let damageMode = false;
+  let techMode = false;
+  let techTopic = "";
   let damageTarget = "";
 
   let isTouch = "ontouchstart" in window;
@@ -84,7 +88,22 @@
     lrcs = v;
   });
 
-  let theme = "light";
+  /**
+   * Read off the DOM, not assumed.
+   *
+   * The page ships `light-css` with media="none", i.e. the dark main.css alone.
+   * Hardcoding "light" here made the variable disagree with what was actually on
+   * screen from the first frame - and since saveState() persists the variable,
+   * the next load applied a light theme nobody asked for. That is why an
+   * exported file came out lighter than the app it was exported from.
+   */
+  let theme = themeFromDom();
+
+  function themeFromDom() {
+    const el = typeof document != "undefined" && document.getElementById("light-css");
+    if (!el) return "dark";
+    return el.getAttribute("media") == "none" ? "dark" : "light";
+  }
 
   function toggleTheme() {
     theme = theme == "light" ? "dark" : "light";
@@ -144,8 +163,31 @@
     checkHash();
   }
 
+  /**
+   * Navigate by hash, and cope with already being there.
+   *
+   * Assigning the hash it already has fires no `hashchange`, so checkHash never
+   * runs and the click does nothing at all. That is invisible until the flags
+   * and the hash disagree - which they did when a mode flag was left set - and
+   * then a button silently needs pressing twice. Calling checkHash directly
+   * makes the hash the single source of truth either way.
+   */
+  function setHash(h) {
+    if (window.location.hash == h) checkHash();
+    else window.location.hash = h;
+  }
+
   function goTo(id) {
-    window.location.hash = "##" + id;
+    setHash("##" + id);
+  }
+
+  function goTech() {
+    if (techMode) {
+      goTo("HOME");
+      return;
+    }
+    // Entering from a research article points the tree straight at it.
+    setHash("##TECH" + (article && rul.research && rul.research[article.id] ? "::" + article.id : ""));
   }
 
   function goDamage() {
@@ -154,8 +196,7 @@
       return;
     }
     // Entering from a unit's article points the calculator straight at it.
-    window.location.hash =
-      "##DAMAGE" + (article && rul.units && rul.units[article.id] ? "::" + article.id : "");
+    setHash("##DAMAGE" + (article && rul.units && rul.units[article.id] ? "::" + article.id : ""));
   }
 
   function compareHash() {
@@ -178,7 +219,7 @@
     } else {
       compareAutofocus = 0;
     }
-    window.location.hash = compareHash();
+    setHash(compareHash());
   }
 
   /** Open compare directly with `left` and `right` - used by shift-clicking a link. */
@@ -207,6 +248,9 @@
     if (id.substring(0, 6) == "DAMAGE") {
       damageMode = true;
       compareMode = false;
+      // Every early-returning branch must clear the OTHER modes, or the render
+      // order decides which screen you get rather than the hash.
+      techMode = false;
       damageTarget = id.split("::")[1] || "";
       // Same guard as compare: article is a {#key} dependency, so leaving it
       // set would tear the component down on every hash write.
@@ -215,6 +259,19 @@
       searching = false;
       return;
     }
+    // Tech tree: ##TECH[::TOPIC_ID]
+    if (id.substring(0, 4) == "TECH") {
+      techMode = true;
+      damageMode = false;
+      compareMode = false;
+      techTopic = id.split("::")[1] || "";
+      // Same guard as compare and damage: article is a {#key} dependency.
+      if (article) article = null;
+      found = null;
+      searching = false;
+      return;
+    }
+    techMode = false;
     damageMode = false;
 
     if (id.substring(0, 7) == "COMPARE") {
@@ -556,6 +613,17 @@
         <nobr>CENTCOM</nobr>
       </div>
 
+      <Notepad />
+
+      <div
+        class="navbar-button {techMode ? 'reveal-lock' : ''}"
+        id="tech-button"
+        title={techMode ? "Leave the tech tree" : "Browse the research tree against a save"}
+        on:click={goTech}
+      >
+        <nobr>TECH</nobr>
+      </div>
+
       <div class="stretcher on-wide" />
 
       {#if !packedData}
@@ -677,7 +745,7 @@
       </nav>
     {/if}
 
-    {#if !compareMode && !damageMode}
+    {#if !compareMode && !damageMode && !techMode}
       <button
         class="side-hide-button"
         on:click={(e) => {
@@ -693,10 +761,12 @@
     <div
       class="main"
       id="main"
-      class:main-compare={compareMode || damageMode}
-      style={seeSide && !compareMode && !damageMode ? "" : "padding-left:1rem;"}
+      class:main-compare={compareMode || damageMode || techMode}
+      style={seeSide && !compareMode && !damageMode && !techMode ? "" : "padding-left:1rem;"}
     >
-      {#if damageMode}
+      {#if techMode}
+        <TechTree topicId={techTopic} />
+      {:else if damageMode}
         <DamageCalc targetId={damageTarget} />
       {:else if compareMode}
         <Compare

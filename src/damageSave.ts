@@ -74,6 +74,30 @@ export type SaveState = {
   crafts: number;
   /** The living roster, in file order. Excludes deadSoldiers by construction. */
   crew: RawSoldier[];
+  /**
+   * Research underway, by topic id.
+   *
+   * The save stores the cost this campaign actually ROLLED for the project,
+   * which is not the ruleset's base cost - topics have a random spread - along
+   * with how much has been spent and how many brainers are on it. So for
+   * anything already started the remaining work is exact rather than estimated.
+   */
+  projects: Map<string, ResearchProject>;
+  /**
+   * Brainers: unassigned scientists across all bases, plus everyone already
+   * sitting on a project. The denominator for "how many days is this".
+   */
+  scientists: number;
+};
+
+export type ResearchProject = {
+  id: string;
+  /** This campaign's rolled cost, not the ruleset's base. */
+  cost: number;
+  spent: number;
+  assigned: number;
+  /** cost - spent, floored at zero. */
+  remaining: number;
 };
 
 /**
@@ -247,10 +271,36 @@ export function parseSave(text: string, path = ""): SaveState {
   const bases = Array.isArray(state.bases) ? state.bases : [];
   let crafts = 0;
   const crew: RawSoldier[] = [];
+  const projects = new Map<string, ResearchProject>();
+  let scientists = 0;
   for (let bi = 0; bi < bases.length; bi++) {
     const b = bases[bi];
     if (!b || typeof b != "object") continue;
     add(b.items);
+
+    // Free brainers at this base; the busy ones are counted per project below.
+    const free = +b.scientists;
+    if (!isNaN(free)) scientists += free;
+
+    for (const pr of Array.isArray(b.research) ? b.research : []) {
+      if (!pr || typeof pr != "object" || typeof pr.project != "string") continue;
+      const cost = +pr.cost || 0;
+      const spent = +pr.spent || 0;
+      const assigned = +pr.assigned || 0;
+      scientists += assigned;
+      // The same topic can be running at two bases; sum the effort.
+      const prev = projects.get(pr.project);
+      const merged = {
+        id: pr.project,
+        cost: prev ? prev.cost + cost : cost,
+        spent: prev ? prev.spent + spent : spent,
+        assigned: prev ? prev.assigned + assigned : assigned,
+        remaining: 0,
+      };
+      merged.remaining = Math.max(0, merged.cost - merged.spent);
+      projects.set(pr.project, merged);
+    }
+
     for (const c of Array.isArray(b.crafts) ? b.crafts : []) {
       crafts++;
       add(c && c.items);
@@ -277,6 +327,8 @@ export function parseSave(text: string, path = ""): SaveState {
     bases: bases.length,
     crafts,
     crew,
+    projects,
+    scientists,
   };
 }
 

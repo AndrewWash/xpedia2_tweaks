@@ -176,8 +176,16 @@ export function weaponHands(item: any): WeaponHands {
  *
  * XPiratez implements these as a RANGED mode with `maxRange: 1` so they can
  * smash terrain - Hammer, Steam Hammer, Anchor, Wreckin' Ball, Crowbar,
- * Pickaxe, Magic Hammer all carry `confSnap`/`confAimed` named STR_CRUSH with
- * `firing: 0.0` and a closeQuartersMultiplier on strength or melee.
+ * Pickaxe and Magic Hammer carry `confSnap`/`confAimed` named STR_CRUSH, and
+ * the five Chainsaw variants carry `confAuto` named STR_CHAINSAW. All of them
+ * set `firing: 0.0` with a closeQuartersMultiplier on strength or melee, so
+ * they are melee weapons wearing a gun's clothes.
+ *
+ * 23 items in the mod share that shape. Only these two names are listed,
+ * because the rest are a mixed bag - Power Mace, Kung Fu and the Drill are real
+ * close-quarters weapons, while the Pirate Flag's "Wave" and the Guitar's
+ * "Play" are flavour. Shape alone cannot tell them apart, so this stays a
+ * decision rather than a heuristic.
  *
  * Being ranged, they pay no approach and are scored at one tile, where the
  * Hit% geometry is at its most generous - so they rank far above what they are
@@ -188,11 +196,35 @@ export function weaponHands(item: any): WeaponHands {
  * would also catch legitimate point-blank weapons. Another mod names its own,
  * so this is the one place to add them.
  */
-export const UTILITY_MODE_NAMES = ["STR_CRUSH"];
+export const UTILITY_MODE_NAMES = [
+  // Wall-breakers: melee weapons wearing a gun's clothes.
+  "STR_CRUSH",
+  "STR_CHAINSAW",
+  // Flavour: things you point at someone that are not attacks.
+  "STR_WAVE", // Pirate Flag
+  "STR_PLAY", // Pirate Pipes, Pirate Guitar
+  "STR_RELEASE_PARROT", // Parrot, Robo-Parrot - lets a pet out, not a shot
+  "STR_SUMMON_KILLBOT", // Destroportal
+];
 
-/** Whether a resolved attack is one of those. */
-export function isUtilityMode(attack: any): boolean {
-  return !!attack && UTILITY_MODE_NAMES.includes(attack.name);
+/**
+ * Utility items that CANNOT be filtered by mode name, because the name they use
+ * is shared with real weapons.
+ *
+ * The Scroll of Inconsensuality is `power: 0` and fires an "Aimed Attack" -
+ * but STR_ATTACK_AIMED is used by 19 items and STR_ATTACK_SNAP by 22, nearly
+ * all of them things you would genuinely shoot someone with. Filtering on those
+ * names would take 19 real weapons out of the list to remove one scroll, so it
+ * is listed by item id instead.
+ */
+export const UTILITY_ITEM_IDS = ["STR_SCROLL_PINK"];
+
+/** Whether a resolved attack is one of those. `item` is optional. */
+export function isUtilityMode(attack: any, item?: any): boolean {
+  if (!attack) return false;
+  if (UTILITY_MODE_NAMES.includes(attack.name)) return true;
+  const id = item ? item.id || item.type : attack.item ? attack.item.id : null;
+  return !!id && UTILITY_ITEM_IDS.includes(id);
 }
 
 /** Which class one firing mode belongs to. */

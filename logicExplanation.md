@@ -1,4 +1,4 @@
-# How the Damage table works, and why you can trust it
+# How CENTCOM and the tech tree work, and why you can trust them
 
 This document explains every number in the CENTCOM damage table: where it comes
 from, what OXCE rule produces it, and what it deliberately does not know.
@@ -21,7 +21,7 @@ dividing averages.
 1. [Why averages were thrown out](#1-why-averages-were-thrown-out)
 2. [The damage pipeline, step by step](#2-the-damage-pipeline-step-by-step)
 3. [Accuracy is not a hit chance](#3-accuracy-is-not-a-hit-chance)
-4. [The melee approach cost](#4-the-melee-approach-cost)
+4. [Sight, engagement range, and the approach cost](#4-sight-engagement-range-and-the-approach-cost)
 5. [The simulation](#5-the-simulation)
 6. [The Score](#6-the-score)
 7. [Every column, and its tooltip](#7-every-column-and-its-tooltip)
@@ -29,7 +29,8 @@ dividing averages.
 9. [The controls on the left](#9-the-controls-on-the-left)
 10. [Where the enemy's numbers come from](#10-where-the-enemys-numbers-come-from)
 11. [What this does NOT model](#11-what-this-does-not-model)
-12. [How to check any of this yourself](#12-how-to-check-any-of-this-yourself)
+12. [The tech tree viewer](#12-the-tech-tree-viewer)
+13. [How to check any of this yourself](#13-how-to-check-any-of-this-yourself)
 
 ---
 
@@ -377,92 +378,178 @@ this tool cannot run, so it gives you the bracket instead of pretending.
 
 ---
 
-## 4. The melee approach cost
+## 4. Sight, engagement range, and the approach cost
 
-### 4.1 The problem
+This decides *where* the fight happens, and everything about range flows from it.
 
-Melee used to be scored as though the soldier were already standing next to the
-target. The Range setting drove accuracy and Hit% for guns, but melee ignored it
-entirely. A Cutlass read "16 TU to drop the G.O." from **ten tiles away** — a
-number that skipped nine tiles of walking — and was then compared against a
-gun's 24 TU, which included no walking because guns need none.
+### 4.1 The rule
 
-That was not a small bias. It was the largest single thing flattering melee in
-the whole table.
-
-### 4.2 The formula
+CENTCOM is a **pre-mission planning** view — "what do I bring to wreck this
+enemy" — not a per-encounter calculator. So there is one **Range cutoff**
+standing for the distance a fight opens at, and one rule off it:
 
 ```
-APPR = max(0, (Range − 1) − freeTiles) × tuPerTile        melee modes only
+APPR = max(0, cutoff - this mode's reach) x TU per tile      melee reach = 0
 ```
 
-Charged **once**, before the first swing — you close the distance, then keep
-swinging. It is a cost of the engagement, not of each attack. Ranged and thrown
-modes are always zero, because you use those from where you stand.
+- A mode that reaches the cutoff **or further pays nothing**. You can already
+  act from where the fight starts, and that is also the safer place to be.
+- A shorter mode is charged for the tiles it has to close. That is TU and
+  exposure both.
+- **Melee reaches nothing**, so it walks the whole cutoff.
 
-`Range − 1` because you need to be *adjacent*, not on top of the enemy: from 10
-tiles you cross 9 tiles. At Range 1 you are already adjacent and it is free.
+Charged **once**, before the first attack, never per attack.
 
-### 4.3 The two knobs, and why they are separate
+At the default cutoff of 16 with Walk 4:
 
-They are deliberately two settings, because they are two different kinds of
-claim.
+| weapon / mode | reach | APPR |
+|---|---|---|
+| RCF Carbine, snap | 18 | **–** |
+| Blackmarch Pistol, snap | 15 | **4** |
+| Sawed-Off, snap | 4 | **48** |
+| Throwing Axes | 7 | **36** |
+| any melee | 0 | **64** |
 
-**Walk (TU/tile), default 4.** This is an engine fact — the flat-floor movement
-cost. This install runs a mod called `Lower move cost player only` whose script
-is:
+**Why 16.** Measured across all **1096** ranged attack modes in the mod with a
+range above 3: the median reach is **18** and the mean is **18.6** once the
+200-tile default is capped at 30. So 16 leaves most guns free and charges only
+the genuinely short-ranged. Nothing in the mod states a range between 50 and
+199 — a weapon either states a real one (max 49) or inherits 200 — so the cutoff
+is not cutting through a continuum.
+
+### 4.2 Sight pulls the cutoff in
+
+You cannot start a fight further away than you can see the enemy. So when sight
+is shorter than the Range box, **sight becomes the cutoff**:
+
+```
+cutoff = min(Range box, sight)
+```
+
+Applied to **every** mode, not just melee. That is what keeps it fair — see the
+squad sight note in §4.5.
+
+This is what makes darkness and camouflage rewrite the whole table. Against a
+Smuggler Catgirl at night the cutoff collapses from 16 to 5, and a Cutlass goes
+from 64 TU of approach to **20**.
+
+### 4.3 Sight, ported from the engine
+
+The local install ships `OpenXcomEx.exe` and data only — no C++ — so this came
+from `MeridianOXC/OpenXcom`, branch `oxce-plus`,
+`src/Savegame/BattleUnit.cpp:4593`:
+
+```cpp
+int BattleUnit::getMaxViewDistance(int baseVisibility, int nerf, int buff) const
+{
+    int result = baseVisibility;
+    if (nerf > 0)  result = nerf;    // fixed distance nerf
+    else           result += nerf;   // relative distance nerf
+    if (result < 1) result = 1;      // can't go under melee distance
+    result += buff;                  // relative distance buff
+    if (result > baseVisibility) result = baseVisibility;  // don't overbuff
+    return result;
+}
+```
+
+`nerf` is the **target's** camouflage, `buff` the **viewer's** anti-camouflage
+(`:4616` and `:4633`). Bases come from `:184-189`:
+
+```cpp
+_maxViewDistanceAtDark = armor.visibilityAtDark ? armor.visibilityAtDark : 9;
+_maxViewDistanceAtDay  = armor.visibilityAtDay  ? armor.visibilityAtDay  : maxViewDistance;
+```
+
+XPiratez sets `maxViewDistance: 40`. A soldier sees **40 tiles by day**, **9 by
+night**, unless her armour says otherwise.
+
+Four behaviours are not obvious and all four change answers:
+
+1. **A positive camouflage is a hard cap, not a subtraction.** `result = nerf`
+   throws the base away, so `camouflageAtDark: 5` means "seen only from five
+   tiles" however good your night vision is.
+2. **A negative camouflage subtracts** instead. Both signs make the target
+   harder to see; different mechanisms.
+3. **Anti-camouflage can never exceed your own base sight.** It only claws back
+   what camouflage took.
+4. **The floor is 1** — "can't go under melee distance". Perfect concealment is
+   still spotted next to you.
+
+**Worked example, and the one to check the tool against.** A TOPLESS gal
+(`visibilityAtDark: 13`, `antiCamouflageAtDark: 1`) against a Smuggler Catgirl
+(`SMUGGLER_ARMOR_P2`, `camouflageAtDark: 5`):
+
+```
+13  your armour's night vision
+ 5  enemy camouflage 5 is a HARD CAP - it replaces your vision outright
+ 6  your anti-camouflage +1
+ =  6 tiles
+```
+
+The Engagement panel shows exactly that working under the enemy's stats when you
+click **why**, along with every visibility value on both armours — including the
+ones that change nothing, marked "not modelled", so nothing looks silently
+folded in.
+
+**`heatVision` is NOT night vision.** Its engine binding is
+`getVisibilityThroughSmoke` (`BattleUnit.cpp:6771`) — smoke penetration. 470
+items carry it and none of them help you see in the dark. Same for `psiVision`
+(through walls) and `personalLight` (lighting your own surroundings, which makes
+nearby targets count as lit): reported, not modelled.
+
+The mod leans on these heavily — `visibilityAtDark` 1004 uses (values 1–30),
+`visibilityAtDay` 177, `camouflageAtDay` 186, `camouflageAtDark` 213,
+`antiCamouflageAtDay` 257, `antiCamouflageAtDark` 251.
+
+### 4.4 The three knobs
+
+**Range (tiles), default 16** — the cutoff. Where a fight opens.
+
+**Walk (TU/tile), default 4** — an engine fact, the flat-floor move cost. This
+install runs `Lower move cost player only`:
 
 ```
 unit.MoveCost.setBaseTimePercent 75;
-unit.MoveCost.setBaseNormalEnergyPercent 75;
 ```
 
-applied to `FACTION_PLAYER` only, which makes it **3 TU/tile** for your units.
-Set it accordingly if you run that mod.
+applied to `FACTION_PLAYER` only, making it **3 TU/tile** for your units.
 
-**Free (tiles), default 3.** This is an assumption about play, not about the
-engine, and it is stated as such. Nobody plays a perfect spacing game. A gunner
-does not stand rooted at exactly her optimal range any more than a melee gal
-starts adjacent — **both** archetypes spend part of every turn repositioning.
-That shared baseline cancels out of a melee-vs-ranged comparison, so only the
-gap *beyond* it is a cost melee actually pays and guns do not.
+**Free (tiles), default 0** — tiles of closing charged as free. The argument for
+it is real (nobody plays a perfect spacing game) but it is an assumption, so it
+is off unless you ask for it. Setting Walk or Free to 0 turns the approach cost
+off entirely.
 
-Setting **either to 0** restores the old assume-adjacency reading, so it doubles
-as the off switch if you want to compare pure weapon-on-weapon.
+### 4.5 Squad sight, and why the cutoff moves for everyone
 
-### 4.4 What it does
+From `Projectile.cpp:401`:
 
-Same weapon, two modes, identical damage, so the walk is the only difference
-between them:
-
-```
- 2 tiles   melee 85   gun 70   APPR 0
-10 tiles   melee 70   gun 70   APPR 24     <- crossover
-20 tiles   melee 55   gun 70   APPR 64
+```cpp
+int noLOSAccuracyPenalty = weapon->getRules()->getNoLOSAccuracyPenalty(_mod);
+if (noLOSAccuracyPenalty != -1) {
+    if (targetUnit) hasLOS = _save->getTileEngine()->visible(bu, t);
+    if (!hasLOS) accuracy = accuracy * noLOSAccuracyPenalty / 100;
+}
 ```
 
-The melee score decays with range; the gun's does not move at all. Close range
-stays firmly melee's, long range goes to guns, and the crossover shifts with
-both knobs. That crossover is the point of the feature — it turns the Range
-slider into the question *"from here, do I close or do I shoot?"*
+**The shot is never refused.** You can fire at anything a squadmate has spotted,
+at full range, whether or not you can see it — you just pay an accuracy penalty.
+XPiratez's global is **50%**; per-item overrides run 100 (six items, no penalty
+at all), 82, 77, 75 on fourteen, 67 on six, 66, 65, and one at **0** which
+cannot be fired blind at all.
 
-For a hybrid weapon (Good Lookin' Rock, Hellblade) this falls out for free,
-because it is applied per **mode**: the melee row pays APPR and the thrown or
-ranged rows show `–`, and the two are ranked honestly against each other in the
-same list.
+So a gun is **not** range-limited by its holder's eyes, and charging only melee
+for the dark would be wrong. Moving the cutoff for every mode keeps the
+comparison honest — and relative ordering is what this table is for. The
+**Squad sight** checkbox applies that penalty when you want to plan for it.
 
-### 4.5 Where it is still biased, stated openly
+### 4.6 Where it is still biased, on purpose
 
-- **Against melee.** A gun sometimes has to move too — to get line of sight, out
-  of cover, or inside its own maximum range. None of that is modelled, so guns
-  get a free pass they do not always deserve in play.
-- **For melee.** You usually close on a *previous* turn and arrive with a full
-  TU bar. And once you are adjacent, the *next* enemy costs no approach at all —
-  the walk amortises across a melee gal's whole turn in a way a single-target
-  score cannot see. Charging the remaining gap to one kill is still the
-  pessimistic end.
-- **Terrain.** Stairs, rubble, water and slopes all change the real per-tile
-  cost. Deliberately out of scope.
+- **Against melee.** A gun sometimes has to move too — line of sight, cover,
+  into its own maximum range. None of that is modelled.
+- **For melee.** You usually close on a previous turn and arrive with a full TU
+  bar, and once adjacent the next enemy costs no approach at all.
+- **Terrain.** Stairs, rubble, water and slopes change the real per-tile cost.
+- **Squad sight positioning.** Getting a spotter into place is not free either.
 
 ---
 
@@ -652,13 +739,15 @@ Relabelled **Stun/attack** when the Goal is Capture. See §5.3 for the worked
 example of why this number is not the whole story.
 
 ### APPR
-> TU to walk one tile. A melee attack cannot be used from the Range above - the
-> gal has to close first, and that walk is charged once before her first swing.
-> 4 is the engine default on a flat floor; this install's Lower move cost player
-> only mod scales player units to 75%, so 3. Set it to 0 to score melee as if you
-> were already standing next to the target.
+> TU to walk one tile, and the tiles are (Range cutoff - this mode's reach).
+> Reach the cutoff or better and it is nothing; fall short and you pay for
+> closing the gap, which is TU and exposure both. Melee reaches nothing, so it
+> walks the whole cutoff. Charged ONCE before the first attack, not per attack.
+> 4 TU a tile is the engine default on a flat floor; this install's Lower move
+> cost player only mod scales player units to 75%, so 3. Set it to 0 to turn the
+> whole thing off.
 
-`–` for ranged and thrown. See §4.
+`–` for anything that already reaches the cutoff, which is most guns. See §4.
 
 ### Attacks
 > Whole attacks expected to take down the target 4 times out of 5, simulated
@@ -762,11 +851,17 @@ or profiles you type in. Shown stats **include the armour's bonuses**, and the
 Armour is limited to what that soldier type can actually wear, and to what the
 availability filter allows.
 
-### Shot
+### Engagement
 
-- **Range** — how far away the enemy is when you engage. Drives accuracy
-  falloff, Hit% and the melee APPR walk.
-- **Walk (TU/tile)** and **Free (tiles)** — see §4.3.
+- **Day / Night** — swings a soldier's sight from 40 tiles to 9 (§4.3).
+- **Spots this enemy at N** — shown under the enemy's stats, with the full
+  arithmetic behind a **why** toggle, and every visibility value on both
+  armours listed including the ones that do not apply.
+- **Range** — the cutoff a fight opens at, and what every approach is measured
+  against (§4.1). Sight overrides it when sight is shorter.
+- **Walk (TU/tile)** and **Free (tiles)** — see §4.4.
+- **Squad sight** — fire at something only a squadmate can see, at the weapon's
+  `noLOSAccuracyPenalty` (§4.5).
 - **Hitting** — which facing you hit: Front, Side, Rear or Under. Armour differs
   per facing and it is usually a large difference.
 - **Kneeling**, **One-handed**, **No line of sight** — the three accuracy
@@ -862,7 +957,7 @@ them.
   This is the biggest single gap and it always flatters ranged weapons.
 - **The target's real LOFT voxel model.** Hit% uses a rectangular silhouette
   approximation of it (§3.3), not a voxel trace.
-- **Reaction fire.** In particular, the shots you eat while walking into melee.
+- **Reaction fire.** In particular, the shots you eat while closing.
 - **Kneeling targets**, and the fact that a shot deviating past a unit can still
   clip it on the way.
 - **Energy and stamina.** Movement costs energy too; running out is real and
@@ -879,7 +974,7 @@ them.
 **Modelled as an assumption you can change:**
 
 - Shotgun pellet landing (the **Pellets** control).
-- The melee walk (**Walk** and **Free**, §4.3).
+- The approach cost (**Range**, **Walk** and **Free**, §4.4).
 
 **Modelled as a fixed judgement call:**
 
@@ -887,7 +982,108 @@ them.
 
 ---
 
-## 12. How to check any of this yourself
+## 12. The tech tree viewer
+
+A separate tab (**TECH**), built on the same save the damage table uses.
+
+### 12.1 Why it is columns and not a graph
+
+4612 research topics. A node-and-edge picture of that is a hairball, and it
+answers a question nobody asks. Every existing viewer — the in-game one and
+XPedia's own article pages — shares one defect: **clicking a prerequisite
+navigates you away from what you were looking at**, so you cannot compare
+diverging paths or back up to the parent.
+
+So this is a **Miller-column browser**. Each click opens a column to the right
+and every ancestor stays on screen; clicking a row in an earlier column
+truncates back to it and branches from there. The trail you walked is always
+visible and always re-branchable. The **▤** button opens the full XPedia article
+in a popup over the top rather than navigating, for the same reason.
+
+### 12.2 The gate that actually decides the list
+
+Judging availability on `dependencies` alone gave **1812** "available now"
+against a real save — a wall, not a list. The reason:
+
+- **1754** of those carry `needItem`, which in OXCE means you must be holding an
+  item with the **same id as the topic**.
+- The save's stores held only **24** of them.
+
+With the item gate applied the honest answer is **77**. That is the difference
+between a usable screen and an unusable one, so `needItem` is modelled rather
+than footnoted, and it gets its own status — **needs an item** is not the same
+as *blocked*, because the research is already clear and you just have to go find
+one.
+
+Availability is therefore:
+
+```
+done        discovered in the save
+inProgress  in the save's own project list
+blocked     a dependency is unmet, and nothing discovered force-unlocks it
+needsItem   research is clear, but you do not hold the item it wants
+available   everything above is satisfied
+```
+
+`dependencies` and `unlocks` are **different mechanisms**. `dependencies` is the
+normal gate — all must be discovered. `unlocks` is a bypass: researching the
+lister makes the listed topic available whether or not its own dependencies are
+met. A topic reachable only that way looks permanently blocked if you read
+`dependencies` alone, so both are consulted.
+
+### 12.3 Days, which the save makes exact
+
+Each in-progress project in the save carries the cost this campaign **actually
+rolled** — not the ruleset's base, which is only ever an estimate:
+
+```yaml
+research:
+  - project: STR_CAMOUFLAGE
+    assigned: 0
+    spent: 2
+    cost: 21
+```
+
+So remaining work is exact for anything started, and the ruleset figure is used
+only for what you have not begun. Brainers = free `scientists` across all bases
+plus everyone already `assigned`. Days = remaining / brainers, rounded up. With
+no brainers it shows **—** rather than dividing by zero.
+
+### 12.4 The Impact sort
+
+The to-do list sorts five ways; four are obvious. **Impact** is:
+
+```
+value = topics that become available the moment this is done
+      + things it lets you build, buy, or receive
+score = value / days
+```
+
+"Topics unblocked" is a fact, not a weighting: a blocked topic whose **only**
+unmet dependency is X becomes available when X lands. One pass over the ruleset
+counts those per topic, so sorting stays cheap however long the list gets.
+
+It is a ratio, so there is nothing to tune and nothing to argue with — a cheap
+topic that frees six others beats an expensive one that frees two, and both beat
+a dead end.
+
+### 12.5 What it refuses to guess at
+
+Availability is not a clean DAG and this mod uses every awkward corner. These
+are surfaced on the topic in words rather than folded into the status:
+
+- `requiresBaseFunc` (398 on research, 1524 on manufacture) — gated on
+  facilities, not research at all
+- `disables` (163) — researching one thing can *remove* another
+- `getOneFreeProtected` (102) — conditional free grants
+- one-shot topics
+
+A "can I research this" that ignored those would be confidently wrong, which is
+worse than not answering.
+
+---
+
+## 13. How to check any of this yourself
 
 None of the above asks you to take anything on faith.
 
@@ -896,13 +1092,15 @@ None of the above asks you to take anything on faith.
 - **Every tooltip** in the table names the mechanic it comes from.
 - **The mod is readable.** Everything about a weapon is in
   `user/mods/Piratez/Ruleset/*.rul`. Search for the item's `type:` and compare.
-- **The calculator is covered by 686 automated checks across 24 suites**, all
+- **The calculator is covered by 795 automated checks across 26 suites**, all
   passing. They are not smoke tests — they encode the specific things that were
   once wrong: that resistance multiplies before armour, that integer truncation
   matches the engine, that a Cutlass outranks a Machete, that an Ax outranks a
   Good Lookin' Rock, that Beginner difficulty does not get applied when no save
-  is loaded, that a miss costs a whole attack, that melee pays the walk exactly
-  once, and that turning the walk off reproduces the old numbers exactly.
+  is loaded, that a miss costs a whole attack, that the approach is charged
+  exactly once, that turning it off reproduces the old numbers exactly, that a
+  positive camouflage caps sight outright, and that a research dependency cycle
+  terminates instead of hanging.
 - **Cross-check against the game.** The single best test is the one that found
   the accuracy bug in the first place: play, watch what actually happens, and if
   the table disagrees with the battlescape, the table is wrong. Every major
@@ -911,6 +1109,16 @@ None of the above asks you to take anything on faith.
 ---
 
 ## Change history
+
+- **2026-09-13 (later)** — Approach reworked onto a single Range cutoff (§4.1):
+  a mode reaching it pays nothing, a shorter one pays to close, melee walks the
+  lot. Sight ported from the engine and used to pull the cutoff in (§4.2-4.3).
+  Day/Night toggle. Squad sight confirmed to exist and the checkbox renamed for
+  it (§4.5). "Exclude demo" filter for the seven wall-breaking `STR_CRUSH`
+  modes, which are ranged-with-range-1 and were ranking far above their worth.
+  Fixed a latent bug where `kneelBonusGlobal` / `oneHandedPenaltyGlobal` /
+  `noLOSAccuracyPenaltyGlobal` were looked up under their bare item-field names
+  and so always fell back to hardcoded defaults.
 
 - **2026-09-13** — Melee approach cost (§4). Table cleanup: Resist folded into
   Damage, Armour↓ moved to the detail row, APPR added, Per attack's tooltip

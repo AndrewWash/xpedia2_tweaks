@@ -52,6 +52,9 @@
     armorAvailable,
   } from "./damageAvailable";
   import { download } from "./exportPedia";
+  import ArticlePeek from "./ArticlePeek.svelte";
+  import { get } from "svelte/store";
+  import { currentSave, currentSavePath, droppedSaves, setCurrentSave } from "./store";
 
   export let targetId = "";
 
@@ -83,6 +86,8 @@
   /** Light conditions. Swings a soldier's sight from 40 tiles to 9. */
   let isDay = true;
   let showSight = false;
+  /** The XPedia article shown over the top, or "". See ArticlePeek. */
+  let peekId = "";
   /**
    * Wall-breaking modes (Demolish) are ranged with a one-tile range, so they
    * pay no approach and are scored where the Hit% geometry is kindest - which
@@ -219,6 +224,9 @@
     soldiers = loadSoldiers();
     if (!soldiers.length) soldiers = [blankSoldier("Gal")];
     currentId = soldiers[0].id;
+    // Whatever the other screen was looking at wins; discoverSaves only
+    // fills in the picker list and the remembered fallback.
+    adoptSharedSave();
     discoverSaves();
   });
 
@@ -230,6 +238,24 @@
    * missing the list is alphabetical and nothing is preselected, which is why
    * none of this is allowed to throw or block the rest of the panel.
    */
+  /**
+   * Take the save the other screen already has, if there is one.
+   *
+   * Saves a re-parse on every tab switch, and is the only way a save that was
+   * DROPPED in as a file survives the trip - there is no path to fetch it back
+   * from. Runs before discoverSaves so the screen is populated immediately.
+   */
+  function adoptSharedSave() {
+    const path = get(currentSavePath);
+    const state = get(currentSave);
+    if (!path || !state) return false;
+    savePath = path;
+    saveState = state;
+    if (droppedSaves.has(path) && !saveList.some((x) => x.path == path))
+      saveList = [{ path, file: path, dir: "", modified: 0 }, ...saveList];
+    return true;
+  }
+
   async function discoverSaves() {
     let found = [];
     try {
@@ -246,10 +272,11 @@
     // A rescan must not drop files the user handed us - they are not on disk
     // and there is no way to find them again.
     saveList = [
-      ...saveList.filter((x) => localSaves.has(x.path)),
-      ...sortSaves(found).filter((x) => !localSaves.has(x.path)),
+      ...saveList.filter((x) => droppedSaves.has(x.path)),
+      ...sortSaves(found).filter((x) => !droppedSaves.has(x.path)),
     ];
 
+    if (saveState) return;   // already adopted from the other screen
     let remembered = "";
     try {
       remembered = localStorage[SAVE_PREF] || "";
@@ -301,7 +328,6 @@
    * this needs no new parsing, only a different way of getting the text.
    */
   /** Saves handed to us as files, by path, since they cannot be re-fetched. */
-  const localSaves = new Map();
 
   function readSavFile(file) {
     if (!file) return;
@@ -324,7 +350,8 @@
       // Keep the parsed result: there is no path to re-fetch a dropped file
       // from, so pickSave has to be able to hand it back without touching the
       // network.
-      localSaves.set(file.name, parsed);
+      droppedSaves.set(file.name, parsed);
+      setCurrentSave(file.name, parsed);
       // It is not on disk as far as the picker is concerned, so give it a row
       // there too - otherwise the <select> would show nothing selected.
       if (!saveList.some((x) => x.path == file.name))
@@ -350,10 +377,14 @@
     } catch (e) {
       // Losing the preference is not worth failing over.
     }
-    if (!path) return;
+    if (!path) {
+      setCurrentSave("", null);
+      return;
+    }
     // A file the user picked or dropped has no URL to fetch back.
-    if (localSaves.has(path)) {
-      saveState = localSaves.get(path);
+    if (droppedSaves.has(path)) {
+      saveState = droppedSaves.get(path);
+      setCurrentSave(path, saveState);
       return;
     }
     saveLoading = true;
@@ -365,6 +396,7 @@
       return;
     }
     saveState = loaded;
+    setCurrentSave(path, loaded);
   }
 
   /**
@@ -445,9 +477,15 @@
    */
   $: armorOptions = (() => {
     const list = shownArmors.slice(0, 300);
-    const worn = current && current.armor;
-    if (worn && !list.some((a) => a.id == worn))
-      return [{ id: worn, title: rul.tr(worn) + " (worn)" }, ...list];
+    const on = current && current.armor;
+    if (on && !list.some((a) => a.id == on))
+      // "(worn)" only when it really is what the save has her in. While a
+      // preview is up this is the armour being TRIED, and calling that "worn"
+      // said the opposite of the truth right next to the button that undoes it.
+      return [
+        { id: on, title: rul.tr(on) + (previewing ? " (trying)" : " (worn)") },
+        ...list,
+      ];
     return list;
   })();
 
@@ -492,6 +530,87 @@
     return (+eff[k] || 0) - (+cur.stats[k] || 0);
   })(current, stats);
 
+  /**
+   * Is a save soldier currently wearing something other than what the save says?
+   *
+   * A manual profile has no "worn" to differ from, so it is never previewing -
+   * its armour IS its armour.
+   */
+  $: previewing = !!(
+    current &&
+    current.fromSave &&
+    current.armor != current.fromSave.wornArmor
+  );
+
+  /**
+   * The same soldier in the armour she actually has on, so a preview can be
+   * measured against it.
+   *
+   * This is the number the game will not show you. In-game the only way to
+   * compare two suits is to equip one, read the stats, equip the other and read
+   * them again from memory - and the armour screen does not list stat bonuses at
+   * all. Here both sides exist at once, so the swap can be reported as a
+   * difference rather than as two absolute readings you have to subtract
+   * yourself.
+   */
+  $: wornStats =
+    current && current.fromSave
+      ? effectiveStats({ ...current, armor: current.fromSave.wornArmor })
+      : null;
+
+  /**
+   * What the previewed armour changes about one stat, against the worn one.
+   *
+   * Closed over its inputs for the same reason statDelta is - see the note
+   * there. Zero when nothing is being previewed, so callers need no guard.
+   */
+  $: swapDelta = ((eff, worn, on) => (k) => {
+    if (!on || !eff || !worn) return 0;
+    return (+eff[k] || 0) - (+worn[k] || 0);
+  })(stats, wornStats, previewing);
+
+  /** Every stat the preview moves, worst first, for the one-line summary. */
+  $: swapSummary = !previewing
+    ? []
+    : STAT_KEYS.filter((k) => swapDelta(k)).sort(
+        (a, b) => Math.abs(swapDelta(b)) - Math.abs(swapDelta(a))
+      );
+
+  /** Strip markup, for text going into a title= attribute. */
+  const bare = (s) => String(s || "").replace(/<[^>]*>/g, "");
+
+  /**
+   * The full story for one stat, spelled out in the tooltip.
+   *
+   * There is only ONE delta column and two things it could say - what the
+   * armour adds to her bare stats, and what a swap changes against the suit
+   * she has on. The column shows whichever is the live question; the tooltip
+   * always holds both, so nothing is hidden, only ranked.
+   */
+  $: statTitle = ((cur, eff, worn, on, sd, wd) => (k) => {
+    if (!cur || !eff) return "";
+    const base = +cur.stats[k] || 0;
+    const arm = sd(k);
+    const bits = [
+      base +
+        " base" +
+        (arm
+          ? (arm > 0 ? " +" : " ") + arm + " from this armour"
+          : ", armour adds nothing"),
+    ];
+    if (on && worn)
+      bits.push(
+        (worn[k] || 0) +
+          " in " +
+          bare(rul.tr(cur.fromSave.wornArmor || "")) +
+          " -> " +
+          (eff[k] || 0) +
+          " in this one" +
+          (wd(k) ? " (" + (wd(k) > 0 ? "+" : "") + wd(k) + ")" : ", no change")
+      );
+    return bits.join("\n");
+  })(current, stats, wornStats, previewing, statDelta, swapDelta);
+
   /** What the armour <select> is bound to. Mirrors the current soldier. */
   let armorPick = "";
   $: armorPick = current ? current.armor : "";
@@ -502,6 +621,9 @@
     armorFilter = "";
     if (current.fromSave) {
       crewArmor = { ...crewArmor, [current.id]: id };
+      // The entire point of the swap is to see what it does to her, and the
+      // stat block starts collapsed - leaving it shut would hide the answer.
+      if (id != current.fromSave.wornArmor) editing = true;
       try {
         localStorage[CREW_ARMOR_PREF] = JSON.stringify(crewArmor);
       } catch (e) {
@@ -814,7 +936,7 @@
     kindFilter == "all" && !dtFilters.length && !excludeDemo
       ? null
       : (attack) => {
-          if (excludeDemo && isUtilityMode(attack)) return false;
+          if (excludeDemo && isUtilityMode(attack, attack.item)) return false;
           if (kindFilter != "all" && modeKind(attack.mode) != kindFilter) return false;
           if (dtFilters.length && !dtFilters.includes(+attack.damageType)) return false;
           return true;
@@ -867,7 +989,7 @@
     "short-ranged pay.";
 
   const DEMO_TITLE =
-    "Hides wall-breaking modes - Demolish on the Hammer, Anchor, Crowbar, Pickaxe and friends. " +
+    "Hides things that are not really weapons: the wall-breakers (Demolish on the Hammer, Anchor, Crowbar, Pickaxe; the Chainsaws) and pure flavour (Pirate Flag, Guitar, Pipes, releasing a Parrot, the Destroportal, the Scroll of Inconsensuality). " +
     "The mod builds them as a RANGED mode with a one-tile range so they can smash terrain, which means " +
     "they pay no approach and are scored at point blank where the Hit% geometry is at its kindest. " +
     "Against a person close-quarters combat is what actually decides them and that is not modelled, so " +
@@ -1667,25 +1789,57 @@
                  before its options finish re-rendering, so the moment the list
                  changed (a filter, or the campaign mode trimming it) the browser
                  found no matching option and fell back to "(none)" - showing a
-                 fully armoured gal as wearing nothing. -->
-            <select
-              class="dmg-input"
-              size={armorFilter ? 8 : 1}
-              bind:value={armorPick}
-              on:change={(e) => setArmor(e.target.value)}
-            >
-              <option value="">(none)</option>
-              {#each armorOptions as a}
-                <option value={a.id}>{@html a.title}</option>
-              {/each}
-            </select>
+                 fully armoured gal as wearing nothing.
+
+                 |capture on the change handler, and this one is not cosmetic:
+                 without it the picker silently refuses every choice. The browser
+                 runs a microtask checkpoint between event listeners, so Svelte's
+                 own bind:value handler - which is registered first, in the bubble
+                 phase - gets its flush BEFORE ours runs. That flush re-evaluates
+                 `$: armorPick = current.armor`, and since setArmor has not been
+                 called yet, current.armor is still the OLD armour, which Svelte
+                 promptly writes back into the DOM. Our handler then read
+                 e.target.value and got the armour she was already wearing.
+                 Capture puts us ahead of the binding: the state is updated first,
+                 so the flush confirms the new armour instead of undoing it.
+                 A synthetic change event hides this - dispatchEvent keeps the JS
+                 stack busy, so no checkpoint runs between listeners and it looks
+                 like it works. Only a real click reproduces it. -->
+            <div class="dmg-armorrow">
+              <select
+                class="dmg-input"
+                size={armorFilter ? 8 : 1}
+                bind:value={armorPick}
+                on:change|capture={(e) => setArmor(e.target.value)}
+              >
+                <option value="">(none)</option>
+                {#each armorOptions as a}
+                  <option value={a.id}>{@html a.title}</option>
+                {/each}
+              </select>
+              <!-- Only while it differs. A permanent button that does nothing
+                   most of the time reads as a setting rather than an undo. -->
+              {#if previewing}
+                <button
+                  class="dmg-mini dmg-worn"
+                  title={"Put her back in what the save has her wearing: " +
+                    (current.fromSave.wornArmor
+                      ? bare(rul.tr(current.fromSave.wornArmor))
+                      : "none")}
+                  on:click={() => setArmor(current.fromSave.wornArmor)}>worn</button
+                >
+              {/if}
+            </div>
             {#if armorFilter}
               <span class="dmg-cap">{shownArmors.length} of {armorChoices.length}</span>
             {/if}
           </div>
 
+          <!-- A save soldier's numbers cannot be typed over, so calling this
+               "Edit stats" hid the one thing an armour swap is for behind a
+               button that read as forbidden. Same control, honest label. -->
           <button class="dmg-mini dmg-wide" on:click={() => (editing = !editing)}>
-            {editing ? "Hide stats" : "Edit stats"}
+            {editing ? "Hide stats" : readOnlySoldier ? "Show stats" : "Edit stats"}
           </button>
 
           {#if editing}
@@ -1696,9 +1850,25 @@
                      selected even when the modifier is zero: an absent span
                      would let rows with no armour effect slide their input left
                      and break the column. -->
+                <!-- While a swap is being previewed this column answers the
+                     question you just asked - what the SWAP does, against the
+                     suit she has on - and falls back to what the armour does
+                     against her bare stats when nothing is being tried on.
+                     A second column for the other number squeezed the stat
+                     label down to a single glyph. -->
                 {#if readOnlySoldier}
-                  <span class="dmg-statdelta" class:dmg-statdown={statDelta(k) < 0}>
-                    {statDelta(k) ? (statDelta(k) > 0 ? "+" : "") + statDelta(k) : ""}
+                  <span
+                    class="dmg-statdelta"
+                    class:dmg-statdown={(previewing ? swapDelta(k) : statDelta(k)) < 0}
+                    class:dmg-statsame={previewing && !swapDelta(k)}
+                  >
+                    {#if previewing}
+                      {swapDelta(k)
+                        ? (swapDelta(k) > 0 ? "\u25b2+" : "\u25bc") + swapDelta(k)
+                        : "="}
+                    {:else}
+                      {statDelta(k) ? (statDelta(k) > 0 ? "+" : "") + statDelta(k) : ""}
+                    {/if}
                   </span>
                 {/if}
                 <input
@@ -1708,9 +1878,7 @@
                   min="0"
                   readonly={readOnlySoldier}
                   tabindex={readOnlySoldier ? -1 : 0}
-                  title={readOnlySoldier && statDelta(k)
-                    ? current.stats[k] + " base " + (statDelta(k) > 0 ? "+" : "") + statDelta(k) + " from armour"
-                    : ""}
+                  title={readOnlySoldier ? statTitle(k) : ""}
                   value={readOnlySoldier ? (stats ? stats[k] : 0) : current.stats[k]}
                   on:change={(e) => {
                     if (readOnlySoldier) return;
@@ -1726,7 +1894,16 @@
             {#if readOnlySoldier}
               <p class="dmg-hint">
                 As they fight: from the save, with transformation and commendation
-                bonuses and the armour worn. Copy to manual to change them.
+                bonuses and the armour {previewing ? "being tried on" : "worn"}.
+                {#if previewing}
+                  The arrows are the change against
+                  {@html current.fromSave.wornArmor
+                    ? rul.tr(current.fromSave.wornArmor)
+                    : "no armour"}; hover a box for the bare-stat breakdown.
+                {:else}
+                  The figures beside them are what the armour adds.
+                {/if}
+                Copy to manual to change them.
               </p>
               <button class="dmg-mini dmg-wide" on:click={copyToManual}>
                 Copy to manual
@@ -1738,16 +1915,28 @@
             {/if}
           {/if}
 
-          {#if current.fromSave && current.armor != current.fromSave.wornArmor}
+          {#if previewing}
+            <!-- The summary exists because the stat block can be collapsed and
+                 the whole table below has already moved. Without it a swap you
+                 made and then folded away is invisible. -->
             <p class="dmg-hint">
-              Trying a different armour — worn in the save:
+              Preview only — the save still has her in
               {@html current.fromSave.wornArmor
                 ? rul.tr(current.fromSave.wornArmor)
-                : "none"}.
-              <button
-                class="dmg-mini"
-                on:click={() => setArmor(current.fromSave.wornArmor)}>Reset</button
-              >
+                : "no armour"}.
+              {#if swapSummary.length}
+                <br />
+                <span class="dmg-swapsum">
+                  {#each swapSummary as k, i}<span
+                      class:dmg-statdown={swapDelta(k) < 0}
+                      >{(swapDelta(k) > 0 ? "+" : "") + swapDelta(k)}
+                      <Tr s={k} /></span
+                    >{i < swapSummary.length - 1 ? ", " : ""}{/each}
+                </span>
+              {:else}
+                <br />No stat changes — but resistances, armour points and sight
+                may still differ.
+              {/if}
             </p>
           {:else if current.armor && stats}
             <p class="dmg-hint">Shown stats include the armour's bonuses.</p>
@@ -1926,7 +2115,13 @@
           <p class="dmg-empty">Pick an enemy on the left to rank every weapon against it.</p>
         {:else}
           <div class="dmg-target">
-            <h2>{@html target.title}</h2>
+            <h2>
+              <button
+                class="dmg-peekname"
+                title="Open this enemy's XPedia article over the top - your soldier, filters and selection all stay put"
+                on:click={() => (peekId = target.id)}>{@html target.title}</button
+              >
+            </h2>
             <div class="dmg-target-stats">
               {#if target.health}<span><b>{target.health}</b> HP</span>{/if}
               <span class="dmg-armors">
@@ -2422,7 +2617,13 @@
         <p class="dmg-empty">Pick a weapon on the left to see how it fares against each enemy.</p>
       {:else}
         <div class="dmg-target">
-          <h2>{@html weapon.title}</h2>
+          <h2>
+            <button
+              class="dmg-peekname"
+              title="Open this weapon's XPedia article over the top"
+              on:click={() => (peekId = weapon.id)}>{@html weapon.title}</button
+            >
+          </h2>
           <div class="dmg-target-stats">
             <span>{byTarget.length} enemies</span>
             <span>at {distance} tiles, {side}</span>
@@ -2621,3 +2822,5 @@
     </main>
   </div>
 </div>
+
+<ArticlePeek bind:id={peekId} />

@@ -8,6 +8,17 @@ export async function exportPedia(onlyCurrentLanguage = false) {
   let style = await readStyle("main-css");
   let lightStyle = await readStyle("light-css");
 
+  /**
+   * Carry the theme you are looking at into the file.
+   *
+   * light.css is an override switched on by clearing its `media`, so writing a
+   * fixed value would export a page that ignores your choice. Read the live
+   * attribute instead; `xpediaTheme` seeds the same answer for the first run,
+   * before the exported file has any localStorage of its own.
+   */
+  const lightMedia =
+    document.getElementById("light-css")?.getAttribute("media") == "none" ? "none" : "";
+
   let src = rul.src;
 
   if (onlyCurrentLanguage) {
@@ -29,8 +40,9 @@ export async function exportPedia(onlyCurrentLanguage = false) {
 <head>
   <meta name="description" content="Online reference for OpenXCom games" />
   <style id="main-css">${style}</style>
-  <style id="light-css" media="none">${lightStyle}</style>
+  <style id="light-css" media="${lightMedia}">${lightStyle}</style>
   <script>
+  window.xpediaTheme = "${lightMedia == "none" ? "dark" : "light"}";
   window.gameDir = ".";
   window.xpediaDir = "xpedia2/";
   window.xpedia = "${packed}";

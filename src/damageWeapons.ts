@@ -17,7 +17,8 @@ import {
   rangeAt,
 } from "./damageCalc";
 import type { RangeLimits } from "./damageCalc";
-import { attacksForHits, effectivenessScore, SCORE_CONFIDENCE } from "./damageScore";
+import { effectivenessScore, SCORE_CONFIDENCE } from "./damageScore";
+import { hitChance, targetGeometry } from "./damageHit";
 import type { PelletModel } from "./damageCalc";
 import type { Stats, Target, DamageResult, AccuracyOpts } from "./damageCalc";
 
@@ -45,9 +46,27 @@ export const MAX_USEFUL_ATTACKS = 100;
  * A unit goes down when accumulated stun reaches its health, so the stun track
  * uses the same threshold against avgStunPerAttack.
  */
-export type Goal = "kill" | "stun";
+/**
+ *   "drop"  down by any means - health out, or stun over whatever health is
+ *           left. This is what you watch happen on screen, and the two tracks
+ *           genuinely add: stun only has to cover the health damage did not.
+ *   "kill"  dead specifically, health alone.
+ *   "stun"  knocked out with stun alone, for a clean capture.
+ */
+export type Goal = "kill" | "stun" | "drop";
 
 export type WeaponKind = "melee" | "ranged" | "thrown" | "other";
+
+/**
+ * Which firing modes a listing is interested in.
+ *
+ * The kind and damage-type filters are properties of a MODE, not of a weapon,
+ * and applying them only at weapon level was visibly wrong: with Ranged
+ * selected the Good Lookin' Rock still sat at the top on the strength of its
+ * melee swing. A weapon qualifies if any mode matches, but once it is in the
+ * list only the matching modes should be scored, ranked or shown.
+ */
+export type ModeFilter = (attack: any) => boolean;
 
 export type WeaponOption = {
   item: any;
@@ -133,6 +152,14 @@ export function weaponHands(item: any): WeaponHands {
   return item.blockBothHands ? "both" : "two";
 }
 
+/** Which class one firing mode belongs to. */
+export function modeKind(mode: string): WeaponKind {
+  if (mode == "melee") return "melee";
+  if (mode == "throw") return "thrown";
+  if (mode == "snap" || mode == "aimed" || mode == "auto") return "ranged";
+  return "other";
+}
+
 /**
  * Classes taken from the firing modes the weapon actually has, which is what a
  * player means by "melee" or "ranged" - battleType alone puts the Hellblade,
@@ -142,9 +169,7 @@ export function weaponKinds(attacks: any[]): WeaponKind[] {
   const out = new Set<WeaponKind>();
   for (const a of attacks) {
     if (!a || !a.possible) continue;
-    if (a.mode == "melee") out.add("melee");
-    else if (a.mode == "throw") out.add("thrown");
-    else if (a.mode == "snap" || a.mode == "aimed" || a.mode == "auto") out.add("ranged");
+    out.add(modeKind(a.mode));
   }
   if (!out.size) out.add("other");
   return [...out];
@@ -257,6 +282,12 @@ export type ModeResult = {
   attack: any;
   damage: DamageResult;
   accuracy: number;
+  /**
+   * How often the attack actually CONNECTS, 0-1, which for direct fire is not
+   * `accuracy / 100` - see damageHit.ts. Kept beside the accuracy rather than
+   * replacing it because they are different facts and the table shows both.
+   */
+  hitRate: number;
   perTurn: number;
   /** Expected health damage across a full turn of attacking, accuracy applied. */
   healthPerTurn: number;
@@ -288,12 +319,8 @@ export type ModeResult = {
    * why it counts misses rather than shrinking the damage.
    */
   score: number;
-  /** Hits the target needs, armour degrading, before accuracy is considered. */
-  hitsNeeded: number;
-  /** Shots to land those hits four times out of five. */
-  reliableAttacks: number;
-  /** Those shots in time units - what the score is built from. */
-  reliableTu: number;
+  /** Chance the target is actually down after `attacksToKill` attacks. */
+  killChance: number;
   /**
    * Armour this attack strips per landing hit.
    *
@@ -334,8 +361,10 @@ export type WeaponResult = {
  *   the SCORE counts a miss as a miss - see damageScore.ts - which is the only
  *   way to tell a reliable weapon from a coin-flip one
  *
- * The accuracy figure itself is the one the game's firing panel shows, not a
- * true hit probability, so all of it is a ranking aid rather than a prediction.
+ * The hit rate behind both is the one from damageHit.ts, not the panel figure -
+ * for direct fire the panel figure is a floor on how often you connect, not an
+ * estimate of it. It is still a geometric model with no cover in it, so this
+ * remains a ranking aid rather than a prediction.
  */
 function killRank(m: ModeResult): number {
   // Ranked on the score, descending, so the table's order and its own Score
@@ -351,29 +380,51 @@ export function scoreWeapon(
   side: string,
   opts: AccuracyOpts,
   pelletModel: PelletModel = "derived",
-  goal: Goal = "kill"
+  goal: Goal = "kill",
+  modeFilter: ModeFilter = null
 ): WeaponResult {
   const clip = ammoId || weapon.ammoOptions[0] || null;
   const modes: ModeResult[] = [];
 
   const attacks = attacksOf(weapon.item, clip);
+  // Ranges are read off the weapon's whole attack list, filter or not: the
+  // aimed range still governs falloff even when you are only looking at snap.
   const aimedRange = aimedRangeOf(weapon.item, attacks);
+  // The silhouette a shot has to land inside. A property of the target, so it
+  // is the same for every mode and every weapon in the ranking.
+  const geom = targetGeometry(target);
 
   for (const attack of attacks) {
+    if (modeFilter && !modeFilter(attack)) continue;
     // Accuracy first: the pellet model for vanilla shotgun behaviour needs it.
     const accuracy = accuracyPercent(attack, weapon.item, stats, opts, aimedRange);
     const profile = damageProfile(attack, stats, target, pelletModel, accuracy);
     if (!profile) continue;
     const perTurn = attacksPerTurn(attack, stats);
-    const hitRate = Math.min(1, accuracy / 100);
+    /**
+     * How often it lands - NOT the accuracy figure, for direct fire.
+     *
+     * The engine does not roll against accuracy for a projectile; it turns
+     * accuracy into how far the aim point drifts, and the drift grows with
+     * range. So a 60% gun lands about 96% of its shots at three tiles and 65%
+     * at twenty, and using the flat 60% under-rated every gun at the ranges
+     * fights happen at. damageHit.ts has the derivation. Melee and thrown
+     * modes pass straight through, melee because it genuinely is a percentage
+     * roll.
+     *
+     * One value, used by the simulation AND by every displayed column that
+     * folds in hit chance. Letting those two diverge is the bug that put a
+     * Machete's "TU to kill 12" beside a better score than a Cutlass's 8.
+     */
+    const hitRate = hitChance(attack.mode, accuracy, opts.distance, geom);
     const hp = target.health || 0;
     /**
-     * Whole shots only, and simulated rather than divided.
+     * ONE simulation, used for both the ranking and the columns.
      *
-     * An expected-value division gives things like "0.1 attacks", which is not
-     * a thing that can happen - you either fire once or you do not. It also
-     * assumes the tenth shot is no better than the first, which armour
-     * degradation makes false: see simulateAttacks.
+     * There used to be two: an expectation-based count for the Attacks column
+     * and a confidence-based one for the Score. They disagreed, visibly - a
+     * Machete showed "TU to kill 12" next to a better score than a Cutlass
+     * showing 8. Now there is a single number and everything reads it.
      */
     const seq = simulateAttacks(
       profile,
@@ -381,57 +432,37 @@ export function scoreWeapon(
       hp,
       goal,
       hitRate,
-      MAX_USEFUL_ATTACKS
+      MAX_USEFUL_ATTACKS,
+      SCORE_CONFIDENCE
     );
     // Everything displayed is the FIRST attack - the target as you find it.
     const damage = seq.first;
     // The chosen goal decides which damage track drives the ranking.
     const perAttack =
-      (goal == "stun" ? damage.avgStunPerAttack : damage.avgHealthPerAttack) * hitRate;
+      (goal == "stun"
+        ? damage.avgStunPerAttack
+        : goal == "drop"
+          ? damage.avgHealthPerAttack + damage.avgStunPerAttack
+          : damage.avgHealthPerAttack) * hitRate;
     const tuCost = tuPerAttack(attack, stats);
     const attacksToKill = seq.attacks;
     // A zero TU cost would make every such weapon a free instant kill. We do
     // not know the real cost, so we say so rather than inventing one.
     const tuToKill = attacksToKill != null && tuCost > 0 ? attacksToKill * tuCost : null;
-
-    /**
-     * The score's own chain, which keeps hits and shots apart.
-     *
-     * Run again at a hit rate of 1 so every attack lands: what comes back is
-     * the number of HITS the target needs, with the armour degrading hit by hit
-     * the way it actually does. Misses strip nothing, so counting them here
-     * would understate the armour damage as well as the damage.
-     */
-    const hitSeq = simulateAttacks(
-      profile,
-      armorValue(target, side),
-      hp,
-      goal,
-      1,
-      MAX_USEFUL_ATTACKS
-    );
-    const hitsNeeded = hitSeq.attacks;
-    const reliableAttacks = attacksForHits(hitsNeeded, hitRate, SCORE_CONFIDENCE, MAX_USEFUL_ATTACKS);
-    const reliableTu = reliableAttacks != null && tuCost > 0 ? reliableAttacks * tuCost : null;
-    const score = effectivenessScore(reliableTu, stats.tu);
+    const score = effectivenessScore(tuToKill, stats.tu);
 
     /**
      * Two different true answers, so both are kept.
      *
      * turnsToKill is the TU cost as a FRACTION of the bar, matching the TU
-     * column beside it. Below 1 it doubles as what you have left - 0.27 turns
-     * means the kill costs a quarter of your gal and she can still move - and
-     * the decimals are what makes "fast" readable at a glance, which a rounded
-     * turn count throws away.
+     * column beside it. Below 1 it doubles as what you have left.
      *
      * wholeTurns is the tactical count, because you cannot carry time units
-     * between turns or fire part of a shot: a 50 TU weapon in the hands of a
-     * 90 TU gal fires ONCE a turn, so three attacks really is three turns
-     * however much of the bar goes unused. It lives in the tooltip.
+     * between turns or fire part of a shot.
      */
     const turnsToKill = tuToKill != null && stats.tu ? tuToKill / stats.tu : null;
     const wholeTurns =
-      reliableAttacks != null && perTurn > 0 ? Math.ceil(reliableAttacks / perTurn) : null;
+      attacksToKill != null && perTurn > 0 ? Math.ceil(attacksToKill / perTurn) : null;
 
     modes.push({
       mode: attack.mode,
@@ -440,6 +471,7 @@ export function scoreWeapon(
       attack,
       damage,
       accuracy,
+      hitRate,
       perTurn,
       healthPerTurn: perAttack * perTurn,
       stunPerTurn: damage.avgStunPerAttack * hitRate * perTurn,
@@ -450,9 +482,7 @@ export function scoreWeapon(
       turnsToKill,
       wholeTurns,
       score,
-      hitsNeeded,
-      reliableAttacks,
-      reliableTu,
+      killChance: seq.chance,
       limits: rangeAt(attack, weapon.item, aimedRange, opts.ufoExtender !== false, opts.distance),
       // Armour stripped by a hit that LANDS. Scaling this by the hit rate
       // smeared a fraction of the armour damage across shots that missed and
@@ -485,10 +515,15 @@ export function rankWeapons(
   opts: AccuracyOpts,
   ammoBy: { [id: string]: string } = {},
   pelletModel: PelletModel = "derived",
-  goal: Goal = "kill"
+  goal: Goal = "kill",
+  modeFilter: ModeFilter = null
 ): WeaponResult[] {
   return weapons
-    .map((w) => scoreWeapon(w, ammoBy[w.id], stats, target, side, opts, pelletModel, goal))
+    .map((w) =>
+      scoreWeapon(w, ammoBy[w.id], stats, target, side, opts, pelletModel, goal, modeFilter)
+    )
+    // A weapon can pass the weapon-level test on a clip you are not carrying
+    // and then have no matching mode at all. Nothing to show for it.
     .filter((r) => r.best)
     .sort((a, b) => killRank(a.best) - killRank(b.best));
 }

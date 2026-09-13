@@ -7,10 +7,12 @@
    *   "targets" - one weapon against a list of enemies ("is this still worth it")
    *
    * The numbers are honest about what they are. Damage is exact arithmetic from
-   * OXCE's own pipeline. The accuracy figure is the one the game's firing panel
-   * shows, NOT a hit probability - the real thing is a voxel trace against the
-   * target model and cover, which no amount of ruleset reading can reproduce.
-   * Anything folding accuracy in is labelled as a ranking aid.
+   * OXCE's own pipeline. Acc is the figure the game's firing panel shows, which
+   * is NOT a hit probability: for a shot the engine deviates the aim point
+   * instead of rolling, so the Hit column beside it - damageHit.ts - is what
+   * actually lands, and it depends on range. What neither can know is cover and
+   * the target's real voxel model, so anything folding hit chance in is
+   * labelled as a ranking aid.
    */
   import { rul } from "./Ruleset";
   import { Tr } from "./Components";
@@ -23,6 +25,7 @@
     rankWeapons,
     scoreWeapon,
     attacksOf,
+    modeKind,
   } from "./damageWeapons";
   import {
     loadSoldiers,
@@ -74,7 +77,7 @@
    * unable. A unit drops when stun reaches its health, which is the threshold
    * the stun track uses.
    */
-  let goal = "kill";
+  let goal = "drop";
   let weaponFilter = "";
   /** "all" or one of the WeaponKind values. */
   let kindFilter = "all";
@@ -123,16 +126,22 @@
   /**
    * Campaign filter: show only what a saved game can actually field.
    *
-   *   "off"        every weapon in the mod, which is the default - browsing and
-   *                planning ahead both need it
+   *   "off"        every weapon in the mod, for browsing and planning ahead
    *   "stores"     only what is in a base store or loaded on a craft right now
    *   "obtainable" that, plus anything the save's research lets you buy or build
    *
    * Three states rather than two because the ruleset cannot answer this alone:
    * most XPiratez weapons carry no research gate at all, so "researched" would
    * happily list every piece of loot you have never found. See damageAvailable.
+   *
+   * Starts "off" - with no campaign loaded there is nothing to filter against
+   * and the whole list is the honest answer. The moment a save actually parses
+   * it flips itself to "obtainable", because by then the useful question is "of
+   * the weapons I can get, which is best". Flips once only: choosing a mode
+   * yourself sticks, the same way the soldier source does.
    */
   let availMode = "off";
+  let availTouched = false;
 
   /**
    * Where the soldier list comes from.
@@ -248,6 +257,8 @@
    * that is the point of loading a campaign - but only if the user has not
    * already made a choice, so picking Manual sticks.
    */
+  $: if (saveState && !availTouched && availMode == "off") availMode = "obtainable";
+
   $: saveCrew = saveState ? soldiersFromSave(saveState.crew) : [];
   $: if (saveCrew.length && !sourceTouched && soldierSource != "save") {
     soldierSource = "save";
@@ -397,7 +408,9 @@
     currentId = copy.id;
     persist();
   }
-  $: target = targetId ? resolveTarget(targetId) : null;
+  /** Campaign difficulty from the save; null (no adjustment) until one loads. */
+  $: difficulty = saveState ? saveState.difficulty : null;
+  $: target = targetId ? resolveTarget(targetId, difficulty) : null;
   /**
    * A mod may take this choice away from the player. `fixedUserOptions` is
    * honoured by OXCE over the player's own options.cfg, so when the active mod
@@ -667,13 +680,46 @@
   $: if (missionRoster && targetId && !missionRoster.has(targetId))
     targetId = shownTargets.length ? shownTargets[0].id : "";
 
+  /**
+   * Which modes the current filters actually want scored.
+   *
+   * Kind and damage type are properties of a FIRING MODE. Testing them only
+   * when deciding which weapons to list left hybrids ranked on the wrong
+   * attack - with Ranged selected the Good Lookin' Rock led the table on its
+   * melee swing. Null when nothing is filtering, so the common case does no
+   * work per mode.
+   */
+  $: modeFilter =
+    kindFilter == "all" && !dtFilters.length
+      ? null
+      : (attack) => {
+          if (kindFilter != "all" && modeKind(attack.mode) != kindFilter) return false;
+          if (dtFilters.length && !dtFilters.includes(+attack.damageType)) return false;
+          return true;
+        };
+
   // Ranking every weapon is the expensive call; keep it to one reactive block.
   $: ranked =
     view == "weapons" && stats && target
-      ? rankWeapons(shownWeapons, stats, target, side, opts, {}, pelletModel, goal)
+      ? rankWeapons(shownWeapons, stats, target, side, opts, {}, pelletModel, goal, modeFilter)
       : [];
 
   $: weapon = weaponId ? allWeapons.find((w) => w.id == weaponId) : null;
+
+  /**
+   * Acc is what the game shows you; Hit is how often the shot lands. They are
+   * different facts, and conflating them is what made guns look worse here
+   * than they play. Shown side by side so it cannot happen again.
+   */
+  const HIT_TITLE =
+    "How often this attack actually connects, which for guns is NOT the Acc figure. " +
+    "The engine never rolls against accuracy for a shot - it uses accuracy to decide " +
+    "how far the aim point drifts, and that drift grows with range. Every roll under " +
+    "your accuracy drifts by a single voxel, a dead-on hit, so Acc is a FLOOR on how " +
+    "often you connect rather than an estimate. Close in the drift is smaller than the " +
+    "enemy and nearly everything lands; far out it is many times their width. " +
+    "Melee and thrown attacks show the same number as Acc, because melee really is a " +
+    "straight percentage roll. No cover or terrain is modelled.";
 
   /**
    * Columns for the enemy list. Same idea as COLUMNS, but keyed on an
@@ -702,11 +748,12 @@
       get: (m) => m.accuracy,
       round: 0,
     },
+    { id: "hit", label: "Hit%", title: HIT_TITLE, get: (m) => m.hitRate * 100, round: 0 },
     { id: "perAttack", label: "Per attack", get: (m) => m.perAttack, round: 1 },
     {
       id: "armourOff",
       label: "Armour↓",
-      title: "Armour stripped from this facing per attack, accuracy included",
+      title: "Armour stripped from this facing per attack, hit chance included",
       get: (m) => m.armorPerAttack,
       round: 1,
     },
@@ -814,7 +861,7 @@
     view == "targets" && stats && weapon
       ? shownTargets
           .map((t) => {
-            const tgt = resolveTarget(t.id);
+            const tgt = resolveTarget(t.id, difficulty);
             if (!tgt) return null;
             const r = scoreWeapon(weapon, null, stats, tgt, side, opts, pelletModel, goal);
             return r.best ? { target: tgt, result: r } : null;
@@ -851,6 +898,14 @@
       round: 0,
     },
     { id: "weapon", label: "Weapon", get: (m, w) => w.title.toLowerCase(), asc: true },
+    {
+      id: "size",
+      label: "Size",
+      title: "Inventory footprint, width x height - what it costs you in pack space",
+      get: (m, w) => (+w.item.invWidth || 1) * (+w.item.invHeight || 1),
+      asc: true,
+      round: 0,
+    },
     { id: "mode", label: "Mode", get: (m) => (m.label || "").toLowerCase(), asc: true },
     { id: "damage", label: "Damage", get: (m) => m.damage.avg, round: 0 },
     { id: "resist", label: "Resist", get: (m) => m.damage.resist, round: 2 },
@@ -865,13 +920,14 @@
       round: 0,
     },
     { id: "acc", label: "Acc", get: (m) => m.accuracy, round: 0 },
+    { id: "hit", label: "Hit%", title: HIT_TITLE, get: (m) => m.hitRate * 100, round: 0 },
     {
       id: "perAttack",
       label: goal == "stun" ? "Stun/attack" : "Per attack",
       title:
         "Expected " +
         (goal == "stun" ? "stun" : "health") +
-        " damage from one attack, accuracy included",
+        " damage from one attack, hit chance included",
       get: (m) => m.perAttack,
       round: 1,
     },
@@ -879,7 +935,7 @@
       id: "armour",
       label: "Armour↓",
       title:
-        "Armour stripped from this facing per attack, accuracy included. " +
+        "Armour stripped from this facing per attack, hit chance included. " +
         "ToArmorPre comes off the roll and lands even when the shot cannot " +
         "penetrate, so a weapon that does no damage can still open the target up.",
       get: (m) => m.armorPerAttack,
@@ -890,21 +946,18 @@
       label: "Attacks",
       title:
         "Whole attacks expected to " +
-        (goal == "stun" ? "knock out" : "kill") +
-        " the target, simulated shot by shot with the armour degrading as it goes. " +
-        "This is the AVERAGE - the Score uses the higher count that works 4 times " +
-        "out of 5, which is why it can imply more TU than the column beside it.",
+        (goal == "stun" ? "knock out" : goal == "drop" ? "take down" : "kill") +
+        " the target 4 times out of 5, simulated shot by shot: misses cost a whole " +
+        "attack, damage is rolled from its real spread rather than averaged, and the " +
+        "armour degrades as it goes. The Score is built from exactly this number.",
       get: (m) => m.attacksToKill,
       asc: true,
       round: 1,
     },
     {
       id: "tu",
-      label: goal == "stun" ? "TU to stun" : "TU to kill",
-      title:
-        "Time units for the average number of attacks. The Score is built on the " +
-        "80%-confidence count instead, so the two differ whenever accuracy is below " +
-        "certain - that gap IS the unreliability.",
+      label: goal == "stun" ? "TU to stun" : goal == "drop" ? "TU to drop" : "TU to kill",
+      title: "Time units for those attacks - the effectiveness measure the Score scales.",
       get: (m) => m.tuToKill,
       asc: true,
       round: 0,
@@ -1127,25 +1180,24 @@
     const m = row.first ? bestOf(row) || row.mode : row.mode;
     if (!m) return "";
     const s = m.score;
-    if (s == null) return "No time-unit cost in the ruleset for this attack, so there is nothing to score";
+    if (s == null)
+      return "No time-unit cost in the ruleset for this attack, so there is nothing to score";
     if (!(s > 0))
       return (
         "Cannot drop this target: " +
-        (m.hitsNeeded == null
-          ? "no number of hits would do it"
-          : m.accuracy <= 0
-            ? "the shot cannot connect at this range"
-            : "it would take more than " + 100 + " shots")
+        (m.accuracy <= 0
+          ? "the shot cannot connect at this range"
+          : "even 100 attacks do not reach 4-in-5 odds of putting it down")
       );
     const turns = scoreTurns(s);
     const parts = [
       (row.first && row.modeCount > 1 ? m.label + " is this weapon's best: " : "") + s + "/100",
-      m.hitsNeeded + (m.hitsNeeded == 1 ? " hit" : " hits") + " needed",
-      m.reliableAttacks +
-        (m.reliableAttacks == 1 ? " shot" : " shots") +
-        (m.hitsNeeded == 1 ? " to land it" : " to land them") +
-        " 4 times out of 5",
-      n(m.reliableTu, 0) + " TU",
+      m.attacksToKill +
+        (m.attacksToKill == 1 ? " attack" : " attacks") +
+        " for " +
+        Math.round((m.killChance || 0) * 100) +
+        "% odds of dropping it",
+      n(m.tuToKill, 0) + " TU",
       (turns < 1 ? "about " + Math.round(turns * 100) + "% of" : n(turns, 1) + "x") +
         " this soldier's turn",
     ];
@@ -1253,8 +1305,9 @@
       One weapon vs enemies
     </button>
     <span class="stretcher" />
-    <span class="dmg-note">
-      Damage is exact. Accuracy is the figure the firing panel shows, not a hit chance.
+    <span class="dmg-note" title={HIT_TITLE}>
+      Damage is exact. Guns never roll against Acc - the shot drifts instead, so
+      Hit% runs above Acc up close and decays with range.
     </span>
   </div>
 
@@ -1289,7 +1342,10 @@
                 class:dmg-chip-on={availMode == m.id}
                 title={m.title}
                 disabled={m.id != "off" && !savePath}
-                on:click={() => (availMode = m.id)}
+                on:click={() => {
+                  availMode = m.id;
+                  availTouched = true;
+                }}
               >
                 {m.label}
                 {#if m.id != "off" && saveState}
@@ -1538,11 +1594,12 @@
           <span>Goal</span>
           <select
             class="dmg-input"
-            title="Kill ranks on health damage; capture ranks on stun, which is the only track a daze weapon has"
+            title="Take down: health runs out OR stun exceeds the health that is left - the two add, which is why a rifle with ToStun can drop a target that the health damage alone would not. Kill outright: health damage only. Capture: stun only, for taking one alive."
             bind:value={goal}
           >
-            <option value="kill">Kill</option>
-            <option value="stun">Capture</option>
+            <option value="drop">Take down</option>
+            <option value="kill">Kill outright</option>
+            <option value="stun">Capture (stun only)</option>
           </select>
         </label>
         <label class="dmg-row">
@@ -1955,6 +2012,11 @@
                       {/if}
                     {/if}
                   </td>
+                  <td class="num dmg-cap">
+                    {#if row.first}
+                      {+row.weapon.item.invWidth || 1}×{+row.weapon.item.invHeight || 1}
+                    {/if}
+                  </td>
                   <td class:dmg-submode={!row.first}>{row.mode.label}</td>
                   <td class="num">
                     {n(row.mode.damage.min, 0)}–{n(row.mode.damage.max, 0)}{#if row.mode.damage.hitsPerAttack > 1}<span
@@ -1981,6 +2043,7 @@
                     {row.mode.attack.range == null ? "–" : n(row.mode.attack.range, 0)}
                   </td>
                   <td class="num">{Math.round(row.mode.accuracy)}%</td>
+                  <td class="num">{Math.round(row.mode.hitRate * 100)}%</td>
                   <td class="num">{n(row.mode.perAttack)}</td>
                   <td class="num" title={armourNote(row.mode)}>
                     {row.mode.armorPerAttack > 0.05 ? n(row.mode.armorPerAttack) : "–"}
@@ -2002,7 +2065,7 @@
                           <tr>
                             <td title="0-100; 50 is one full turn of this soldier's TU">Score</td>
                             <td>Mode</td><td>Power</td><td>Roll</td><td>After armour</td>
-                            <td>Bounces</td><td>Shots</td><td title="Projectiles assumed to land on the target">Land</td><td>Acc</td>
+                            <td title="Shots that HIT and still did nothing - the roll came in at or below the armour, so no damage got through. Misses are not counted here; that is the Acc column. Worth watching because a healthy average can hide a weapon most of whose shots bounce off.">Bounces</td><td>Shots</td><td title="Projectiles assumed to land on the target">Land</td><td>Acc</td><td title={HIT_TITLE}>Hit%</td>
                             <td>TU</td><td>Per attack</td>
                             <td title="Armour stripped per attack: ToArmorPre off the roll plus ToArmor off what got through">Armour↓</td>
                             <td>Attacks</td><td>Turns</td>
@@ -2032,6 +2095,7 @@
                               <td class="num">{m.damage.hitsPerAttack}</td>
 <td class="num">{n(m.damage.expectedHitsPerAttack, 1)}</td>
                               <td class="num">{Math.round(m.accuracy)}%</td>
+                              <td class="num">{Math.round(m.hitRate * 100)}%</td>
                               <td class="num">{n(m.tuCost, 0)}</td>
                               <td class="num">{n(m.perAttack)}</td>
                               <td class="num" title={armourNote(m)}
@@ -2152,6 +2216,9 @@
                 <td class="num" class:dmg-outofrange={outOfRange(row.mode)}>
                   {Math.round(row.mode.accuracy)}%
                 </td>
+                <td class="num" class:dmg-outofrange={outOfRange(row.mode)}>
+                  {Math.round(row.mode.hitRate * 100)}%
+                </td>
                 <td class="num">{n(row.mode.perAttack)}</td>
                 <td class="num" title={armourNote(row.mode)}>
                   {row.mode.armorPerAttack > 0.05 ? n(row.mode.armorPerAttack) : "–"}
@@ -2202,7 +2269,7 @@
                       <thead>
                         <tr>
                           <td>Mode</td><td>Power</td><td>Roll</td><td>After armour</td>
-                          <td>Bounces</td><td>Shots</td><td title="Projectiles assumed to land on the target">Land</td><td>Range</td><td>Acc</td>
+                          <td title="Shots that HIT and still did nothing - the roll came in at or below the armour, so no damage got through. Misses are not counted here; that is the Acc column. Worth watching because a healthy average can hide a weapon most of whose shots bounce off.">Bounces</td><td>Shots</td><td title="Projectiles assumed to land on the target">Land</td><td>Range</td><td>Acc</td><td title={HIT_TITLE}>Hit%</td>
                           <td>TU</td><td>Per attack</td><td>Attacks</td><td>Turns</td>
                         </tr>
                       </thead>
@@ -2229,6 +2296,7 @@
                               {m.attack.range == null ? "–" : n(m.attack.range, 0)}
                             </td>
                             <td class="num">{Math.round(m.accuracy)}%</td>
+                              <td class="num">{Math.round(m.hitRate * 100)}%</td>
                             <td class="num">{n(m.tuCost, 0)}</td>
                             <td class="num">{n(m.perAttack)}</td>
                             <td class="num"

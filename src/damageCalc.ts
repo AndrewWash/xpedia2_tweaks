@@ -464,13 +464,44 @@ export type Target = {
   unit: any;
   /** The armour actually worn - where resistances and armour values live. */
   armor: any;
+  /** What the campaign difficulty does to this enemy. */
+  difficulty: { aim: number; armor: number; growthPercent: number };
+  /** Health after the difficulty adjustment. */
   health: number;
   /** ARMOR_ENERGY_SHIELD_* tags, when present. Not modelled, only reported. */
   shield: { capacity: number; perTurn: number; type: number };
 };
 
 /** Resolve an id to something shootable: a unit, or an armour on its own. */
-export function resolveTarget(id: string): Target {
+/**
+ * How the campaign's difficulty changes an enemy, from Mod.cpp's own table:
+ *
+ *   difficulty 0   aimMultiplier 0.5, armorMultiplier 0.5, growthMultiplier 0
+ *   difficulty 1-4 aimMultiplier 1.0, armorMultiplier 1.0, growthMultiplier = n
+ *
+ * Applied to hostile units only (BattleUnit's constructor:
+ * `if (_originalFaction == FACTION_HOSTILE) adjustStats(*adjustment);`).
+ * growthMultiplier adds that many PERCENT to each stat, so a Genius-difficulty
+ * enemy is 3% tougher and a Beginner one has half the armour and aim.
+ *
+ * Small at most difficulties, but it is real and free to apply once the save
+ * tells us which one is being played.
+ */
+export function difficultyAdjustment(difficulty: number) {
+  /**
+   * null means "no campaign loaded", which must be NEUTRAL - not Beginner.
+   * Defaulting to 0 quietly halved every enemy's armour before a save was
+   * picked, and the whole test suite with it.
+   */
+  if (difficulty == null || difficulty === "" || isNaN(+difficulty))
+    return { aim: 1, armor: 1, growthPercent: 0 };
+  const d = Math.max(0, Math.min(4, Math.round(+difficulty)));
+  return d === 0
+    ? { aim: 0.5, armor: 0.5, growthPercent: 0 }
+    : { aim: 1, armor: 1, growthPercent: d };
+}
+
+export function resolveTarget(id: string, difficulty: number = null): Target {
   if (!id) return null;
   const unit = rul.units ? rul.units[id] : null;
   const armor = unit ? rul.armors[unit.armor] : rul.armors ? rul.armors[id] : null;
@@ -478,13 +509,16 @@ export function resolveTarget(id: string): Target {
 
   const tags = armor.tags || {};
   const cap = +tags.ARMOR_ENERGY_SHIELD_CAPACITY || 0;
+  const adj = difficultyAdjustment(difficulty);
+  const baseHealth = (unit && unit.stats && +unit.stats.health) || 0;
 
   return {
     id,
     title: rul.tr(id),
     unit,
     armor,
-    health: (unit && unit.stats && +unit.stats.health) || 0,
+    difficulty: adj,
+    health: Math.round(baseHealth * (1 + adj.growthPercent / 100)),
     shield: cap
       ? {
           capacity: cap,
@@ -502,7 +536,10 @@ export function armorValue(target: Target, side: string): number {
   if (!target || !target.armor) return 0;
   const a = target.armor.armor || {};
   const v = a[side];
-  return +(v != null ? v : a.Front) || 0;
+  const base = +(v != null ? v : a.Front) || 0;
+  // Beginner halves enemy armour; every other difficulty leaves it alone.
+  const mult = target.difficulty ? target.difficulty.armor : 1;
+  return Math.round(base * mult);
 }
 
 export type DamageResult = {
@@ -814,13 +851,201 @@ export type KillSequence = {
   first: DamageResult;
 };
 
+/**
+ * Resolution of the accumulated-damage grid.
+ *
+ * The target's health is split into this many steps and damage is accumulated
+ * on that scale. 64 keeps the quantisation error under 2% of the target's
+ * health per attack while a convolution stays 65x65 - small enough to run for
+ * every firing mode in the mod without the page noticing.
+ */
+const KILL_GRID = 64;
+
+/** How many samples stand in for one randomised To* roll. */
+const RANDOM_SAMPLES = 8;
+
+/**
+ * Spread of one To* term, rather than just its mean.
+ *
+ * getDamageHelper rolls `round(rand(0, damage) * mult)` when the Random flag is
+ * set, so the result is uniform over 0..round(damage*mult). Collapsing that to
+ * its average hides the thing that decides fights: an RCF Carbine clip carries
+ * ToStun 0.5 with the default RandomStun, so a 27-damage hit on a 35 HP agent
+ * leaves 8 health and rolls 0-13 stun - it knocks the target out about two
+ * times in five, and looks like an inconsistent one-shot kill from the outside.
+ */
+function termOutcomes(random: boolean, damage: number, mult: number, into: Outcome[], weight: number) {
+  if (!(damage > 0) || !mult) {
+    into.push({ v: 0, p: weight });
+    return;
+  }
+  if (!random) {
+    into.push({ v: Math.round(damage * mult), p: weight });
+    return;
+  }
+  const top = Math.round(damage * mult);
+  const n = Math.min(RANDOM_SAMPLES, top + 1);
+  for (let i = 0; i < n; i++) into.push({ v: (top * i) / (n - 1 || 1), p: weight / n });
+}
+
+/**
+ * One projectile's contribution, in the currency the goal cares about.
+ *
+ * "drop" is the one that matches what happens on screen: a unit goes down when
+ * it runs out of health OR its stun reaches whatever health it has left. Since
+ * stun only has to cover the health that damage did not, the two simply add -
+ * health damage + stun damage >= starting health - so a single pool still works.
+ */
+function projectileOutcomes(
+  p: DamageProfile,
+  armor: number,
+  goal: "kill" | "stun" | "drop"
+): Outcome[] {
+  const effectiveArmor = Math.max(0, armor) * p.armorEff;
+  const out: Outcome[] = [];
+  for (const o of p.dist) {
+    const dmg = Math.max(0, Math.floor(o.v - effectiveArmor));
+
+    if (goal == "kill") {
+      termOutcomes(p.randomHealth, dmg, p.toHealth, out, o.p);
+    } else if (goal == "stun") {
+      termOutcomes(p.randomStun, dmg, p.toStun, out, o.p);
+    } else {
+      // Both tracks, convolved: each is rolled independently by the engine.
+      const health: Outcome[] = [];
+      termOutcomes(p.randomHealth, dmg, p.toHealth, health, 1);
+      const stun: Outcome[] = [];
+      termOutcomes(p.randomStun, dmg, p.toStun, stun, 1);
+      for (const h of health)
+        for (const st of stun) out.push({ v: h.v + st.v, p: o.p * h.p * st.p });
+    }
+  }
+  return out;
+}
+
+/** Bucket a set of outcomes onto the grid. The last bucket absorbs overkill. */
+function bucketise(outcomes: Outcome[], step: number): Float64Array {
+  const v = new Float64Array(KILL_GRID + 1);
+  for (const o of outcomes) {
+    let k = step > 0 ? Math.round(o.v / step) : o.v > 0 ? KILL_GRID : 0;
+    if (k > KILL_GRID) k = KILL_GRID;
+    if (k < 0) k = 0;
+    v[k] += o.p;
+  }
+  return v;
+}
+
+/** Distribution of a + b, with the top bucket absorbing (that is "dead"). */
+function convolve(a: Float64Array, b: Float64Array): Float64Array {
+  const out = new Float64Array(KILL_GRID + 1);
+  for (let i = 0; i <= KILL_GRID; i++) {
+    const ai = a[i];
+    if (!ai) continue;
+    // Already at or past the target's health: nothing more can change.
+    if (i == KILL_GRID) {
+      out[KILL_GRID] += ai;
+      continue;
+    }
+    for (let j = 0; j <= KILL_GRID; j++) {
+      const bj = b[j];
+      if (!bj) continue;
+      const k = i + j;
+      out[k > KILL_GRID ? KILL_GRID : k] += ai * bj;
+    }
+  }
+  return out;
+}
+
+/** n independent copies summed, by repeated squaring so 40 pellets cost ~6. */
+function selfConvolve(base: Float64Array, n: number): Float64Array {
+  let result: Float64Array = null;
+  let power = base;
+  let k = Math.max(0, Math.floor(n));
+  while (k > 0) {
+    if (k & 1) result = result ? convolve(result, power) : power;
+    k >>= 1;
+    if (k) power = convolve(power, power);
+  }
+  if (!result) {
+    result = new Float64Array(KILL_GRID + 1);
+    result[0] = 1;
+  }
+  return result;
+}
+
+/**
+ * What one whole attack adds, all its projectiles together.
+ *
+ * A fractional projectile count is real - a shotgun lands 5.8 pellets on
+ * average - so the extra one is mixed in at its own probability rather than
+ * rounded away.
+ */
+function attackDistribution(
+  p: DamageProfile,
+  armor: number,
+  goal: "kill" | "stun" | "drop",
+  step: number
+): Float64Array {
+  const one = bucketise(projectileOutcomes(p, armor, goal), step);
+  const n = Math.max(0, p.landed);
+  const whole = Math.floor(n);
+  const frac = n - whole;
+  const lo = selfConvolve(one, whole);
+  if (frac < 1e-6) return lo;
+  const hi = convolve(lo, one);
+  const out = new Float64Array(KILL_GRID + 1);
+  for (let i = 0; i <= KILL_GRID; i++) out[i] = lo[i] * (1 - frac) + hi[i] * frac;
+  return out;
+}
+
+export type KillSequence = {
+  /**
+   * Attacks needed to drop the target at SCORE_CONFIDENCE, or null if it never
+   * gets there. Both the ranking and the Attacks column read this, so the two
+   * cannot disagree.
+   */
+  attacks: number;
+  /** Chance the target is down after that many attacks. */
+  chance: number;
+  /** Armour left on that facing when the target goes down. */
+  armorEnd: number;
+  armorStart: number;
+  /** First attack that gets any damage through, or null if none ever does. */
+  attacksToPenetrate: number;
+  /** Whether this attack strips armour at all. */
+  degrades: boolean;
+  /** Resolved damage against the armour as it stands now: the first shot. */
+  first: DamageResult;
+};
+
+/**
+ * How many attacks it really takes, spread and all.
+ *
+ * This carries a DISTRIBUTION of accumulated damage rather than a running
+ * average, and that is the whole point. Dividing health by mean damage says a
+ * Good Lookin' Rock (0-68, mean 31) one-shots a 30 HP nurse, when in truth it
+ * manages it about half the time; the same arithmetic said a Machete out-ranked
+ * a Cutlass that hits twice as hard. Averages hide variance, and variance is
+ * most of what separates a reliable weapon from a lucky one.
+ *
+ * Each attack either misses (probability 1 - hitRate, nothing accumulates) or
+ * lands and adds its own damage distribution. The target is down once the mass
+ * at or beyond its health reaches the confidence level. Armour degradation
+ * still applies between attacks, and the per-armour distributions are cached
+ * because armour only ever walks downward.
+ *
+ * The one approximation left: a randomised To* term contributes its mean
+ * (damage/2) rather than its own spread, the same simplification applyArmor
+ * makes and for the same reason.
+ */
 export function simulateAttacks(
   p: DamageProfile,
   armorStart: number,
   pool: number,
-  goal: "kill" | "stun",
+  goal: "kill" | "stun" | "drop",
   hitRate: number,
-  maxAttacks: number
+  maxAttacks: number,
+  confidence = 0.8
 ): KillSequence {
   const cache: { [a: number]: DamageResult } = {};
   const at = (a: number) => cache[a] || (cache[a] = applyArmor(p, a));
@@ -829,49 +1054,63 @@ export function simulateAttacks(
   const first = at(Math.round(armor));
   const out: KillSequence = {
     attacks: null,
+    chance: 0,
     armorEnd: armor,
     armorStart: armor,
     attacksToPenetrate: null,
     degrades: first.armorLossPerAttack > 0,
     first,
   };
-  if (!(pool > 0)) return out;
+  if (!(pool > 0) || !(hitRate > 0)) return out;
 
-  const track = (d: DamageResult) =>
-    (goal == "stun" ? d.avgStunPerAttack : d.avgHealthPerAttack) * hitRate;
+  const step = pool / KILL_GRID;
+  const distCache: { [a: number]: Float64Array } = {};
+  const attackAt = (a: number) =>
+    distCache[a] || (distCache[a] = attackDistribution(p, a, goal, step));
 
-  let left = pool;
-  let attacks = 0;
+  // Accumulated damage, starting at nothing.
+  let cur = new Float64Array(KILL_GRID + 1);
+  cur[0] = 1;
+  const want = Math.min(0.999999, Math.max(0, confidence));
 
-  for (;;) {
-    const d = at(Math.round(armor));
-    const per = track(d);
-    // Armour only matters to the damage while ArmorEffectiveness is non-zero -
-    // a burn weapon can be shredding plating that was never in its way.
-    const loss = p.armorEff > 0 ? d.armorLossPerAttack * hitRate : 0;
+  for (let n = 1; n <= maxAttacks; n++) {
+    const key = Math.round(armor);
+    const d = at(key);
+    if (out.attacksToPenetrate == null && d.avg > 0) out.attacksToPenetrate = n;
 
-    // Nothing more will change, so the rest is arithmetic rather than a loop.
-    if (loss <= 0) {
-      if (per <= 0) return out;
-      const more = Math.max(1, Math.ceil(left / per));
-      if (attacks + more > maxAttacks) return out;
-      out.attacksToPenetrate = out.attacksToPenetrate != null ? out.attacksToPenetrate : attacks + 1;
-      out.attacks = attacks + more;
+    const landed = convolve(cur, attackAt(key));
+    const next = new Float64Array(KILL_GRID + 1);
+    for (let i = 0; i <= KILL_GRID; i++)
+      next[i] = cur[i] * (1 - hitRate) + landed[i] * hitRate;
+    cur = next;
+
+    out.chance = cur[KILL_GRID];
+    if (out.chance >= want) {
+      out.attacks = n;
       out.armorEnd = armor;
       return out;
     }
 
-    attacks++;
-    if (attacks > maxAttacks) return out;
-    if (per > 0 && out.attacksToPenetrate == null) out.attacksToPenetrate = attacks;
-    left -= per;
-    if (left <= 0) {
-      out.attacks = attacks;
-      out.armorEnd = Math.max(0, armor - loss);
+    // Armour only matters while ArmorEffectiveness is non-zero - a burn weapon
+    // can be shredding plating that was never in its way.
+    const loss = p.armorEff > 0 ? d.armorLossPerAttack * hitRate : 0;
+    if (loss > 0) {
+      armor = Math.max(0, armor - loss);
+      continue;
+    }
+    /**
+     * Give up only when the attack can never contribute ANYTHING and the
+     * armour will not move. Testing the kill chance instead was wrong: a stun
+     * baton doing 30 to a 75 HP target has a zero chance after one swing and
+     * still gets there on the third.
+     */
+    if (attackAt(key)[0] >= 1) {
+      out.armorEnd = armor;
       return out;
     }
-    armor = Math.max(0, armor - loss);
   }
+  out.armorEnd = armor;
+  return out;
 }
 
 /**

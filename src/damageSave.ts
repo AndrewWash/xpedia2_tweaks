@@ -67,6 +67,8 @@ export type SaveState = {
   discovered: Set<string>;
   /** Every item id held at a base or loaded on a craft, with total count. */
   owned: Map<string, number>;
+  /** Campaign difficulty, 0 (Beginner) to 4 (Superhuman). Buffs enemies. */
+  difficulty: number;
   /** Base count, so the UI can say what it summed. */
   bases: number;
   crafts: number;
@@ -267,6 +269,8 @@ export function parseSave(text: string, path = ""): SaveState {
   return {
     path,
     name: typeof header.name == "string" ? header.name : "",
+    // Top level of the state document; absent on a malformed save.
+    difficulty: Math.max(0, Math.min(4, Math.round(+state.difficulty || 0))),
     date: gameDate(header.time),
     discovered,
     owned,

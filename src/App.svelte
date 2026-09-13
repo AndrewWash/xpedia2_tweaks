@@ -551,7 +551,9 @@
         title={damageMode ? "Leave the damage calculator" : "Estimate damage against an enemy"}
         on:click={goDamage}
       >
-        <nobr>🎯<span class="on-wide">&nbsp;<Tr s="Damage" /></span></nobr>
+        <!-- No icon, so the label carries the button on narrow layouts too -
+             it is short enough not to need the on-wide hiding the others use. -->
+        <nobr>CENTCOM</nobr>
       </div>
 
       <div class="stretcher on-wide" />

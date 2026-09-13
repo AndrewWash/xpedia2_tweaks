@@ -2,36 +2,35 @@
  * The effectiveness score: one glanceable number for "is this weapon worth
  * using against this enemy at all".
  *
- * Three steps, and the middle one is the whole point of this file.
+ * The score itself is one line - 100 / (1 + TU / the soldier's TU bar) - and all
+ * the work is in the TU it is handed. That comes from simulateAttacks in
+ * damageCalc.ts, which walks a DISTRIBUTION of accumulated damage rather than a
+ * running average and stops when the target is down four times out of five.
  *
- *   1. How many HITS does it take to drop the target? That comes from
- *      simulateAttacks with the hit rate left out, so the armour still degrades
- *      hit by hit - a hit is the only thing that strips armour.
- *   2. How many SHOTS to land that many hits? A negative binomial, below.
- *   3. Turn that into TU and compare it against the soldier's own bar.
+ * Why a distribution, and not health / average damage: averages hide variance,
+ * and variance is most of what separates a reliable weapon from a lucky one.
+ * The mean said a Good Lookin' Rock (0-68 damage, mean 31) one-shots a 30 HP
+ * nurse; it manages that about half the time. The same arithmetic ranked a
+ * Machete above a Cutlass hitting twice as hard, because the Machete's mean
+ * scraped over the line more cheaply. Both are fixed by counting the spread.
  *
- * Why step 2 exists at all. The rest of the calculator folds accuracy into the
- * damage, so a 50%-accuracy shot is treated as doing half damage every time.
- * The average is right and the spread is thrown away, which is the one thing
- * that matters here: you do not get half a hit, you either connect for full or
- * you spend the TU for nothing. Modelled properly the gap is much wider than
- * the linear version suggests:
- *
- *                        folded into damage      misses as misses
- *   2 hits at 90% acc    ceil(2/0.9) = 3         2 shots
- *   2 hits at 50% acc    ceil(2/0.5) = 4         5 shots
- *                        1.33x worse             2.5x worse
- *
- * Which is why a slightly slower, accurate weapon really does beat a cheap
- * inaccurate one, and why the old TU-to-kill column could never show it.
+ * A miss is a wasted attack, not reduced damage - the other half of the same
+ * point. attacksForHits below is the closed form of that idea for the simple
+ * case of a fixed number of hits; the live pipeline uses the fuller simulation
+ * because damage spread and armour degradation do not fit a closed form.
  *
  * WHAT THIS DOES NOT KNOW. It is a ranking aid over what the ruleset actually
  * states, not a verdict on a weapon: ammo capacity and reload cost, energy
  * cost, weight and encumbrance, energy shields (reported but not modelled),
  * and the exposure of standing in the open for another turn are all outside
- * it. The accuracy it uses is the figure the firing panel shows, which is an
- * input to a voxel trace against the target's model and cover - not a true hit
- * probability. Treat a high score as "worth trying", never as "guaranteed".
+ * it.
+ *
+ * The hit rate it uses is NOT the figure the firing panel shows. For direct
+ * fire the engine deviates the aim point rather than rolling against accuracy,
+ * so the panel figure is a floor on how often you connect and the real rate
+ * depends on range; damageHit.ts reproduces that geometry. What it still does
+ * not know is cover, terrain and the target's actual voxel model, so treat a
+ * high score as "worth trying", never as "guaranteed".
  */
 
 /**

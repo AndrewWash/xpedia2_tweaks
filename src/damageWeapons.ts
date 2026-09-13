@@ -15,10 +15,14 @@ import {
   attacksPerTurn,
   tuPerAttack,
   rangeAt,
+  rangeLimits,
+  approachTu,
+  fireDistance,
 } from "./damageCalc";
 import type { RangeLimits } from "./damageCalc";
 import { effectivenessScore, SCORE_CONFIDENCE } from "./damageScore";
 import { hitChance, targetGeometry } from "./damageHit";
+import { sightDistance } from "./damageSight";
 import type { PelletModel } from "./damageCalc";
 import type { Stats, Target, DamageResult, AccuracyOpts } from "./damageCalc";
 
@@ -36,6 +40,21 @@ export const USABLE_MODES = ["snap", "aimed", "auto", "melee", "throw"];
  * expected damage it is divided by is a rounding artefact.
  */
 export const MAX_USEFUL_ATTACKS = 100;
+
+/**
+ * What an "unlimited" range counts as when averaging a hybrid's reach.
+ *
+ * 360 of the mod's ranged items never state an `aimRange`, so they inherit the
+ * engine default of 200 tiles. Averaging that in literally makes a Hunting
+ * Rifle's melee approach (18 + 200) / 2 = 109 tiles, or 436 TU, which is
+ * nonsense. 30 tiles covers about 90% of any map, so past it the extra reach
+ * buys nothing you would ever use.
+ *
+ * Applied per mode before the average, so a weapon that states a real range
+ * shorter than this is untouched: the Flintlock's snap 15 and aimed 17 average
+ * to 16 exactly as they should.
+ */
+export const UNLIMITED_RANGE_BENCHMARK = 30;
 
 /**
  * What "effective" means for this comparison.
@@ -150,6 +169,30 @@ export function weaponDamageTypes(item: any, attacks: any[], ammoOptions: string
 export function weaponHands(item: any): WeaponHands {
   if (!item.twoHanded) return "one";
   return item.blockBothHands ? "both" : "two";
+}
+
+/**
+ * Mode names that are wall-breaking utility rather than a way to kill someone.
+ *
+ * XPiratez implements these as a RANGED mode with `maxRange: 1` so they can
+ * smash terrain - Hammer, Steam Hammer, Anchor, Wreckin' Ball, Crowbar,
+ * Pickaxe, Magic Hammer all carry `confSnap`/`confAimed` named STR_CRUSH with
+ * `firing: 0.0` and a closeQuartersMultiplier on strength or melee.
+ *
+ * Being ranged, they pay no approach and are scored at one tile, where the
+ * Hit% geometry is at its most generous - so they rank far above what they are
+ * worth against a person, because in practice close-quarters combat is what
+ * decides them and that is not modelled.
+ *
+ * A name list rather than a shape test on purpose: "ranged mode with range 1"
+ * would also catch legitimate point-blank weapons. Another mod names its own,
+ * so this is the one place to add them.
+ */
+export const UTILITY_MODE_NAMES = ["STR_CRUSH"];
+
+/** Whether a resolved attack is one of those. */
+export function isUtilityMode(attack: any): boolean {
+  return !!attack && UTILITY_MODE_NAMES.includes(attack.name);
 }
 
 /** Which class one firing mode belongs to. */
@@ -296,6 +339,16 @@ export type ModeResult = {
   perAttack: number;
   tuCost: number;
   /**
+   * TU to walk from where the enemy was spotted to where this mode can be used,
+   * charged once. Zero for anything usable from where you stand. See
+   * approachTu and fireDistance in damageCalc.ts.
+   */
+  approachTu: number;
+  /** Tiles this mode is actually used from. 1 for melee. */
+  fireDistance: number;
+  /** Tiles at which this soldier spots this enemy, with the working shown. */
+  sight: any;
+  /**
    * What actually separates weapons.
    *
    * Damage-per-turn is a trap against a soft target: a 40-pellet burst reports
@@ -393,11 +446,67 @@ export function scoreWeapon(
   // The silhouette a shot has to land inside. A property of the target, so it
   // is the same for every mode and every weapon in the ranking.
   const geom = targetGeometry(target);
+  /**
+   * How far away this soldier spots THIS enemy, in these light conditions.
+   *
+   * The constant every mode is measured against, and it is not a constant at
+   * all - it swings with her armour, the enemy's camouflage and the light. A
+   * property of the pairing, so it is computed once here rather than per mode.
+   */
+  const sight = sightDistance(opts.soldierArmor, target && target.armor, opts.isDay !== false);
+
+  /**
+   * The approach cost, off a single distance cutoff.
+   *
+   *   APPR = max(0, cutoff - this mode's reach) * tuPerTile
+   *
+   * One rule for every mode, melee included (its reach is 0 - it works only in
+   * contact). The cutoff is the Range box, and it stands for the distance a
+   * fight typically opens at.
+   *
+   * The trade-off it encodes: a weapon that reaches AT or BEYOND the cutoff
+   * pays nothing, because you can already act from where the fight starts and
+   * that is the safer position. Anything shorter has to be walked into range,
+   * and the walk is both TU and exposure. A Sawed-Off (snapRange 4) against a
+   * cutoff of 16 pays (16 - 4) x 4 = 48 TU; a rifle reaching 18 pays nothing.
+   *
+   * Measured over the mod, the median ranged reach is 18 tiles and the mean
+   * (with the 200-tile default capped at 30) is 18.6, so a cutoff near 16-18
+   * sits right in the middle of what weapons actually do.
+   */
+  const cutoff = Math.max(0, +opts.distance || 0);
+
+  /**
+   * The previous model, kept because it may come back rather than because it
+   * is used: a hybrid's melee charged from the average of its OWN guns' reach,
+   * so clubbing with a rifle cost the shot you gave up. Switched off to see the
+   * flat cutoff on its own. UNLIMITED_RANGE_BENCHMARK exists only for this.
+   */
+  const HYBRID_MELEE_FROM_OWN_RANGE = false;
+  const rangedReach = attacks
+    .filter((a) => modeKind(a.mode) == "ranged")
+    .map((a) =>
+      Math.min(
+        UNLIMITED_RANGE_BENCHMARK,
+        rangeLimits(a, weapon.item, aimedRange, opts.ufoExtender !== false).upper
+      )
+    );
+  const meleeFrom =
+    HYBRID_MELEE_FROM_OWN_RANGE && rangedReach.length
+      ? Math.round(rangedReach.reduce((a, b) => a + b, 0) / rangedReach.length)
+      : cutoff;
 
   for (const attack of attacks) {
     if (modeFilter && !modeFilter(attack)) continue;
+    /**
+     * Where the attack is made FROM, which is not where you spotted the enemy.
+     * A Sawed-Off sighted at 40 tiles is not fired from 40 - you walk it into
+     * its four-tile range first, and judging its accuracy at the spotting
+     * distance was costing it 100 points off a stated 130.
+     */
+    const fireAt = fireDistance(attack, weapon.item, aimedRange, sight.tiles, opts.ufoExtender !== false);
     // Accuracy first: the pellet model for vanilla shotgun behaviour needs it.
-    const accuracy = accuracyPercent(attack, weapon.item, stats, opts, aimedRange);
+    const accuracy = accuracyPercent(attack, weapon.item, stats, opts, aimedRange, fireAt);
     const profile = damageProfile(attack, stats, target, pelletModel, accuracy);
     if (!profile) continue;
     const perTurn = attacksPerTurn(attack, stats);
@@ -416,7 +525,7 @@ export function scoreWeapon(
      * folds in hit chance. Letting those two diverge is the bug that put a
      * Machete's "TU to kill 12" beside a better score than a Cutlass's 8.
      */
-    const hitRate = hitChance(attack.mode, accuracy, opts.distance, geom);
+    const hitRate = hitChance(attack.mode, accuracy, fireAt, geom);
     const hp = target.health || 0;
     /**
      * ONE simulation, used for both the ranking and the columns.
@@ -446,9 +555,44 @@ export function scoreWeapon(
           : damage.avgHealthPerAttack) * hitRate;
     const tuCost = tuPerAttack(attack, stats);
     const attacksToKill = seq.attacks;
+    /**
+     * Getting there is part of the cost.
+     *
+     * A melee mode cannot be used from the Range the rest of the table is
+     * judged at - the gal has to walk. Charged once, before the first swing,
+     * because you close the distance and then keep swinging. Ranged and thrown
+     * modes are zero: you use those from where you stand.
+     *
+     * Leaving this out was the single biggest thing flattering melee. A Cutlass
+     * read "16 TU to drop the G.O." from ten tiles away, against a gun's 24 -
+     * comparing a number that skipped nine tiles of walking against one that
+     * did not.
+     */
+    /**
+     * Melee walks from the manual Range box, everything else from sight.
+     *
+     * Deliberately asymmetric. A melee weapon has no choice to weigh - it works
+     * at one tile and that is that - so its approach is the one number worth
+     * dialling in by hand. Every other mode has a real reach, and what matters
+     * is how much of the spotting distance it has to give up to use it: an
+     * aimRange 200 rifle gives up nothing, a Sawed-Off gives up everything past
+     * four tiles.
+     */
+    // Melee has no reach at all, so it walks the whole cutoff.
+    const modeReach =
+      attack.mode == "melee"
+        ? 0
+        : rangeLimits(attack, weapon.item, aimedRange, opts.ufoExtender !== false).upper;
+    const approach = approachTu(
+      attack.mode == "melee" ? meleeFrom : cutoff,
+      modeReach,
+      opts.tuPerTile,
+      opts.freeTiles
+    );
     // A zero TU cost would make every such weapon a free instant kill. We do
     // not know the real cost, so we say so rather than inventing one.
-    const tuToKill = attacksToKill != null && tuCost > 0 ? attacksToKill * tuCost : null;
+    const tuToKill =
+      attacksToKill != null && tuCost > 0 ? approach + attacksToKill * tuCost : null;
     const score = effectivenessScore(tuToKill, stats.tu);
 
     /**
@@ -458,11 +602,18 @@ export function scoreWeapon(
      * column beside it. Below 1 it doubles as what you have left.
      *
      * wholeTurns is the tactical count, because you cannot carry time units
-     * between turns or fire part of a shot.
+     * between turns or fire part of a shot. Derived from the TU total rather
+     * than from attacks-per-turn so it accounts for a first turn partly spent
+     * walking - otherwise a melee mode could report "1 turn" for a kill whose
+     * approach alone eats the whole bar.
      */
     const turnsToKill = tuToKill != null && stats.tu ? tuToKill / stats.tu : null;
     const wholeTurns =
-      attacksToKill != null && perTurn > 0 ? Math.ceil(attacksToKill / perTurn) : null;
+      tuToKill != null && stats.tu > 0
+        ? Math.ceil(tuToKill / stats.tu)
+        : attacksToKill != null && perTurn > 0
+          ? Math.ceil(attacksToKill / perTurn)
+          : null;
 
     modes.push({
       mode: attack.mode,
@@ -477,13 +628,16 @@ export function scoreWeapon(
       stunPerTurn: damage.avgStunPerAttack * hitRate * perTurn,
       perAttack,
       tuCost,
+      approachTu: approach,
+      fireDistance: fireAt,
+      sight,
       attacksToKill,
       tuToKill,
       turnsToKill,
       wholeTurns,
       score,
       killChance: seq.chance,
-      limits: rangeAt(attack, weapon.item, aimedRange, opts.ufoExtender !== false, opts.distance),
+      limits: rangeAt(attack, weapon.item, aimedRange, opts.ufoExtender !== false, fireAt),
       // Armour stripped by a hit that LANDS. Scaling this by the hit rate
       // smeared a fraction of the armour damage across shots that missed and
       // stripped nothing at all.

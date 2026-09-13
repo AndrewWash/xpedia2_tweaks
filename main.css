@@ -2575,3 +2575,54 @@ tr.diff-row > td:first-child {
   color: #ff9d5c;
   margin-left: 0.1em;
 }
+
+/* The resistance percentage now rides inside the Damage cell rather than
+   owning a column. Dimmed so the damage range still reads first. */
+.dmg-resist {
+  opacity: 0.55;
+  font-size: 90%;
+}
+
+/* The computed sight line and its full breakdown. Every visibility value on
+   both armours is listed, including the ones that change nothing - "this
+   armour has heatVision 50 and it does not apply here" is information. */
+.dmg-sight {
+  margin: 0.3rem 0 0.15rem;
+}
+
+.dmg-sightmore {
+  margin-left: 0.3rem;
+  padding: 0 0.3rem;
+}
+
+.dmg-sightbox {
+  border: 1px solid var(--border);
+  padding: 0.3rem;
+  margin-bottom: 0.35rem;
+}
+
+.dmg-sighttab {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 90%;
+}
+
+.dmg-sighttab td {
+  padding: 0.05rem 0.2rem;
+  white-space: nowrap;
+}
+
+.dmg-sighttab td:nth-child(2) {
+  white-space: normal;
+  word-break: break-word;
+}
+
+.dmg-sightunused {
+  opacity: 0.5;
+}
+
+/* The demolish filter sits with the search rather than the kind chips - it is
+   a "hide the noise" switch, not a category. */
+.dmg-demo {
+  margin-left: 0.3rem;
+}

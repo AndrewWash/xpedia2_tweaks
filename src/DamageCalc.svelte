@@ -17,7 +17,9 @@
   import { rul } from "./Ruleset";
   import { Tr } from "./Components";
   import { onMount } from "svelte";
-  import { resolveTarget, SIDES, armorValue, computeDamage } from "./damageCalc";
+  import { resolveTarget, SIDES, armorValue, computeDamage,
+    DEFAULT_TU_PER_TILE, DEFAULT_FREE_TILES } from "./damageCalc";
+  import { sightDistance, sightNote, maxViewDistance } from "./damageSight";
   import { damageTypes } from "./Ruleset";
   import {
     weaponList,
@@ -26,6 +28,7 @@
     scoreWeapon,
     attacksOf,
     modeKind,
+    isUtilityMode,
   } from "./damageWeapons";
   import {
     loadSoldiers,
@@ -57,7 +60,36 @@
   let currentId = "";
   let editing = false;
   let side = "Front";
-  let distance = 10;
+  /**
+   * The distance a fight opens at, and the cutoff every mode's approach is
+   * measured against. A mode reaching this far or further pays nothing; a
+   * shorter one is charged for the tiles it has to close.
+   *
+   * 16 because that is where the mod actually sits: across 1096 ranged attack
+   * modes the median reach is 18 and the mean (200-tile defaults capped at 30)
+   * is 18.6, so a cutoff of 16 leaves most guns free and charges the genuinely
+   * short-ranged ones.
+   */
+  let distance = 16;
+  /**
+   * Walking cost for the melee approach. Two knobs because they are two
+   * different kinds of claim: tuPerTile is an engine fact (4 on a flat floor;
+   * the "Lower move cost player only" mod scales player units to 75%, so 3),
+   * freeTiles is an assumption about play. Either at 0 turns the whole thing
+   * off and restores the assume-adjacency reading.
+   */
+  let tuPerTile = DEFAULT_TU_PER_TILE;
+  let freeTiles = DEFAULT_FREE_TILES;
+  /** Light conditions. Swings a soldier's sight from 40 tiles to 9. */
+  let isDay = true;
+  let showSight = false;
+  /**
+   * Wall-breaking modes (Demolish) are ranged with a one-tile range, so they
+   * pay no approach and are scored where the Hit% geometry is kindest - which
+   * ranks them far above what they do to a person. On by default; the modes
+   * are still there if you want to look.
+   */
+  let excludeDemo = true;
   let kneeling = false;
   let oneHanded = false;
   let noLOS = false;
@@ -508,7 +540,11 @@
       : null;
   $: if (forcedExtender != null) ufoExtender = forcedExtender;
 
-  $: opts = { distance: +distance || 0, kneeling, oneHanded, noLOS, ufoExtender };
+  $: soldierArmor = current && current.armor ? rul.armors[current.armor] : null;
+  $: opts = { distance: +distance || 0, kneeling, oneHanded, noLOS, ufoExtender,
+    tuPerTile: +tuPerTile || 0, freeTiles: +freeTiles || 0, isDay, soldierArmor };
+  /** The spotting distance the whole table is measured against. */
+  $: sight = target ? sightDistance(soldierArmor, target.armor, isDay) : null;
 
   function persist() {
     soldiers = soldiers;
@@ -775,9 +811,10 @@
    * work per mode.
    */
   $: modeFilter =
-    kindFilter == "all" && !dtFilters.length
+    kindFilter == "all" && !dtFilters.length && !excludeDemo
       ? null
       : (attack) => {
+          if (excludeDemo && isUtilityMode(attack)) return false;
           if (kindFilter != "all" && modeKind(attack.mode) != kindFilter) return false;
           if (dtFilters.length && !dtFilters.includes(+attack.damageType)) return false;
           return true;
@@ -796,6 +833,48 @@
    * different facts, and conflating them is what made guns look worse here
    * than they play. Shown side by side so it cannot happen again.
    */
+  const SHOT_TITLE =
+    "Where the fight starts. Range is the cutoff every approach is measured against - reach it and you pay " +
+    "nothing, fall short and you pay to close. Sight is how far away you spot THIS enemy with THIS armour " +
+    "in this light, computed from the ruleset; it is shown for reference but does not feed APPR yet.";
+
+  const LIGHT_TITLE =
+    "Daylight or darkness. A soldier sees maxViewDistance tiles by day (40 in XPiratez) but only 9 in the " +
+    "dark unless her armour states otherwise - CASTAWAY states 12. It changes the whole table, because " +
+    "a weapon you cannot shoot from spotting distance has to be walked into range.";
+
+  const RANGE_TITLE =
+    "The distance a fight opens at, and the cutoff every approach is measured against. A mode that reaches " +
+    "THIS FAR OR FURTHER pays no APPR - you can already act from where the fight starts, which is also the " +
+    "safer place to be. A shorter mode is charged for the tiles it has to close: a Sawed-Off reaching 4 at " +
+    "a cutoff of 16 pays (16 - 4) x 4 = 48 TU. Melee reaches nothing, so it walks the whole cutoff. " +
+    "16 because the mod's median ranged reach is 18 tiles, so most guns sit free of it and only the genuinely " +
+    "short-ranged pay.";
+
+  const DEMO_TITLE =
+    "Hides wall-breaking modes - Demolish on the Hammer, Anchor, Crowbar, Pickaxe and friends. " +
+    "The mod builds them as a RANGED mode with a one-tile range so they can smash terrain, which means " +
+    "they pay no approach and are scored at point blank where the Hit% geometry is at its kindest. " +
+    "Against a person close-quarters combat is what actually decides them and that is not modelled, so " +
+    "they rank far above their worth. On by default; turn it off to see them anyway.";
+
+  const RESIST_TITLE =
+    "The target's resistance to this damage type, already applied to the range beside it. " +
+    "Over 100% means it takes MORE than face value; 0% means immune.";
+
+  const APPR_TITLE =
+    "TU to walk one tile, and the tiles are (Range cutoff - this mode's reach). Reach the cutoff or better " +
+    "and it is nothing; fall short and you pay for closing the gap, which is TU and exposure both. Melee " +
+    "reaches nothing, so it walks the whole cutoff. Charged ONCE before the first attack, not per attack. " +
+    "4 TU a tile is the engine default on a flat floor; this install's Lower move cost player only mod " +
+    "scales player units to 75%, so 3. Set it to 0 to turn the whole thing off.";
+
+  const FREE_TITLE =
+    "Tiles of closing that cost nothing, because you would have moved anyway. Nobody plays a perfect " +
+    "spacing game - a gunner does not stand rooted at her ideal range any more than a melee gal starts " +
+    "adjacent, and both spend part of every turn repositioning. That shared cost cancels out of the " +
+    "comparison, so only the gap beyond it is charged to melee.";
+
   const HIT_TITLE =
     "How often this attack actually connects, which for guns is NOT the Acc figure. " +
     "The engine never rolls against accuracy for a shot - it uses accuracy to decide " +
@@ -825,7 +904,6 @@
     { id: "hp", label: "HP", get: (m, t) => t.health, asc: true, round: 0 },
     { id: "mode", label: "Mode", get: (m) => (m.label || "").toLowerCase(), asc: true },
     { id: "damage", label: "Damage", get: (m) => m.damage.avg, round: 0 },
-    { id: "resist", label: "Resist", get: (m) => m.damage.resist, round: 2 },
     {
       id: "acc",
       label: "Acc",
@@ -835,13 +913,7 @@
     },
     { id: "hit", label: "Hit%", title: HIT_TITLE, get: (m) => m.hitRate * 100, round: 0 },
     { id: "perAttack", label: "Per attack", get: (m) => m.perAttack, round: 1 },
-    {
-      id: "armourOff",
-      label: "Armour↓",
-      title: "Armour stripped from this facing per attack, hit chance included",
-      get: (m) => m.armorPerAttack,
-      round: 1,
-    },
+    { id: "appr", label: "APPR", title: APPR_TITLE, get: (m) => m.approachTu || null, round: 0 },
     { id: "tu", label: "TU to kill", get: (m) => m.tuToKill, asc: true, round: 0 },
     { id: "turns", label: "Turns", get: (m) => m.turnsToKill, asc: true, round: 1 },
   ];
@@ -993,7 +1065,6 @@
     },
     { id: "mode", label: "Mode", get: (m) => (m.label || "").toLowerCase(), asc: true },
     { id: "damage", label: "Damage", get: (m) => m.damage.avg, round: 0 },
-    { id: "resist", label: "Resist", get: (m) => m.damage.resist, round: 2 },
     {
       id: "range",
       label: "Range",
@@ -1010,22 +1081,16 @@
       id: "perAttack",
       label: goal == "stun" ? "Stun/attack" : "Per attack",
       title:
-        "Expected " +
+        "Average " +
         (goal == "stun" ? "stun" : "health") +
-        " damage from one attack, hit chance included",
+        " damage per attack ATTEMPT - after armour, and with misses averaged in, " +
+        "so it is not what a hit does. No single attack ever deals exactly this. " +
+        "That is why it can sit above the target's HP and still need two attacks: " +
+        "see the Damage range beside it and the Attacks tooltip.",
       get: (m) => m.perAttack,
       round: 1,
     },
-    {
-      id: "armour",
-      label: "Armour↓",
-      title:
-        "Armour stripped from this facing per attack, hit chance included. " +
-        "ToArmorPre comes off the roll and lands even when the shot cannot " +
-        "penetrate, so a weapon that does no damage can still open the target up.",
-      get: (m) => m.armorPerAttack,
-      round: 1,
-    },
+    { id: "appr", label: "APPR", title: APPR_TITLE, get: (m) => m.approachTu || null, round: 0 },
     {
       id: "attacks",
       label: "Attacks",
@@ -1042,7 +1107,10 @@
     {
       id: "tu",
       label: goal == "stun" ? "TU to stun" : goal == "drop" ? "TU to drop" : "TU to kill",
-      title: "Time units for those attacks - the effectiveness measure the Score scales.",
+      title:
+        "The total the Score is built from: every attack, PLUS the APPR walk for a " +
+        "melee mode. Charged once, so it is approach + attacks x cost, not the walk " +
+        "repeated per swing.",
       get: (m) => m.tuToKill,
       asc: true,
       round: 0,
@@ -1686,12 +1754,74 @@
       </section>
 
       <section class="dmg-block">
-        <header>Shot</header>
-        <label class="dmg-row">
+        <header title={SHOT_TITLE}>Engagement</header>
+
+        <div class="dmg-chips" title={LIGHT_TITLE}>
+          <button class="dmg-chip" class:dmg-chip-on={isDay} on:click={() => (isDay = true)}>
+            Day
+          </button>
+          <button class="dmg-chip" class:dmg-chip-on={!isDay} on:click={() => (isDay = false)}>
+            Night
+          </button>
+        </div>
+
+        {#if sight}
+          <p class="dmg-cap dmg-sight" title={sightNote(sight)}>
+            Spots this enemy at <b>{sight.tiles}</b>
+            {sight.tiles == 1 ? "tile" : "tiles"}
+            <button
+              class="dmg-mini dmg-sightmore"
+              title="Show every visibility value on both armours"
+              on:click={() => (showSight = !showSight)}>{showSight ? "hide" : "why"}</button
+            >
+          </p>
+          {#if showSight}
+            <div class="dmg-sightbox">
+              <p class="dmg-hint">{sightNote(sight)}</p>
+              {#if sight.fields.length}
+                <table class="dmg-sighttab">
+                  <tbody>
+                    {#each sight.fields as f}
+                      <tr class:dmg-sightunused={!f.used} title={f.note}>
+                        <td>{f.side}</td>
+                        <td>{f.label}</td>
+                        <td class="num">{f.value}</td>
+                        <td>{f.used ? "used" : "not modelled"}</td>
+                      </tr>
+                    {/each}
+                  </tbody>
+                </table>
+              {:else}
+                <p class="dmg-hint">Neither armour states any visibility value.</p>
+              {/if}
+              <p class="dmg-hint">
+                Mod ceiling <code>maxViewDistance: {maxViewDistance()}</code>. Unset dark
+                visibility falls back to 9 for a player unit.
+              </p>
+            </div>
+          {/if}
+        {/if}
+
+        <label class="dmg-row" title={RANGE_TITLE}>
           <span>Range</span>
           <input class="dmg-input dmg-num" type="number" min="0" bind:value={distance} />
           <span class="dmg-cap">tiles</span>
         </label>
+        <label class="dmg-row" title={APPR_TITLE}>
+          <span>Walk</span>
+          <input class="dmg-input dmg-num" type="number" min="0" bind:value={tuPerTile} />
+          <span class="dmg-cap">TU/tile</span>
+        </label>
+        <label class="dmg-row" title={FREE_TITLE}>
+          <span>Free</span>
+          <input class="dmg-input dmg-num" type="number" min="0" bind:value={freeTiles} />
+          <span class="dmg-cap">tiles</span>
+        </label>
+        <p class="dmg-hint" title={RANGE_TITLE}>
+          <b>Range</b> is the cutoff: reach it and APPR is nothing, fall short and you pay
+          <b>(Range − reach) × Walk</b> to close. Melee walks the lot. Sight above is shown
+          but does not feed APPR yet.
+        </p>
         <label class="dmg-row">
           <span>Hitting</span>
           <select class="dmg-input" bind:value={side}>
@@ -1947,6 +2077,12 @@
               title="Type part of a name. Separate several with commas - &quot;saber, cutlass&quot; shows both, side by side for this soldier."
               bind:value={weaponFilter}
             />
+            <button
+              class="dmg-chip dmg-demo"
+              class:dmg-chip-on={excludeDemo}
+              title={DEMO_TITLE}
+              on:click={() => (excludeDemo = !excludeDemo)}>Exclude demo</button
+            >
             <div class="dmg-chips">
               {#each KINDS as k}
                 {#if k.id == "all" || kindCounts[k.id] || kindFilter == k.id}
@@ -2149,7 +2285,12 @@
                   </td>
                   <td class:dmg-submode={!row.first}>{row.mode.label}</td>
                   <td class="num">
-                    {n(row.mode.damage.min, 0)}–{n(row.mode.damage.max, 0)}{#if row.mode.damage.hitsPerAttack > 1}<span
+                    {n(row.mode.damage.min, 0)}–{n(row.mode.damage.max, 0)}<span
+                      class="dmg-resist"
+                      class:dmg-immune={row.mode.damage.resist == 0}
+                      title={RESIST_TITLE}
+                      >&nbsp;({Math.round(row.mode.damage.resist * 100)}%)</span
+                    >{#if row.mode.damage.hitsPerAttack > 1}<span
                         class="dmg-hits"
                         title="{row.mode.damage.hitsPerAttack} projectiles fired, about {n(
                           row.mode.damage.expectedHitsPerAttack,
@@ -2160,9 +2301,6 @@
                             >→{n(row.mode.damage.expectedHitsPerAttack, 1)}</span
                           >{/if}</span
                       >{/if}
-                  </td>
-                  <td class="num" class:dmg-immune={row.mode.damage.resist == 0}>
-                    {Math.round(row.mode.damage.resist * 100)}%
                   </td>
                   <td
                     class="num"
@@ -2175,8 +2313,8 @@
                   <td class="num">{Math.round(row.mode.accuracy)}%</td>
                   <td class="num">{Math.round(row.mode.hitRate * 100)}%</td>
                   <td class="num">{n(row.mode.perAttack)}</td>
-                  <td class="num" title={armourNote(row.mode)}>
-                    {row.mode.armorPerAttack > 0.05 ? n(row.mode.armorPerAttack) : "–"}
+                  <td class="num" title={APPR_TITLE}>
+                    {row.mode.approachTu > 0 ? n(row.mode.approachTu, 0) : "–"}
                   </td>
                   <td class="num">
                     {row.mode.attacksToKill == null ? "–" : n(row.mode.attacksToKill)}
@@ -2334,14 +2472,16 @@
                 <td class="num">{row.first ? row.target.health || "–" : ""}</td>
                 <td class:dmg-submode={!row.first}>{row.mode.label}</td>
                 <td class="num">
-                  {n(row.mode.damage.min, 0)}–{n(row.mode.damage.max, 0)}{#if row.mode.damage.hitsPerAttack > 1}<span
+                  {n(row.mode.damage.min, 0)}–{n(row.mode.damage.max, 0)}<span
+                    class="dmg-resist"
+                    class:dmg-immune={row.mode.damage.resist == 0}
+                    title={RESIST_TITLE}
+                    >&nbsp;({Math.round(row.mode.damage.resist * 100)}%)</span
+                  >{#if row.mode.damage.hitsPerAttack > 1}<span
                       class="dmg-hits"
                       title="{row.mode.damage.hitsPerAttack} projectiles per attack, each rolled and armour-checked separately"
                       >×{row.mode.damage.hitsPerAttack}</span
                     >{/if}
-                </td>
-                <td class="num" class:dmg-immune={row.mode.damage.resist == 0}>
-                  {Math.round(row.mode.damage.resist * 100)}%
                 </td>
                 <td class="num" class:dmg-outofrange={outOfRange(row.mode)}>
                   {Math.round(row.mode.accuracy)}%
@@ -2350,8 +2490,8 @@
                   {Math.round(row.mode.hitRate * 100)}%
                 </td>
                 <td class="num">{n(row.mode.perAttack)}</td>
-                <td class="num" title={armourNote(row.mode)}>
-                  {row.mode.armorPerAttack > 0.05 ? n(row.mode.armorPerAttack) : "–"}
+                <td class="num" title={APPR_TITLE}>
+                  {row.mode.approachTu > 0 ? n(row.mode.approachTu, 0) : "–"}
                 </td>
                 <td class="num dmg-key">
                   {row.mode.tuToKill == null ? "–" : n(row.mode.tuToKill, 0)}

@@ -1149,7 +1149,93 @@ export type AccuracyOpts = {
    */
   ufoExtender?: boolean;
   noLOS: boolean;
+  /**
+   * Walking cost, for the melee approach. See approachTu.
+   *
+   * Not an accuracy setting, but it shares `distance` with them and comes off
+   * the same Shot panel, so it rides along rather than threading a second
+   * options object through every call.
+   */
+  tuPerTile?: number;
+  freeTiles?: number;
+  /**
+   * Light conditions, and the soldier's armour - both inputs to how far she
+   * spots the enemy. See damageSight.ts. `isDay` defaults to true and
+   * `soldierArmor` may be null for a hand-typed soldier with no armour picked,
+   * in which case the engine's own fallbacks apply.
+   */
+  isDay?: boolean;
+  soldierArmor?: any;
 };
+
+/** Engine default walk cost on a flat floor, in TU per tile. */
+export const DEFAULT_TU_PER_TILE = 4;
+
+/**
+ * Tiles of closing that cost nothing, because you would have moved anyway.
+ *
+ * Defaults to 0 - the walk is charged in full. The control is kept because the
+ * argument for it is real (nobody plays a perfect spacing game, and a gunner
+ * repositions too), but it is an assumption rather than a fact, so it is off
+ * until it is asked for rather than quietly shaving every melee number.
+ */
+export const DEFAULT_FREE_TILES = 0;
+
+/**
+ * TU to walk from where you spotted the enemy to where this mode can be used,
+ * charged ONCE.
+ *
+ * You close the distance, then keep attacking - it is a cost of the engagement,
+ * not of each attack. Zero for anything already usable from where you stand,
+ * which is why a rifle with `aimRange: 200` never pays it and a Sawed-Off with
+ * `snapRange: 4` always does.
+ *
+ * The two knobs mean different things and both are visible in the UI rather
+ * than baked in: tuPerTile is an engine fact (4 on a flat floor; this install's
+ * "Lower move cost player only" mod scales player units to 75%, so 3), while
+ * freeTiles is an assumption about how the game is actually played.
+ */
+export function approachTu(
+  from: number,
+  to: number,
+  tuPerTile = DEFAULT_TU_PER_TILE,
+  freeTiles = DEFAULT_FREE_TILES
+): number {
+  const perTile = +tuPerTile;
+  if (!(perTile > 0)) return 0;
+  const free = Math.max(0, +freeTiles || 0);
+  const start = Math.max(0, +from || 0);
+  const end = Math.max(0, +to || 0);
+  const tiles = Math.max(0, start - end - free);
+  return Math.round(tiles * perTile);
+}
+
+/**
+ * Where a mode is actually used from, given how far away you spotted the enemy.
+ *
+ * Melee is tested FIRST and answered outright. A melee Attack carries no
+ * `range`, so rangeLimits would fall through to the item's aimRange - 200 by
+ * default - and hand back the full sight distance, making the walk zero. Melee
+ * only ever works from one tile; there is no other option to weigh.
+ *
+ * Everything else fires from wherever you spotted, unless its own reach is
+ * shorter (close until it is in range) or its minRange is longer (you cannot
+ * use it point blank, so the closing stops early).
+ */
+export function fireDistance(
+  attack: any,
+  item: any,
+  aimedRange: number,
+  sight: number,
+  ufoExtender = true
+): number {
+  if (!attack) return 0;
+  if (attack.mode == "melee") return 1;
+  const at = Math.max(0, +sight || 0);
+  const l = rangeLimits(attack, item, aimedRange, ufoExtender);
+  const upper = l.upper > 0 ? l.upper : at;
+  return Math.max(l.lower || 0, Math.min(at, upper));
+}
 
 /**
  * Engine defaults for the range fields (RuleItem's constructor).
@@ -1247,7 +1333,8 @@ export function accuracyPercent(
   item: any,
   stats: Stats,
   opts: AccuracyOpts,
-  aimedRange?: number
+  aimedRange?: number,
+  atDistance?: number
 ): number {
   if (!attack) return 0;
   const base = +attack.accuracy || 0;
@@ -1280,9 +1367,19 @@ export function accuracyPercent(
   // is actually resolved without line of sight, so it is off the panel figure.
   if (opts.noLOS) acc = Math.trunc((acc * accuracyGlobal(item, "noLOSAccuracyPenalty")) / 100);
 
-  // Range falloff. Which limit applies depends on the UFO Extender option, and
-  // rangeLimits is the only place that branch is stated.
-  const distance = Math.floor(+opts.distance || 0);
+  /**
+   * Range falloff. Which limit applies depends on the UFO Extender option, and
+   * rangeLimits is the only place that branch is stated.
+   *
+   * `atDistance` is where the shot is actually TAKEN FROM, which is not the
+   * same as how far away you spotted the enemy: a Sawed-Off (snapRange 4,
+   * dropoff 10) sighted at 14 tiles is not fired from 14 tiles, it is walked
+   * into range first. Judging it at the spotting distance cost it
+   * 10 x (14 - 4) = 100 accuracy off a stated 130 and declared it useless.
+   */
+  const distance = Math.floor(
+    atDistance == null ? +opts.distance || 0 : +atDistance || 0
+  );
   const limits = rangeAt(
     attack,
     item,

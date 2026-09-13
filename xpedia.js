@@ -36655,7 +36655,7 @@
     const own = item ? +item[key] : NaN;
     if (!isNaN(own) && item[key] != null)
       return own;
-    return modGlobal(key, GLOBALS[key]);
+    return modGlobal(key + "Global", modGlobal(key, GLOBALS[key]));
   }
   var DEFAULT_TU_PER_TILE = 4;
   var DEFAULT_FREE_TILES = 0;
@@ -36850,20 +36850,36 @@
       ]
     };
   }
-  function sightNote(s) {
+  function sightSteps(s) {
     if (!s)
-      return "";
+      return [];
     const light = s.isDay ? "day" : "night";
-    const parts = [s.base + " tiles " + light + " sight"];
-    if (s.capped)
-      parts.push("capped to " + s.camouflage + " by the enemy's camouflage (a positive value replaces your sight outright)");
-    else if (s.camouflage < 0)
-      parts.push(s.camouflage + " from the enemy's camouflage");
-    if (s.antiCamouflage > 0)
-      parts.push("+" + s.antiCamouflage + " anti-camouflage, which can never take you past your own base sight");
-    if (s.tiles <= 1)
-      parts.push("floored at 1 - you always spot something standing next to you");
-    return parts.join(" \xB7 ") + " = " + s.tiles + " tiles";
+    const out = [];
+    out.push({ text: "your armour's " + light + " vision", value: s.base });
+    let running = s.base;
+    if (s.camouflage > 0) {
+      running = s.camouflage;
+      out.push({
+        text: "enemy camouflage " + s.camouflage + " \u2014 a POSITIVE value is a hard cap, it replaces your vision outright",
+        value: running
+      });
+    } else if (s.camouflage < 0) {
+      running = running + s.camouflage;
+      out.push({ text: "enemy camouflage " + s.camouflage + " (subtracted)", value: running });
+    }
+    if (running < 1) {
+      running = 1;
+      out.push({ text: "floored at 1 \u2014 you always spot what is next to you", value: running });
+    }
+    if (s.antiCamouflage) {
+      const before = running;
+      running = Math.min(s.base, running + s.antiCamouflage);
+      out.push({
+        text: "your anti-camouflage +" + s.antiCamouflage + (before + s.antiCamouflage > s.base ? ", capped at your own base vision" : ""),
+        value: running
+      });
+    }
+    return out;
   }
 
   // src/damageScore.ts
@@ -37104,7 +37120,7 @@
     const aimedRange = aimedRangeOf(weapon.item, attacks);
     const geom = targetGeometry(target);
     const sight = sightDistance(opts.soldierArmor, target && target.armor, opts.isDay !== false);
-    const cutoff = Math.max(0, +opts.distance || 0);
+    const cutoff = Math.min(Math.max(0, +opts.distance || 0), sight.tiles);
     const HYBRID_MELEE_FROM_OWN_RANGE = false;
     const rangedReach = attacks.filter((a) => modeKind(a.mode) == "ranged").map((a) => Math.min(UNLIMITED_RANGE_BENCHMARK, rangeLimits(a, weapon.item, aimedRange, opts.ufoExtender !== false).upper));
     const meleeFrom = HYBRID_MELEE_FROM_OWN_RANGE && rangedReach.length ? Math.round(rangedReach.reduce((a, b) => a + b, 0) / rangedReach.length) : cutoff;
@@ -37913,165 +37929,170 @@
 
   // src/DamageCalc.svelte
   var { Boolean: Boolean_1, Map: Map_1 } = globals;
-  function get_each_context_143(ctx, list, i) {
-    const child_ctx = ctx.slice();
-    child_ctx[206] = list[i];
-    return child_ctx;
-  }
-  function get_each_context_152(ctx, list, i) {
-    const child_ctx = ctx.slice();
-    child_ctx[209] = list[i];
-    return child_ctx;
-  }
   function get_each_context_162(ctx, list, i) {
     const child_ctx = ctx.slice();
-    child_ctx[234] = list[i];
+    child_ctx[208] = list[i];
     return child_ctx;
   }
   function get_each_context_172(ctx, list, i) {
     const child_ctx = ctx.slice();
-    child_ctx[242] = list[i];
+    child_ctx[211] = list[i];
     return child_ctx;
   }
   function get_each_context_182(ctx, list, i) {
     const child_ctx = ctx.slice();
-    child_ctx[213] = list[i];
+    child_ctx[236] = list[i];
     return child_ctx;
   }
   function get_each_context_192(ctx, list, i) {
     const child_ctx = ctx.slice();
-    child_ctx[216] = list[i];
-    child_ctx[218] = i;
-    return child_ctx;
-  }
-  function get_each_context29(ctx, list, i) {
-    const child_ctx = ctx.slice();
-    child_ctx[206] = list[i];
-    return child_ctx;
-  }
-  function get_each_context_111(ctx, list, i) {
-    const child_ctx = ctx.slice();
-    child_ctx[209] = list[i];
-    return child_ctx;
-  }
-  function get_if_ctx(ctx) {
-    const child_ctx = ctx.slice();
-    const constants_0 = child_ctx[49].get(child_ctx[206].weapon.id);
-    child_ctx[212] = constants_0;
-    return child_ctx;
-  }
-  function get_each_context_26(ctx, list, i) {
-    const child_ctx = ctx.slice();
-    child_ctx[213] = list[i];
-    return child_ctx;
-  }
-  function get_each_context_36(ctx, list, i) {
-    const child_ctx = ctx.slice();
-    child_ctx[216] = list[i];
-    child_ctx[218] = i;
-    return child_ctx;
-  }
-  function get_each_context_45(ctx, list, i) {
-    const child_ctx = ctx.slice();
-    child_ctx[219] = list[i];
-    return child_ctx;
-  }
-  function get_each_context_54(ctx, list, i) {
-    const child_ctx = ctx.slice();
-    child_ctx[222] = list[i];
-    return child_ctx;
-  }
-  function get_each_context_64(ctx, list, i) {
-    const child_ctx = ctx.slice();
-    child_ctx[213] = list[i];
-    return child_ctx;
-  }
-  function get_each_context_73(ctx, list, i) {
-    const child_ctx = ctx.slice();
-    child_ctx[213] = list[i];
-    return child_ctx;
-  }
-  function get_each_context_82(ctx, list, i) {
-    const child_ctx = ctx.slice();
-    child_ctx[229] = list[i];
-    return child_ctx;
-  }
-  function get_each_context_92(ctx, list, i) {
-    const child_ctx = ctx.slice();
-    child_ctx[216] = list[i];
-    return child_ctx;
-  }
-  function get_each_context_102(ctx, list, i) {
-    const child_ctx = ctx.slice();
-    child_ctx[234] = list[i];
-    return child_ctx;
-  }
-  function get_each_context_112(ctx, list, i) {
-    const child_ctx = ctx.slice();
-    child_ctx[234] = list[i];
-    return child_ctx;
-  }
-  function get_each_context_123(ctx, list, i) {
-    const child_ctx = ctx.slice();
-    child_ctx[239] = list[i];
-    return child_ctx;
-  }
-  function get_each_context_133(ctx, list, i) {
-    const child_ctx = ctx.slice();
-    child_ctx[242] = list[i];
-    return child_ctx;
-  }
-  function get_each_context_222(ctx, list, i) {
-    const child_ctx = ctx.slice();
-    child_ctx[260] = list[i];
+    child_ctx[249] = list[i];
     return child_ctx;
   }
   function get_each_context_20(ctx, list, i) {
     const child_ctx = ctx.slice();
-    child_ctx[219] = list[i];
+    child_ctx[215] = list[i];
     return child_ctx;
   }
   function get_each_context_21(ctx, list, i) {
     const child_ctx = ctx.slice();
-    child_ctx[209] = list[i];
+    child_ctx[218] = list[i];
+    child_ctx[220] = i;
     return child_ctx;
   }
-  function get_each_context_232(ctx, list, i) {
+  function get_each_context29(ctx, list, i) {
     const child_ctx = ctx.slice();
-    child_ctx[263] = list[i];
+    child_ctx[208] = list[i];
+    return child_ctx;
+  }
+  function get_each_context_111(ctx, list, i) {
+    const child_ctx = ctx.slice();
+    child_ctx[211] = list[i];
+    return child_ctx;
+  }
+  function get_if_ctx(ctx) {
+    const child_ctx = ctx.slice();
+    const constants_0 = child_ctx[49].get(child_ctx[208].weapon.id);
+    child_ctx[214] = constants_0;
+    return child_ctx;
+  }
+  function get_each_context_26(ctx, list, i) {
+    const child_ctx = ctx.slice();
+    child_ctx[215] = list[i];
+    return child_ctx;
+  }
+  function get_each_context_36(ctx, list, i) {
+    const child_ctx = ctx.slice();
+    child_ctx[218] = list[i];
+    child_ctx[220] = i;
+    return child_ctx;
+  }
+  function get_each_context_45(ctx, list, i) {
+    const child_ctx = ctx.slice();
+    child_ctx[221] = list[i];
+    return child_ctx;
+  }
+  function get_each_context_54(ctx, list, i) {
+    const child_ctx = ctx.slice();
+    child_ctx[224] = list[i];
+    return child_ctx;
+  }
+  function get_each_context_64(ctx, list, i) {
+    const child_ctx = ctx.slice();
+    child_ctx[215] = list[i];
+    return child_ctx;
+  }
+  function get_each_context_73(ctx, list, i) {
+    const child_ctx = ctx.slice();
+    child_ctx[215] = list[i];
+    return child_ctx;
+  }
+  function get_each_context_82(ctx, list, i) {
+    const child_ctx = ctx.slice();
+    child_ctx[231] = list[i];
+    return child_ctx;
+  }
+  function get_each_context_92(ctx, list, i) {
+    const child_ctx = ctx.slice();
+    child_ctx[218] = list[i];
+    return child_ctx;
+  }
+  function get_each_context_102(ctx, list, i) {
+    const child_ctx = ctx.slice();
+    child_ctx[236] = list[i];
+    return child_ctx;
+  }
+  function get_each_context_112(ctx, list, i) {
+    const child_ctx = ctx.slice();
+    child_ctx[236] = list[i];
+    return child_ctx;
+  }
+  function get_each_context_123(ctx, list, i) {
+    const child_ctx = ctx.slice();
+    child_ctx[241] = list[i];
+    return child_ctx;
+  }
+  function get_each_context_133(ctx, list, i) {
+    const child_ctx = ctx.slice();
+    child_ctx[244] = list[i];
+    return child_ctx;
+  }
+  function get_each_context_143(ctx, list, i) {
+    const child_ctx = ctx.slice();
+    child_ctx[244] = list[i];
+    return child_ctx;
+  }
+  function get_each_context_152(ctx, list, i) {
+    const child_ctx = ctx.slice();
+    child_ctx[249] = list[i];
     return child_ctx;
   }
   function get_each_context_242(ctx, list, i) {
     const child_ctx = ctx.slice();
-    child_ctx[266] = list[i];
+    child_ctx[267] = list[i];
+    return child_ctx;
+  }
+  function get_each_context_222(ctx, list, i) {
+    const child_ctx = ctx.slice();
+    child_ctx[221] = list[i];
+    return child_ctx;
+  }
+  function get_each_context_232(ctx, list, i) {
+    const child_ctx = ctx.slice();
+    child_ctx[211] = list[i];
     return child_ctx;
   }
   function get_each_context_252(ctx, list, i) {
     const child_ctx = ctx.slice();
-    child_ctx[216] = list[i];
+    child_ctx[270] = list[i];
     return child_ctx;
   }
   function get_each_context_262(ctx, list, i) {
     const child_ctx = ctx.slice();
-    child_ctx[271] = list[i];
+    child_ctx[218] = list[i];
     return child_ctx;
   }
   function get_each_context_27(ctx, list, i) {
     const child_ctx = ctx.slice();
-    child_ctx[263] = list[i];
+    child_ctx[275] = list[i];
     return child_ctx;
   }
   function get_each_context_28(ctx, list, i) {
     const child_ctx = ctx.slice();
-    child_ctx[209] = list[i];
+    child_ctx[270] = list[i];
     return child_ctx;
   }
   function get_each_context_29(ctx, list, i) {
     const child_ctx = ctx.slice();
-    child_ctx[278] = list[i];
+    child_ctx[211] = list[i];
     return child_ctx;
   }
-  function create_if_block_672(ctx) {
+  function get_each_context_30(ctx, list, i) {
+    const child_ctx = ctx.slice();
+    child_ctx[282] = list[i];
+    return child_ctx;
+  }
+  function create_if_block_68(ctx) {
     let button;
     let t;
     let mounted;
@@ -38105,7 +38126,7 @@
       }
     };
   }
-  function create_else_block_11(ctx) {
+  function create_else_block_10(ctx) {
     let select;
     let option;
     let t1;
@@ -38118,25 +38139,25 @@
     let if_block_anchor;
     let mounted;
     let dispose;
-    let each_value_29 = ctx[61];
+    let each_value_30 = ctx[61];
     let each_blocks_1 = [];
-    for (let i = 0; i < each_value_29.length; i += 1) {
-      each_blocks_1[i] = create_each_block_29(get_each_context_29(ctx, each_value_29, i));
+    for (let i = 0; i < each_value_30.length; i += 1) {
+      each_blocks_1[i] = create_each_block_30(get_each_context_30(ctx, each_value_30, i));
     }
-    let each_value_28 = ctx[90];
+    let each_value_29 = ctx[90];
     let each_blocks = [];
-    for (let i = 0; i < each_value_28.length; i += 1) {
-      each_blocks[i] = create_each_block_28(get_each_context_28(ctx, each_value_28, i));
+    for (let i = 0; i < each_value_29.length; i += 1) {
+      each_blocks[i] = create_each_block_29(get_each_context_29(ctx, each_value_29, i));
     }
     function select_block_type_3(ctx2, dirty) {
       if (ctx2[36])
-        return create_if_block_60;
-      if (ctx2[37])
         return create_if_block_61;
-      if (ctx2[35])
+      if (ctx2[37])
         return create_if_block_622;
+      if (ctx2[35])
+        return create_if_block_632;
       if (ctx2[34])
-        return create_if_block_652;
+        return create_if_block_662;
     }
     let current_block_type = select_block_type_3(ctx, [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1]);
     let if_block = current_block_type && current_block_type(ctx);
@@ -38193,22 +38214,22 @@
         insert(target, if_block_anchor, anchor);
         if (!mounted) {
           dispose = [
-            listen(select, "change", ctx[143]),
-            listen(input, "change", ctx[144])
+            listen(select, "change", ctx[145]),
+            listen(input, "change", ctx[146])
           ];
           mounted = true;
         }
       },
       p(ctx2, dirty) {
         if (dirty[1] & 1073741824) {
-          each_value_29 = ctx2[61];
+          each_value_30 = ctx2[61];
           let i;
-          for (i = 0; i < each_value_29.length; i += 1) {
-            const child_ctx = get_each_context_29(ctx2, each_value_29, i);
+          for (i = 0; i < each_value_30.length; i += 1) {
+            const child_ctx = get_each_context_30(ctx2, each_value_30, i);
             if (each_blocks_1[i]) {
               each_blocks_1[i].p(child_ctx, dirty);
             } else {
-              each_blocks_1[i] = create_each_block_29(child_ctx);
+              each_blocks_1[i] = create_each_block_30(child_ctx);
               each_blocks_1[i].c();
               each_blocks_1[i].m(select, null);
             }
@@ -38216,20 +38237,20 @@
           for (; i < each_blocks_1.length; i += 1) {
             each_blocks_1[i].d(1);
           }
-          each_blocks_1.length = each_value_29.length;
+          each_blocks_1.length = each_value_30.length;
         }
         if (dirty[1] & 1073741832) {
           select_option(select, ctx2[34]);
         }
         if (dirty[0] & 805306368 | dirty[1] & 24 | dirty[2] & 268566528) {
-          each_value_28 = ctx2[90];
+          each_value_29 = ctx2[90];
           let i;
-          for (i = 0; i < each_value_28.length; i += 1) {
-            const child_ctx = get_each_context_28(ctx2, each_value_28, i);
+          for (i = 0; i < each_value_29.length; i += 1) {
+            const child_ctx = get_each_context_29(ctx2, each_value_29, i);
             if (each_blocks[i]) {
               each_blocks[i].p(child_ctx, dirty);
             } else {
-              each_blocks[i] = create_each_block_28(child_ctx);
+              each_blocks[i] = create_each_block_29(child_ctx);
               each_blocks[i].c();
               each_blocks[i].m(div, null);
             }
@@ -38237,7 +38258,7 @@
           for (; i < each_blocks.length; i += 1) {
             each_blocks[i].d(1);
           }
-          each_blocks.length = each_value_28.length;
+          each_blocks.length = each_value_29.length;
         }
         if (current_block_type === (current_block_type = select_block_type_3(ctx2, dirty)) && if_block) {
           if_block.p(ctx2, dirty);
@@ -38276,7 +38297,7 @@
       }
     };
   }
-  function create_if_block_562(ctx) {
+  function create_if_block_572(ctx) {
     let t0;
     let label;
     let t1;
@@ -38287,16 +38308,16 @@
     let dispose;
     function select_block_type_1(ctx2, dirty) {
       if (ctx2[86])
-        return create_if_block_59;
-      return create_else_block_10;
+        return create_if_block_60;
+      return create_else_block_92;
     }
     let current_block_type = select_block_type_1(ctx, [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1]);
     let if_block0 = current_block_type(ctx);
     function select_block_type_2(ctx2, dirty) {
       if (ctx2[36])
-        return create_if_block_572;
-      if (ctx2[37])
         return create_if_block_582;
+      if (ctx2[37])
+        return create_if_block_59;
     }
     let current_block_type_1 = select_block_type_2(ctx, [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1]);
     let if_block1 = current_block_type_1 && current_block_type_1(ctx);
@@ -38326,7 +38347,7 @@
           if_block1.m(target, anchor);
         insert(target, if_block1_anchor, anchor);
         if (!mounted) {
-          dispose = listen(input, "change", ctx[142]);
+          dispose = listen(input, "change", ctx[144]);
           mounted = true;
         }
       },
@@ -38361,16 +38382,16 @@
       }
     };
   }
-  function create_each_block_29(ctx) {
+  function create_each_block_30(ctx) {
     let option;
-    let t_value = ctx[278].file.replace(/\.a?sav$/, "") + "";
+    let t_value = ctx[282].file.replace(/\.a?sav$/, "") + "";
     let t;
     let option_value_value;
     return {
       c() {
         option = element("option");
         t = text(t_value);
-        option.__value = option_value_value = ctx[278].path;
+        option.__value = option_value_value = ctx[282].path;
         option.value = option.__value;
       },
       m(target, anchor) {
@@ -38378,9 +38399,9 @@
         append(option, t);
       },
       p(ctx2, dirty) {
-        if (dirty[1] & 1073741824 && t_value !== (t_value = ctx2[278].file.replace(/\.a?sav$/, "") + ""))
+        if (dirty[1] & 1073741824 && t_value !== (t_value = ctx2[282].file.replace(/\.a?sav$/, "") + ""))
           set_data(t, t_value);
-        if (dirty[1] & 1073741824 && option_value_value !== (option_value_value = ctx2[278].path)) {
+        if (dirty[1] & 1073741824 && option_value_value !== (option_value_value = ctx2[282].path)) {
           option.__value = option_value_value;
           option.value = option.__value;
         }
@@ -38391,9 +38412,9 @@
       }
     };
   }
-  function create_if_block_662(ctx) {
+  function create_if_block_672(ctx) {
     let span;
-    let t_value = ctx[79][ctx[209].id] + "";
+    let t_value = ctx[79][ctx[211].id] + "";
     let t;
     return {
       c() {
@@ -38406,7 +38427,7 @@
         append(span, t);
       },
       p(ctx2, dirty) {
-        if (dirty[2] & 131072 && t_value !== (t_value = ctx2[79][ctx2[209].id] + ""))
+        if (dirty[2] & 131072 && t_value !== (t_value = ctx2[79][ctx2[211].id] + ""))
           set_data(t, t_value);
       },
       d(detaching) {
@@ -38415,9 +38436,9 @@
       }
     };
   }
-  function create_each_block_28(ctx) {
+  function create_each_block_29(ctx) {
     let button;
-    let t0_value = ctx[209].label + "";
+    let t0_value = ctx[211].label + "";
     let t0;
     let t1;
     let t2;
@@ -38425,9 +38446,9 @@
     let button_disabled_value;
     let mounted;
     let dispose;
-    let if_block = ctx[209].id != "off" && ctx[35] && create_if_block_662(ctx);
+    let if_block = ctx[211].id != "off" && ctx[35] && create_if_block_672(ctx);
     function click_handler_2() {
-      return ctx[145](ctx[209]);
+      return ctx[147](ctx[211]);
     }
     return {
       c() {
@@ -38438,9 +38459,9 @@
           if_block.c();
         t2 = space();
         attr(button, "class", "dmg-chip");
-        attr(button, "title", button_title_value = ctx[209].title);
-        button.disabled = button_disabled_value = ctx[209].id != "off" && !ctx[34];
-        toggle_class(button, "dmg-chip-on", ctx[28] == ctx[209].id);
+        attr(button, "title", button_title_value = ctx[211].title);
+        button.disabled = button_disabled_value = ctx[211].id != "off" && !ctx[34];
+        toggle_class(button, "dmg-chip-on", ctx[28] == ctx[211].id);
       },
       m(target, anchor) {
         insert(target, button, anchor);
@@ -38456,11 +38477,11 @@
       },
       p(new_ctx, dirty) {
         ctx = new_ctx;
-        if (ctx[209].id != "off" && ctx[35]) {
+        if (ctx[211].id != "off" && ctx[35]) {
           if (if_block) {
             if_block.p(ctx, dirty);
           } else {
-            if_block = create_if_block_662(ctx);
+            if_block = create_if_block_672(ctx);
             if_block.c();
             if_block.m(button, t2);
           }
@@ -38468,11 +38489,11 @@
           if_block.d(1);
           if_block = null;
         }
-        if (dirty[1] & 1073741832 && button_disabled_value !== (button_disabled_value = ctx[209].id != "off" && !ctx[34])) {
+        if (dirty[1] & 1073741832 && button_disabled_value !== (button_disabled_value = ctx[211].id != "off" && !ctx[34])) {
           button.disabled = button_disabled_value;
         }
         if (dirty[0] & 268435456 | dirty[2] & 268435456) {
-          toggle_class(button, "dmg-chip-on", ctx[28] == ctx[209].id);
+          toggle_class(button, "dmg-chip-on", ctx[28] == ctx[211].id);
         }
       },
       d(detaching) {
@@ -38485,7 +38506,7 @@
       }
     };
   }
-  function create_if_block_652(ctx) {
+  function create_if_block_662(ctx) {
     let p;
     return {
       c() {
@@ -38503,7 +38524,7 @@
       }
     };
   }
-  function create_if_block_622(ctx) {
+  function create_if_block_632(ctx) {
     let p;
     let html_tag;
     let raw_value = (ctx[35].name || "save") + "";
@@ -38522,8 +38543,8 @@
     let t7_value = ctx[35].bases == 1 ? "base" : "bases";
     let t7;
     let t8;
-    let if_block0 = ctx[35].date && create_if_block_642(ctx);
-    let if_block1 = ctx[35].crafts && create_if_block_632(ctx);
+    let if_block0 = ctx[35].date && create_if_block_652(ctx);
+    let if_block1 = ctx[35].crafts && create_if_block_642(ctx);
     return {
       c() {
         p = element("p");
@@ -38572,7 +38593,7 @@
           if (if_block0) {
             if_block0.p(ctx2, dirty);
           } else {
-            if_block0 = create_if_block_642(ctx2);
+            if_block0 = create_if_block_652(ctx2);
             if_block0.c();
             if_block0.m(p, br);
           }
@@ -38592,7 +38613,7 @@
           if (if_block1) {
             if_block1.p(ctx2, dirty);
           } else {
-            if_block1 = create_if_block_632(ctx2);
+            if_block1 = create_if_block_642(ctx2);
             if_block1.c();
             if_block1.m(p, null);
           }
@@ -38611,7 +38632,7 @@
       }
     };
   }
-  function create_if_block_61(ctx) {
+  function create_if_block_622(ctx) {
     let p;
     let t0;
     let t1;
@@ -38637,7 +38658,7 @@
       }
     };
   }
-  function create_if_block_60(ctx) {
+  function create_if_block_61(ctx) {
     let p;
     return {
       c() {
@@ -38655,7 +38676,7 @@
       }
     };
   }
-  function create_if_block_642(ctx) {
+  function create_if_block_652(ctx) {
     let t0;
     let t1_value = ctx[35].date + "";
     let t1;
@@ -38680,7 +38701,7 @@
       }
     };
   }
-  function create_if_block_632(ctx) {
+  function create_if_block_642(ctx) {
     let t0;
     let t1_value = ctx[35].crafts + "";
     let t1;
@@ -38718,7 +38739,7 @@
       }
     };
   }
-  function create_else_block_10(ctx) {
+  function create_else_block_92(ctx) {
     let p;
     return {
       c() {
@@ -38737,7 +38758,7 @@
       }
     };
   }
-  function create_if_block_59(ctx) {
+  function create_if_block_60(ctx) {
     let p;
     return {
       c() {
@@ -38756,7 +38777,7 @@
       }
     };
   }
-  function create_if_block_582(ctx) {
+  function create_if_block_59(ctx) {
     let p;
     let t0;
     let t1;
@@ -38782,7 +38803,7 @@
       }
     };
   }
-  function create_if_block_572(ctx) {
+  function create_if_block_582(ctx) {
     let p;
     return {
       c() {
@@ -38800,7 +38821,7 @@
       }
     };
   }
-  function create_if_block_552(ctx) {
+  function create_if_block_562(ctx) {
     let div;
     let button0;
     let t0;
@@ -38850,8 +38871,8 @@
         append(span1, t4);
         if (!mounted) {
           dispose = [
-            listen(button0, "click", ctx[148]),
-            listen(button1, "click", ctx[149])
+            listen(button0, "click", ctx[150]),
+            listen(button1, "click", ctx[151])
           ];
           mounted = true;
         }
@@ -38876,11 +38897,11 @@
       }
     };
   }
-  function create_each_block_27(ctx) {
+  function create_each_block_28(ctx) {
     let option;
-    let t0_value = ctx[263].name + "";
+    let t0_value = ctx[270].name + "";
     let t0;
-    let t1_value = ctx[263].fromSave && ctx[263].fromSave.note ? " \xB7 " + ctx[263].fromSave.note : "";
+    let t1_value = ctx[270].fromSave && ctx[270].fromSave.note ? " \xB7 " + ctx[270].fromSave.note : "";
     let t1;
     let option_value_value;
     return {
@@ -38888,7 +38909,7 @@
         option = element("option");
         t0 = text(t0_value);
         t1 = text(t1_value);
-        option.__value = option_value_value = ctx[263].id;
+        option.__value = option_value_value = ctx[270].id;
         option.value = option.__value;
       },
       m(target, anchor) {
@@ -38897,11 +38918,11 @@
         append(option, t1);
       },
       p(ctx2, dirty) {
-        if (dirty[1] & 4194304 && t0_value !== (t0_value = ctx2[263].name + ""))
+        if (dirty[1] & 4194304 && t0_value !== (t0_value = ctx2[270].name + ""))
           set_data(t0, t0_value);
-        if (dirty[1] & 4194304 && t1_value !== (t1_value = ctx2[263].fromSave && ctx2[263].fromSave.note ? " \xB7 " + ctx2[263].fromSave.note : ""))
+        if (dirty[1] & 4194304 && t1_value !== (t1_value = ctx2[270].fromSave && ctx2[270].fromSave.note ? " \xB7 " + ctx2[270].fromSave.note : ""))
           set_data(t1, t1_value);
-        if (dirty[1] & 4194304 && option_value_value !== (option_value_value = ctx2[263].id)) {
+        if (dirty[1] & 4194304 && option_value_value !== (option_value_value = ctx2[270].id)) {
           option.__value = option_value_value;
           option.value = option.__value;
         }
@@ -38912,7 +38933,7 @@
       }
     };
   }
-  function create_if_block_542(ctx) {
+  function create_if_block_552(ctx) {
     let span;
     let t0_value = ctx[53].length + "";
     let t0;
@@ -38945,7 +38966,7 @@
       }
     };
   }
-  function create_if_block_452(ctx) {
+  function create_if_block_462(ctx) {
     let t0;
     let div0;
     let span;
@@ -38974,23 +38995,23 @@
     let current;
     let mounted;
     let dispose;
-    let if_block0 = !ctx[82] && create_if_block_532(ctx);
-    let each_value_26 = ctx[84];
+    let if_block0 = !ctx[82] && create_if_block_542(ctx);
+    let each_value_27 = ctx[84];
     let each_blocks = [];
-    for (let i = 0; i < each_value_26.length; i += 1) {
-      each_blocks[i] = create_each_block_26(get_each_context_262(ctx, each_value_26, i));
+    for (let i = 0; i < each_value_27.length; i += 1) {
+      each_blocks[i] = create_each_block_27(get_each_context_27(ctx, each_value_27, i));
     }
-    let if_block1 = ctx[27] && create_if_block_522(ctx);
-    let if_block2 = ctx[55] && create_if_block_492(ctx);
+    let if_block1 = ctx[27] && create_if_block_532(ctx);
+    let if_block2 = ctx[55] && create_if_block_50(ctx);
     function select_block_type_5(ctx2, dirty) {
       if (ctx2[50].fromSave && ctx2[50].armor != ctx2[50].fromSave.wornArmor)
-        return create_if_block_472;
-      if (ctx2[50].armor && ctx2[42])
         return create_if_block_482;
+      if (ctx2[50].armor && ctx2[42])
+        return create_if_block_492;
     }
     let current_block_type = select_block_type_5(ctx, [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1]);
     let if_block3 = current_block_type && current_block_type(ctx);
-    let if_block4 = ctx[60] && create_if_block_462(ctx);
+    let if_block4 = ctx[60] && create_if_block_472(ctx);
     return {
       c() {
         if (if_block0)
@@ -39040,7 +39061,7 @@
         attr(select, "class", "dmg-input");
         attr(select, "size", select_size_value = ctx[27] ? 8 : 1);
         if (ctx[64] === void 0)
-          add_render_callback(() => ctx[154].call(select));
+          add_render_callback(() => ctx[156].call(select));
         attr(div0, "class", "dmg-armorpick");
         attr(button0, "class", "dmg-mini dmg-wide");
         attr(button1, "class", "dmg-mini");
@@ -39091,11 +39112,11 @@
         current = true;
         if (!mounted) {
           dispose = [
-            listen(input0, "input", ctx[153]),
-            listen(select, "change", ctx[154]),
-            listen(select, "change", ctx[155]),
-            listen(button0, "click", ctx[156]),
-            listen(button1, "click", ctx[159]),
+            listen(input0, "input", ctx[155]),
+            listen(select, "change", ctx[156]),
+            listen(select, "change", ctx[157]),
+            listen(button0, "click", ctx[158]),
+            listen(button1, "click", ctx[161]),
             listen(input1, "change", ctx[96])
           ];
           mounted = true;
@@ -39106,7 +39127,7 @@
           if (if_block0) {
             if_block0.p(ctx2, dirty);
           } else {
-            if_block0 = create_if_block_532(ctx2);
+            if_block0 = create_if_block_542(ctx2);
             if_block0.c();
             if_block0.m(t0.parentNode, t0);
           }
@@ -39118,14 +39139,14 @@
           set_input_value(input0, ctx2[27]);
         }
         if (dirty[2] & 4194304) {
-          each_value_26 = ctx2[84];
+          each_value_27 = ctx2[84];
           let i;
-          for (i = 0; i < each_value_26.length; i += 1) {
-            const child_ctx = get_each_context_262(ctx2, each_value_26, i);
+          for (i = 0; i < each_value_27.length; i += 1) {
+            const child_ctx = get_each_context_27(ctx2, each_value_27, i);
             if (each_blocks[i]) {
               each_blocks[i].p(child_ctx, dirty);
             } else {
-              each_blocks[i] = create_each_block_26(child_ctx);
+              each_blocks[i] = create_each_block_27(child_ctx);
               each_blocks[i].c();
               each_blocks[i].m(select, null);
             }
@@ -39133,7 +39154,7 @@
           for (; i < each_blocks.length; i += 1) {
             each_blocks[i].d(1);
           }
-          each_blocks.length = each_value_26.length;
+          each_blocks.length = each_value_27.length;
         }
         if (!current || dirty[0] & 134217728 && select_size_value !== (select_size_value = ctx2[27] ? 8 : 1)) {
           attr(select, "size", select_size_value);
@@ -39145,7 +39166,7 @@
           if (if_block1) {
             if_block1.p(ctx2, dirty);
           } else {
-            if_block1 = create_if_block_522(ctx2);
+            if_block1 = create_if_block_532(ctx2);
             if_block1.c();
             if_block1.m(div0, null);
           }
@@ -39162,7 +39183,7 @@
               transition_in(if_block2, 1);
             }
           } else {
-            if_block2 = create_if_block_492(ctx2);
+            if_block2 = create_if_block_50(ctx2);
             if_block2.c();
             transition_in(if_block2, 1);
             if_block2.m(t9.parentNode, t9);
@@ -39189,7 +39210,7 @@
           if (if_block4) {
             if_block4.p(ctx2, dirty);
           } else {
-            if_block4 = create_if_block_462(ctx2);
+            if_block4 = create_if_block_472(ctx2);
             if_block4.c();
             if_block4.m(if_block4_anchor.parentNode, if_block4_anchor);
           }
@@ -39246,7 +39267,7 @@
       }
     };
   }
-  function create_if_block_532(ctx) {
+  function create_if_block_542(ctx) {
     let input;
     let mounted;
     let dispose;
@@ -39260,7 +39281,7 @@
         set_input_value(input, ctx[50].name);
         if (!mounted) {
           dispose = [
-            listen(input, "input", ctx[152]),
+            listen(input, "input", ctx[154]),
             listen(input, "change", ctx[93])
           ];
           mounted = true;
@@ -39279,14 +39300,14 @@
       }
     };
   }
-  function create_each_block_26(ctx) {
+  function create_each_block_27(ctx) {
     let option;
-    let raw_value = ctx[271].title + "";
+    let raw_value = ctx[275].title + "";
     let option_value_value;
     return {
       c() {
         option = element("option");
-        option.__value = option_value_value = ctx[271].id;
+        option.__value = option_value_value = ctx[275].id;
         option.value = option.__value;
       },
       m(target, anchor) {
@@ -39294,10 +39315,10 @@
         option.innerHTML = raw_value;
       },
       p(ctx2, dirty) {
-        if (dirty[2] & 4194304 && raw_value !== (raw_value = ctx2[271].title + ""))
+        if (dirty[2] & 4194304 && raw_value !== (raw_value = ctx2[275].title + ""))
           option.innerHTML = raw_value;
         ;
-        if (dirty[2] & 4194304 && option_value_value !== (option_value_value = ctx2[271].id)) {
+        if (dirty[2] & 4194304 && option_value_value !== (option_value_value = ctx2[275].id)) {
           option.__value = option_value_value;
           option.value = option.__value;
         }
@@ -39308,7 +39329,7 @@
       }
     };
   }
-  function create_if_block_522(ctx) {
+  function create_if_block_532(ctx) {
     let span;
     let t0_value = ctx[54].length + "";
     let t0;
@@ -39341,22 +39362,22 @@
       }
     };
   }
-  function create_if_block_492(ctx) {
+  function create_if_block_50(ctx) {
     let t;
     let if_block_anchor;
     let current;
-    let each_value_25 = STAT_KEYS;
+    let each_value_26 = STAT_KEYS;
     let each_blocks = [];
-    for (let i = 0; i < each_value_25.length; i += 1) {
-      each_blocks[i] = create_each_block_252(get_each_context_252(ctx, each_value_25, i));
+    for (let i = 0; i < each_value_26.length; i += 1) {
+      each_blocks[i] = create_each_block_26(get_each_context_262(ctx, each_value_26, i));
     }
     const out = (i) => transition_out(each_blocks[i], 1, 1, () => {
       each_blocks[i] = null;
     });
     function select_block_type_4(ctx2, dirty) {
       if (ctx2[82])
-        return create_if_block_50;
-      return create_else_block_92;
+        return create_if_block_51;
+      return create_else_block_82;
     }
     let current_block_type = select_block_type_4(ctx, [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1]);
     let if_block = current_block_type(ctx);
@@ -39380,22 +39401,22 @@
       },
       p(ctx2, dirty) {
         if (dirty[1] & 526336 | dirty[2] & 3670016 | dirty[3] & 1) {
-          each_value_25 = STAT_KEYS;
+          each_value_26 = STAT_KEYS;
           let i;
-          for (i = 0; i < each_value_25.length; i += 1) {
-            const child_ctx = get_each_context_252(ctx2, each_value_25, i);
+          for (i = 0; i < each_value_26.length; i += 1) {
+            const child_ctx = get_each_context_262(ctx2, each_value_26, i);
             if (each_blocks[i]) {
               each_blocks[i].p(child_ctx, dirty);
               transition_in(each_blocks[i], 1);
             } else {
-              each_blocks[i] = create_each_block_252(child_ctx);
+              each_blocks[i] = create_each_block_26(child_ctx);
               each_blocks[i].c();
               transition_in(each_blocks[i], 1);
               each_blocks[i].m(t.parentNode, t);
             }
           }
           group_outros();
-          for (i = each_value_25.length; i < each_blocks.length; i += 1) {
+          for (i = each_value_26.length; i < each_blocks.length; i += 1) {
             out(i);
           }
           check_outros();
@@ -39414,7 +39435,7 @@
       i(local) {
         if (current)
           return;
-        for (let i = 0; i < each_value_25.length; i += 1) {
+        for (let i = 0; i < each_value_26.length; i += 1) {
           transition_in(each_blocks[i]);
         }
         current = true;
@@ -39436,26 +39457,26 @@
       }
     };
   }
-  function create_if_block_51(ctx) {
+  function create_if_block_522(ctx) {
     let span;
-    let t_value = ctx[81](ctx[216]) ? (ctx[81](ctx[216]) > 0 ? "+" : "") + ctx[81](ctx[216]) : "";
+    let t_value = ctx[81](ctx[218]) ? (ctx[81](ctx[218]) > 0 ? "+" : "") + ctx[81](ctx[218]) : "";
     let t;
     return {
       c() {
         span = element("span");
         t = text(t_value);
         attr(span, "class", "dmg-statdelta");
-        toggle_class(span, "dmg-statdown", ctx[81](ctx[216]) < 0);
+        toggle_class(span, "dmg-statdown", ctx[81](ctx[218]) < 0);
       },
       m(target, anchor) {
         insert(target, span, anchor);
         append(span, t);
       },
       p(ctx2, dirty) {
-        if (dirty[2] & 524288 && t_value !== (t_value = ctx2[81](ctx2[216]) ? (ctx2[81](ctx2[216]) > 0 ? "+" : "") + ctx2[81](ctx2[216]) : ""))
+        if (dirty[2] & 524288 && t_value !== (t_value = ctx2[81](ctx2[218]) ? (ctx2[81](ctx2[218]) > 0 ? "+" : "") + ctx2[81](ctx2[218]) : ""))
           set_data(t, t_value);
         if (dirty[2] & 524288) {
-          toggle_class(span, "dmg-statdown", ctx2[81](ctx2[216]) < 0);
+          toggle_class(span, "dmg-statdown", ctx2[81](ctx2[218]) < 0);
         }
       },
       d(detaching) {
@@ -39464,7 +39485,7 @@
       }
     };
   }
-  function create_each_block_252(ctx) {
+  function create_each_block_26(ctx) {
     let label;
     let span0;
     let tr2;
@@ -39476,15 +39497,15 @@
     let input_value_value;
     let t2;
     let span1;
-    let t3_value = ctx[83][ctx[216]] ? "/ " + ctx[83][ctx[216]] : "";
+    let t3_value = ctx[83][ctx[218]] ? "/ " + ctx[83][ctx[218]] : "";
     let t3;
     let current;
     let mounted;
     let dispose;
-    tr2 = new Tr_default({ props: { s: ctx[216] } });
-    let if_block = ctx[82] && create_if_block_51(ctx);
+    tr2 = new Tr_default({ props: { s: ctx[218] } });
+    let if_block = ctx[82] && create_if_block_522(ctx);
     function change_handler_4(...args) {
-      return ctx[157](ctx[216], ...args);
+      return ctx[159](ctx[218], ...args);
     }
     return {
       c() {
@@ -39504,8 +39525,8 @@
         attr(input, "min", "0");
         input.readOnly = ctx[82];
         attr(input, "tabindex", input_tabindex_value = ctx[82] ? -1 : 0);
-        attr(input, "title", input_title_value = ctx[82] && ctx[81](ctx[216]) ? ctx[50].stats[ctx[216]] + " base " + (ctx[81](ctx[216]) > 0 ? "+" : "") + ctx[81](ctx[216]) + " from armour" : "");
-        input.value = input_value_value = ctx[82] ? ctx[42] ? ctx[42][ctx[216]] : 0 : ctx[50].stats[ctx[216]];
+        attr(input, "title", input_title_value = ctx[82] && ctx[81](ctx[218]) ? ctx[50].stats[ctx[218]] + " base " + (ctx[81](ctx[218]) > 0 ? "+" : "") + ctx[81](ctx[218]) + " from armour" : "");
+        input.value = input_value_value = ctx[82] ? ctx[42] ? ctx[42][ctx[218]] : 0 : ctx[50].stats[ctx[218]];
         toggle_class(input, "dmg-readonly", ctx[82]);
         attr(span1, "class", "dmg-cap dmg-statcap");
         attr(label, "class", "dmg-row dmg-stat");
@@ -39534,7 +39555,7 @@
           if (if_block) {
             if_block.p(ctx, dirty);
           } else {
-            if_block = create_if_block_51(ctx);
+            if_block = create_if_block_522(ctx);
             if_block.c();
             if_block.m(label, t1);
           }
@@ -39548,16 +39569,16 @@
         if (!current || dirty[2] & 1048576 && input_tabindex_value !== (input_tabindex_value = ctx[82] ? -1 : 0)) {
           attr(input, "tabindex", input_tabindex_value);
         }
-        if (!current || dirty[1] & 524288 | dirty[2] & 1572864 && input_title_value !== (input_title_value = ctx[82] && ctx[81](ctx[216]) ? ctx[50].stats[ctx[216]] + " base " + (ctx[81](ctx[216]) > 0 ? "+" : "") + ctx[81](ctx[216]) + " from armour" : "")) {
+        if (!current || dirty[1] & 524288 | dirty[2] & 1572864 && input_title_value !== (input_title_value = ctx[82] && ctx[81](ctx[218]) ? ctx[50].stats[ctx[218]] + " base " + (ctx[81](ctx[218]) > 0 ? "+" : "") + ctx[81](ctx[218]) + " from armour" : "")) {
           attr(input, "title", input_title_value);
         }
-        if (!current || dirty[1] & 526336 | dirty[2] & 1048576 && input_value_value !== (input_value_value = ctx[82] ? ctx[42] ? ctx[42][ctx[216]] : 0 : ctx[50].stats[ctx[216]]) && input.value !== input_value_value) {
+        if (!current || dirty[1] & 526336 | dirty[2] & 1048576 && input_value_value !== (input_value_value = ctx[82] ? ctx[42] ? ctx[42][ctx[218]] : 0 : ctx[50].stats[ctx[218]]) && input.value !== input_value_value) {
           input.value = input_value_value;
         }
         if (dirty[2] & 1048576) {
           toggle_class(input, "dmg-readonly", ctx[82]);
         }
-        if ((!current || dirty[2] & 2097152) && t3_value !== (t3_value = ctx[83][ctx[216]] ? "/ " + ctx[83][ctx[216]] : ""))
+        if ((!current || dirty[2] & 2097152) && t3_value !== (t3_value = ctx[83][ctx[218]] ? "/ " + ctx[83][ctx[218]] : ""))
           set_data(t3, t3_value);
       },
       i(local) {
@@ -39581,7 +39602,7 @@
       }
     };
   }
-  function create_else_block_92(ctx) {
+  function create_else_block_82(ctx) {
     let p;
     return {
       c() {
@@ -39599,7 +39620,7 @@
       }
     };
   }
-  function create_if_block_50(ctx) {
+  function create_if_block_51(ctx) {
     let p;
     let t1;
     let button;
@@ -39637,7 +39658,7 @@
       }
     };
   }
-  function create_if_block_482(ctx) {
+  function create_if_block_492(ctx) {
     let p;
     return {
       c() {
@@ -39655,7 +39676,7 @@
       }
     };
   }
-  function create_if_block_472(ctx) {
+  function create_if_block_482(ctx) {
     let p;
     let t0;
     let html_tag;
@@ -39683,7 +39704,7 @@
         append(p, t1);
         append(p, button);
         if (!mounted) {
-          dispose = listen(button, "click", ctx[158]);
+          dispose = listen(button, "click", ctx[160]);
           mounted = true;
         }
       },
@@ -39699,7 +39720,7 @@
       }
     };
   }
-  function create_if_block_462(ctx) {
+  function create_if_block_472(ctx) {
     let p;
     let t;
     return {
@@ -39722,323 +39743,16 @@
       }
     };
   }
-  function create_if_block_422(ctx) {
-    let p;
-    let t0;
-    let b;
-    let t1_value = ctx[80].tiles + "";
-    let t1;
-    let t2;
-    let t3_value = ctx[80].tiles == 1 ? "tile" : "tiles";
-    let t3;
-    let t4;
-    let button;
-    let t5_value = ctx[56] ? "hide" : "why";
-    let t5;
-    let p_title_value;
-    let t6;
-    let if_block_anchor;
-    let mounted;
-    let dispose;
-    let if_block = ctx[56] && create_if_block_432(ctx);
-    return {
-      c() {
-        p = element("p");
-        t0 = text("Spots this enemy at ");
-        b = element("b");
-        t1 = text(t1_value);
-        t2 = space();
-        t3 = text(t3_value);
-        t4 = space();
-        button = element("button");
-        t5 = text(t5_value);
-        t6 = space();
-        if (if_block)
-          if_block.c();
-        if_block_anchor = empty();
-        attr(button, "class", "dmg-mini dmg-sightmore");
-        attr(button, "title", "Show every visibility value on both armours");
-        attr(p, "class", "dmg-cap dmg-sight");
-        attr(p, "title", p_title_value = sightNote(ctx[80]));
-      },
-      m(target, anchor) {
-        insert(target, p, anchor);
-        append(p, t0);
-        append(p, b);
-        append(b, t1);
-        append(p, t2);
-        append(p, t3);
-        append(p, t4);
-        append(p, button);
-        append(button, t5);
-        insert(target, t6, anchor);
-        if (if_block)
-          if_block.m(target, anchor);
-        insert(target, if_block_anchor, anchor);
-        if (!mounted) {
-          dispose = listen(button, "click", ctx[162]);
-          mounted = true;
-        }
-      },
-      p(ctx2, dirty) {
-        if (dirty[2] & 262144 && t1_value !== (t1_value = ctx2[80].tiles + ""))
-          set_data(t1, t1_value);
-        if (dirty[2] & 262144 && t3_value !== (t3_value = ctx2[80].tiles == 1 ? "tile" : "tiles"))
-          set_data(t3, t3_value);
-        if (dirty[1] & 33554432 && t5_value !== (t5_value = ctx2[56] ? "hide" : "why"))
-          set_data(t5, t5_value);
-        if (dirty[2] & 262144 && p_title_value !== (p_title_value = sightNote(ctx2[80]))) {
-          attr(p, "title", p_title_value);
-        }
-        if (ctx2[56]) {
-          if (if_block) {
-            if_block.p(ctx2, dirty);
-          } else {
-            if_block = create_if_block_432(ctx2);
-            if_block.c();
-            if_block.m(if_block_anchor.parentNode, if_block_anchor);
-          }
-        } else if (if_block) {
-          if_block.d(1);
-          if_block = null;
-        }
-      },
-      d(detaching) {
-        if (detaching)
-          detach(p);
-        if (detaching)
-          detach(t6);
-        if (if_block)
-          if_block.d(detaching);
-        if (detaching)
-          detach(if_block_anchor);
-        mounted = false;
-        dispose();
-      }
-    };
-  }
-  function create_if_block_432(ctx) {
-    let div;
-    let p0;
-    let t0_value = sightNote(ctx[80]) + "";
-    let t0;
-    let t1;
-    let t2;
-    let p1;
-    let t3;
-    let code;
-    let t6;
-    function select_block_type_6(ctx2, dirty) {
-      if (ctx2[80].fields.length)
-        return create_if_block_442;
-      return create_else_block_82;
-    }
-    let current_block_type = select_block_type_6(ctx, [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1]);
-    let if_block = current_block_type(ctx);
-    return {
-      c() {
-        div = element("div");
-        p0 = element("p");
-        t0 = text(t0_value);
-        t1 = space();
-        if_block.c();
-        t2 = space();
-        p1 = element("p");
-        t3 = text("Mod ceiling ");
-        code = element("code");
-        code.textContent = `maxViewDistance: ${maxViewDistance()}`;
-        t6 = text(". Unset dark\r\n                visibility falls back to 9 for a player unit.");
-        attr(p0, "class", "dmg-hint");
-        attr(p1, "class", "dmg-hint");
-        attr(div, "class", "dmg-sightbox");
-      },
-      m(target, anchor) {
-        insert(target, div, anchor);
-        append(div, p0);
-        append(p0, t0);
-        append(div, t1);
-        if_block.m(div, null);
-        append(div, t2);
-        append(div, p1);
-        append(p1, t3);
-        append(p1, code);
-        append(p1, t6);
-      },
-      p(ctx2, dirty) {
-        if (dirty[2] & 262144 && t0_value !== (t0_value = sightNote(ctx2[80]) + ""))
-          set_data(t0, t0_value);
-        if (current_block_type === (current_block_type = select_block_type_6(ctx2, dirty)) && if_block) {
-          if_block.p(ctx2, dirty);
-        } else {
-          if_block.d(1);
-          if_block = current_block_type(ctx2);
-          if (if_block) {
-            if_block.c();
-            if_block.m(div, t2);
-          }
-        }
-      },
-      d(detaching) {
-        if (detaching)
-          detach(div);
-        if_block.d();
-      }
-    };
-  }
-  function create_else_block_82(ctx) {
-    let p;
-    return {
-      c() {
-        p = element("p");
-        p.textContent = "Neither armour states any visibility value.";
-        attr(p, "class", "dmg-hint");
-      },
-      m(target, anchor) {
-        insert(target, p, anchor);
-      },
-      p: noop,
-      d(detaching) {
-        if (detaching)
-          detach(p);
-      }
-    };
-  }
-  function create_if_block_442(ctx) {
-    let table;
-    let tbody;
-    let each_value_24 = ctx[80].fields;
-    let each_blocks = [];
-    for (let i = 0; i < each_value_24.length; i += 1) {
-      each_blocks[i] = create_each_block_242(get_each_context_242(ctx, each_value_24, i));
-    }
-    return {
-      c() {
-        table = element("table");
-        tbody = element("tbody");
-        for (let i = 0; i < each_blocks.length; i += 1) {
-          each_blocks[i].c();
-        }
-        attr(table, "class", "dmg-sighttab");
-      },
-      m(target, anchor) {
-        insert(target, table, anchor);
-        append(table, tbody);
-        for (let i = 0; i < each_blocks.length; i += 1) {
-          each_blocks[i].m(tbody, null);
-        }
-      },
-      p(ctx2, dirty) {
-        if (dirty[2] & 262144) {
-          each_value_24 = ctx2[80].fields;
-          let i;
-          for (i = 0; i < each_value_24.length; i += 1) {
-            const child_ctx = get_each_context_242(ctx2, each_value_24, i);
-            if (each_blocks[i]) {
-              each_blocks[i].p(child_ctx, dirty);
-            } else {
-              each_blocks[i] = create_each_block_242(child_ctx);
-              each_blocks[i].c();
-              each_blocks[i].m(tbody, null);
-            }
-          }
-          for (; i < each_blocks.length; i += 1) {
-            each_blocks[i].d(1);
-          }
-          each_blocks.length = each_value_24.length;
-        }
-      },
-      d(detaching) {
-        if (detaching)
-          detach(table);
-        destroy_each(each_blocks, detaching);
-      }
-    };
-  }
-  function create_each_block_242(ctx) {
-    let tr2;
-    let td0;
-    let t0_value = ctx[266].side + "";
-    let t0;
-    let t1;
-    let td1;
-    let t2_value = ctx[266].label + "";
-    let t2;
-    let t3;
-    let td2;
-    let t4_value = ctx[266].value + "";
-    let t4;
-    let t5;
-    let td3;
-    let t6_value = ctx[266].used ? "used" : "not modelled";
-    let t6;
-    let t7;
-    let tr_title_value;
-    return {
-      c() {
-        tr2 = element("tr");
-        td0 = element("td");
-        t0 = text(t0_value);
-        t1 = space();
-        td1 = element("td");
-        t2 = text(t2_value);
-        t3 = space();
-        td2 = element("td");
-        t4 = text(t4_value);
-        t5 = space();
-        td3 = element("td");
-        t6 = text(t6_value);
-        t7 = space();
-        attr(td2, "class", "num");
-        attr(tr2, "title", tr_title_value = ctx[266].note);
-        toggle_class(tr2, "dmg-sightunused", !ctx[266].used);
-      },
-      m(target, anchor) {
-        insert(target, tr2, anchor);
-        append(tr2, td0);
-        append(td0, t0);
-        append(tr2, t1);
-        append(tr2, td1);
-        append(td1, t2);
-        append(tr2, t3);
-        append(tr2, td2);
-        append(td2, t4);
-        append(tr2, t5);
-        append(tr2, td3);
-        append(td3, t6);
-        append(tr2, t7);
-      },
-      p(ctx2, dirty) {
-        if (dirty[2] & 262144 && t0_value !== (t0_value = ctx2[266].side + ""))
-          set_data(t0, t0_value);
-        if (dirty[2] & 262144 && t2_value !== (t2_value = ctx2[266].label + ""))
-          set_data(t2, t2_value);
-        if (dirty[2] & 262144 && t4_value !== (t4_value = ctx2[266].value + ""))
-          set_data(t4, t4_value);
-        if (dirty[2] & 262144 && t6_value !== (t6_value = ctx2[266].used ? "used" : "not modelled"))
-          set_data(t6, t6_value);
-        if (dirty[2] & 262144 && tr_title_value !== (tr_title_value = ctx2[266].note)) {
-          attr(tr2, "title", tr_title_value);
-        }
-        if (dirty[2] & 262144) {
-          toggle_class(tr2, "dmg-sightunused", !ctx2[266].used);
-        }
-      },
-      d(detaching) {
-        if (detaching)
-          detach(tr2);
-      }
-    };
-  }
-  function create_each_block_232(ctx) {
+  function create_each_block_252(ctx) {
     let option;
-    let t_value = ctx[263] + "";
+    let t_value = ctx[270] + "";
     let t;
     let option_value_value;
     return {
       c() {
         option = element("option");
         t = text(t_value);
-        option.__value = option_value_value = ctx[263];
+        option.__value = option_value_value = ctx[270];
         option.value = option.__value;
       },
       m(target, anchor) {
@@ -40052,7 +39766,7 @@
       }
     };
   }
-  function create_if_block_412(ctx) {
+  function create_if_block_452(ctx) {
     let span;
     let t0;
     let t1_value = ctx[51] ? "on" : "off";
@@ -40091,10 +39805,10 @@
     let select;
     let mounted;
     let dispose;
-    let each_value_22 = ctx[46].slice(0, 400);
+    let each_value_24 = ctx[46].slice(0, 400);
     let each_blocks = [];
-    for (let i = 0; i < each_value_22.length; i += 1) {
-      each_blocks[i] = create_each_block_222(get_each_context_222(ctx, each_value_22, i));
+    for (let i = 0; i < each_value_24.length; i += 1) {
+      each_blocks[i] = create_each_block_242(get_each_context_242(ctx, each_value_24, i));
     }
     return {
       c() {
@@ -40113,7 +39827,7 @@
         attr(select, "class", "dmg-input dmg-list");
         attr(select, "size", "12");
         if (ctx[26] === void 0)
-          add_render_callback(() => ctx[179].call(select));
+          add_render_callback(() => ctx[180].call(select));
         attr(section, "class", "dmg-block");
       },
       m(target, anchor) {
@@ -40130,8 +39844,8 @@
         select_option(select, ctx[26]);
         if (!mounted) {
           dispose = [
-            listen(input, "input", ctx[178]),
-            listen(select, "change", ctx[179])
+            listen(input, "input", ctx[179]),
+            listen(select, "change", ctx[180])
           ];
           mounted = true;
         }
@@ -40141,14 +39855,14 @@
           set_input_value(input, ctx2[16]);
         }
         if (dirty[1] & 32768) {
-          each_value_22 = ctx2[46].slice(0, 400);
+          each_value_24 = ctx2[46].slice(0, 400);
           let i;
-          for (i = 0; i < each_value_22.length; i += 1) {
-            const child_ctx = get_each_context_222(ctx2, each_value_22, i);
+          for (i = 0; i < each_value_24.length; i += 1) {
+            const child_ctx = get_each_context_242(ctx2, each_value_24, i);
             if (each_blocks[i]) {
               each_blocks[i].p(child_ctx, dirty);
             } else {
-              each_blocks[i] = create_each_block_222(child_ctx);
+              each_blocks[i] = create_each_block_242(child_ctx);
               each_blocks[i].c();
               each_blocks[i].m(select, null);
             }
@@ -40156,7 +39870,7 @@
           for (; i < each_blocks.length; i += 1) {
             each_blocks[i].d(1);
           }
-          each_blocks.length = each_value_22.length;
+          each_blocks.length = each_value_24.length;
         }
         if (dirty[0] & 67108864 | dirty[1] & 32768) {
           select_option(select, ctx2[26]);
@@ -40171,7 +39885,7 @@
       }
     };
   }
-  function create_if_block_383(ctx) {
+  function create_if_block_422(ctx) {
     let section0;
     let header0;
     let t0;
@@ -40190,17 +39904,17 @@
     let select1;
     let mounted;
     let dispose;
-    let if_block0 = ctx[23] && create_if_block_402(ctx);
-    let each_value_21 = ctx[73].slice(0, 400);
+    let if_block0 = ctx[23] && create_if_block_442(ctx);
+    let each_value_23 = ctx[73].slice(0, 400);
     let each_blocks_1 = [];
-    for (let i = 0; i < each_value_21.length; i += 1) {
-      each_blocks_1[i] = create_each_block_21(get_each_context_21(ctx, each_value_21, i));
+    for (let i = 0; i < each_value_23.length; i += 1) {
+      each_blocks_1[i] = create_each_block_232(get_each_context_232(ctx, each_value_23, i));
     }
-    let if_block1 = ctx[23] && create_if_block_393(ctx);
-    let each_value_20 = ctx[44].slice(0, 400);
+    let if_block1 = ctx[23] && create_if_block_432(ctx);
+    let each_value_22 = ctx[44].slice(0, 400);
     let each_blocks = [];
-    for (let i = 0; i < each_value_20.length; i += 1) {
-      each_blocks[i] = create_each_block_20(get_each_context_20(ctx, each_value_20, i));
+    for (let i = 0; i < each_value_22.length; i += 1) {
+      each_blocks[i] = create_each_block_222(get_each_context_222(ctx, each_value_22, i));
     }
     return {
       c() {
@@ -40239,7 +39953,7 @@
         attr(select0, "class", "dmg-input dmg-list");
         attr(select0, "size", "6");
         if (ctx[23] === void 0)
-          add_render_callback(() => ctx[175].call(select0));
+          add_render_callback(() => ctx[176].call(select0));
         attr(section0, "class", "dmg-block");
         attr(input1, "class", "dmg-input");
         attr(input1, "placeholder", "Filter enemies\u2026 (comma-separate)");
@@ -40247,7 +39961,7 @@
         attr(select1, "class", "dmg-input dmg-list");
         attr(select1, "size", "12");
         if (ctx[0] === void 0)
-          add_render_callback(() => ctx[177].call(select1));
+          add_render_callback(() => ctx[178].call(select1));
         attr(section1, "class", "dmg-block");
       },
       m(target, anchor) {
@@ -40283,10 +39997,10 @@
         select_option(select1, ctx[0]);
         if (!mounted) {
           dispose = [
-            listen(input0, "input", ctx[174]),
-            listen(select0, "change", ctx[175]),
-            listen(input1, "input", ctx[176]),
-            listen(select1, "change", ctx[177])
+            listen(input0, "input", ctx[175]),
+            listen(select0, "change", ctx[176]),
+            listen(input1, "input", ctx[177]),
+            listen(select1, "change", ctx[178])
           ];
           mounted = true;
         }
@@ -40296,7 +40010,7 @@
           if (if_block0) {
             if_block0.p(ctx2, dirty);
           } else {
-            if_block0 = create_if_block_402(ctx2);
+            if_block0 = create_if_block_442(ctx2);
             if_block0.c();
             if_block0.m(header0, null);
           }
@@ -40308,14 +40022,14 @@
           set_input_value(input0, ctx2[24]);
         }
         if (dirty[2] & 2048) {
-          each_value_21 = ctx2[73].slice(0, 400);
+          each_value_23 = ctx2[73].slice(0, 400);
           let i;
-          for (i = 0; i < each_value_21.length; i += 1) {
-            const child_ctx = get_each_context_21(ctx2, each_value_21, i);
+          for (i = 0; i < each_value_23.length; i += 1) {
+            const child_ctx = get_each_context_232(ctx2, each_value_23, i);
             if (each_blocks_1[i]) {
               each_blocks_1[i].p(child_ctx, dirty);
             } else {
-              each_blocks_1[i] = create_each_block_21(child_ctx);
+              each_blocks_1[i] = create_each_block_232(child_ctx);
               each_blocks_1[i].c();
               each_blocks_1[i].m(select0, null);
             }
@@ -40323,7 +40037,7 @@
           for (; i < each_blocks_1.length; i += 1) {
             each_blocks_1[i].d(1);
           }
-          each_blocks_1.length = each_value_21.length;
+          each_blocks_1.length = each_value_23.length;
         }
         if (dirty[0] & 8388608 | dirty[2] & 2048) {
           select_option(select0, ctx2[23]);
@@ -40331,7 +40045,7 @@
         if (ctx2[23]) {
           if (if_block1) {
           } else {
-            if_block1 = create_if_block_393(ctx2);
+            if_block1 = create_if_block_432(ctx2);
             if_block1.c();
             if_block1.m(section0, null);
           }
@@ -40343,14 +40057,14 @@
           set_input_value(input1, ctx2[22]);
         }
         if (dirty[1] & 8192) {
-          each_value_20 = ctx2[44].slice(0, 400);
+          each_value_22 = ctx2[44].slice(0, 400);
           let i;
-          for (i = 0; i < each_value_20.length; i += 1) {
-            const child_ctx = get_each_context_20(ctx2, each_value_20, i);
+          for (i = 0; i < each_value_22.length; i += 1) {
+            const child_ctx = get_each_context_222(ctx2, each_value_22, i);
             if (each_blocks[i]) {
               each_blocks[i].p(child_ctx, dirty);
             } else {
-              each_blocks[i] = create_each_block_20(child_ctx);
+              each_blocks[i] = create_each_block_222(child_ctx);
               each_blocks[i].c();
               each_blocks[i].m(select1, null);
             }
@@ -40358,7 +40072,7 @@
           for (; i < each_blocks.length; i += 1) {
             each_blocks[i].d(1);
           }
-          each_blocks.length = each_value_20.length;
+          each_blocks.length = each_value_22.length;
         }
         if (dirty[0] & 1 | dirty[1] & 8192) {
           select_option(select1, ctx2[0]);
@@ -40382,14 +40096,14 @@
       }
     };
   }
-  function create_each_block_222(ctx) {
+  function create_each_block_242(ctx) {
     let option;
-    let raw_value = ctx[260].title + "";
+    let raw_value = ctx[267].title + "";
     let option_value_value;
     return {
       c() {
         option = element("option");
-        option.__value = option_value_value = ctx[260].id;
+        option.__value = option_value_value = ctx[267].id;
         option.value = option.__value;
       },
       m(target, anchor) {
@@ -40397,10 +40111,10 @@
         option.innerHTML = raw_value;
       },
       p(ctx2, dirty) {
-        if (dirty[1] & 32768 && raw_value !== (raw_value = ctx2[260].title + ""))
+        if (dirty[1] & 32768 && raw_value !== (raw_value = ctx2[267].title + ""))
           option.innerHTML = raw_value;
         ;
-        if (dirty[1] & 32768 && option_value_value !== (option_value_value = ctx2[260].id)) {
+        if (dirty[1] & 32768 && option_value_value !== (option_value_value = ctx2[267].id)) {
           option.__value = option_value_value;
           option.value = option.__value;
         }
@@ -40411,7 +40125,7 @@
       }
     };
   }
-  function create_if_block_402(ctx) {
+  function create_if_block_442(ctx) {
     let button;
     let mounted;
     let dispose;
@@ -40425,7 +40139,7 @@
       m(target, anchor) {
         insert(target, button, anchor);
         if (!mounted) {
-          dispose = listen(button, "click", ctx[173]);
+          dispose = listen(button, "click", ctx[174]);
           mounted = true;
         }
       },
@@ -40438,12 +40152,12 @@
       }
     };
   }
-  function create_each_block_21(ctx) {
+  function create_each_block_232(ctx) {
     let option;
     let html_tag;
-    let raw_value = ctx[209].title + "";
+    let raw_value = ctx[211].title + "";
     let t0;
-    let t1_value = ctx[209].count + "";
+    let t1_value = ctx[211].count + "";
     let t1;
     let t2;
     let option_value_value;
@@ -40455,7 +40169,7 @@
         t1 = text(t1_value);
         t2 = text(")");
         html_tag.a = t0;
-        option.__value = option_value_value = ctx[209].id;
+        option.__value = option_value_value = ctx[211].id;
         option.value = option.__value;
       },
       m(target, anchor) {
@@ -40466,11 +40180,11 @@
         append(option, t2);
       },
       p(ctx2, dirty) {
-        if (dirty[2] & 2048 && raw_value !== (raw_value = ctx2[209].title + ""))
+        if (dirty[2] & 2048 && raw_value !== (raw_value = ctx2[211].title + ""))
           html_tag.p(raw_value);
-        if (dirty[2] & 2048 && t1_value !== (t1_value = ctx2[209].count + ""))
+        if (dirty[2] & 2048 && t1_value !== (t1_value = ctx2[211].count + ""))
           set_data(t1, t1_value);
-        if (dirty[2] & 2048 && option_value_value !== (option_value_value = ctx2[209].id)) {
+        if (dirty[2] & 2048 && option_value_value !== (option_value_value = ctx2[211].id)) {
           option.__value = option_value_value;
           option.value = option.__value;
         }
@@ -40481,7 +40195,7 @@
       }
     };
   }
-  function create_if_block_393(ctx) {
+  function create_if_block_432(ctx) {
     let p;
     return {
       c() {
@@ -40498,14 +40212,14 @@
       }
     };
   }
-  function create_each_block_20(ctx) {
+  function create_each_block_222(ctx) {
     let option;
-    let raw_value = ctx[219].title + "";
+    let raw_value = ctx[221].title + "";
     let option_value_value;
     return {
       c() {
         option = element("option");
-        option.__value = option_value_value = ctx[219].id;
+        option.__value = option_value_value = ctx[221].id;
         option.value = option.__value;
       },
       m(target, anchor) {
@@ -40513,10 +40227,10 @@
         option.innerHTML = raw_value;
       },
       p(ctx2, dirty) {
-        if (dirty[1] & 8192 && raw_value !== (raw_value = ctx2[219].title + ""))
+        if (dirty[1] & 8192 && raw_value !== (raw_value = ctx2[221].title + ""))
           option.innerHTML = raw_value;
         ;
-        if (dirty[1] & 8192 && option_value_value !== (option_value_value = ctx2[219].id)) {
+        if (dirty[1] & 8192 && option_value_value !== (option_value_value = ctx2[221].id)) {
           option.__value = option_value_value;
           option.value = option.__value;
         }
@@ -40552,24 +40266,24 @@
     let tbody;
     let each_blocks = [];
     let each1_lookup = new Map_1();
-    function select_block_type_14(ctx2, dirty) {
+    function select_block_type_13(ctx2, dirty) {
       if (ctx2[72])
-        return create_if_block_373;
+        return create_if_block_412;
       return create_else_block_62;
     }
-    let current_block_type = select_block_type_14(ctx, [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1]);
+    let current_block_type = select_block_type_13(ctx, [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1]);
     let if_block = current_block_type(ctx);
-    let each_value_18 = ctx[109];
+    let each_value_20 = ctx[111];
     let each_blocks_1 = [];
-    for (let i = 0; i < each_value_18.length; i += 1) {
-      each_blocks_1[i] = create_each_block_182(get_each_context_182(ctx, each_value_18, i));
+    for (let i = 0; i < each_value_20.length; i += 1) {
+      each_blocks_1[i] = create_each_block_20(get_each_context_20(ctx, each_value_20, i));
     }
-    let each_value_14 = ctx[71].slice(0, 400);
-    const get_key = (ctx2) => ctx2[206].id;
-    for (let i = 0; i < each_value_14.length; i += 1) {
-      let child_ctx = get_each_context_143(ctx, each_value_14, i);
+    let each_value_16 = ctx[71].slice(0, 400);
+    const get_key = (ctx2) => ctx2[208].id;
+    for (let i = 0; i < each_value_16.length; i += 1) {
+      let child_ctx = get_each_context_162(ctx, each_value_16, i);
       let key = get_key(child_ctx);
-      each1_lookup.set(key, each_blocks[i] = create_each_block_143(key, child_ctx));
+      each1_lookup.set(key, each_blocks[i] = create_each_block_162(key, child_ctx));
     }
     return {
       c() {
@@ -40644,7 +40358,7 @@
           set_data(t5, ctx2[5]);
         if (dirty[0] & 16)
           set_data(t7, ctx2[4]);
-        if (current_block_type === (current_block_type = select_block_type_14(ctx2, dirty)) && if_block) {
+        if (current_block_type === (current_block_type = select_block_type_13(ctx2, dirty)) && if_block) {
           if_block.p(ctx2, dirty);
         } else {
           if_block.d(1);
@@ -40654,15 +40368,15 @@
             if_block.m(div0, null);
           }
         }
-        if (dirty[1] & 256 | dirty[3] & 67436544) {
-          each_value_18 = ctx2[109];
+        if (dirty[1] & 256 | dirty[3] & 269746176) {
+          each_value_20 = ctx2[111];
           let i;
-          for (i = 0; i < each_value_18.length; i += 1) {
-            const child_ctx = get_each_context_182(ctx2, each_value_18, i);
+          for (i = 0; i < each_value_20.length; i += 1) {
+            const child_ctx = get_each_context_20(ctx2, each_value_20, i);
             if (each_blocks_1[i]) {
               each_blocks_1[i].p(child_ctx, dirty);
             } else {
-              each_blocks_1[i] = create_each_block_182(child_ctx);
+              each_blocks_1[i] = create_each_block_20(child_ctx);
               each_blocks_1[i].c();
               each_blocks_1[i].m(tr2, null);
             }
@@ -40670,11 +40384,11 @@
           for (; i < each_blocks_1.length; i += 1) {
             each_blocks_1[i].d(1);
           }
-          each_blocks_1.length = each_value_18.length;
+          each_blocks_1.length = each_value_20.length;
         }
-        if (dirty[0] & 16 | dirty[2] & 520 | dirty[3] & 2015473664 | dirty[4] & 3) {
-          each_value_14 = ctx2[71].slice(0, 400);
-          each_blocks = update_keyed_each(each_blocks, dirty, get_key, 1, ctx2, each_value_14, each1_lookup, tbody, destroy_block, create_each_block_143, null, get_each_context_143);
+        if (dirty[0] & 16 | dirty[2] & 520 | dirty[3] & 1619443712 | dirty[4] & 15) {
+          each_value_16 = ctx2[71].slice(0, 400);
+          each_blocks = update_keyed_each(each_blocks, dirty, get_key, 1, ctx2, each_value_16, each1_lookup, tbody, destroy_block, create_each_block_162, null, get_each_context_162);
         }
       },
       d(detaching) {
@@ -40692,7 +40406,7 @@
       }
     };
   }
-  function create_if_block_283(ctx) {
+  function create_if_block_323(ctx) {
     let p;
     return {
       c() {
@@ -40712,12 +40426,12 @@
   }
   function create_if_block_127(ctx) {
     let if_block_anchor;
-    function select_block_type_9(ctx2, dirty) {
+    function select_block_type_8(ctx2, dirty) {
       if (!ctx2[41])
         return create_if_block_217;
       return create_else_block18;
     }
-    let current_block_type = select_block_type_9(ctx, [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1]);
+    let current_block_type = select_block_type_8(ctx, [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1]);
     let if_block = current_block_type(ctx);
     return {
       c() {
@@ -40729,7 +40443,7 @@
         insert(target, if_block_anchor, anchor);
       },
       p(ctx2, dirty) {
-        if (current_block_type === (current_block_type = select_block_type_9(ctx2, dirty)) && if_block) {
+        if (current_block_type === (current_block_type = select_block_type_8(ctx2, dirty)) && if_block) {
           if_block.p(ctx2, dirty);
         } else {
           if_block.d(1);
@@ -40772,10 +40486,10 @@
     let button;
     let mounted;
     let dispose;
-    let each_value_19 = ctx[39];
+    let each_value_21 = ctx[39];
     let each_blocks = [];
-    for (let i = 0; i < each_value_19.length; i += 1) {
-      each_blocks[i] = create_each_block_192(get_each_context_192(ctx, each_value_19, i));
+    for (let i = 0; i < each_value_21.length; i += 1) {
+      each_blocks[i] = create_each_block_21(get_each_context_21(ctx, each_value_21, i));
     }
     return {
       c() {
@@ -40800,20 +40514,20 @@
         insert(target, t2, anchor);
         insert(target, button, anchor);
         if (!mounted) {
-          dispose = listen(button, "click", ctx[113]);
+          dispose = listen(button, "click", ctx[115]);
           mounted = true;
         }
       },
       p(ctx2, dirty) {
-        if (dirty[1] & 256 | dirty[3] & 655360) {
-          each_value_19 = ctx2[39];
+        if (dirty[1] & 256 | dirty[3] & 2621440) {
+          each_value_21 = ctx2[39];
           let i;
-          for (i = 0; i < each_value_19.length; i += 1) {
-            const child_ctx = get_each_context_192(ctx2, each_value_19, i);
+          for (i = 0; i < each_value_21.length; i += 1) {
+            const child_ctx = get_each_context_21(ctx2, each_value_21, i);
             if (each_blocks[i]) {
               each_blocks[i].p(child_ctx, dirty);
             } else {
-              each_blocks[i] = create_each_block_192(child_ctx);
+              each_blocks[i] = create_each_block_21(child_ctx);
               each_blocks[i].c();
               each_blocks[i].m(t2.parentNode, t2);
             }
@@ -40821,7 +40535,7 @@
           for (; i < each_blocks.length; i += 1) {
             each_blocks[i].d(1);
           }
-          each_blocks.length = each_value_19.length;
+          each_blocks.length = each_value_21.length;
         }
       },
       d(detaching) {
@@ -40839,7 +40553,7 @@
       }
     };
   }
-  function create_if_block_373(ctx) {
+  function create_if_block_412(ctx) {
     let span;
     return {
       c() {
@@ -40857,22 +40571,22 @@
       }
     };
   }
-  function create_each_block_192(ctx) {
+  function create_each_block_21(ctx) {
     let button;
-    let t0_value = ctx[218] + 1 + "";
+    let t0_value = ctx[220] + 1 + "";
     let t0;
     let t1;
-    let t2_value = ctx[110](ctx[216].id).label + "";
+    let t2_value = ctx[112](ctx[218].id).label + "";
     let t2;
     let t3;
-    let t4_value = ctx[216].desc ? "\u25BC" : "\u25B2";
+    let t4_value = ctx[218].desc ? "\u25BC" : "\u25B2";
     let t4;
     let t5;
     let span;
     let mounted;
     let dispose;
     function click_handler_24() {
-      return ctx[199](ctx[216]);
+      return ctx[201](ctx[218]);
     }
     return {
       c() {
@@ -40905,9 +40619,9 @@
       },
       p(new_ctx, dirty) {
         ctx = new_ctx;
-        if (dirty[1] & 256 && t2_value !== (t2_value = ctx[110](ctx[216].id).label + ""))
+        if (dirty[1] & 256 && t2_value !== (t2_value = ctx[112](ctx[218].id).label + ""))
           set_data(t2, t2_value);
-        if (dirty[1] & 256 && t4_value !== (t4_value = ctx[216].desc ? "\u25BC" : "\u25B2"))
+        if (dirty[1] & 256 && t4_value !== (t4_value = ctx[218].desc ? "\u25BC" : "\u25B2"))
           set_data(t4, t4_value);
       },
       d(detaching) {
@@ -40918,11 +40632,11 @@
       }
     };
   }
-  function create_if_block_353(ctx) {
+  function create_if_block_393(ctx) {
     let span;
-    let t_value = ctx[39][ctx[119](ctx[39], ctx[213].id)].desc ? "\u25BC" : "\u25B2";
+    let t_value = ctx[39][ctx[121](ctx[39], ctx[215].id)].desc ? "\u25BC" : "\u25B2";
     let t;
-    let if_block = ctx[39].length > 1 && create_if_block_363(ctx);
+    let if_block = ctx[39].length > 1 && create_if_block_402(ctx);
     return {
       c() {
         span = element("span");
@@ -40938,13 +40652,13 @@
           if_block.m(span, null);
       },
       p(ctx2, dirty) {
-        if (dirty[1] & 256 && t_value !== (t_value = ctx2[39][ctx2[119](ctx2[39], ctx2[213].id)].desc ? "\u25BC" : "\u25B2"))
+        if (dirty[1] & 256 && t_value !== (t_value = ctx2[39][ctx2[121](ctx2[39], ctx2[215].id)].desc ? "\u25BC" : "\u25B2"))
           set_data(t, t_value);
         if (ctx2[39].length > 1) {
           if (if_block) {
             if_block.p(ctx2, dirty);
           } else {
-            if_block = create_if_block_363(ctx2);
+            if_block = create_if_block_402(ctx2);
             if_block.c();
             if_block.m(span, null);
           }
@@ -40961,9 +40675,9 @@
       }
     };
   }
-  function create_if_block_363(ctx) {
+  function create_if_block_402(ctx) {
     let sup;
-    let t_value = ctx[119](ctx[39], ctx[213].id) + 1 + "";
+    let t_value = ctx[121](ctx[39], ctx[215].id) + 1 + "";
     let t;
     return {
       c() {
@@ -40975,7 +40689,7 @@
         append(sup, t);
       },
       p(ctx2, dirty) {
-        if (dirty[1] & 256 && t_value !== (t_value = ctx2[119](ctx2[39], ctx2[213].id) + 1 + ""))
+        if (dirty[1] & 256 && t_value !== (t_value = ctx2[121](ctx2[39], ctx2[215].id) + 1 + ""))
           set_data(t, t_value);
       },
       d(detaching) {
@@ -40984,18 +40698,18 @@
       }
     };
   }
-  function create_each_block_182(ctx) {
+  function create_each_block_20(ctx) {
     let td;
-    let t0_value = ctx[213].label + "";
+    let t0_value = ctx[215].label + "";
     let t0;
-    let show_if = ctx[119](ctx[39], ctx[213].id) != -1;
+    let show_if = ctx[121](ctx[39], ctx[215].id) != -1;
     let t1;
     let td_title_value;
     let mounted;
     let dispose;
-    let if_block = show_if && create_if_block_353(ctx);
+    let if_block = show_if && create_if_block_393(ctx);
     function click_handler_25() {
-      return ctx[200](ctx[213]);
+      return ctx[202](ctx[215]);
     }
     return {
       c() {
@@ -41005,8 +40719,8 @@
           if_block.c();
         t1 = space();
         attr(td, "class", "dmg-sortable");
-        attr(td, "title", td_title_value = (ctx[213].title || "Sort by " + ctx[213].label) + " \u2014 click again to reverse, click another column to add it as a tiebreak");
-        toggle_class(td, "dmg-sorted", ctx[119](ctx[39], ctx[213].id) != -1);
+        attr(td, "title", td_title_value = (ctx[215].title || "Sort by " + ctx[215].label) + " \u2014 click again to reverse, click another column to add it as a tiebreak");
+        toggle_class(td, "dmg-sorted", ctx[121](ctx[39], ctx[215].id) != -1);
       },
       m(target, anchor) {
         insert(target, td, anchor);
@@ -41022,12 +40736,12 @@
       p(new_ctx, dirty) {
         ctx = new_ctx;
         if (dirty[1] & 256)
-          show_if = ctx[119](ctx[39], ctx[213].id) != -1;
+          show_if = ctx[121](ctx[39], ctx[215].id) != -1;
         if (show_if) {
           if (if_block) {
             if_block.p(ctx, dirty);
           } else {
-            if_block = create_if_block_353(ctx);
+            if_block = create_if_block_393(ctx);
             if_block.c();
             if_block.m(td, t1);
           }
@@ -41035,8 +40749,8 @@
           if_block.d(1);
           if_block = null;
         }
-        if (dirty[1] & 256 | dirty[3] & 67174400) {
-          toggle_class(td, "dmg-sorted", ctx[119](ctx[39], ctx[213].id) != -1);
+        if (dirty[1] & 256 | dirty[3] & 268697600) {
+          toggle_class(td, "dmg-sorted", ctx[121](ctx[39], ctx[215].id) != -1);
         }
       },
       d(detaching) {
@@ -41049,12 +40763,12 @@
       }
     };
   }
-  function create_if_block_333(ctx) {
+  function create_if_block_373(ctx) {
     let html_tag;
-    let raw_value = ctx[206].target.title + "";
+    let raw_value = ctx[208].target.title + "";
     let t;
     let if_block_anchor;
-    let if_block = ctx[206].modeCount > 1 && create_if_block_343(ctx);
+    let if_block = ctx[208].modeCount > 1 && create_if_block_383(ctx);
     return {
       c() {
         html_tag = new HtmlTag(false);
@@ -41072,13 +40786,13 @@
         insert(target, if_block_anchor, anchor);
       },
       p(ctx2, dirty) {
-        if (dirty[2] & 512 && raw_value !== (raw_value = ctx2[206].target.title + ""))
+        if (dirty[2] & 512 && raw_value !== (raw_value = ctx2[208].target.title + ""))
           html_tag.p(raw_value);
-        if (ctx2[206].modeCount > 1) {
+        if (ctx2[208].modeCount > 1) {
           if (if_block) {
             if_block.p(ctx2, dirty);
           } else {
-            if_block = create_if_block_343(ctx2);
+            if_block = create_if_block_383(ctx2);
             if_block.c();
             if_block.m(if_block_anchor.parentNode, if_block_anchor);
           }
@@ -41099,9 +40813,9 @@
       }
     };
   }
-  function create_if_block_343(ctx) {
+  function create_if_block_383(ctx) {
     let span;
-    let t0_value = ctx[206].modeCount + "";
+    let t0_value = ctx[208].modeCount + "";
     let t0;
     let t1;
     return {
@@ -41117,7 +40831,7 @@
         append(span, t1);
       },
       p(ctx2, dirty) {
-        if (dirty[2] & 512 && t0_value !== (t0_value = ctx2[206].modeCount + ""))
+        if (dirty[2] & 512 && t0_value !== (t0_value = ctx2[208].modeCount + ""))
           set_data(t0, t0_value);
       },
       d(detaching) {
@@ -41126,10 +40840,10 @@
       }
     };
   }
-  function create_if_block_323(ctx) {
+  function create_if_block_363(ctx) {
     let span;
     let t0;
-    let t1_value = ctx[206].mode.damage.hitsPerAttack + "";
+    let t1_value = ctx[208].mode.damage.hitsPerAttack + "";
     let t1;
     let span_title_value;
     return {
@@ -41138,7 +40852,7 @@
         t0 = text("\xD7");
         t1 = text(t1_value);
         attr(span, "class", "dmg-hits");
-        attr(span, "title", span_title_value = ctx[206].mode.damage.hitsPerAttack + " projectiles per attack, each rolled and armour-checked separately");
+        attr(span, "title", span_title_value = ctx[208].mode.damage.hitsPerAttack + " projectiles per attack, each rolled and armour-checked separately");
       },
       m(target, anchor) {
         insert(target, span, anchor);
@@ -41146,9 +40860,9 @@
         append(span, t1);
       },
       p(ctx2, dirty) {
-        if (dirty[2] & 512 && t1_value !== (t1_value = ctx2[206].mode.damage.hitsPerAttack + ""))
+        if (dirty[2] & 512 && t1_value !== (t1_value = ctx2[208].mode.damage.hitsPerAttack + ""))
           set_data(t1, t1_value);
-        if (dirty[2] & 512 && span_title_value !== (span_title_value = ctx2[206].mode.damage.hitsPerAttack + " projectiles per attack, each rolled and armour-checked separately")) {
+        if (dirty[2] & 512 && span_title_value !== (span_title_value = ctx2[208].mode.damage.hitsPerAttack + " projectiles per attack, each rolled and armour-checked separately")) {
           attr(span, "title", span_title_value);
         }
       },
@@ -41158,14 +40872,14 @@
       }
     };
   }
-  function create_if_block_293(ctx) {
+  function create_if_block_333(ctx) {
     let tr1;
     let td14;
     let div;
     let span;
     let t0;
     let t1;
-    let show_if = ctx[114](ctx[206].target).length;
+    let show_if = ctx[116](ctx[208].target).length;
     let t2;
     let table;
     let thead;
@@ -41192,24 +40906,24 @@
     let t20;
     let p;
     let html_tag;
-    let raw_value = (ctx[206].result.best.damage.damageTypeName ? rul.tr(ctx[206].result.best.damage.damageTypeName) : "") + "";
+    let raw_value = (ctx[208].result.best.damage.damageTypeName ? rul.tr(ctx[208].result.best.damage.damageTypeName) : "") + "";
     let t21;
-    let t22_value = ctx[120](ctx[206].result.best.damage.effectiveArmor, 0) + "";
+    let t22_value = ctx[122](ctx[208].result.best.damage.effectiveArmor, 0) + "";
     let t22;
     let t23;
     let td14_colspan_value;
     let t24;
-    let each_value_17 = SIDES;
+    let each_value_19 = SIDES;
     let each_blocks_1 = [];
-    for (let i = 0; i < each_value_17.length; i += 1) {
-      each_blocks_1[i] = create_each_block_172(get_each_context_172(ctx, each_value_17, i));
+    for (let i = 0; i < each_value_19.length; i += 1) {
+      each_blocks_1[i] = create_each_block_192(get_each_context_192(ctx, each_value_19, i));
     }
-    let if_block0 = ctx[206].target.shield && create_if_block_314(ctx);
-    let if_block1 = show_if && create_if_block_302(ctx);
-    let each_value_15 = ctx[206].result.modes;
+    let if_block0 = ctx[208].target.shield && create_if_block_353(ctx);
+    let if_block1 = show_if && create_if_block_343(ctx);
+    let each_value_17 = ctx[208].result.modes;
     let each_blocks = [];
-    for (let i = 0; i < each_value_15.length; i += 1) {
-      each_blocks[i] = create_each_block_152(get_each_context_152(ctx, each_value_15, i));
+    for (let i = 0; i < each_value_17.length; i += 1) {
+      each_blocks[i] = create_each_block_172(get_each_context_172(ctx, each_value_17, i));
     }
     return {
       c() {
@@ -41276,11 +40990,11 @@
         attr(div, "class", "dmg-target-stats");
         attr(td4, "title", "Shots that HIT and still did nothing - the roll came in at or below the armour, so no damage got through. Misses are not counted here; that is the Acc column. Worth watching because a healthy average can hide a weapon most of whose shots bounce off.");
         attr(td6, "title", "Projectiles assumed to land on the target");
-        attr(td9, "title", ctx[108]);
+        attr(td9, "title", ctx[110]);
         attr(table, "class", "dmg-modes");
         html_tag.a = t21;
         attr(p, "class", "dmg-hint");
-        attr(td14, "colspan", td14_colspan_value = ctx[109].length);
+        attr(td14, "colspan", td14_colspan_value = ctx[111].length);
         attr(tr1, "class", "dmg-detail");
       },
       m(target, anchor) {
@@ -41333,14 +41047,14 @@
       },
       p(ctx2, dirty) {
         if (dirty[0] & 16 | dirty[2] & 512) {
-          each_value_17 = SIDES;
+          each_value_19 = SIDES;
           let i;
-          for (i = 0; i < each_value_17.length; i += 1) {
-            const child_ctx = get_each_context_172(ctx2, each_value_17, i);
+          for (i = 0; i < each_value_19.length; i += 1) {
+            const child_ctx = get_each_context_192(ctx2, each_value_19, i);
             if (each_blocks_1[i]) {
               each_blocks_1[i].p(child_ctx, dirty);
             } else {
-              each_blocks_1[i] = create_each_block_172(child_ctx);
+              each_blocks_1[i] = create_each_block_192(child_ctx);
               each_blocks_1[i].c();
               each_blocks_1[i].m(span, null);
             }
@@ -41348,13 +41062,13 @@
           for (; i < each_blocks_1.length; i += 1) {
             each_blocks_1[i].d(1);
           }
-          each_blocks_1.length = each_value_17.length;
+          each_blocks_1.length = each_value_19.length;
         }
-        if (ctx2[206].target.shield) {
+        if (ctx2[208].target.shield) {
           if (if_block0) {
             if_block0.p(ctx2, dirty);
           } else {
-            if_block0 = create_if_block_314(ctx2);
+            if_block0 = create_if_block_353(ctx2);
             if_block0.c();
             if_block0.m(div, null);
           }
@@ -41363,12 +41077,12 @@
           if_block0 = null;
         }
         if (dirty[2] & 512)
-          show_if = ctx2[114](ctx2[206].target).length;
+          show_if = ctx2[116](ctx2[208].target).length;
         if (show_if) {
           if (if_block1) {
             if_block1.p(ctx2, dirty);
           } else {
-            if_block1 = create_if_block_302(ctx2);
+            if_block1 = create_if_block_343(ctx2);
             if_block1.c();
             if_block1.m(td14, t2);
           }
@@ -41376,15 +41090,15 @@
           if_block1.d(1);
           if_block1 = null;
         }
-        if (dirty[2] & 512 | dirty[3] & 1476395008 | dirty[4] & 3) {
-          each_value_15 = ctx2[206].result.modes;
+        if (dirty[2] & 512 | dirty[3] & 1610612736 | dirty[4] & 14) {
+          each_value_17 = ctx2[208].result.modes;
           let i;
-          for (i = 0; i < each_value_15.length; i += 1) {
-            const child_ctx = get_each_context_152(ctx2, each_value_15, i);
+          for (i = 0; i < each_value_17.length; i += 1) {
+            const child_ctx = get_each_context_172(ctx2, each_value_17, i);
             if (each_blocks[i]) {
               each_blocks[i].p(child_ctx, dirty);
             } else {
-              each_blocks[i] = create_each_block_152(child_ctx);
+              each_blocks[i] = create_each_block_172(child_ctx);
               each_blocks[i].c();
               each_blocks[i].m(tbody, null);
             }
@@ -41392,11 +41106,11 @@
           for (; i < each_blocks.length; i += 1) {
             each_blocks[i].d(1);
           }
-          each_blocks.length = each_value_15.length;
+          each_blocks.length = each_value_17.length;
         }
-        if (dirty[2] & 512 && raw_value !== (raw_value = (ctx2[206].result.best.damage.damageTypeName ? rul.tr(ctx2[206].result.best.damage.damageTypeName) : "") + ""))
+        if (dirty[2] & 512 && raw_value !== (raw_value = (ctx2[208].result.best.damage.damageTypeName ? rul.tr(ctx2[208].result.best.damage.damageTypeName) : "") + ""))
           html_tag.p(raw_value);
-        if (dirty[2] & 512 && t22_value !== (t22_value = ctx2[120](ctx2[206].result.best.damage.effectiveArmor, 0) + ""))
+        if (dirty[2] & 512 && t22_value !== (t22_value = ctx2[122](ctx2[208].result.best.damage.effectiveArmor, 0) + ""))
           set_data(t22, t22_value);
       },
       d(detaching) {
@@ -41411,13 +41125,13 @@
       }
     };
   }
-  function create_each_block_172(ctx) {
+  function create_each_block_192(ctx) {
     let span;
-    let t0_value = ctx[242] + "";
+    let t0_value = ctx[249] + "";
     let t0;
     let t1;
     let b;
-    let t2_value = armorValue(ctx[206].target, ctx[242]) + "";
+    let t2_value = armorValue(ctx[208].target, ctx[249]) + "";
     let t2;
     let t3;
     return {
@@ -41429,7 +41143,7 @@
         t2 = text(t2_value);
         t3 = space();
         attr(span, "class", "dmg-armor");
-        toggle_class(span, "dmg-armor-on", ctx[242] == ctx[4]);
+        toggle_class(span, "dmg-armor-on", ctx[249] == ctx[4]);
       },
       m(target, anchor) {
         insert(target, span, anchor);
@@ -41440,10 +41154,10 @@
         append(span, t3);
       },
       p(ctx2, dirty) {
-        if (dirty[2] & 512 && t2_value !== (t2_value = armorValue(ctx2[206].target, ctx2[242]) + ""))
+        if (dirty[2] & 512 && t2_value !== (t2_value = armorValue(ctx2[208].target, ctx2[249]) + ""))
           set_data(t2, t2_value);
         if (dirty[0] & 16) {
-          toggle_class(span, "dmg-armor-on", ctx2[242] == ctx2[4]);
+          toggle_class(span, "dmg-armor-on", ctx2[249] == ctx2[4]);
         }
       },
       d(detaching) {
@@ -41452,10 +41166,10 @@
       }
     };
   }
-  function create_if_block_314(ctx) {
+  function create_if_block_353(ctx) {
     let span;
     let t0;
-    let t1_value = ctx[206].target.shield.capacity + "";
+    let t1_value = ctx[208].target.shield.capacity + "";
     let t1;
     let t2;
     return {
@@ -41473,7 +41187,7 @@
         append(span, t2);
       },
       p(ctx2, dirty) {
-        if (dirty[2] & 512 && t1_value !== (t1_value = ctx2[206].target.shield.capacity + ""))
+        if (dirty[2] & 512 && t1_value !== (t1_value = ctx2[208].target.shield.capacity + ""))
           set_data(t1, t1_value);
       },
       d(detaching) {
@@ -41482,14 +41196,14 @@
       }
     };
   }
-  function create_if_block_302(ctx) {
+  function create_if_block_343(ctx) {
     let div;
     let span;
     let t1;
-    let each_value_16 = ctx[114](ctx[206].target);
+    let each_value_18 = ctx[116](ctx[208].target);
     let each_blocks = [];
-    for (let i = 0; i < each_value_16.length; i += 1) {
-      each_blocks[i] = create_each_block_162(get_each_context_162(ctx, each_value_16, i));
+    for (let i = 0; i < each_value_18.length; i += 1) {
+      each_blocks[i] = create_each_block_182(get_each_context_182(ctx, each_value_18, i));
     }
     return {
       c() {
@@ -41512,15 +41226,15 @@
         }
       },
       p(ctx2, dirty) {
-        if (dirty[2] & 512 | dirty[3] & 2097152) {
-          each_value_16 = ctx2[114](ctx2[206].target);
+        if (dirty[2] & 512 | dirty[3] & 8388608) {
+          each_value_18 = ctx2[116](ctx2[208].target);
           let i;
-          for (i = 0; i < each_value_16.length; i += 1) {
-            const child_ctx = get_each_context_162(ctx2, each_value_16, i);
+          for (i = 0; i < each_value_18.length; i += 1) {
+            const child_ctx = get_each_context_182(ctx2, each_value_18, i);
             if (each_blocks[i]) {
               each_blocks[i].p(child_ctx, dirty);
             } else {
-              each_blocks[i] = create_each_block_162(child_ctx);
+              each_blocks[i] = create_each_block_182(child_ctx);
               each_blocks[i].c();
               each_blocks[i].m(div, null);
             }
@@ -41528,7 +41242,7 @@
           for (; i < each_blocks.length; i += 1) {
             each_blocks[i].d(1);
           }
-          each_blocks.length = each_value_16.length;
+          each_blocks.length = each_value_18.length;
         }
       },
       d(detaching) {
@@ -41538,13 +41252,13 @@
       }
     };
   }
-  function create_each_block_162(ctx) {
+  function create_each_block_182(ctx) {
     let span;
     let html_tag;
-    let raw_value = ctx[234].name + "";
+    let raw_value = ctx[236].name + "";
     let t0;
     let b;
-    let t1_value = ctx[234].pct + "";
+    let t1_value = ctx[236].pct + "";
     let t1;
     let t2;
     let t3;
@@ -41559,9 +41273,9 @@
         t3 = space();
         html_tag.a = t0;
         attr(span, "class", "dmg-resist");
-        toggle_class(span, "dmg-resist-weak", ctx[234].pct > 100);
-        toggle_class(span, "dmg-resist-strong", ctx[234].pct < 100);
-        toggle_class(span, "dmg-immune", ctx[234].pct == 0);
+        toggle_class(span, "dmg-resist-weak", ctx[236].pct > 100);
+        toggle_class(span, "dmg-resist-strong", ctx[236].pct < 100);
+        toggle_class(span, "dmg-immune", ctx[236].pct == 0);
       },
       m(target, anchor) {
         insert(target, span, anchor);
@@ -41573,18 +41287,18 @@
         append(span, t3);
       },
       p(ctx2, dirty) {
-        if (dirty[2] & 512 && raw_value !== (raw_value = ctx2[234].name + ""))
+        if (dirty[2] & 512 && raw_value !== (raw_value = ctx2[236].name + ""))
           html_tag.p(raw_value);
-        if (dirty[2] & 512 && t1_value !== (t1_value = ctx2[234].pct + ""))
+        if (dirty[2] & 512 && t1_value !== (t1_value = ctx2[236].pct + ""))
           set_data(t1, t1_value);
-        if (dirty[2] & 512 | dirty[3] & 2097152) {
-          toggle_class(span, "dmg-resist-weak", ctx2[234].pct > 100);
+        if (dirty[2] & 512 | dirty[3] & 8388608) {
+          toggle_class(span, "dmg-resist-weak", ctx2[236].pct > 100);
         }
-        if (dirty[2] & 512 | dirty[3] & 2097152) {
-          toggle_class(span, "dmg-resist-strong", ctx2[234].pct < 100);
+        if (dirty[2] & 512 | dirty[3] & 8388608) {
+          toggle_class(span, "dmg-resist-strong", ctx2[236].pct < 100);
         }
-        if (dirty[2] & 512 | dirty[3] & 2097152) {
-          toggle_class(span, "dmg-immune", ctx2[234].pct == 0);
+        if (dirty[2] & 512 | dirty[3] & 8388608) {
+          toggle_class(span, "dmg-immune", ctx2[236].pct == 0);
         }
       },
       d(detaching) {
@@ -41593,71 +41307,71 @@
       }
     };
   }
-  function create_each_block_152(ctx) {
+  function create_each_block_172(ctx) {
     let tr2;
     let td0;
-    let t0_value = ctx[209].label + "";
+    let t0_value = ctx[211].label + "";
     let t0;
     let t1;
     let td1;
-    let t2_value = ctx[120](ctx[209].damage.power, 0) + "";
+    let t2_value = ctx[122](ctx[211].damage.power, 0) + "";
     let t2;
     let t3;
     let td2;
-    let t4_value = ctx[120](ctx[209].damage.rollMin, 0) + "";
+    let t4_value = ctx[122](ctx[211].damage.rollMin, 0) + "";
     let t4;
     let t5;
-    let t6_value = ctx[120](ctx[209].damage.rollMax, 0) + "";
+    let t6_value = ctx[122](ctx[211].damage.rollMax, 0) + "";
     let t6;
     let t7;
     let td3;
-    let t8_value = ctx[120](ctx[209].damage.min, 0) + "";
+    let t8_value = ctx[122](ctx[211].damage.min, 0) + "";
     let t8;
     let t9;
-    let t10_value = ctx[120](ctx[209].damage.max, 0) + "";
+    let t10_value = ctx[122](ctx[211].damage.max, 0) + "";
     let t10;
     let t11;
     let td4;
-    let t12_value = ctx[121](ctx[209].damage.pZero) + "";
+    let t12_value = ctx[123](ctx[211].damage.pZero) + "";
     let t12;
     let t13;
     let td5;
-    let t14_value = ctx[209].damage.hitsPerAttack + "";
+    let t14_value = ctx[211].damage.hitsPerAttack + "";
     let t14;
     let t15;
     let td6;
-    let t16_value = ctx[120](ctx[209].damage.expectedHitsPerAttack, 1) + "";
+    let t16_value = ctx[122](ctx[211].damage.expectedHitsPerAttack, 1) + "";
     let t16;
     let t17;
     let td7;
-    let t18_value = (ctx[209].attack.range == null ? "\u2013" : ctx[120](ctx[209].attack.range, 0)) + "";
+    let t18_value = (ctx[211].attack.range == null ? "\u2013" : ctx[122](ctx[211].attack.range, 0)) + "";
     let t18;
     let td7_title_value;
     let t19;
     let td8;
-    let t20_value = Math.round(ctx[209].accuracy) + "";
+    let t20_value = Math.round(ctx[211].accuracy) + "";
     let t20;
     let t21;
     let t22;
     let td9;
-    let t23_value = Math.round(ctx[209].hitRate * 100) + "";
+    let t23_value = Math.round(ctx[211].hitRate * 100) + "";
     let t23;
     let t24;
     let t25;
     let td10;
-    let t26_value = ctx[120](ctx[209].tuCost, 0) + "";
+    let t26_value = ctx[122](ctx[211].tuCost, 0) + "";
     let t26;
     let t27;
     let td11;
-    let t28_value = ctx[120](ctx[209].perAttack) + "";
+    let t28_value = ctx[122](ctx[211].perAttack) + "";
     let t28;
     let t29;
     let td12;
-    let t30_value = (ctx[209].attacksToKill == null ? "\u2013" : ctx[120](ctx[209].attacksToKill)) + "";
+    let t30_value = (ctx[211].attacksToKill == null ? "\u2013" : ctx[122](ctx[211].attacksToKill)) + "";
     let t30;
     let t31;
     let td13;
-    let t32_value = ctx[124](ctx[209]) + "";
+    let t32_value = ctx[126](ctx[211]) + "";
     let t32;
     let td13_title_value;
     let t33;
@@ -41716,20 +41430,20 @@
         attr(td2, "class", "num");
         attr(td3, "class", "num");
         attr(td4, "class", "num");
-        toggle_class(td4, "dmg-immune", ctx[209].damage.pZero > 0.5);
+        toggle_class(td4, "dmg-immune", ctx[211].damage.pZero > 0.5);
         attr(td5, "class", "num");
         attr(td6, "class", "num");
         attr(td7, "class", "num");
-        attr(td7, "title", td7_title_value = ctx[123](ctx[209]));
-        toggle_class(td7, "dmg-outofrange", outOfRange(ctx[209]));
-        toggle_class(td7, "dmg-offrange", !rangeGoverns(ctx[209]));
+        attr(td7, "title", td7_title_value = ctx[125](ctx[211]));
+        toggle_class(td7, "dmg-outofrange", outOfRange(ctx[211]));
+        toggle_class(td7, "dmg-offrange", !rangeGoverns(ctx[211]));
         attr(td8, "class", "num");
         attr(td9, "class", "num");
         attr(td10, "class", "num");
         attr(td11, "class", "num");
         attr(td12, "class", "num");
         attr(td13, "class", "num dmg-key");
-        attr(td13, "title", td13_title_value = ctx[125](ctx[209]));
+        attr(td13, "title", td13_title_value = ctx[127](ctx[211]));
       },
       m(target, anchor) {
         insert(target, tr2, anchor);
@@ -41783,51 +41497,51 @@
         append(tr2, t33);
       },
       p(ctx2, dirty) {
-        if (dirty[2] & 512 && t0_value !== (t0_value = ctx2[209].label + ""))
+        if (dirty[2] & 512 && t0_value !== (t0_value = ctx2[211].label + ""))
           set_data(t0, t0_value);
-        if (dirty[2] & 512 && t2_value !== (t2_value = ctx2[120](ctx2[209].damage.power, 0) + ""))
+        if (dirty[2] & 512 && t2_value !== (t2_value = ctx2[122](ctx2[211].damage.power, 0) + ""))
           set_data(t2, t2_value);
-        if (dirty[2] & 512 && t4_value !== (t4_value = ctx2[120](ctx2[209].damage.rollMin, 0) + ""))
+        if (dirty[2] & 512 && t4_value !== (t4_value = ctx2[122](ctx2[211].damage.rollMin, 0) + ""))
           set_data(t4, t4_value);
-        if (dirty[2] & 512 && t6_value !== (t6_value = ctx2[120](ctx2[209].damage.rollMax, 0) + ""))
+        if (dirty[2] & 512 && t6_value !== (t6_value = ctx2[122](ctx2[211].damage.rollMax, 0) + ""))
           set_data(t6, t6_value);
-        if (dirty[2] & 512 && t8_value !== (t8_value = ctx2[120](ctx2[209].damage.min, 0) + ""))
+        if (dirty[2] & 512 && t8_value !== (t8_value = ctx2[122](ctx2[211].damage.min, 0) + ""))
           set_data(t8, t8_value);
-        if (dirty[2] & 512 && t10_value !== (t10_value = ctx2[120](ctx2[209].damage.max, 0) + ""))
+        if (dirty[2] & 512 && t10_value !== (t10_value = ctx2[122](ctx2[211].damage.max, 0) + ""))
           set_data(t10, t10_value);
-        if (dirty[2] & 512 && t12_value !== (t12_value = ctx2[121](ctx2[209].damage.pZero) + ""))
+        if (dirty[2] & 512 && t12_value !== (t12_value = ctx2[123](ctx2[211].damage.pZero) + ""))
           set_data(t12, t12_value);
         if (dirty[2] & 512) {
-          toggle_class(td4, "dmg-immune", ctx2[209].damage.pZero > 0.5);
+          toggle_class(td4, "dmg-immune", ctx2[211].damage.pZero > 0.5);
         }
-        if (dirty[2] & 512 && t14_value !== (t14_value = ctx2[209].damage.hitsPerAttack + ""))
+        if (dirty[2] & 512 && t14_value !== (t14_value = ctx2[211].damage.hitsPerAttack + ""))
           set_data(t14, t14_value);
-        if (dirty[2] & 512 && t16_value !== (t16_value = ctx2[120](ctx2[209].damage.expectedHitsPerAttack, 1) + ""))
+        if (dirty[2] & 512 && t16_value !== (t16_value = ctx2[122](ctx2[211].damage.expectedHitsPerAttack, 1) + ""))
           set_data(t16, t16_value);
-        if (dirty[2] & 512 && t18_value !== (t18_value = (ctx2[209].attack.range == null ? "\u2013" : ctx2[120](ctx2[209].attack.range, 0)) + ""))
+        if (dirty[2] & 512 && t18_value !== (t18_value = (ctx2[211].attack.range == null ? "\u2013" : ctx2[122](ctx2[211].attack.range, 0)) + ""))
           set_data(t18, t18_value);
-        if (dirty[2] & 512 && td7_title_value !== (td7_title_value = ctx2[123](ctx2[209]))) {
+        if (dirty[2] & 512 && td7_title_value !== (td7_title_value = ctx2[125](ctx2[211]))) {
           attr(td7, "title", td7_title_value);
         }
         if (dirty[2] & 512) {
-          toggle_class(td7, "dmg-outofrange", outOfRange(ctx2[209]));
+          toggle_class(td7, "dmg-outofrange", outOfRange(ctx2[211]));
         }
         if (dirty[2] & 512) {
-          toggle_class(td7, "dmg-offrange", !rangeGoverns(ctx2[209]));
+          toggle_class(td7, "dmg-offrange", !rangeGoverns(ctx2[211]));
         }
-        if (dirty[2] & 512 && t20_value !== (t20_value = Math.round(ctx2[209].accuracy) + ""))
+        if (dirty[2] & 512 && t20_value !== (t20_value = Math.round(ctx2[211].accuracy) + ""))
           set_data(t20, t20_value);
-        if (dirty[2] & 512 && t23_value !== (t23_value = Math.round(ctx2[209].hitRate * 100) + ""))
+        if (dirty[2] & 512 && t23_value !== (t23_value = Math.round(ctx2[211].hitRate * 100) + ""))
           set_data(t23, t23_value);
-        if (dirty[2] & 512 && t26_value !== (t26_value = ctx2[120](ctx2[209].tuCost, 0) + ""))
+        if (dirty[2] & 512 && t26_value !== (t26_value = ctx2[122](ctx2[211].tuCost, 0) + ""))
           set_data(t26, t26_value);
-        if (dirty[2] & 512 && t28_value !== (t28_value = ctx2[120](ctx2[209].perAttack) + ""))
+        if (dirty[2] & 512 && t28_value !== (t28_value = ctx2[122](ctx2[211].perAttack) + ""))
           set_data(t28, t28_value);
-        if (dirty[2] & 512 && t30_value !== (t30_value = (ctx2[209].attacksToKill == null ? "\u2013" : ctx2[120](ctx2[209].attacksToKill)) + ""))
+        if (dirty[2] & 512 && t30_value !== (t30_value = (ctx2[211].attacksToKill == null ? "\u2013" : ctx2[122](ctx2[211].attacksToKill)) + ""))
           set_data(t30, t30_value);
-        if (dirty[2] & 512 && t32_value !== (t32_value = ctx2[124](ctx2[209]) + ""))
+        if (dirty[2] & 512 && t32_value !== (t32_value = ctx2[126](ctx2[211]) + ""))
           set_data(t32, t32_value);
-        if (dirty[2] & 512 && td13_title_value !== (td13_title_value = ctx2[125](ctx2[209]))) {
+        if (dirty[2] & 512 && td13_title_value !== (td13_title_value = ctx2[127](ctx2[211]))) {
           attr(td13, "title", td13_title_value);
         }
       },
@@ -41837,75 +41551,75 @@
       }
     };
   }
-  function create_each_block_143(key_1, ctx) {
+  function create_each_block_162(key_1, ctx) {
     let tr2;
     let td0;
-    let t0_value = (scoreOf(ctx[206]) == null ? "?" : scoreOf(ctx[206])) + "";
+    let t0_value = (scoreOf(ctx[208]) == null ? "?" : scoreOf(ctx[208])) + "";
     let t0;
     let td0_title_value;
     let t1;
     let td1;
     let t2;
     let td2;
-    let t3_value = (ctx[206].first ? armorValue(ctx[206].target, ctx[4]) : "") + "";
+    let t3_value = (ctx[208].first ? armorValue(ctx[208].target, ctx[4]) : "") + "";
     let t3;
     let t4;
     let td3;
-    let t5_value = (ctx[206].first ? ctx[206].target.health || "\u2013" : "") + "";
+    let t5_value = (ctx[208].first ? ctx[208].target.health || "\u2013" : "") + "";
     let t5;
     let t6;
     let td4;
-    let t7_value = ctx[206].mode.label + "";
+    let t7_value = ctx[208].mode.label + "";
     let t7;
     let t8;
     let td5;
-    let t9_value = ctx[120](ctx[206].mode.damage.min, 0) + "";
+    let t9_value = ctx[122](ctx[208].mode.damage.min, 0) + "";
     let t9;
     let t10;
-    let t11_value = ctx[120](ctx[206].mode.damage.max, 0) + "";
+    let t11_value = ctx[122](ctx[208].mode.damage.max, 0) + "";
     let t11;
     let span;
     let t12;
-    let t13_value = Math.round(ctx[206].mode.damage.resist * 100) + "";
+    let t13_value = Math.round(ctx[208].mode.damage.resist * 100) + "";
     let t13;
     let t14;
     let t15;
     let td6;
-    let t16_value = Math.round(ctx[206].mode.accuracy) + "";
+    let t16_value = Math.round(ctx[208].mode.accuracy) + "";
     let t16;
     let t17;
     let t18;
     let td7;
-    let t19_value = Math.round(ctx[206].mode.hitRate * 100) + "";
+    let t19_value = Math.round(ctx[208].mode.hitRate * 100) + "";
     let t19;
     let t20;
     let t21;
     let td8;
-    let t22_value = ctx[120](ctx[206].mode.perAttack) + "";
+    let t22_value = ctx[122](ctx[208].mode.perAttack) + "";
     let t22;
     let t23;
     let td9;
-    let t24_value = (ctx[206].mode.approachTu > 0 ? ctx[120](ctx[206].mode.approachTu, 0) : "\u2013") + "";
+    let t24_value = (ctx[208].mode.approachTu > 0 ? ctx[122](ctx[208].mode.approachTu, 0) : "\u2013") + "";
     let t24;
     let t25;
     let td10;
-    let t26_value = (ctx[206].mode.tuToKill == null ? "\u2013" : ctx[120](ctx[206].mode.tuToKill, 0)) + "";
+    let t26_value = (ctx[208].mode.tuToKill == null ? "\u2013" : ctx[122](ctx[208].mode.tuToKill, 0)) + "";
     let t26;
     let t27;
     let td11;
-    let t28_value = ctx[124](ctx[206].mode) + "";
+    let t28_value = ctx[126](ctx[208].mode) + "";
     let t28;
     let td11_title_value;
     let t29;
     let if_block2_anchor;
     let mounted;
     let dispose;
-    let if_block0 = ctx[206].first && create_if_block_333(ctx);
-    let if_block1 = ctx[206].mode.damage.hitsPerAttack > 1 && create_if_block_323(ctx);
+    let if_block0 = ctx[208].first && create_if_block_373(ctx);
+    let if_block1 = ctx[208].mode.damage.hitsPerAttack > 1 && create_if_block_363(ctx);
     function click_handler_26() {
-      return ctx[201](ctx[206]);
+      return ctx[203](ctx[208]);
     }
-    let if_block2 = ctx[65] == ctx[206].target.id && ctx[206].last && create_if_block_293(ctx);
+    let if_block2 = ctx[65] == ctx[208].target.id && ctx[208].last && create_if_block_333(ctx);
     return {
       key: key_1,
       first: null,
@@ -41962,33 +41676,33 @@
           if_block2.c();
         if_block2_anchor = empty();
         attr(td0, "class", "num dmg-score");
-        attr(td0, "title", td0_title_value = ctx[122](ctx[206]));
-        toggle_class(td0, "dmg-score-sub", !ctx[206].first);
-        toggle_class(td0, "dmg-score-good", scoreBand(scoreOf(ctx[206])) == "good");
-        toggle_class(td0, "dmg-score-fair", scoreBand(scoreOf(ctx[206])) == "fair");
-        toggle_class(td0, "dmg-score-poor", scoreBand(scoreOf(ctx[206])) == "poor");
-        toggle_class(td0, "dmg-score-none", scoreBand(scoreOf(ctx[206])) == "none");
+        attr(td0, "title", td0_title_value = ctx[124](ctx[208]));
+        toggle_class(td0, "dmg-score-sub", !ctx[208].first);
+        toggle_class(td0, "dmg-score-good", scoreBand(scoreOf(ctx[208])) == "good");
+        toggle_class(td0, "dmg-score-fair", scoreBand(scoreOf(ctx[208])) == "fair");
+        toggle_class(td0, "dmg-score-poor", scoreBand(scoreOf(ctx[208])) == "poor");
+        toggle_class(td0, "dmg-score-none", scoreBand(scoreOf(ctx[208])) == "none");
         attr(td1, "class", "dmg-name");
         attr(td2, "class", "num");
         attr(td3, "class", "num");
-        toggle_class(td4, "dmg-submode", !ctx[206].first);
+        toggle_class(td4, "dmg-submode", !ctx[208].first);
         attr(span, "class", "dmg-resist");
-        attr(span, "title", ctx[105]);
-        toggle_class(span, "dmg-immune", ctx[206].mode.damage.resist == 0);
+        attr(span, "title", ctx[107]);
+        toggle_class(span, "dmg-immune", ctx[208].mode.damage.resist == 0);
         attr(td5, "class", "num");
         attr(td6, "class", "num");
-        toggle_class(td6, "dmg-outofrange", outOfRange(ctx[206].mode));
+        toggle_class(td6, "dmg-outofrange", outOfRange(ctx[208].mode));
         attr(td7, "class", "num");
-        toggle_class(td7, "dmg-outofrange", outOfRange(ctx[206].mode));
+        toggle_class(td7, "dmg-outofrange", outOfRange(ctx[208].mode));
         attr(td8, "class", "num");
         attr(td9, "class", "num");
-        attr(td9, "title", ctx[106]);
+        attr(td9, "title", ctx[108]);
         attr(td10, "class", "num dmg-key");
         attr(td11, "class", "num");
-        attr(td11, "title", td11_title_value = ctx[125](ctx[206].mode));
+        attr(td11, "title", td11_title_value = ctx[127](ctx[208].mode));
         attr(tr2, "class", "dmg-click");
-        toggle_class(tr2, "dmg-group-first", ctx[206].first);
-        toggle_class(tr2, "dmg-open", ctx[65] == ctx[206].target.id);
+        toggle_class(tr2, "dmg-group-first", ctx[208].first);
+        toggle_class(tr2, "dmg-open", ctx[65] == ctx[208].target.id);
         this.first = tr2;
       },
       m(target, anchor) {
@@ -42050,31 +41764,31 @@
       },
       p(new_ctx, dirty) {
         ctx = new_ctx;
-        if (dirty[2] & 512 && t0_value !== (t0_value = (scoreOf(ctx[206]) == null ? "?" : scoreOf(ctx[206])) + ""))
+        if (dirty[2] & 512 && t0_value !== (t0_value = (scoreOf(ctx[208]) == null ? "?" : scoreOf(ctx[208])) + ""))
           set_data(t0, t0_value);
-        if (dirty[2] & 512 && td0_title_value !== (td0_title_value = ctx[122](ctx[206]))) {
+        if (dirty[2] & 512 && td0_title_value !== (td0_title_value = ctx[124](ctx[208]))) {
           attr(td0, "title", td0_title_value);
         }
         if (dirty[2] & 512) {
-          toggle_class(td0, "dmg-score-sub", !ctx[206].first);
+          toggle_class(td0, "dmg-score-sub", !ctx[208].first);
         }
         if (dirty[2] & 512) {
-          toggle_class(td0, "dmg-score-good", scoreBand(scoreOf(ctx[206])) == "good");
+          toggle_class(td0, "dmg-score-good", scoreBand(scoreOf(ctx[208])) == "good");
         }
         if (dirty[2] & 512) {
-          toggle_class(td0, "dmg-score-fair", scoreBand(scoreOf(ctx[206])) == "fair");
+          toggle_class(td0, "dmg-score-fair", scoreBand(scoreOf(ctx[208])) == "fair");
         }
         if (dirty[2] & 512) {
-          toggle_class(td0, "dmg-score-poor", scoreBand(scoreOf(ctx[206])) == "poor");
+          toggle_class(td0, "dmg-score-poor", scoreBand(scoreOf(ctx[208])) == "poor");
         }
         if (dirty[2] & 512) {
-          toggle_class(td0, "dmg-score-none", scoreBand(scoreOf(ctx[206])) == "none");
+          toggle_class(td0, "dmg-score-none", scoreBand(scoreOf(ctx[208])) == "none");
         }
-        if (ctx[206].first) {
+        if (ctx[208].first) {
           if (if_block0) {
             if_block0.p(ctx, dirty);
           } else {
-            if_block0 = create_if_block_333(ctx);
+            if_block0 = create_if_block_373(ctx);
             if_block0.c();
             if_block0.m(td1, null);
           }
@@ -42082,29 +41796,29 @@
           if_block0.d(1);
           if_block0 = null;
         }
-        if (dirty[0] & 16 | dirty[2] & 512 && t3_value !== (t3_value = (ctx[206].first ? armorValue(ctx[206].target, ctx[4]) : "") + ""))
+        if (dirty[0] & 16 | dirty[2] & 512 && t3_value !== (t3_value = (ctx[208].first ? armorValue(ctx[208].target, ctx[4]) : "") + ""))
           set_data(t3, t3_value);
-        if (dirty[2] & 512 && t5_value !== (t5_value = (ctx[206].first ? ctx[206].target.health || "\u2013" : "") + ""))
+        if (dirty[2] & 512 && t5_value !== (t5_value = (ctx[208].first ? ctx[208].target.health || "\u2013" : "") + ""))
           set_data(t5, t5_value);
-        if (dirty[2] & 512 && t7_value !== (t7_value = ctx[206].mode.label + ""))
+        if (dirty[2] & 512 && t7_value !== (t7_value = ctx[208].mode.label + ""))
           set_data(t7, t7_value);
         if (dirty[2] & 512) {
-          toggle_class(td4, "dmg-submode", !ctx[206].first);
+          toggle_class(td4, "dmg-submode", !ctx[208].first);
         }
-        if (dirty[2] & 512 && t9_value !== (t9_value = ctx[120](ctx[206].mode.damage.min, 0) + ""))
+        if (dirty[2] & 512 && t9_value !== (t9_value = ctx[122](ctx[208].mode.damage.min, 0) + ""))
           set_data(t9, t9_value);
-        if (dirty[2] & 512 && t11_value !== (t11_value = ctx[120](ctx[206].mode.damage.max, 0) + ""))
+        if (dirty[2] & 512 && t11_value !== (t11_value = ctx[122](ctx[208].mode.damage.max, 0) + ""))
           set_data(t11, t11_value);
-        if (dirty[2] & 512 && t13_value !== (t13_value = Math.round(ctx[206].mode.damage.resist * 100) + ""))
+        if (dirty[2] & 512 && t13_value !== (t13_value = Math.round(ctx[208].mode.damage.resist * 100) + ""))
           set_data(t13, t13_value);
         if (dirty[2] & 512) {
-          toggle_class(span, "dmg-immune", ctx[206].mode.damage.resist == 0);
+          toggle_class(span, "dmg-immune", ctx[208].mode.damage.resist == 0);
         }
-        if (ctx[206].mode.damage.hitsPerAttack > 1) {
+        if (ctx[208].mode.damage.hitsPerAttack > 1) {
           if (if_block1) {
             if_block1.p(ctx, dirty);
           } else {
-            if_block1 = create_if_block_323(ctx);
+            if_block1 = create_if_block_363(ctx);
             if_block1.c();
             if_block1.m(td5, null);
           }
@@ -42112,38 +41826,38 @@
           if_block1.d(1);
           if_block1 = null;
         }
-        if (dirty[2] & 512 && t16_value !== (t16_value = Math.round(ctx[206].mode.accuracy) + ""))
+        if (dirty[2] & 512 && t16_value !== (t16_value = Math.round(ctx[208].mode.accuracy) + ""))
           set_data(t16, t16_value);
         if (dirty[2] & 512) {
-          toggle_class(td6, "dmg-outofrange", outOfRange(ctx[206].mode));
+          toggle_class(td6, "dmg-outofrange", outOfRange(ctx[208].mode));
         }
-        if (dirty[2] & 512 && t19_value !== (t19_value = Math.round(ctx[206].mode.hitRate * 100) + ""))
+        if (dirty[2] & 512 && t19_value !== (t19_value = Math.round(ctx[208].mode.hitRate * 100) + ""))
           set_data(t19, t19_value);
         if (dirty[2] & 512) {
-          toggle_class(td7, "dmg-outofrange", outOfRange(ctx[206].mode));
+          toggle_class(td7, "dmg-outofrange", outOfRange(ctx[208].mode));
         }
-        if (dirty[2] & 512 && t22_value !== (t22_value = ctx[120](ctx[206].mode.perAttack) + ""))
+        if (dirty[2] & 512 && t22_value !== (t22_value = ctx[122](ctx[208].mode.perAttack) + ""))
           set_data(t22, t22_value);
-        if (dirty[2] & 512 && t24_value !== (t24_value = (ctx[206].mode.approachTu > 0 ? ctx[120](ctx[206].mode.approachTu, 0) : "\u2013") + ""))
+        if (dirty[2] & 512 && t24_value !== (t24_value = (ctx[208].mode.approachTu > 0 ? ctx[122](ctx[208].mode.approachTu, 0) : "\u2013") + ""))
           set_data(t24, t24_value);
-        if (dirty[2] & 512 && t26_value !== (t26_value = (ctx[206].mode.tuToKill == null ? "\u2013" : ctx[120](ctx[206].mode.tuToKill, 0)) + ""))
+        if (dirty[2] & 512 && t26_value !== (t26_value = (ctx[208].mode.tuToKill == null ? "\u2013" : ctx[122](ctx[208].mode.tuToKill, 0)) + ""))
           set_data(t26, t26_value);
-        if (dirty[2] & 512 && t28_value !== (t28_value = ctx[124](ctx[206].mode) + ""))
+        if (dirty[2] & 512 && t28_value !== (t28_value = ctx[126](ctx[208].mode) + ""))
           set_data(t28, t28_value);
-        if (dirty[2] & 512 && td11_title_value !== (td11_title_value = ctx[125](ctx[206].mode))) {
+        if (dirty[2] & 512 && td11_title_value !== (td11_title_value = ctx[127](ctx[208].mode))) {
           attr(td11, "title", td11_title_value);
         }
         if (dirty[2] & 512) {
-          toggle_class(tr2, "dmg-group-first", ctx[206].first);
+          toggle_class(tr2, "dmg-group-first", ctx[208].first);
         }
         if (dirty[2] & 520) {
-          toggle_class(tr2, "dmg-open", ctx[65] == ctx[206].target.id);
+          toggle_class(tr2, "dmg-open", ctx[65] == ctx[208].target.id);
         }
-        if (ctx[65] == ctx[206].target.id && ctx[206].last) {
+        if (ctx[65] == ctx[208].target.id && ctx[208].last) {
           if (if_block2) {
             if_block2.p(ctx, dirty);
           } else {
-            if_block2 = create_if_block_293(ctx);
+            if_block2 = create_if_block_333(ctx);
             if_block2.c();
             if_block2.m(if_block2_anchor.parentNode, if_block2_anchor);
           }
@@ -42183,55 +41897,57 @@
     let t4;
     let t5;
     let t6;
+    let t7;
     let div4;
     let input0;
-    let t7;
-    let button;
     let t8;
+    let button;
     let t9;
-    let div2;
     let t10;
-    let div3;
+    let div2;
     let t11;
+    let div3;
+    let t12;
     let select0;
     let option0;
-    let t12_value = ctx[20].length ? "Add a weapon type\u2026" : "Any weapon type";
-    let t12;
+    let t13_value = ctx[20].length ? "Add a weapon type\u2026" : "Any weapon type";
     let t13;
     let t14;
     let t15;
+    let t16;
     let select1;
     let option1;
-    let t16_value = ctx[19].length ? "Add a damage type\u2026" : "Any damage type";
-    let t16;
+    let t17_value = ctx[19].length ? "Add a damage type\u2026" : "Any damage type";
     let t17;
     let t18;
     let t19;
+    let t20;
     let label;
     let input1;
-    let t20;
     let t21;
     let t22;
     let t23;
+    let t24;
     let table;
     let thead;
     let tr2;
-    let t24;
+    let t25;
     let tbody;
     let each_blocks = [];
     let each8_lookup = new Map_1();
     let mounted;
     let dispose;
-    let if_block0 = ctx[41].health && create_if_block_273(ctx);
-    let each_value_13 = SIDES;
+    let if_block0 = ctx[41].health && create_if_block_314(ctx);
+    let each_value_15 = SIDES;
     let each_blocks_8 = [];
-    for (let i = 0; i < each_value_13.length; i += 1) {
-      each_blocks_8[i] = create_each_block_133(get_each_context_133(ctx, each_value_13, i));
+    for (let i = 0; i < each_value_15.length; i += 1) {
+      each_blocks_8[i] = create_each_block_152(get_each_context_152(ctx, each_value_15, i));
     }
-    let if_block1 = ctx[66].length && create_if_block_263(ctx);
-    let if_block2 = ctx[67].length && create_if_block_243(ctx);
-    let if_block3 = ctx[47] && create_if_block_204(ctx);
-    let if_block4 = ctx[41].shield && create_if_block_194(ctx);
+    let if_block1 = ctx[66].length && create_if_block_302(ctx);
+    let if_block2 = ctx[80] && create_if_block_263(ctx);
+    let if_block3 = ctx[67].length && create_if_block_243(ctx);
+    let if_block4 = ctx[47] && create_if_block_204(ctx);
+    let if_block5 = ctx[41].shield && create_if_block_194(ctx);
     let each_value_9 = ctx[97];
     let each_blocks_7 = [];
     for (let i = 0; i < each_value_9.length; i += 1) {
@@ -42262,21 +41978,21 @@
     for (let i = 0; i < each_value_4.length; i += 1) {
       each_blocks_2[i] = create_each_block_45(get_each_context_45(ctx, each_value_4, i));
     }
-    function select_block_type_12(ctx2, dirty) {
+    function select_block_type_11(ctx2, dirty) {
       if (ctx2[69])
         return create_if_block_165;
       return create_else_block_23;
     }
-    let current_block_type = select_block_type_12(ctx, [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1]);
-    let if_block5 = current_block_type(ctx);
-    let if_block6 = (ctx[16] || ctx[17] != "all" || ctx[18] != "all" || ctx[19].length || ctx[20].length || ctx[21]) && create_if_block_155(ctx);
+    let current_block_type = select_block_type_11(ctx, [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1]);
+    let if_block6 = current_block_type(ctx);
+    let if_block7 = (ctx[16] || ctx[17] != "all" || ctx[18] != "all" || ctx[19].length || ctx[20].length || ctx[21]) && create_if_block_155(ctx);
     let each_value_2 = ctx[70];
     let each_blocks_1 = [];
     for (let i = 0; i < each_value_2.length; i += 1) {
       each_blocks_1[i] = create_each_block_210(get_each_context_26(ctx, each_value_2, i));
     }
     let each_value = ctx[68].slice(0, 400);
-    const get_key = (ctx2) => ctx2[206].id;
+    const get_key = (ctx2) => ctx2[208].id;
     for (let i = 0; i < each_value.length; i += 1) {
       let child_ctx = get_each_context29(ctx, each_value, i);
       let key = get_key(child_ctx);
@@ -42308,62 +42024,65 @@
         if (if_block4)
           if_block4.c();
         t6 = space();
+        if (if_block5)
+          if_block5.c();
+        t7 = space();
         div4 = element("div");
         input0 = element("input");
-        t7 = space();
+        t8 = space();
         button = element("button");
-        t8 = text("Exclude demo");
-        t9 = space();
+        t9 = text("Exclude demo");
+        t10 = space();
         div2 = element("div");
         for (let i = 0; i < each_blocks_7.length; i += 1) {
           each_blocks_7[i].c();
         }
-        t10 = space();
+        t11 = space();
         div3 = element("div");
         for (let i = 0; i < each_blocks_6.length; i += 1) {
           each_blocks_6[i].c();
         }
-        t11 = space();
+        t12 = space();
         select0 = element("select");
         option0 = element("option");
-        t12 = text(t12_value);
-        t13 = space();
+        t13 = text(t13_value);
+        t14 = space();
         for (let i = 0; i < each_blocks_5.length; i += 1) {
           each_blocks_5[i].c();
         }
-        t14 = space();
+        t15 = space();
         for (let i = 0; i < each_blocks_4.length; i += 1) {
           each_blocks_4[i].c();
         }
-        t15 = space();
+        t16 = space();
         select1 = element("select");
         option1 = element("option");
-        t16 = text(t16_value);
-        t17 = space();
+        t17 = text(t17_value);
+        t18 = space();
         for (let i = 0; i < each_blocks_3.length; i += 1) {
           each_blocks_3[i].c();
         }
-        t18 = space();
+        t19 = space();
         for (let i = 0; i < each_blocks_2.length; i += 1) {
           each_blocks_2[i].c();
         }
-        t19 = space();
+        t20 = space();
         label = element("label");
         input1 = element("input");
-        t20 = text("\r\n              Vehicle & built-in");
-        t21 = space();
-        if_block5.c();
+        t21 = text("\r\n              Vehicle & built-in");
         t22 = space();
-        if (if_block6)
-          if_block6.c();
+        if_block6.c();
         t23 = space();
+        if (if_block7)
+          if_block7.c();
+        t24 = space();
         table = element("table");
         thead = element("thead");
         tr2 = element("tr");
         for (let i = 0; i < each_blocks_1.length; i += 1) {
           each_blocks_1[i].c();
         }
-        t24 = space();
+        t25 = space();
         tbody = element("tbody");
         for (let i = 0; i < each_blocks.length; i += 1) {
           each_blocks[i].c();
@@ -42375,7 +42094,7 @@
         attr(input0, "placeholder", "Search weapons\u2026 (comma-separate to compare)");
         attr(input0, "title", 'Type part of a name. Separate several with commas - "saber, cutlass" shows both, side by side for this soldier.');
         attr(button, "class", "dmg-chip dmg-demo");
-        attr(button, "title", ctx[104]);
+        attr(button, "title", ctx[106]);
         toggle_class(button, "dmg-chip-on", ctx[9]);
         attr(div2, "class", "dmg-chips");
         attr(div3, "class", "dmg-chips");
@@ -42384,13 +42103,13 @@
         attr(select0, "class", "dmg-input dmg-dtpick");
         attr(select0, "title", "Filter by the mod's own weapon types - pistols, shotguns, rifles and so on. Pick several to combine them.");
         if (ctx[58] === void 0)
-          add_render_callback(() => ctx[188].call(select0));
+          add_render_callback(() => ctx[190].call(select0));
         option1.__value = "all";
         option1.value = option1.__value;
         attr(select1, "class", "dmg-input dmg-dtpick");
         attr(select1, "title", "Add a damage type to the filter. The enemy's resistance chips above do the same thing.");
         if (ctx[57] === void 0)
-          add_render_callback(() => ctx[191].call(select1));
+          add_render_callback(() => ctx[193].call(select1));
         attr(input1, "type", "checkbox");
         attr(label, "class", "dmg-check dmg-inline");
         attr(div4, "class", "dmg-filters");
@@ -42421,80 +42140,83 @@
         append(div1, t5);
         if (if_block4)
           if_block4.m(div1, null);
-        insert(target, t6, anchor);
+        append(div1, t6);
+        if (if_block5)
+          if_block5.m(div1, null);
+        insert(target, t7, anchor);
         insert(target, div4, anchor);
         append(div4, input0);
         set_input_value(input0, ctx[16]);
-        append(div4, t7);
+        append(div4, t8);
         append(div4, button);
-        append(button, t8);
-        append(div4, t9);
+        append(button, t9);
+        append(div4, t10);
         append(div4, div2);
         for (let i = 0; i < each_blocks_7.length; i += 1) {
           each_blocks_7[i].m(div2, null);
         }
-        append(div4, t10);
+        append(div4, t11);
         append(div4, div3);
         for (let i = 0; i < each_blocks_6.length; i += 1) {
           each_blocks_6[i].m(div3, null);
         }
-        append(div4, t11);
+        append(div4, t12);
         append(div4, select0);
         append(select0, option0);
-        append(option0, t12);
         append(option0, t13);
+        append(option0, t14);
         for (let i = 0; i < each_blocks_5.length; i += 1) {
           each_blocks_5[i].m(select0, null);
         }
         select_option(select0, ctx[58]);
-        append(div4, t14);
+        append(div4, t15);
         for (let i = 0; i < each_blocks_4.length; i += 1) {
           each_blocks_4[i].m(div4, null);
         }
-        append(div4, t15);
+        append(div4, t16);
         append(div4, select1);
         append(select1, option1);
-        append(option1, t16);
         append(option1, t17);
+        append(option1, t18);
         for (let i = 0; i < each_blocks_3.length; i += 1) {
           each_blocks_3[i].m(select1, null);
         }
         select_option(select1, ctx[57]);
-        append(div4, t18);
+        append(div4, t19);
         for (let i = 0; i < each_blocks_2.length; i += 1) {
           each_blocks_2[i].m(div4, null);
         }
-        append(div4, t19);
+        append(div4, t20);
         append(div4, label);
         append(label, input1);
         input1.checked = ctx[21];
-        append(label, t20);
-        append(div4, t21);
-        if_block5.m(div4, null);
+        append(label, t21);
         append(div4, t22);
-        if (if_block6)
-          if_block6.m(div4, null);
-        insert(target, t23, anchor);
+        if_block6.m(div4, null);
+        append(div4, t23);
+        if (if_block7)
+          if_block7.m(div4, null);
+        insert(target, t24, anchor);
         insert(target, table, anchor);
         append(table, thead);
         append(thead, tr2);
         for (let i = 0; i < each_blocks_1.length; i += 1) {
           each_blocks_1[i].m(tr2, null);
         }
-        append(table, t24);
+        append(table, t25);
         append(table, tbody);
         for (let i = 0; i < each_blocks.length; i += 1) {
           each_blocks[i].m(tbody, null);
         }
         if (!mounted) {
           dispose = [
-            listen(input0, "input", ctx[184]),
-            listen(button, "click", ctx[185]),
-            listen(select0, "change", ctx[188]),
-            listen(select0, "change", ctx[189]),
-            listen(select1, "change", ctx[191]),
-            listen(select1, "change", ctx[192]),
-            listen(input1, "change", ctx[194])
+            listen(input0, "input", ctx[186]),
+            listen(button, "click", ctx[187]),
+            listen(select0, "change", ctx[190]),
+            listen(select0, "change", ctx[191]),
+            listen(select1, "change", ctx[193]),
+            listen(select1, "change", ctx[194]),
+            listen(input1, "change", ctx[196])
           ];
           mounted = true;
         }
@@ -42507,7 +42229,7 @@
           if (if_block0) {
             if_block0.p(ctx2, dirty);
           } else {
-            if_block0 = create_if_block_273(ctx2);
+            if_block0 = create_if_block_314(ctx2);
             if_block0.c();
             if_block0.m(div0, t1);
           }
@@ -42516,14 +42238,14 @@
           if_block0 = null;
         }
         if (dirty[0] & 16 | dirty[1] & 1024) {
-          each_value_13 = SIDES;
+          each_value_15 = SIDES;
           let i;
-          for (i = 0; i < each_value_13.length; i += 1) {
-            const child_ctx = get_each_context_133(ctx2, each_value_13, i);
+          for (i = 0; i < each_value_15.length; i += 1) {
+            const child_ctx = get_each_context_152(ctx2, each_value_15, i);
             if (each_blocks_8[i]) {
               each_blocks_8[i].p(child_ctx, dirty);
             } else {
-              each_blocks_8[i] = create_each_block_133(child_ctx);
+              each_blocks_8[i] = create_each_block_152(child_ctx);
               each_blocks_8[i].c();
               each_blocks_8[i].m(span, null);
             }
@@ -42531,13 +42253,13 @@
           for (; i < each_blocks_8.length; i += 1) {
             each_blocks_8[i].d(1);
           }
-          each_blocks_8.length = each_value_13.length;
+          each_blocks_8.length = each_value_15.length;
         }
         if (ctx2[66].length) {
           if (if_block1) {
             if_block1.p(ctx2, dirty);
           } else {
-            if_block1 = create_if_block_263(ctx2);
+            if_block1 = create_if_block_302(ctx2);
             if_block1.c();
             if_block1.m(div0, null);
           }
@@ -42545,11 +42267,11 @@
           if_block1.d(1);
           if_block1 = null;
         }
-        if (ctx2[67].length) {
+        if (ctx2[80]) {
           if (if_block2) {
             if_block2.p(ctx2, dirty);
           } else {
-            if_block2 = create_if_block_243(ctx2);
+            if_block2 = create_if_block_263(ctx2);
             if_block2.c();
             if_block2.m(div1, t4);
           }
@@ -42557,11 +42279,11 @@
           if_block2.d(1);
           if_block2 = null;
         }
-        if (ctx2[47]) {
+        if (ctx2[67].length) {
           if (if_block3) {
             if_block3.p(ctx2, dirty);
           } else {
-            if_block3 = create_if_block_204(ctx2);
+            if_block3 = create_if_block_243(ctx2);
             if_block3.c();
             if_block3.m(div1, t5);
           }
@@ -42569,17 +42291,29 @@
           if_block3.d(1);
           if_block3 = null;
         }
-        if (ctx2[41].shield) {
+        if (ctx2[47]) {
           if (if_block4) {
             if_block4.p(ctx2, dirty);
           } else {
-            if_block4 = create_if_block_194(ctx2);
+            if_block4 = create_if_block_204(ctx2);
             if_block4.c();
-            if_block4.m(div1, null);
+            if_block4.m(div1, t6);
           }
         } else if (if_block4) {
           if_block4.d(1);
           if_block4 = null;
+        }
+        if (ctx2[41].shield) {
+          if (if_block5) {
+            if_block5.p(ctx2, dirty);
+          } else {
+            if_block5 = create_if_block_194(ctx2);
+            if_block5.c();
+            if_block5.m(div1, null);
+          }
+        } else if (if_block5) {
+          if_block5.d(1);
+          if_block5 = null;
         }
         if (dirty[0] & 65536 && input0.value !== ctx2[16]) {
           set_input_value(input0, ctx2[16]);
@@ -42623,8 +42357,8 @@
           }
           each_blocks_6.length = each_value_8.length;
         }
-        if (dirty[0] & 1048576 && t12_value !== (t12_value = ctx2[20].length ? "Add a weapon type\u2026" : "Any weapon type"))
-          set_data(t12, t12_value);
+        if (dirty[0] & 1048576 && t13_value !== (t13_value = ctx2[20].length ? "Add a weapon type\u2026" : "Any weapon type"))
+          set_data(t13, t13_value);
         if (dirty[0] & 1048576 | dirty[2] & 16384) {
           each_value_7 = ctx2[76];
           let i;
@@ -42656,7 +42390,7 @@
             } else {
               each_blocks_4[i] = create_each_block_64(child_ctx);
               each_blocks_4[i].c();
-              each_blocks_4[i].m(div4, t15);
+              each_blocks_4[i].m(div4, t16);
             }
           }
           for (; i < each_blocks_4.length; i += 1) {
@@ -42664,8 +42398,8 @@
           }
           each_blocks_4.length = each_value_6.length;
         }
-        if (dirty[0] & 524288 && t16_value !== (t16_value = ctx2[19].length ? "Add a damage type\u2026" : "Any damage type"))
-          set_data(t16, t16_value);
+        if (dirty[0] & 524288 && t17_value !== (t17_value = ctx2[19].length ? "Add a damage type\u2026" : "Any damage type"))
+          set_data(t17, t17_value);
         if (dirty[0] & 524288 | dirty[1] & 131072) {
           each_value_5 = ctx2[48];
           let i;
@@ -42697,7 +42431,7 @@
             } else {
               each_blocks_2[i] = create_each_block_45(child_ctx);
               each_blocks_2[i].c();
-              each_blocks_2[i].m(div4, t19);
+              each_blocks_2[i].m(div4, t20);
             }
           }
           for (; i < each_blocks_2.length; i += 1) {
@@ -42708,29 +42442,29 @@
         if (dirty[0] & 2097152) {
           input1.checked = ctx2[21];
         }
-        if (current_block_type === (current_block_type = select_block_type_12(ctx2, dirty)) && if_block5) {
-          if_block5.p(ctx2, dirty);
+        if (current_block_type === (current_block_type = select_block_type_11(ctx2, dirty)) && if_block6) {
+          if_block6.p(ctx2, dirty);
         } else {
-          if_block5.d(1);
-          if_block5 = current_block_type(ctx2);
-          if (if_block5) {
-            if_block5.c();
-            if_block5.m(div4, t22);
+          if_block6.d(1);
+          if_block6 = current_block_type(ctx2);
+          if (if_block6) {
+            if_block6.c();
+            if_block6.m(div4, t23);
           }
         }
         if (ctx2[16] || ctx2[17] != "all" || ctx2[18] != "all" || ctx2[19].length || ctx2[20].length || ctx2[21]) {
-          if (if_block6) {
-            if_block6.p(ctx2, dirty);
+          if (if_block7) {
+            if_block7.p(ctx2, dirty);
           } else {
-            if_block6 = create_if_block_155(ctx2);
-            if_block6.c();
-            if_block6.m(div4, null);
+            if_block7 = create_if_block_155(ctx2);
+            if_block7.c();
+            if_block7.m(div4, null);
           }
-        } else if (if_block6) {
-          if_block6.d(1);
-          if_block6 = null;
+        } else if (if_block7) {
+          if_block7.d(1);
+          if_block7 = null;
         }
-        if (dirty[1] & 512 | dirty[2] & 256 | dirty[3] & 75497472) {
+        if (dirty[1] & 512 | dirty[2] & 256 | dirty[3] & 301989888) {
           each_value_2 = ctx2[70];
           let i;
           for (i = 0; i < each_value_2.length; i += 1) {
@@ -42748,7 +42482,7 @@
           }
           each_blocks_1.length = each_value_2.length;
         }
-        if (dirty[0] & 268435456 | dirty[1] & 268697600 | dirty[2] & 320 | dirty[3] & 2013310976 | dirty[4] & 7) {
+        if (dirty[0] & 268435456 | dirty[1] & 268697600 | dirty[2] & 320 | dirty[3] & 1610792960 | dirty[4] & 31) {
           each_value = ctx2[68].slice(0, 400);
           each_blocks = update_keyed_each(each_blocks, dirty, get_key, 1, ctx2, each_value, each8_lookup, tbody, destroy_block, create_each_block29, null, get_each_context29);
         }
@@ -42767,8 +42501,10 @@
           if_block3.d();
         if (if_block4)
           if_block4.d();
+        if (if_block5)
+          if_block5.d();
         if (detaching)
-          detach(t6);
+          detach(t7);
         if (detaching)
           detach(div4);
         destroy_each(each_blocks_7, detaching);
@@ -42777,11 +42513,11 @@
         destroy_each(each_blocks_4, detaching);
         destroy_each(each_blocks_3, detaching);
         destroy_each(each_blocks_2, detaching);
-        if_block5.d();
-        if (if_block6)
-          if_block6.d();
+        if_block6.d();
+        if (if_block7)
+          if_block7.d();
         if (detaching)
-          detach(t23);
+          detach(t24);
         if (detaching)
           detach(table);
         destroy_each(each_blocks_1, detaching);
@@ -42811,7 +42547,7 @@
       }
     };
   }
-  function create_if_block_273(ctx) {
+  function create_if_block_314(ctx) {
     let span;
     let b;
     let t0_value = ctx[41].health + "";
@@ -42840,13 +42576,13 @@
       }
     };
   }
-  function create_each_block_133(ctx) {
+  function create_each_block_152(ctx) {
     let span;
-    let t0_value = ctx[242] + "";
+    let t0_value = ctx[249] + "";
     let t0;
     let t1;
     let b;
-    let t2_value = armorValue(ctx[41], ctx[242]) + "";
+    let t2_value = armorValue(ctx[41], ctx[249]) + "";
     let t2;
     let t3;
     return {
@@ -42858,7 +42594,7 @@
         t2 = text(t2_value);
         t3 = space();
         attr(span, "class", "dmg-armor");
-        toggle_class(span, "dmg-armor-on", ctx[242] == ctx[4]);
+        toggle_class(span, "dmg-armor-on", ctx[249] == ctx[4]);
       },
       m(target, anchor) {
         insert(target, span, anchor);
@@ -42869,10 +42605,10 @@
         append(span, t3);
       },
       p(ctx2, dirty) {
-        if (dirty[1] & 1024 && t2_value !== (t2_value = armorValue(ctx2[41], ctx2[242]) + ""))
+        if (dirty[1] & 1024 && t2_value !== (t2_value = armorValue(ctx2[41], ctx2[249]) + ""))
           set_data(t2, t2_value);
         if (dirty[0] & 16) {
-          toggle_class(span, "dmg-armor-on", ctx2[242] == ctx2[4]);
+          toggle_class(span, "dmg-armor-on", ctx2[249] == ctx2[4]);
         }
       },
       d(detaching) {
@@ -42881,12 +42617,12 @@
       }
     };
   }
-  function create_if_block_263(ctx) {
+  function create_if_block_302(ctx) {
     let span;
-    let each_value_12 = ctx[66];
+    let each_value_14 = ctx[66];
     let each_blocks = [];
-    for (let i = 0; i < each_value_12.length; i += 1) {
-      each_blocks[i] = create_each_block_123(get_each_context_123(ctx, each_value_12, i));
+    for (let i = 0; i < each_value_14.length; i += 1) {
+      each_blocks[i] = create_each_block_143(get_each_context_143(ctx, each_value_14, i));
     }
     return {
       c() {
@@ -42904,14 +42640,14 @@
       },
       p(ctx2, dirty) {
         if (dirty[2] & 16) {
-          each_value_12 = ctx2[66];
+          each_value_14 = ctx2[66];
           let i;
-          for (i = 0; i < each_value_12.length; i += 1) {
-            const child_ctx = get_each_context_123(ctx2, each_value_12, i);
+          for (i = 0; i < each_value_14.length; i += 1) {
+            const child_ctx = get_each_context_143(ctx2, each_value_14, i);
             if (each_blocks[i]) {
               each_blocks[i].p(child_ctx, dirty);
             } else {
-              each_blocks[i] = create_each_block_123(child_ctx);
+              each_blocks[i] = create_each_block_143(child_ctx);
               each_blocks[i].c();
               each_blocks[i].m(span, null);
             }
@@ -42919,7 +42655,7 @@
           for (; i < each_blocks.length; i += 1) {
             each_blocks[i].d(1);
           }
-          each_blocks.length = each_value_12.length;
+          each_blocks.length = each_value_14.length;
         }
       },
       d(detaching) {
@@ -42929,9 +42665,9 @@
       }
     };
   }
-  function create_each_block_123(ctx) {
+  function create_each_block_143(ctx) {
     let span;
-    let t_value = ctx[239] + "";
+    let t_value = ctx[244] + "";
     let t;
     return {
       c() {
@@ -42943,12 +42679,461 @@
         append(span, t);
       },
       p(ctx2, dirty) {
-        if (dirty[2] & 16 && t_value !== (t_value = ctx2[239] + ""))
+        if (dirty[2] & 16 && t_value !== (t_value = ctx2[244] + ""))
           set_data(t, t_value);
       },
       d(detaching) {
         if (detaching)
           detach(span);
+      }
+    };
+  }
+  function create_if_block_263(ctx) {
+    let div;
+    let span0;
+    let t0;
+    let t1;
+    let b;
+    let t2_value = ctx[80].tiles + "";
+    let t2;
+    let t3;
+    let span1;
+    let t4_value = ctx[80].tiles == 1 ? "tile" : "tiles";
+    let t4;
+    let t5;
+    let t6_value = ctx[80].isDay ? "day" : "night";
+    let t6;
+    let t7;
+    let button;
+    let t8_value = ctx[56] ? "hide" : "why";
+    let t8;
+    let t9;
+    let t10;
+    let if_block1_anchor;
+    let mounted;
+    let dispose;
+    let if_block0 = ctx[80].tiles < ctx[5] && create_if_block_293(ctx);
+    let if_block1 = ctx[56] && create_if_block_273(ctx);
+    return {
+      c() {
+        div = element("div");
+        span0 = element("span");
+        t0 = text("Spots this enemy at");
+        t1 = space();
+        b = element("b");
+        t2 = text(t2_value);
+        t3 = space();
+        span1 = element("span");
+        t4 = text(t4_value);
+        t5 = text(" \xB7 ");
+        t6 = text(t6_value);
+        t7 = space();
+        button = element("button");
+        t8 = text(t8_value);
+        t9 = space();
+        if (if_block0)
+          if_block0.c();
+        t10 = space();
+        if (if_block1)
+          if_block1.c();
+        if_block1_anchor = empty();
+        attr(span0, "class", "dmg-resist-label");
+        attr(span0, "title", ctx[102]);
+        attr(b, "class", "dmg-spotn");
+        toggle_class(b, "dmg-spotlow", ctx[80].tiles < ctx[5]);
+        attr(span1, "class", "dmg-cap");
+        attr(button, "class", "dmg-mini");
+        attr(button, "title", "Show the arithmetic and every visibility value on both armours");
+        attr(div, "class", "dmg-spot");
+      },
+      m(target, anchor) {
+        insert(target, div, anchor);
+        append(div, span0);
+        append(span0, t0);
+        append(div, t1);
+        append(div, b);
+        append(b, t2);
+        append(div, t3);
+        append(div, span1);
+        append(span1, t4);
+        append(span1, t5);
+        append(span1, t6);
+        append(div, t7);
+        append(div, button);
+        append(button, t8);
+        append(div, t9);
+        if (if_block0)
+          if_block0.m(div, null);
+        insert(target, t10, anchor);
+        if (if_block1)
+          if_block1.m(target, anchor);
+        insert(target, if_block1_anchor, anchor);
+        if (!mounted) {
+          dispose = listen(button, "click", ctx[181]);
+          mounted = true;
+        }
+      },
+      p(ctx2, dirty) {
+        if (dirty[2] & 262144 && t2_value !== (t2_value = ctx2[80].tiles + ""))
+          set_data(t2, t2_value);
+        if (dirty[0] & 32 | dirty[2] & 262144) {
+          toggle_class(b, "dmg-spotlow", ctx2[80].tiles < ctx2[5]);
+        }
+        if (dirty[2] & 262144 && t4_value !== (t4_value = ctx2[80].tiles == 1 ? "tile" : "tiles"))
+          set_data(t4, t4_value);
+        if (dirty[2] & 262144 && t6_value !== (t6_value = ctx2[80].isDay ? "day" : "night"))
+          set_data(t6, t6_value);
+        if (dirty[1] & 33554432 && t8_value !== (t8_value = ctx2[56] ? "hide" : "why"))
+          set_data(t8, t8_value);
+        if (ctx2[80].tiles < ctx2[5]) {
+          if (if_block0) {
+            if_block0.p(ctx2, dirty);
+          } else {
+            if_block0 = create_if_block_293(ctx2);
+            if_block0.c();
+            if_block0.m(div, null);
+          }
+        } else if (if_block0) {
+          if_block0.d(1);
+          if_block0 = null;
+        }
+        if (ctx2[56]) {
+          if (if_block1) {
+            if_block1.p(ctx2, dirty);
+          } else {
+            if_block1 = create_if_block_273(ctx2);
+            if_block1.c();
+            if_block1.m(if_block1_anchor.parentNode, if_block1_anchor);
+          }
+        } else if (if_block1) {
+          if_block1.d(1);
+          if_block1 = null;
+        }
+      },
+      d(detaching) {
+        if (detaching)
+          detach(div);
+        if (if_block0)
+          if_block0.d();
+        if (detaching)
+          detach(t10);
+        if (if_block1)
+          if_block1.d(detaching);
+        if (detaching)
+          detach(if_block1_anchor);
+        mounted = false;
+        dispose();
+      }
+    };
+  }
+  function create_if_block_293(ctx) {
+    let span;
+    let t0;
+    let t1_value = ctx[80].tiles + "";
+    let t1;
+    let t2;
+    let t3;
+    return {
+      c() {
+        span = element("span");
+        t0 = text("APPR measured from ");
+        t1 = text(t1_value);
+        t2 = text(", not ");
+        t3 = text(ctx[5]);
+        attr(span, "class", "dmg-cap dmg-spotnote");
+      },
+      m(target, anchor) {
+        insert(target, span, anchor);
+        append(span, t0);
+        append(span, t1);
+        append(span, t2);
+        append(span, t3);
+      },
+      p(ctx2, dirty) {
+        if (dirty[2] & 262144 && t1_value !== (t1_value = ctx2[80].tiles + ""))
+          set_data(t1, t1_value);
+        if (dirty[0] & 32)
+          set_data(t3, ctx2[5]);
+      },
+      d(detaching) {
+        if (detaching)
+          detach(span);
+      }
+    };
+  }
+  function create_if_block_273(ctx) {
+    let div;
+    let ol;
+    let t0;
+    let p;
+    let t1;
+    let b;
+    let t2_value = ctx[80].tiles + "";
+    let t2;
+    let t3;
+    let t4_value = ctx[80].tiles == 1 ? "tile" : "tiles";
+    let t4;
+    let t5;
+    let code;
+    let t8;
+    let t9;
+    let each_value_13 = sightSteps(ctx[80]);
+    let each_blocks = [];
+    for (let i = 0; i < each_value_13.length; i += 1) {
+      each_blocks[i] = create_each_block_133(get_each_context_133(ctx, each_value_13, i));
+    }
+    let if_block = ctx[80].fields.length && create_if_block_283(ctx);
+    return {
+      c() {
+        div = element("div");
+        ol = element("ol");
+        for (let i = 0; i < each_blocks.length; i += 1) {
+          each_blocks[i].c();
+        }
+        t0 = space();
+        p = element("p");
+        t1 = text("Spots at ");
+        b = element("b");
+        t2 = text(t2_value);
+        t3 = space();
+        t4 = text(t4_value);
+        t5 = text(". Mod ceiling\r\n                    ");
+        code = element("code");
+        code.textContent = `maxViewDistance: ${maxViewDistance()}`;
+        t8 = text("; unset night vision falls\r\n                    back to 9 for a player unit.");
+        t9 = space();
+        if (if_block)
+          if_block.c();
+        attr(ol, "class", "dmg-sightsteps");
+        attr(p, "class", "dmg-hint");
+        attr(div, "class", "dmg-sightbox");
+      },
+      m(target, anchor) {
+        insert(target, div, anchor);
+        append(div, ol);
+        for (let i = 0; i < each_blocks.length; i += 1) {
+          each_blocks[i].m(ol, null);
+        }
+        append(div, t0);
+        append(div, p);
+        append(p, t1);
+        append(p, b);
+        append(b, t2);
+        append(p, t3);
+        append(p, t4);
+        append(p, t5);
+        append(p, code);
+        append(p, t8);
+        append(div, t9);
+        if (if_block)
+          if_block.m(div, null);
+      },
+      p(ctx2, dirty) {
+        if (dirty[2] & 262144) {
+          each_value_13 = sightSteps(ctx2[80]);
+          let i;
+          for (i = 0; i < each_value_13.length; i += 1) {
+            const child_ctx = get_each_context_133(ctx2, each_value_13, i);
+            if (each_blocks[i]) {
+              each_blocks[i].p(child_ctx, dirty);
+            } else {
+              each_blocks[i] = create_each_block_133(child_ctx);
+              each_blocks[i].c();
+              each_blocks[i].m(ol, null);
+            }
+          }
+          for (; i < each_blocks.length; i += 1) {
+            each_blocks[i].d(1);
+          }
+          each_blocks.length = each_value_13.length;
+        }
+        if (dirty[2] & 262144 && t2_value !== (t2_value = ctx2[80].tiles + ""))
+          set_data(t2, t2_value);
+        if (dirty[2] & 262144 && t4_value !== (t4_value = ctx2[80].tiles == 1 ? "tile" : "tiles"))
+          set_data(t4, t4_value);
+        if (ctx2[80].fields.length) {
+          if (if_block) {
+            if_block.p(ctx2, dirty);
+          } else {
+            if_block = create_if_block_283(ctx2);
+            if_block.c();
+            if_block.m(div, null);
+          }
+        } else if (if_block) {
+          if_block.d(1);
+          if_block = null;
+        }
+      },
+      d(detaching) {
+        if (detaching)
+          detach(div);
+        destroy_each(each_blocks, detaching);
+        if (if_block)
+          if_block.d();
+      }
+    };
+  }
+  function create_each_block_133(ctx) {
+    let li;
+    let t0_value = ctx[244].text + "";
+    let t0;
+    let t1;
+    let b;
+    let t2;
+    let t3_value = ctx[244].value + "";
+    let t3;
+    return {
+      c() {
+        li = element("li");
+        t0 = text(t0_value);
+        t1 = space();
+        b = element("b");
+        t2 = text("\u2192 ");
+        t3 = text(t3_value);
+      },
+      m(target, anchor) {
+        insert(target, li, anchor);
+        append(li, t0);
+        append(li, t1);
+        append(li, b);
+        append(b, t2);
+        append(b, t3);
+      },
+      p(ctx2, dirty) {
+        if (dirty[2] & 262144 && t0_value !== (t0_value = ctx2[244].text + ""))
+          set_data(t0, t0_value);
+        if (dirty[2] & 262144 && t3_value !== (t3_value = ctx2[244].value + ""))
+          set_data(t3, t3_value);
+      },
+      d(detaching) {
+        if (detaching)
+          detach(li);
+      }
+    };
+  }
+  function create_if_block_283(ctx) {
+    let table;
+    let tbody;
+    let each_value_12 = ctx[80].fields;
+    let each_blocks = [];
+    for (let i = 0; i < each_value_12.length; i += 1) {
+      each_blocks[i] = create_each_block_123(get_each_context_123(ctx, each_value_12, i));
+    }
+    return {
+      c() {
+        table = element("table");
+        tbody = element("tbody");
+        for (let i = 0; i < each_blocks.length; i += 1) {
+          each_blocks[i].c();
+        }
+        attr(table, "class", "dmg-sighttab");
+      },
+      m(target, anchor) {
+        insert(target, table, anchor);
+        append(table, tbody);
+        for (let i = 0; i < each_blocks.length; i += 1) {
+          each_blocks[i].m(tbody, null);
+        }
+      },
+      p(ctx2, dirty) {
+        if (dirty[2] & 262144) {
+          each_value_12 = ctx2[80].fields;
+          let i;
+          for (i = 0; i < each_value_12.length; i += 1) {
+            const child_ctx = get_each_context_123(ctx2, each_value_12, i);
+            if (each_blocks[i]) {
+              each_blocks[i].p(child_ctx, dirty);
+            } else {
+              each_blocks[i] = create_each_block_123(child_ctx);
+              each_blocks[i].c();
+              each_blocks[i].m(tbody, null);
+            }
+          }
+          for (; i < each_blocks.length; i += 1) {
+            each_blocks[i].d(1);
+          }
+          each_blocks.length = each_value_12.length;
+        }
+      },
+      d(detaching) {
+        if (detaching)
+          detach(table);
+        destroy_each(each_blocks, detaching);
+      }
+    };
+  }
+  function create_each_block_123(ctx) {
+    let tr2;
+    let td0;
+    let t0_value = ctx[241].side + "";
+    let t0;
+    let t1;
+    let td1;
+    let t2_value = ctx[241].label + "";
+    let t2;
+    let t3;
+    let td2;
+    let t4_value = ctx[241].value + "";
+    let t4;
+    let t5;
+    let td3;
+    let t6_value = ctx[241].used ? "used" : "not modelled";
+    let t6;
+    let t7;
+    let tr_title_value;
+    return {
+      c() {
+        tr2 = element("tr");
+        td0 = element("td");
+        t0 = text(t0_value);
+        t1 = space();
+        td1 = element("td");
+        t2 = text(t2_value);
+        t3 = space();
+        td2 = element("td");
+        t4 = text(t4_value);
+        t5 = space();
+        td3 = element("td");
+        t6 = text(t6_value);
+        t7 = space();
+        attr(td2, "class", "num");
+        attr(tr2, "title", tr_title_value = ctx[241].note);
+        toggle_class(tr2, "dmg-sightunused", !ctx[241].used);
+      },
+      m(target, anchor) {
+        insert(target, tr2, anchor);
+        append(tr2, td0);
+        append(td0, t0);
+        append(tr2, t1);
+        append(tr2, td1);
+        append(td1, t2);
+        append(tr2, t3);
+        append(tr2, td2);
+        append(td2, t4);
+        append(tr2, t5);
+        append(tr2, td3);
+        append(td3, t6);
+        append(tr2, t7);
+      },
+      p(ctx2, dirty) {
+        if (dirty[2] & 262144 && t0_value !== (t0_value = ctx2[241].side + ""))
+          set_data(t0, t0_value);
+        if (dirty[2] & 262144 && t2_value !== (t2_value = ctx2[241].label + ""))
+          set_data(t2, t2_value);
+        if (dirty[2] & 262144 && t4_value !== (t4_value = ctx2[241].value + ""))
+          set_data(t4, t4_value);
+        if (dirty[2] & 262144 && t6_value !== (t6_value = ctx2[241].used ? "used" : "not modelled"))
+          set_data(t6, t6_value);
+        if (dirty[2] & 262144 && tr_title_value !== (tr_title_value = ctx2[241].note)) {
+          attr(tr2, "title", tr_title_value);
+        }
+        if (dirty[2] & 262144) {
+          toggle_class(tr2, "dmg-sightunused", !ctx2[241].used);
+        }
+      },
+      d(detaching) {
+        if (detaching)
+          detach(tr2);
       }
     };
   }
@@ -43034,17 +43219,17 @@
   function create_each_block_112(ctx) {
     let button;
     let html_tag;
-    let raw_value = ctx[234].name + "";
+    let raw_value = ctx[236].name + "";
     let t0;
     let b;
-    let t1_value = ctx[234].pct + "";
+    let t1_value = ctx[236].pct + "";
     let t1;
     let t2;
     let button_title_value;
     let mounted;
     let dispose;
     function click_handler_12() {
-      return ctx[180](ctx[234]);
+      return ctx[182](ctx[236]);
     }
     return {
       c() {
@@ -43056,11 +43241,11 @@
         t2 = text("%");
         html_tag.a = t0;
         attr(button, "class", "dmg-resist dmg-resist-pick");
-        attr(button, "title", button_title_value = (ctx[19].includes(ctx[234].i) ? "Showing" : "Show") + " only weapons that deal this damage type" + (ctx[75][ctx[234].i] ? " (" + ctx[75][ctx[234].i] + " of them)" : " - none in the list") + (ctx[19].includes(ctx[234].i) ? ". Click to drop it." : ". Click to add it."));
-        toggle_class(button, "dmg-resist-weak", ctx[234].pct > 100);
-        toggle_class(button, "dmg-resist-strong", ctx[234].pct < 100);
-        toggle_class(button, "dmg-immune", ctx[234].pct == 0);
-        toggle_class(button, "dmg-resist-on", ctx[19].includes(ctx[234].i));
+        attr(button, "title", button_title_value = (ctx[19].includes(ctx[236].i) ? "Showing" : "Show") + " only weapons that deal this damage type" + (ctx[75][ctx[236].i] ? " (" + ctx[75][ctx[236].i] + " of them)" : " - none in the list") + (ctx[19].includes(ctx[236].i) ? ". Click to drop it." : ". Click to add it."));
+        toggle_class(button, "dmg-resist-weak", ctx[236].pct > 100);
+        toggle_class(button, "dmg-resist-strong", ctx[236].pct < 100);
+        toggle_class(button, "dmg-immune", ctx[236].pct == 0);
+        toggle_class(button, "dmg-resist-on", ctx[19].includes(ctx[236].i));
       },
       m(target, anchor) {
         insert(target, button, anchor);
@@ -43076,24 +43261,24 @@
       },
       p(new_ctx, dirty) {
         ctx = new_ctx;
-        if (dirty[2] & 32 && raw_value !== (raw_value = ctx[234].name + ""))
+        if (dirty[2] & 32 && raw_value !== (raw_value = ctx[236].name + ""))
           html_tag.p(raw_value);
-        if (dirty[2] & 32 && t1_value !== (t1_value = ctx[234].pct + ""))
+        if (dirty[2] & 32 && t1_value !== (t1_value = ctx[236].pct + ""))
           set_data(t1, t1_value);
-        if (dirty[0] & 524288 | dirty[2] & 8224 && button_title_value !== (button_title_value = (ctx[19].includes(ctx[234].i) ? "Showing" : "Show") + " only weapons that deal this damage type" + (ctx[75][ctx[234].i] ? " (" + ctx[75][ctx[234].i] + " of them)" : " - none in the list") + (ctx[19].includes(ctx[234].i) ? ". Click to drop it." : ". Click to add it."))) {
+        if (dirty[0] & 524288 | dirty[2] & 8224 && button_title_value !== (button_title_value = (ctx[19].includes(ctx[236].i) ? "Showing" : "Show") + " only weapons that deal this damage type" + (ctx[75][ctx[236].i] ? " (" + ctx[75][ctx[236].i] + " of them)" : " - none in the list") + (ctx[19].includes(ctx[236].i) ? ". Click to drop it." : ". Click to add it."))) {
           attr(button, "title", button_title_value);
         }
         if (dirty[2] & 32) {
-          toggle_class(button, "dmg-resist-weak", ctx[234].pct > 100);
+          toggle_class(button, "dmg-resist-weak", ctx[236].pct > 100);
         }
         if (dirty[2] & 32) {
-          toggle_class(button, "dmg-resist-strong", ctx[234].pct < 100);
+          toggle_class(button, "dmg-resist-strong", ctx[236].pct < 100);
         }
         if (dirty[2] & 32) {
-          toggle_class(button, "dmg-immune", ctx[234].pct == 0);
+          toggle_class(button, "dmg-immune", ctx[236].pct == 0);
         }
         if (dirty[0] & 524288 | dirty[2] & 32) {
-          toggle_class(button, "dmg-resist-on", ctx[19].includes(ctx[234].i));
+          toggle_class(button, "dmg-resist-on", ctx[19].includes(ctx[236].i));
         }
       },
       d(detaching) {
@@ -43118,7 +43303,7 @@
       m(target, anchor) {
         insert(target, button, anchor);
         if (!mounted) {
-          dispose = listen(button, "click", ctx[181]);
+          dispose = listen(button, "click", ctx[183]);
           mounted = true;
         }
       },
@@ -43147,12 +43332,12 @@
     let if_block1_anchor;
     let mounted;
     let dispose;
-    function select_block_type_10(ctx2, dirty) {
+    function select_block_type_9(ctx2, dirty) {
       if (ctx2[47].unresolved)
         return create_if_block_233;
       return create_else_block_42;
     }
-    let current_block_type = select_block_type_10(ctx, [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1]);
+    let current_block_type = select_block_type_9(ctx, [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1]);
     let if_block0 = current_block_type(ctx);
     let if_block1 = ctx[25] && create_if_block_218(ctx);
     return {
@@ -43194,7 +43379,7 @@
           if_block1.m(target, anchor);
         insert(target, if_block1_anchor, anchor);
         if (!mounted) {
-          dispose = listen(button, "click", ctx[182]);
+          dispose = listen(button, "click", ctx[184]);
           mounted = true;
         }
       },
@@ -43202,7 +43387,7 @@
         if (dirty[1] & 65536 && raw_value !== (raw_value = ctx2[47].title + ""))
           b.innerHTML = raw_value;
         ;
-        if (current_block_type === (current_block_type = select_block_type_10(ctx2, dirty)) && if_block0) {
+        if (current_block_type === (current_block_type = select_block_type_9(ctx2, dirty)) && if_block0) {
           if_block0.p(ctx2, dirty);
         } else {
           if_block0.d(1);
@@ -43368,7 +43553,7 @@
   }
   function create_if_block_224(ctx) {
     let html_tag;
-    let raw_value = ctx[234].units.map(ctx[183]).join(", ") + "";
+    let raw_value = ctx[236].units.map(ctx[185]).join(", ") + "";
     let html_anchor;
     return {
       c() {
@@ -43381,7 +43566,7 @@
         insert(target, html_anchor, anchor);
       },
       p(ctx2, dirty) {
-        if (dirty[2] & 4096 && raw_value !== (raw_value = ctx2[234].units.map(ctx2[183]).join(", ") + ""))
+        if (dirty[2] & 4096 && raw_value !== (raw_value = ctx2[236].units.map(ctx2[185]).join(", ") + ""))
           html_tag.p(raw_value);
       },
       d(detaching) {
@@ -43397,26 +43582,26 @@
     let td0;
     let t0;
     let td1;
-    let t1_value = (ctx[234].low == ctx[234].high ? ctx[234].low : ctx[234].low + "\u2013" + ctx[234].high) + "";
+    let t1_value = (ctx[236].low == ctx[236].high ? ctx[236].low : ctx[236].low + "\u2013" + ctx[236].high) + "";
     let t1;
     let t2;
     let td2;
-    let t3_value = ctx[234].outside + "";
+    let t3_value = ctx[236].outside + "";
     let t3;
     let t4;
     let t5;
     let td3;
-    let t6_value = ctx[234].reinforcement ? "reinforcement" : "start";
+    let t6_value = ctx[236].reinforcement ? "reinforcement" : "start";
     let t6;
-    let t7_value = ctx[234].stage ? " \xB7 " + ctx[234].stage : "";
+    let t7_value = ctx[236].stage ? " \xB7 " + ctx[236].stage : "";
     let t7;
     let t8;
-    function select_block_type_11(ctx2, dirty) {
-      if (ctx2[234].units.length)
+    function select_block_type_10(ctx2, dirty) {
+      if (ctx2[236].units.length)
         return create_if_block_224;
       return create_else_block_33;
     }
-    let current_block_type = select_block_type_11(ctx, [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1]);
+    let current_block_type = select_block_type_10(ctx, [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1]);
     let if_block = current_block_type(ctx);
     return {
       c() {
@@ -43437,7 +43622,7 @@
         t8 = space();
         attr(td1, "class", "num");
         attr(td2, "class", "num");
-        toggle_class(td2, "dmg-outofrange", ctx[234].outside >= 50);
+        toggle_class(td2, "dmg-outofrange", ctx[236].outside >= 50);
         attr(td3, "class", "dmg-cap");
       },
       m(target, anchor) {
@@ -43458,7 +43643,7 @@
         append(tr2, t8);
       },
       p(ctx2, dirty) {
-        if (current_block_type === (current_block_type = select_block_type_11(ctx2, dirty)) && if_block) {
+        if (current_block_type === (current_block_type = select_block_type_10(ctx2, dirty)) && if_block) {
           if_block.p(ctx2, dirty);
         } else {
           if_block.d(1);
@@ -43468,16 +43653,16 @@
             if_block.m(td0, null);
           }
         }
-        if (dirty[2] & 4096 && t1_value !== (t1_value = (ctx2[234].low == ctx2[234].high ? ctx2[234].low : ctx2[234].low + "\u2013" + ctx2[234].high) + ""))
+        if (dirty[2] & 4096 && t1_value !== (t1_value = (ctx2[236].low == ctx2[236].high ? ctx2[236].low : ctx2[236].low + "\u2013" + ctx2[236].high) + ""))
           set_data(t1, t1_value);
-        if (dirty[2] & 4096 && t3_value !== (t3_value = ctx2[234].outside + ""))
+        if (dirty[2] & 4096 && t3_value !== (t3_value = ctx2[236].outside + ""))
           set_data(t3, t3_value);
         if (dirty[2] & 4096) {
-          toggle_class(td2, "dmg-outofrange", ctx2[234].outside >= 50);
+          toggle_class(td2, "dmg-outofrange", ctx2[236].outside >= 50);
         }
-        if (dirty[2] & 4096 && t6_value !== (t6_value = ctx2[234].reinforcement ? "reinforcement" : "start"))
+        if (dirty[2] & 4096 && t6_value !== (t6_value = ctx2[236].reinforcement ? "reinforcement" : "start"))
           set_data(t6, t6_value);
-        if (dirty[2] & 4096 && t7_value !== (t7_value = ctx2[234].stage ? " \xB7 " + ctx2[234].stage : ""))
+        if (dirty[2] & 4096 && t7_value !== (t7_value = ctx2[236].stage ? " \xB7 " + ctx2[236].stage : ""))
           set_data(t7, t7_value);
       },
       d(detaching) {
@@ -43528,17 +43713,17 @@
   }
   function create_if_block_185(ctx) {
     let button;
-    let t0_value = ctx[216].label + "";
+    let t0_value = ctx[218].label + "";
     let t0;
     let t1;
     let span;
-    let t2_value = (ctx[78][ctx[216].id] || 0) + "";
+    let t2_value = (ctx[78][ctx[218].id] || 0) + "";
     let t2;
     let t3;
     let mounted;
     let dispose;
     function click_handler_16() {
-      return ctx[186](ctx[216]);
+      return ctx[188](ctx[218]);
     }
     return {
       c() {
@@ -43550,7 +43735,7 @@
         t3 = space();
         attr(span, "class", "dmg-chip-n");
         attr(button, "class", "dmg-chip");
-        toggle_class(button, "dmg-chip-on", ctx[17] == ctx[216].id);
+        toggle_class(button, "dmg-chip-on", ctx[17] == ctx[218].id);
       },
       m(target, anchor) {
         insert(target, button, anchor);
@@ -43566,10 +43751,10 @@
       },
       p(new_ctx, dirty) {
         ctx = new_ctx;
-        if (dirty[2] & 65536 && t2_value !== (t2_value = (ctx[78][ctx[216].id] || 0) + ""))
+        if (dirty[2] & 65536 && t2_value !== (t2_value = (ctx[78][ctx[218].id] || 0) + ""))
           set_data(t2, t2_value);
         if (dirty[0] & 131072 | dirty[3] & 16) {
-          toggle_class(button, "dmg-chip-on", ctx[17] == ctx[216].id);
+          toggle_class(button, "dmg-chip-on", ctx[17] == ctx[218].id);
         }
       },
       d(detaching) {
@@ -43582,7 +43767,7 @@
   }
   function create_each_block_92(ctx) {
     let if_block_anchor;
-    let if_block = (ctx[216].id == "all" || ctx[78][ctx[216].id] || ctx[17] == ctx[216].id) && create_if_block_185(ctx);
+    let if_block = (ctx[218].id == "all" || ctx[78][ctx[218].id] || ctx[17] == ctx[218].id) && create_if_block_185(ctx);
     return {
       c() {
         if (if_block)
@@ -43595,7 +43780,7 @@
         insert(target, if_block_anchor, anchor);
       },
       p(ctx2, dirty) {
-        if (ctx2[216].id == "all" || ctx2[78][ctx2[216].id] || ctx2[17] == ctx2[216].id) {
+        if (ctx2[218].id == "all" || ctx2[78][ctx2[218].id] || ctx2[17] == ctx2[218].id) {
           if (if_block) {
             if_block.p(ctx2, dirty);
           } else {
@@ -43618,18 +43803,18 @@
   }
   function create_if_block_175(ctx) {
     let button;
-    let t0_value = ctx[229].label + "";
+    let t0_value = ctx[231].label + "";
     let t0;
     let t1;
     let span;
-    let t2_value = (ctx[77][ctx[229].id] || 0) + "";
+    let t2_value = (ctx[77][ctx[231].id] || 0) + "";
     let t2;
     let t3;
     let button_title_value;
     let mounted;
     let dispose;
     function click_handler_17() {
-      return ctx[187](ctx[229]);
+      return ctx[189](ctx[231]);
     }
     return {
       c() {
@@ -43641,8 +43826,8 @@
         t3 = space();
         attr(span, "class", "dmg-chip-n");
         attr(button, "class", "dmg-chip");
-        attr(button, "title", button_title_value = ctx[229].title);
-        toggle_class(button, "dmg-chip-on", ctx[18] == ctx[229].id);
+        attr(button, "title", button_title_value = ctx[231].title);
+        toggle_class(button, "dmg-chip-on", ctx[18] == ctx[231].id);
       },
       m(target, anchor) {
         insert(target, button, anchor);
@@ -43658,10 +43843,10 @@
       },
       p(new_ctx, dirty) {
         ctx = new_ctx;
-        if (dirty[2] & 32768 && t2_value !== (t2_value = (ctx[77][ctx[229].id] || 0) + ""))
+        if (dirty[2] & 32768 && t2_value !== (t2_value = (ctx[77][ctx[231].id] || 0) + ""))
           set_data(t2, t2_value);
         if (dirty[0] & 262144 | dirty[3] & 32) {
-          toggle_class(button, "dmg-chip-on", ctx[18] == ctx[229].id);
+          toggle_class(button, "dmg-chip-on", ctx[18] == ctx[231].id);
         }
       },
       d(detaching) {
@@ -43674,7 +43859,7 @@
   }
   function create_each_block_82(ctx) {
     let if_block_anchor;
-    let if_block = (ctx[229].id == "all" || ctx[77][ctx[229].id] || ctx[18] == ctx[229].id) && create_if_block_175(ctx);
+    let if_block = (ctx[231].id == "all" || ctx[77][ctx[231].id] || ctx[18] == ctx[231].id) && create_if_block_175(ctx);
     return {
       c() {
         if (if_block)
@@ -43687,7 +43872,7 @@
         insert(target, if_block_anchor, anchor);
       },
       p(ctx2, dirty) {
-        if (ctx2[229].id == "all" || ctx2[77][ctx2[229].id] || ctx2[18] == ctx2[229].id) {
+        if (ctx2[231].id == "all" || ctx2[77][ctx2[231].id] || ctx2[18] == ctx2[231].id) {
           if (if_block) {
             if_block.p(ctx2, dirty);
           } else {
@@ -43710,12 +43895,12 @@
   }
   function create_each_block_73(ctx) {
     let option;
-    let t0_value = ctx[20].includes(ctx[213].id) ? "\u2713 " : "";
+    let t0_value = ctx[20].includes(ctx[215].id) ? "\u2713 " : "";
     let t0;
     let html_tag;
-    let raw_value = ctx[213].label + "";
+    let raw_value = ctx[215].label + "";
     let t1;
-    let t2_value = ctx[213].n + "";
+    let t2_value = ctx[215].n + "";
     let t2;
     let t3;
     let option_value_value;
@@ -43728,7 +43913,7 @@
         t2 = text(t2_value);
         t3 = text(")\r\n                ");
         html_tag.a = t1;
-        option.__value = option_value_value = ctx[213].id;
+        option.__value = option_value_value = ctx[215].id;
         option.value = option.__value;
       },
       m(target, anchor) {
@@ -43740,13 +43925,13 @@
         append(option, t3);
       },
       p(ctx2, dirty) {
-        if (dirty[0] & 1048576 | dirty[2] & 16384 && t0_value !== (t0_value = ctx2[20].includes(ctx2[213].id) ? "\u2713 " : ""))
+        if (dirty[0] & 1048576 | dirty[2] & 16384 && t0_value !== (t0_value = ctx2[20].includes(ctx2[215].id) ? "\u2713 " : ""))
           set_data(t0, t0_value);
-        if (dirty[2] & 16384 && raw_value !== (raw_value = ctx2[213].label + ""))
+        if (dirty[2] & 16384 && raw_value !== (raw_value = ctx2[215].label + ""))
           html_tag.p(raw_value);
-        if (dirty[2] & 16384 && t2_value !== (t2_value = ctx2[213].n + ""))
+        if (dirty[2] & 16384 && t2_value !== (t2_value = ctx2[215].n + ""))
           set_data(t2, t2_value);
-        if (dirty[2] & 16384 && option_value_value !== (option_value_value = ctx2[213].id)) {
+        if (dirty[2] & 16384 && option_value_value !== (option_value_value = ctx2[215].id)) {
           option.__value = option_value_value;
           option.value = option.__value;
         }
@@ -43760,14 +43945,14 @@
   function create_each_block_64(ctx) {
     let button;
     let html_tag;
-    let raw_value = rul.tr(ctx[213]) + "";
+    let raw_value = rul.tr(ctx[215]) + "";
     let t0;
     let span;
     let t2;
     let mounted;
     let dispose;
     function click_handler_18() {
-      return ctx[190](ctx[213]);
+      return ctx[192](ctx[215]);
     }
     return {
       c() {
@@ -43795,7 +43980,7 @@
       },
       p(new_ctx, dirty) {
         ctx = new_ctx;
-        if (dirty[0] & 1048576 && raw_value !== (raw_value = rul.tr(ctx[213]) + ""))
+        if (dirty[0] & 1048576 && raw_value !== (raw_value = rul.tr(ctx[215]) + ""))
           html_tag.p(raw_value);
       },
       d(detaching) {
@@ -43808,12 +43993,12 @@
   }
   function create_each_block_54(ctx) {
     let option;
-    let t0_value = ctx[19].includes(+ctx[222].id) ? "\u2713 " : "";
+    let t0_value = ctx[19].includes(+ctx[224].id) ? "\u2713 " : "";
     let t0;
     let html_tag;
-    let raw_value = ctx[222].label + "";
+    let raw_value = ctx[224].label + "";
     let t1;
-    let t2_value = ctx[222].n + "";
+    let t2_value = ctx[224].n + "";
     let t2;
     let t3;
     let option_value_value;
@@ -43826,7 +44011,7 @@
         t2 = text(t2_value);
         t3 = text(")\r\n                ");
         html_tag.a = t1;
-        option.__value = option_value_value = ctx[222].id;
+        option.__value = option_value_value = ctx[224].id;
         option.value = option.__value;
       },
       m(target, anchor) {
@@ -43838,13 +44023,13 @@
         append(option, t3);
       },
       p(ctx2, dirty) {
-        if (dirty[0] & 524288 | dirty[1] & 131072 && t0_value !== (t0_value = ctx2[19].includes(+ctx2[222].id) ? "\u2713 " : ""))
+        if (dirty[0] & 524288 | dirty[1] & 131072 && t0_value !== (t0_value = ctx2[19].includes(+ctx2[224].id) ? "\u2713 " : ""))
           set_data(t0, t0_value);
-        if (dirty[1] & 131072 && raw_value !== (raw_value = ctx2[222].label + ""))
+        if (dirty[1] & 131072 && raw_value !== (raw_value = ctx2[224].label + ""))
           html_tag.p(raw_value);
-        if (dirty[1] & 131072 && t2_value !== (t2_value = ctx2[222].n + ""))
+        if (dirty[1] & 131072 && t2_value !== (t2_value = ctx2[224].n + ""))
           set_data(t2, t2_value);
-        if (dirty[1] & 131072 && option_value_value !== (option_value_value = ctx2[222].id)) {
+        if (dirty[1] & 131072 && option_value_value !== (option_value_value = ctx2[224].id)) {
           option.__value = option_value_value;
           option.value = option.__value;
         }
@@ -43858,13 +44043,13 @@
   function create_each_block_45(ctx) {
     let button;
     let html_tag;
-    let raw_value = rul.tr(damageTypes[ctx[219]] || "type " + ctx[219]) + "";
+    let raw_value = rul.tr(damageTypes[ctx[221]] || "type " + ctx[221]) + "";
     let t0;
     let span;
     let mounted;
     let dispose;
     function click_handler_19() {
-      return ctx[193](ctx[219]);
+      return ctx[195](ctx[221]);
     }
     return {
       c() {
@@ -43890,7 +44075,7 @@
       },
       p(new_ctx, dirty) {
         ctx = new_ctx;
-        if (dirty[0] & 524288 && raw_value !== (raw_value = rul.tr(damageTypes[ctx[219]] || "type " + ctx[219]) + ""))
+        if (dirty[0] & 524288 && raw_value !== (raw_value = rul.tr(damageTypes[ctx[221]] || "type " + ctx[221]) + ""))
           html_tag.p(raw_value);
       },
       d(detaching) {
@@ -43937,12 +44122,12 @@
         insert(target, t2, anchor);
         insert(target, button, anchor);
         if (!mounted) {
-          dispose = listen(button, "click", ctx[118]);
+          dispose = listen(button, "click", ctx[120]);
           mounted = true;
         }
       },
       p(ctx2, dirty) {
-        if (dirty[1] & 512 | dirty[3] & 20971520) {
+        if (dirty[1] & 512 | dirty[3] & 83886080) {
           each_value_3 = ctx2[40];
           let i;
           for (i = 0; i < each_value_3.length; i += 1) {
@@ -43996,20 +44181,20 @@
   }
   function create_each_block_36(ctx) {
     let button;
-    let t0_value = ctx[218] + 1 + "";
+    let t0_value = ctx[220] + 1 + "";
     let t0;
     let t1;
-    let t2_value = ctx[115](ctx[216].id).label + "";
+    let t2_value = ctx[117](ctx[218].id).label + "";
     let t2;
     let t3;
-    let t4_value = ctx[216].desc ? "\u25BC" : "\u25B2";
+    let t4_value = ctx[218].desc ? "\u25BC" : "\u25B2";
     let t4;
     let t5;
     let span;
     let mounted;
     let dispose;
     function click_handler_20() {
-      return ctx[195](ctx[216]);
+      return ctx[197](ctx[218]);
     }
     return {
       c() {
@@ -44042,9 +44227,9 @@
       },
       p(new_ctx, dirty) {
         ctx = new_ctx;
-        if (dirty[1] & 512 && t2_value !== (t2_value = ctx[115](ctx[216].id).label + ""))
+        if (dirty[1] & 512 && t2_value !== (t2_value = ctx[117](ctx[218].id).label + ""))
           set_data(t2, t2_value);
-        if (dirty[1] & 512 && t4_value !== (t4_value = ctx[216].desc ? "\u25BC" : "\u25B2"))
+        if (dirty[1] & 512 && t4_value !== (t4_value = ctx[218].desc ? "\u25BC" : "\u25B2"))
           set_data(t4, t4_value);
       },
       d(detaching) {
@@ -44068,7 +44253,7 @@
       m(target, anchor) {
         insert(target, button, anchor);
         if (!mounted) {
-          dispose = listen(button, "click", ctx[196]);
+          dispose = listen(button, "click", ctx[198]);
           mounted = true;
         }
       },
@@ -44083,7 +44268,7 @@
   }
   function create_if_block_136(ctx) {
     let span;
-    let t_value = ctx[40][ctx[119](ctx[40], ctx[213].id)].desc ? "\u25BC" : "\u25B2";
+    let t_value = ctx[40][ctx[121](ctx[40], ctx[215].id)].desc ? "\u25BC" : "\u25B2";
     let t;
     let if_block = ctx[40].length > 1 && create_if_block_145(ctx);
     return {
@@ -44101,7 +44286,7 @@
           if_block.m(span, null);
       },
       p(ctx2, dirty) {
-        if (dirty[1] & 512 | dirty[2] & 256 && t_value !== (t_value = ctx2[40][ctx2[119](ctx2[40], ctx2[213].id)].desc ? "\u25BC" : "\u25B2"))
+        if (dirty[1] & 512 | dirty[2] & 256 && t_value !== (t_value = ctx2[40][ctx2[121](ctx2[40], ctx2[215].id)].desc ? "\u25BC" : "\u25B2"))
           set_data(t, t_value);
         if (ctx2[40].length > 1) {
           if (if_block) {
@@ -44126,7 +44311,7 @@
   }
   function create_if_block_145(ctx) {
     let sup;
-    let t_value = ctx[119](ctx[40], ctx[213].id) + 1 + "";
+    let t_value = ctx[121](ctx[40], ctx[215].id) + 1 + "";
     let t;
     return {
       c() {
@@ -44138,7 +44323,7 @@
         append(sup, t);
       },
       p(ctx2, dirty) {
-        if (dirty[1] & 512 | dirty[2] & 256 && t_value !== (t_value = ctx2[119](ctx2[40], ctx2[213].id) + 1 + ""))
+        if (dirty[1] & 512 | dirty[2] & 256 && t_value !== (t_value = ctx2[121](ctx2[40], ctx2[215].id) + 1 + ""))
           set_data(t, t_value);
       },
       d(detaching) {
@@ -44149,16 +44334,16 @@
   }
   function create_each_block_210(ctx) {
     let td;
-    let t0_value = ctx[213].label + "";
+    let t0_value = ctx[215].label + "";
     let t0;
-    let show_if = ctx[119](ctx[40], ctx[213].id) != -1;
+    let show_if = ctx[121](ctx[40], ctx[215].id) != -1;
     let t1;
     let td_title_value;
     let mounted;
     let dispose;
     let if_block = show_if && create_if_block_136(ctx);
     function click_handler_22() {
-      return ctx[197](ctx[213]);
+      return ctx[199](ctx[215]);
     }
     return {
       c() {
@@ -44168,8 +44353,8 @@
           if_block.c();
         t1 = space();
         attr(td, "class", "dmg-sortable");
-        attr(td, "title", td_title_value = (ctx[213].title || "Sort by " + ctx[213].label) + " \u2014 click again to reverse, click another column to add it as a tiebreak");
-        toggle_class(td, "dmg-sorted", ctx[119](ctx[40], ctx[213].id) != -1);
+        attr(td, "title", td_title_value = (ctx[215].title || "Sort by " + ctx[215].label) + " \u2014 click again to reverse, click another column to add it as a tiebreak");
+        toggle_class(td, "dmg-sorted", ctx[121](ctx[40], ctx[215].id) != -1);
       },
       m(target, anchor) {
         insert(target, td, anchor);
@@ -44184,10 +44369,10 @@
       },
       p(new_ctx, dirty) {
         ctx = new_ctx;
-        if (dirty[2] & 256 && t0_value !== (t0_value = ctx[213].label + ""))
+        if (dirty[2] & 256 && t0_value !== (t0_value = ctx[215].label + ""))
           set_data(t0, t0_value);
         if (dirty[1] & 512 | dirty[2] & 256)
-          show_if = ctx[119](ctx[40], ctx[213].id) != -1;
+          show_if = ctx[121](ctx[40], ctx[215].id) != -1;
         if (show_if) {
           if (if_block) {
             if_block.p(ctx, dirty);
@@ -44200,11 +44385,11 @@
           if_block.d(1);
           if_block = null;
         }
-        if (dirty[2] & 256 && td_title_value !== (td_title_value = (ctx[213].title || "Sort by " + ctx[213].label) + " \u2014 click again to reverse, click another column to add it as a tiebreak")) {
+        if (dirty[2] & 256 && td_title_value !== (td_title_value = (ctx[215].title || "Sort by " + ctx[215].label) + " \u2014 click again to reverse, click another column to add it as a tiebreak")) {
           attr(td, "title", td_title_value);
         }
-        if (dirty[1] & 512 | dirty[2] & 256 | dirty[3] & 67108864) {
-          toggle_class(td, "dmg-sorted", ctx[119](ctx[40], ctx[213].id) != -1);
+        if (dirty[1] & 512 | dirty[2] & 256 | dirty[3] & 268435456) {
+          toggle_class(td, "dmg-sorted", ctx[121](ctx[40], ctx[215].id) != -1);
         }
       },
       d(detaching) {
@@ -44219,13 +44404,13 @@
   }
   function create_if_block_78(ctx) {
     let html_tag;
-    let raw_value = ctx[206].weapon.title + "";
+    let raw_value = ctx[208].weapon.title + "";
     let t0;
-    let show_if = ctx[28] != "off" && ctx[49].get(ctx[206].weapon.id);
+    let show_if = ctx[28] != "off" && ctx[49].get(ctx[208].weapon.id);
     let t1;
     let if_block1_anchor;
     let if_block0 = show_if && create_if_block_96(get_if_ctx(ctx));
-    let if_block1 = ctx[206].modeCount > 1 && create_if_block_87(ctx);
+    let if_block1 = ctx[208].modeCount > 1 && create_if_block_87(ctx);
     return {
       c() {
         html_tag = new HtmlTag(false);
@@ -44249,10 +44434,10 @@
         insert(target, if_block1_anchor, anchor);
       },
       p(ctx2, dirty) {
-        if (dirty[2] & 64 && raw_value !== (raw_value = ctx2[206].weapon.title + ""))
+        if (dirty[2] & 64 && raw_value !== (raw_value = ctx2[208].weapon.title + ""))
           html_tag.p(raw_value);
         if (dirty[0] & 268435456 | dirty[1] & 262144 | dirty[2] & 64)
-          show_if = ctx2[28] != "off" && ctx2[49].get(ctx2[206].weapon.id);
+          show_if = ctx2[28] != "off" && ctx2[49].get(ctx2[208].weapon.id);
         if (show_if) {
           if (if_block0) {
             if_block0.p(get_if_ctx(ctx2), dirty);
@@ -44265,7 +44450,7 @@
           if_block0.d(1);
           if_block0 = null;
         }
-        if (ctx2[206].modeCount > 1) {
+        if (ctx2[208].modeCount > 1) {
           if (if_block1) {
             if_block1.p(ctx2, dirty);
           } else {
@@ -44298,16 +44483,16 @@
     let span;
     let if_block0_anchor;
     let span_title_value;
-    function select_block_type_13(ctx2, dirty) {
-      if (ctx2[212].owned)
+    function select_block_type_12(ctx2, dirty) {
+      if (ctx2[214].owned)
         return create_if_block_1111;
-      if (ctx2[212].buyable)
+      if (ctx2[214].buyable)
         return create_if_block_128;
       return create_else_block_18;
     }
-    let current_block_type = select_block_type_13(ctx, [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1]);
+    let current_block_type = select_block_type_12(ctx, [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1]);
     let if_block0 = current_block_type(ctx);
-    let if_block1 = !ctx[212].ammoOwned && create_if_block_106(ctx);
+    let if_block1 = !ctx[214].ammoOwned && create_if_block_106(ctx);
     return {
       c() {
         span = element("span");
@@ -44316,8 +44501,8 @@
         if (if_block1)
           if_block1.c();
         attr(span, "class", "dmg-avail");
-        attr(span, "title", span_title_value = availabilityNote(ctx[212]));
-        toggle_class(span, "dmg-avail-dry", !ctx[212].ammoOwned);
+        attr(span, "title", span_title_value = availabilityNote(ctx[214]));
+        toggle_class(span, "dmg-avail-dry", !ctx[214].ammoOwned);
       },
       m(target, anchor) {
         insert(target, span, anchor);
@@ -44327,7 +44512,7 @@
           if_block1.m(span, null);
       },
       p(ctx2, dirty) {
-        if (current_block_type === (current_block_type = select_block_type_13(ctx2, dirty)) && if_block0) {
+        if (current_block_type === (current_block_type = select_block_type_12(ctx2, dirty)) && if_block0) {
           if_block0.p(ctx2, dirty);
         } else {
           if_block0.d(1);
@@ -44337,7 +44522,7 @@
             if_block0.m(span, if_block0_anchor);
           }
         }
-        if (!ctx2[212].ammoOwned) {
+        if (!ctx2[214].ammoOwned) {
           if (if_block1) {
           } else {
             if_block1 = create_if_block_106(ctx2);
@@ -44348,11 +44533,11 @@
           if_block1.d(1);
           if_block1 = null;
         }
-        if (dirty[1] & 262144 | dirty[2] & 64 && span_title_value !== (span_title_value = availabilityNote(ctx2[212]))) {
+        if (dirty[1] & 262144 | dirty[2] & 64 && span_title_value !== (span_title_value = availabilityNote(ctx2[214]))) {
           attr(span, "title", span_title_value);
         }
         if (dirty[1] & 262144 | dirty[2] & 64) {
-          toggle_class(span, "dmg-avail-dry", !ctx2[212].ammoOwned);
+          toggle_class(span, "dmg-avail-dry", !ctx2[214].ammoOwned);
         }
       },
       d(detaching) {
@@ -44398,7 +44583,7 @@
   }
   function create_if_block_1111(ctx) {
     let t0;
-    let t1_value = ctx[212].count + "";
+    let t1_value = ctx[214].count + "";
     let t1;
     return {
       c() {
@@ -44410,7 +44595,7 @@
         insert(target, t1, anchor);
       },
       p(ctx2, dirty) {
-        if (dirty[1] & 262144 | dirty[2] & 64 && t1_value !== (t1_value = ctx2[212].count + ""))
+        if (dirty[1] & 262144 | dirty[2] & 64 && t1_value !== (t1_value = ctx2[214].count + ""))
           set_data(t1, t1_value);
       },
       d(detaching) {
@@ -44438,7 +44623,7 @@
   }
   function create_if_block_87(ctx) {
     let span;
-    let t0_value = ctx[206].modeCount + "";
+    let t0_value = ctx[208].modeCount + "";
     let t0;
     let t1;
     return {
@@ -44454,7 +44639,7 @@
         append(span, t1);
       },
       p(ctx2, dirty) {
-        if (dirty[2] & 64 && t0_value !== (t0_value = ctx2[206].modeCount + ""))
+        if (dirty[2] & 64 && t0_value !== (t0_value = ctx2[208].modeCount + ""))
           set_data(t0, t0_value);
       },
       d(detaching) {
@@ -44463,11 +44648,11 @@
       }
     };
   }
-  function create_if_block_68(ctx) {
-    let t0_value = (+ctx[206].weapon.item.invWidth || 1) + "";
+  function create_if_block_69(ctx) {
+    let t0_value = (+ctx[208].weapon.item.invWidth || 1) + "";
     let t0;
     let t1;
-    let t2_value = (+ctx[206].weapon.item.invHeight || 1) + "";
+    let t2_value = (+ctx[208].weapon.item.invHeight || 1) + "";
     let t2;
     return {
       c() {
@@ -44481,9 +44666,9 @@
         insert(target, t2, anchor);
       },
       p(ctx2, dirty) {
-        if (dirty[2] & 64 && t0_value !== (t0_value = (+ctx2[206].weapon.item.invWidth || 1) + ""))
+        if (dirty[2] & 64 && t0_value !== (t0_value = (+ctx2[208].weapon.item.invWidth || 1) + ""))
           set_data(t0, t0_value);
-        if (dirty[2] & 64 && t2_value !== (t2_value = (+ctx2[206].weapon.item.invHeight || 1) + ""))
+        if (dirty[2] & 64 && t2_value !== (t2_value = (+ctx2[208].weapon.item.invHeight || 1) + ""))
           set_data(t2, t2_value);
       },
       d(detaching) {
@@ -44499,10 +44684,10 @@
   function create_if_block_410(ctx) {
     let span;
     let t0;
-    let t1_value = ctx[206].mode.damage.hitsPerAttack + "";
+    let t1_value = ctx[208].mode.damage.hitsPerAttack + "";
     let t1;
     let span_title_value;
-    let if_block = ctx[206].mode.damage.expectedHitsPerAttack < ctx[206].mode.damage.hitsPerAttack - 0.05 && create_if_block_510(ctx);
+    let if_block = ctx[208].mode.damage.expectedHitsPerAttack < ctx[208].mode.damage.hitsPerAttack - 0.05 && create_if_block_510(ctx);
     return {
       c() {
         span = element("span");
@@ -44511,7 +44696,7 @@
         if (if_block)
           if_block.c();
         attr(span, "class", "dmg-hits");
-        attr(span, "title", span_title_value = ctx[206].mode.damage.hitsPerAttack + " projectiles fired, about " + ctx[120](ctx[206].mode.damage.expectedHitsPerAttack, 1) + " assumed to land");
+        attr(span, "title", span_title_value = ctx[208].mode.damage.hitsPerAttack + " projectiles fired, about " + ctx[122](ctx[208].mode.damage.expectedHitsPerAttack, 1) + " assumed to land");
       },
       m(target, anchor) {
         insert(target, span, anchor);
@@ -44521,9 +44706,9 @@
           if_block.m(span, null);
       },
       p(ctx2, dirty) {
-        if (dirty[2] & 64 && t1_value !== (t1_value = ctx2[206].mode.damage.hitsPerAttack + ""))
+        if (dirty[2] & 64 && t1_value !== (t1_value = ctx2[208].mode.damage.hitsPerAttack + ""))
           set_data(t1, t1_value);
-        if (ctx2[206].mode.damage.expectedHitsPerAttack < ctx2[206].mode.damage.hitsPerAttack - 0.05) {
+        if (ctx2[208].mode.damage.expectedHitsPerAttack < ctx2[208].mode.damage.hitsPerAttack - 0.05) {
           if (if_block) {
             if_block.p(ctx2, dirty);
           } else {
@@ -44535,7 +44720,7 @@
           if_block.d(1);
           if_block = null;
         }
-        if (dirty[2] & 64 && span_title_value !== (span_title_value = ctx2[206].mode.damage.hitsPerAttack + " projectiles fired, about " + ctx2[120](ctx2[206].mode.damage.expectedHitsPerAttack, 1) + " assumed to land")) {
+        if (dirty[2] & 64 && span_title_value !== (span_title_value = ctx2[208].mode.damage.hitsPerAttack + " projectiles fired, about " + ctx2[122](ctx2[208].mode.damage.expectedHitsPerAttack, 1) + " assumed to land")) {
           attr(span, "title", span_title_value);
         }
       },
@@ -44550,7 +44735,7 @@
   function create_if_block_510(ctx) {
     let span;
     let t0;
-    let t1_value = ctx[120](ctx[206].mode.damage.expectedHitsPerAttack, 1) + "";
+    let t1_value = ctx[122](ctx[208].mode.damage.expectedHitsPerAttack, 1) + "";
     let t1;
     return {
       c() {
@@ -44565,7 +44750,7 @@
         append(span, t1);
       },
       p(ctx2, dirty) {
-        if (dirty[2] & 64 && t1_value !== (t1_value = ctx2[120](ctx2[206].mode.damage.expectedHitsPerAttack, 1) + ""))
+        if (dirty[2] & 64 && t1_value !== (t1_value = ctx2[122](ctx2[208].mode.damage.expectedHitsPerAttack, 1) + ""))
           set_data(t1, t1_value);
       },
       d(detaching) {
@@ -44606,14 +44791,14 @@
     let t21;
     let p;
     let html_tag;
-    let raw_value = (ctx[206].weapon.best.damage.damageTypeName ? rul.tr(ctx[206].weapon.best.damage.damageTypeName) : "") + "";
+    let raw_value = (ctx[208].weapon.best.damage.damageTypeName ? rul.tr(ctx[208].weapon.best.damage.damageTypeName) : "") + "";
     let t22;
-    let t23_value = ctx[120](ctx[206].weapon.best.damage.effectiveArmor, 0) + "";
+    let t23_value = ctx[122](ctx[208].weapon.best.damage.effectiveArmor, 0) + "";
     let t23;
     let t24;
     let td15_colspan_value;
     let t25;
-    let each_value_1 = ctx[206].weapon.modes;
+    let each_value_1 = ctx[208].weapon.modes;
     let each_blocks = [];
     for (let i = 0; i < each_value_1.length; i += 1) {
       each_blocks[i] = create_each_block_111(get_each_context_111(ctx, each_value_1, i));
@@ -44675,7 +44860,7 @@
         attr(td0, "title", "0-100; 50 is one full turn of this soldier's TU");
         attr(td5, "title", "Shots that HIT and still did nothing - the roll came in at or below the armour, so no damage got through. Misses are not counted here; that is the Acc column. Worth watching because a healthy average can hide a weapon most of whose shots bounce off.");
         attr(td7, "title", "Projectiles assumed to land on the target");
-        attr(td9, "title", ctx[108]);
+        attr(td9, "title", ctx[110]);
         attr(td12, "title", "Armour stripped per attack: ToArmorPre off the roll plus ToArmor off what got through");
         attr(table, "class", "dmg-modes");
         html_tag.a = t22;
@@ -44724,8 +44909,8 @@
         append(tr1, t25);
       },
       p(ctx2, dirty) {
-        if (dirty[2] & 64 | dirty[3] & 939524096 | dirty[4] & 7) {
-          each_value_1 = ctx2[206].weapon.modes;
+        if (dirty[2] & 64 | dirty[3] & 1610612736 | dirty[4] & 29) {
+          each_value_1 = ctx2[208].weapon.modes;
           let i;
           for (i = 0; i < each_value_1.length; i += 1) {
             const child_ctx = get_each_context_111(ctx2, each_value_1, i);
@@ -44742,9 +44927,9 @@
           }
           each_blocks.length = each_value_1.length;
         }
-        if (dirty[2] & 64 && raw_value !== (raw_value = (ctx2[206].weapon.best.damage.damageTypeName ? rul.tr(ctx2[206].weapon.best.damage.damageTypeName) : "") + ""))
+        if (dirty[2] & 64 && raw_value !== (raw_value = (ctx2[208].weapon.best.damage.damageTypeName ? rul.tr(ctx2[208].weapon.best.damage.damageTypeName) : "") + ""))
           html_tag.p(raw_value);
-        if (dirty[2] & 64 && t23_value !== (t23_value = ctx2[120](ctx2[206].weapon.best.damage.effectiveArmor, 0) + ""))
+        if (dirty[2] & 64 && t23_value !== (t23_value = ctx2[122](ctx2[208].weapon.best.damage.effectiveArmor, 0) + ""))
           set_data(t23, t23_value);
         if (dirty[2] & 256 && td15_colspan_value !== (td15_colspan_value = ctx2[70].length)) {
           attr(td15, "colspan", td15_colspan_value);
@@ -44760,73 +44945,73 @@
   function create_each_block_111(ctx) {
     let tr2;
     let td0;
-    let t0_value = (ctx[209].score == null ? "?" : ctx[209].score) + "";
+    let t0_value = (ctx[211].score == null ? "?" : ctx[211].score) + "";
     let t0;
     let td0_title_value;
     let t1;
     let td1;
-    let t2_value = ctx[209].label + "";
+    let t2_value = ctx[211].label + "";
     let t2;
     let t3;
     let td2;
-    let t4_value = ctx[120](ctx[209].damage.power, 0) + "";
+    let t4_value = ctx[122](ctx[211].damage.power, 0) + "";
     let t4;
     let t5;
     let td3;
-    let t6_value = ctx[120](ctx[209].damage.rollMin, 0) + "";
+    let t6_value = ctx[122](ctx[211].damage.rollMin, 0) + "";
     let t6;
     let t7;
-    let t8_value = ctx[120](ctx[209].damage.rollMax, 0) + "";
+    let t8_value = ctx[122](ctx[211].damage.rollMax, 0) + "";
     let t8;
     let t9;
     let td4;
-    let t10_value = ctx[120](ctx[209].damage.min, 0) + "";
+    let t10_value = ctx[122](ctx[211].damage.min, 0) + "";
     let t10;
     let t11;
-    let t12_value = ctx[120](ctx[209].damage.max, 0) + "";
+    let t12_value = ctx[122](ctx[211].damage.max, 0) + "";
     let t12;
     let t13;
     let td5;
-    let t14_value = ctx[121](ctx[209].damage.pZero) + "";
+    let t14_value = ctx[123](ctx[211].damage.pZero) + "";
     let t14;
     let t15;
     let td6;
-    let t16_value = ctx[209].damage.hitsPerAttack + "";
+    let t16_value = ctx[211].damage.hitsPerAttack + "";
     let t16;
     let t17;
     let td7;
-    let t18_value = ctx[120](ctx[209].damage.expectedHitsPerAttack, 1) + "";
+    let t18_value = ctx[122](ctx[211].damage.expectedHitsPerAttack, 1) + "";
     let t18;
     let t19;
     let td8;
-    let t20_value = Math.round(ctx[209].accuracy) + "";
+    let t20_value = Math.round(ctx[211].accuracy) + "";
     let t20;
     let t21;
     let t22;
     let td9;
-    let t23_value = Math.round(ctx[209].hitRate * 100) + "";
+    let t23_value = Math.round(ctx[211].hitRate * 100) + "";
     let t23;
     let t24;
     let t25;
     let td10;
-    let t26_value = ctx[120](ctx[209].tuCost, 0) + "";
+    let t26_value = ctx[122](ctx[211].tuCost, 0) + "";
     let t26;
     let t27;
     let td11;
-    let t28_value = ctx[120](ctx[209].perAttack) + "";
+    let t28_value = ctx[122](ctx[211].perAttack) + "";
     let t28;
     let t29;
     let td12;
-    let t30_value = (ctx[209].armorPerAttack > 0.05 ? ctx[120](ctx[209].armorPerAttack) : "\u2013") + "";
+    let t30_value = (ctx[211].armorPerAttack > 0.05 ? ctx[122](ctx[211].armorPerAttack) : "\u2013") + "";
     let t30;
     let td12_title_value;
     let t31;
     let td13;
-    let t32_value = (ctx[209].attacksToKill == null ? "\u2013" : ctx[120](ctx[209].attacksToKill)) + "";
+    let t32_value = (ctx[211].attacksToKill == null ? "\u2013" : ctx[122](ctx[211].attacksToKill)) + "";
     let t32;
     let t33;
     let td14;
-    let t34_value = ctx[124](ctx[209]) + "";
+    let t34_value = ctx[126](ctx[211]) + "";
     let t34;
     let td14_title_value;
     let t35;
@@ -44885,16 +45070,16 @@
         t34 = text(t34_value);
         t35 = space();
         attr(td0, "class", "num dmg-score");
-        attr(td0, "title", td0_title_value = ctx[122]({ mode: ctx[209], first: false }));
-        toggle_class(td0, "dmg-score-good", scoreBand(ctx[209].score) == "good");
-        toggle_class(td0, "dmg-score-fair", scoreBand(ctx[209].score) == "fair");
-        toggle_class(td0, "dmg-score-poor", scoreBand(ctx[209].score) == "poor");
-        toggle_class(td0, "dmg-score-none", scoreBand(ctx[209].score) == "none");
+        attr(td0, "title", td0_title_value = ctx[124]({ mode: ctx[211], first: false }));
+        toggle_class(td0, "dmg-score-good", scoreBand(ctx[211].score) == "good");
+        toggle_class(td0, "dmg-score-fair", scoreBand(ctx[211].score) == "fair");
+        toggle_class(td0, "dmg-score-poor", scoreBand(ctx[211].score) == "poor");
+        toggle_class(td0, "dmg-score-none", scoreBand(ctx[211].score) == "none");
         attr(td2, "class", "num");
         attr(td3, "class", "num");
         attr(td4, "class", "num");
         attr(td5, "class", "num");
-        toggle_class(td5, "dmg-immune", ctx[209].damage.pZero > 0.5);
+        toggle_class(td5, "dmg-immune", ctx[211].damage.pZero > 0.5);
         attr(td6, "class", "num");
         attr(td7, "class", "num");
         attr(td8, "class", "num");
@@ -44902,10 +45087,10 @@
         attr(td10, "class", "num");
         attr(td11, "class", "num");
         attr(td12, "class", "num");
-        attr(td12, "title", td12_title_value = ctx[126](ctx[209]));
+        attr(td12, "title", td12_title_value = ctx[128](ctx[211]));
         attr(td13, "class", "num");
         attr(td14, "class", "num dmg-key");
-        attr(td14, "title", td14_title_value = ctx[125](ctx[209]));
+        attr(td14, "title", td14_title_value = ctx[127](ctx[211]));
       },
       m(target, anchor) {
         insert(target, tr2, anchor);
@@ -44962,62 +45147,62 @@
         append(tr2, t35);
       },
       p(ctx2, dirty) {
-        if (dirty[2] & 64 && t0_value !== (t0_value = (ctx2[209].score == null ? "?" : ctx2[209].score) + ""))
+        if (dirty[2] & 64 && t0_value !== (t0_value = (ctx2[211].score == null ? "?" : ctx2[211].score) + ""))
           set_data(t0, t0_value);
-        if (dirty[2] & 64 && td0_title_value !== (td0_title_value = ctx2[122]({ mode: ctx2[209], first: false }))) {
+        if (dirty[2] & 64 && td0_title_value !== (td0_title_value = ctx2[124]({ mode: ctx2[211], first: false }))) {
           attr(td0, "title", td0_title_value);
         }
         if (dirty[2] & 64) {
-          toggle_class(td0, "dmg-score-good", scoreBand(ctx2[209].score) == "good");
+          toggle_class(td0, "dmg-score-good", scoreBand(ctx2[211].score) == "good");
         }
         if (dirty[2] & 64) {
-          toggle_class(td0, "dmg-score-fair", scoreBand(ctx2[209].score) == "fair");
+          toggle_class(td0, "dmg-score-fair", scoreBand(ctx2[211].score) == "fair");
         }
         if (dirty[2] & 64) {
-          toggle_class(td0, "dmg-score-poor", scoreBand(ctx2[209].score) == "poor");
+          toggle_class(td0, "dmg-score-poor", scoreBand(ctx2[211].score) == "poor");
         }
         if (dirty[2] & 64) {
-          toggle_class(td0, "dmg-score-none", scoreBand(ctx2[209].score) == "none");
+          toggle_class(td0, "dmg-score-none", scoreBand(ctx2[211].score) == "none");
         }
-        if (dirty[2] & 64 && t2_value !== (t2_value = ctx2[209].label + ""))
+        if (dirty[2] & 64 && t2_value !== (t2_value = ctx2[211].label + ""))
           set_data(t2, t2_value);
-        if (dirty[2] & 64 && t4_value !== (t4_value = ctx2[120](ctx2[209].damage.power, 0) + ""))
+        if (dirty[2] & 64 && t4_value !== (t4_value = ctx2[122](ctx2[211].damage.power, 0) + ""))
           set_data(t4, t4_value);
-        if (dirty[2] & 64 && t6_value !== (t6_value = ctx2[120](ctx2[209].damage.rollMin, 0) + ""))
+        if (dirty[2] & 64 && t6_value !== (t6_value = ctx2[122](ctx2[211].damage.rollMin, 0) + ""))
           set_data(t6, t6_value);
-        if (dirty[2] & 64 && t8_value !== (t8_value = ctx2[120](ctx2[209].damage.rollMax, 0) + ""))
+        if (dirty[2] & 64 && t8_value !== (t8_value = ctx2[122](ctx2[211].damage.rollMax, 0) + ""))
           set_data(t8, t8_value);
-        if (dirty[2] & 64 && t10_value !== (t10_value = ctx2[120](ctx2[209].damage.min, 0) + ""))
+        if (dirty[2] & 64 && t10_value !== (t10_value = ctx2[122](ctx2[211].damage.min, 0) + ""))
           set_data(t10, t10_value);
-        if (dirty[2] & 64 && t12_value !== (t12_value = ctx2[120](ctx2[209].damage.max, 0) + ""))
+        if (dirty[2] & 64 && t12_value !== (t12_value = ctx2[122](ctx2[211].damage.max, 0) + ""))
           set_data(t12, t12_value);
-        if (dirty[2] & 64 && t14_value !== (t14_value = ctx2[121](ctx2[209].damage.pZero) + ""))
+        if (dirty[2] & 64 && t14_value !== (t14_value = ctx2[123](ctx2[211].damage.pZero) + ""))
           set_data(t14, t14_value);
         if (dirty[2] & 64) {
-          toggle_class(td5, "dmg-immune", ctx2[209].damage.pZero > 0.5);
+          toggle_class(td5, "dmg-immune", ctx2[211].damage.pZero > 0.5);
         }
-        if (dirty[2] & 64 && t16_value !== (t16_value = ctx2[209].damage.hitsPerAttack + ""))
+        if (dirty[2] & 64 && t16_value !== (t16_value = ctx2[211].damage.hitsPerAttack + ""))
           set_data(t16, t16_value);
-        if (dirty[2] & 64 && t18_value !== (t18_value = ctx2[120](ctx2[209].damage.expectedHitsPerAttack, 1) + ""))
+        if (dirty[2] & 64 && t18_value !== (t18_value = ctx2[122](ctx2[211].damage.expectedHitsPerAttack, 1) + ""))
           set_data(t18, t18_value);
-        if (dirty[2] & 64 && t20_value !== (t20_value = Math.round(ctx2[209].accuracy) + ""))
+        if (dirty[2] & 64 && t20_value !== (t20_value = Math.round(ctx2[211].accuracy) + ""))
           set_data(t20, t20_value);
-        if (dirty[2] & 64 && t23_value !== (t23_value = Math.round(ctx2[209].hitRate * 100) + ""))
+        if (dirty[2] & 64 && t23_value !== (t23_value = Math.round(ctx2[211].hitRate * 100) + ""))
           set_data(t23, t23_value);
-        if (dirty[2] & 64 && t26_value !== (t26_value = ctx2[120](ctx2[209].tuCost, 0) + ""))
+        if (dirty[2] & 64 && t26_value !== (t26_value = ctx2[122](ctx2[211].tuCost, 0) + ""))
           set_data(t26, t26_value);
-        if (dirty[2] & 64 && t28_value !== (t28_value = ctx2[120](ctx2[209].perAttack) + ""))
+        if (dirty[2] & 64 && t28_value !== (t28_value = ctx2[122](ctx2[211].perAttack) + ""))
           set_data(t28, t28_value);
-        if (dirty[2] & 64 && t30_value !== (t30_value = (ctx2[209].armorPerAttack > 0.05 ? ctx2[120](ctx2[209].armorPerAttack) : "\u2013") + ""))
+        if (dirty[2] & 64 && t30_value !== (t30_value = (ctx2[211].armorPerAttack > 0.05 ? ctx2[122](ctx2[211].armorPerAttack) : "\u2013") + ""))
           set_data(t30, t30_value);
-        if (dirty[2] & 64 && td12_title_value !== (td12_title_value = ctx2[126](ctx2[209]))) {
+        if (dirty[2] & 64 && td12_title_value !== (td12_title_value = ctx2[128](ctx2[211]))) {
           attr(td12, "title", td12_title_value);
         }
-        if (dirty[2] & 64 && t32_value !== (t32_value = (ctx2[209].attacksToKill == null ? "\u2013" : ctx2[120](ctx2[209].attacksToKill)) + ""))
+        if (dirty[2] & 64 && t32_value !== (t32_value = (ctx2[211].attacksToKill == null ? "\u2013" : ctx2[122](ctx2[211].attacksToKill)) + ""))
           set_data(t32, t32_value);
-        if (dirty[2] & 64 && t34_value !== (t34_value = ctx2[124](ctx2[209]) + ""))
+        if (dirty[2] & 64 && t34_value !== (t34_value = ctx2[126](ctx2[211]) + ""))
           set_data(t34, t34_value);
-        if (dirty[2] & 64 && td14_title_value !== (td14_title_value = ctx2[125](ctx2[209]))) {
+        if (dirty[2] & 64 && td14_title_value !== (td14_title_value = ctx2[127](ctx2[211]))) {
           attr(td14, "title", td14_title_value);
         }
       },
@@ -45030,7 +45215,7 @@
   function create_each_block29(key_1, ctx) {
     let tr2;
     let td0;
-    let t0_value = (scoreOf(ctx[206]) == null ? "?" : scoreOf(ctx[206])) + "";
+    let t0_value = (scoreOf(ctx[208]) == null ? "?" : scoreOf(ctx[208])) + "";
     let t0;
     let td0_title_value;
     let t1;
@@ -45039,67 +45224,67 @@
     let td2;
     let t3;
     let td3;
-    let t4_value = ctx[206].mode.label + "";
+    let t4_value = ctx[208].mode.label + "";
     let t4;
     let t5;
     let td4;
-    let t6_value = ctx[120](ctx[206].mode.damage.min, 0) + "";
+    let t6_value = ctx[122](ctx[208].mode.damage.min, 0) + "";
     let t6;
     let t7;
-    let t8_value = ctx[120](ctx[206].mode.damage.max, 0) + "";
+    let t8_value = ctx[122](ctx[208].mode.damage.max, 0) + "";
     let t8;
     let span;
     let t9;
-    let t10_value = Math.round(ctx[206].mode.damage.resist * 100) + "";
+    let t10_value = Math.round(ctx[208].mode.damage.resist * 100) + "";
     let t10;
     let t11;
     let t12;
     let td5;
-    let t13_value = (ctx[206].mode.attack.range == null ? "\u2013" : ctx[120](ctx[206].mode.attack.range, 0)) + "";
+    let t13_value = (ctx[208].mode.attack.range == null ? "\u2013" : ctx[122](ctx[208].mode.attack.range, 0)) + "";
     let t13;
     let td5_title_value;
     let t14;
     let td6;
-    let t15_value = Math.round(ctx[206].mode.accuracy) + "";
+    let t15_value = Math.round(ctx[208].mode.accuracy) + "";
     let t15;
     let t16;
     let t17;
     let td7;
-    let t18_value = Math.round(ctx[206].mode.hitRate * 100) + "";
+    let t18_value = Math.round(ctx[208].mode.hitRate * 100) + "";
     let t18;
     let t19;
     let t20;
     let td8;
-    let t21_value = ctx[120](ctx[206].mode.perAttack) + "";
+    let t21_value = ctx[122](ctx[208].mode.perAttack) + "";
     let t21;
     let t22;
     let td9;
-    let t23_value = (ctx[206].mode.approachTu > 0 ? ctx[120](ctx[206].mode.approachTu, 0) : "\u2013") + "";
+    let t23_value = (ctx[208].mode.approachTu > 0 ? ctx[122](ctx[208].mode.approachTu, 0) : "\u2013") + "";
     let t23;
     let t24;
     let td10;
-    let t25_value = (ctx[206].mode.attacksToKill == null ? "\u2013" : ctx[120](ctx[206].mode.attacksToKill)) + "";
+    let t25_value = (ctx[208].mode.attacksToKill == null ? "\u2013" : ctx[122](ctx[208].mode.attacksToKill)) + "";
     let t25;
     let t26;
     let td11;
-    let t27_value = (ctx[206].mode.tuToKill == null ? "\u2013" : ctx[120](ctx[206].mode.tuToKill, 0)) + "";
+    let t27_value = (ctx[208].mode.tuToKill == null ? "\u2013" : ctx[122](ctx[208].mode.tuToKill, 0)) + "";
     let t27;
     let t28;
     let td12;
-    let t29_value = ctx[124](ctx[206].mode) + "";
+    let t29_value = ctx[126](ctx[208].mode) + "";
     let t29;
     let td12_title_value;
     let t30;
     let if_block3_anchor;
     let mounted;
     let dispose;
-    let if_block0 = ctx[206].first && create_if_block_78(ctx);
-    let if_block1 = ctx[206].first && create_if_block_68(ctx);
-    let if_block2 = ctx[206].mode.damage.hitsPerAttack > 1 && create_if_block_410(ctx);
+    let if_block0 = ctx[208].first && create_if_block_78(ctx);
+    let if_block1 = ctx[208].first && create_if_block_69(ctx);
+    let if_block2 = ctx[208].mode.damage.hitsPerAttack > 1 && create_if_block_410(ctx);
     function click_handler_23() {
-      return ctx[198](ctx[206]);
+      return ctx[200](ctx[208]);
     }
-    let if_block3 = ctx[59] == ctx[206].weapon.id && ctx[206].last && create_if_block_315(ctx);
+    let if_block3 = ctx[59] == ctx[208].weapon.id && ctx[208].last && create_if_block_315(ctx);
     return {
       key: key_1,
       first: null,
@@ -45160,35 +45345,35 @@
           if_block3.c();
         if_block3_anchor = empty();
         attr(td0, "class", "num dmg-score");
-        attr(td0, "title", td0_title_value = ctx[122](ctx[206]));
-        toggle_class(td0, "dmg-score-sub", !ctx[206].first);
-        toggle_class(td0, "dmg-score-good", scoreBand(scoreOf(ctx[206])) == "good");
-        toggle_class(td0, "dmg-score-fair", scoreBand(scoreOf(ctx[206])) == "fair");
-        toggle_class(td0, "dmg-score-poor", scoreBand(scoreOf(ctx[206])) == "poor");
-        toggle_class(td0, "dmg-score-none", scoreBand(scoreOf(ctx[206])) == "none");
+        attr(td0, "title", td0_title_value = ctx[124](ctx[208]));
+        toggle_class(td0, "dmg-score-sub", !ctx[208].first);
+        toggle_class(td0, "dmg-score-good", scoreBand(scoreOf(ctx[208])) == "good");
+        toggle_class(td0, "dmg-score-fair", scoreBand(scoreOf(ctx[208])) == "fair");
+        toggle_class(td0, "dmg-score-poor", scoreBand(scoreOf(ctx[208])) == "poor");
+        toggle_class(td0, "dmg-score-none", scoreBand(scoreOf(ctx[208])) == "none");
         attr(td1, "class", "dmg-name");
         attr(td2, "class", "num dmg-cap");
-        toggle_class(td3, "dmg-submode", !ctx[206].first);
+        toggle_class(td3, "dmg-submode", !ctx[208].first);
         attr(span, "class", "dmg-resist");
-        attr(span, "title", ctx[105]);
-        toggle_class(span, "dmg-immune", ctx[206].mode.damage.resist == 0);
+        attr(span, "title", ctx[107]);
+        toggle_class(span, "dmg-immune", ctx[208].mode.damage.resist == 0);
         attr(td4, "class", "num");
         attr(td5, "class", "num");
-        attr(td5, "title", td5_title_value = ctx[123](ctx[206].mode));
-        toggle_class(td5, "dmg-outofrange", outOfRange(ctx[206].mode));
-        toggle_class(td5, "dmg-offrange", !rangeGoverns(ctx[206].mode));
+        attr(td5, "title", td5_title_value = ctx[125](ctx[208].mode));
+        toggle_class(td5, "dmg-outofrange", outOfRange(ctx[208].mode));
+        toggle_class(td5, "dmg-offrange", !rangeGoverns(ctx[208].mode));
         attr(td6, "class", "num");
         attr(td7, "class", "num");
         attr(td8, "class", "num");
         attr(td9, "class", "num");
-        attr(td9, "title", ctx[106]);
+        attr(td9, "title", ctx[108]);
         attr(td10, "class", "num");
         attr(td11, "class", "num dmg-key");
         attr(td12, "class", "num");
-        attr(td12, "title", td12_title_value = ctx[125](ctx[206].mode));
+        attr(td12, "title", td12_title_value = ctx[127](ctx[208].mode));
         attr(tr2, "class", "dmg-click");
-        toggle_class(tr2, "dmg-group-first", ctx[206].first);
-        toggle_class(tr2, "dmg-open", ctx[59] == ctx[206].weapon.id);
+        toggle_class(tr2, "dmg-group-first", ctx[208].first);
+        toggle_class(tr2, "dmg-open", ctx[59] == ctx[208].weapon.id);
         this.first = tr2;
       },
       m(target, anchor) {
@@ -45254,27 +45439,27 @@
       },
       p(new_ctx, dirty) {
         ctx = new_ctx;
-        if (dirty[2] & 64 && t0_value !== (t0_value = (scoreOf(ctx[206]) == null ? "?" : scoreOf(ctx[206])) + ""))
+        if (dirty[2] & 64 && t0_value !== (t0_value = (scoreOf(ctx[208]) == null ? "?" : scoreOf(ctx[208])) + ""))
           set_data(t0, t0_value);
-        if (dirty[2] & 64 && td0_title_value !== (td0_title_value = ctx[122](ctx[206]))) {
+        if (dirty[2] & 64 && td0_title_value !== (td0_title_value = ctx[124](ctx[208]))) {
           attr(td0, "title", td0_title_value);
         }
         if (dirty[2] & 64) {
-          toggle_class(td0, "dmg-score-sub", !ctx[206].first);
+          toggle_class(td0, "dmg-score-sub", !ctx[208].first);
         }
         if (dirty[2] & 64) {
-          toggle_class(td0, "dmg-score-good", scoreBand(scoreOf(ctx[206])) == "good");
+          toggle_class(td0, "dmg-score-good", scoreBand(scoreOf(ctx[208])) == "good");
         }
         if (dirty[2] & 64) {
-          toggle_class(td0, "dmg-score-fair", scoreBand(scoreOf(ctx[206])) == "fair");
+          toggle_class(td0, "dmg-score-fair", scoreBand(scoreOf(ctx[208])) == "fair");
         }
         if (dirty[2] & 64) {
-          toggle_class(td0, "dmg-score-poor", scoreBand(scoreOf(ctx[206])) == "poor");
+          toggle_class(td0, "dmg-score-poor", scoreBand(scoreOf(ctx[208])) == "poor");
         }
         if (dirty[2] & 64) {
-          toggle_class(td0, "dmg-score-none", scoreBand(scoreOf(ctx[206])) == "none");
+          toggle_class(td0, "dmg-score-none", scoreBand(scoreOf(ctx[208])) == "none");
         }
-        if (ctx[206].first) {
+        if (ctx[208].first) {
           if (if_block0) {
             if_block0.p(ctx, dirty);
           } else {
@@ -45286,11 +45471,11 @@
           if_block0.d(1);
           if_block0 = null;
         }
-        if (ctx[206].first) {
+        if (ctx[208].first) {
           if (if_block1) {
             if_block1.p(ctx, dirty);
           } else {
-            if_block1 = create_if_block_68(ctx);
+            if_block1 = create_if_block_69(ctx);
             if_block1.c();
             if_block1.m(td2, null);
           }
@@ -45298,21 +45483,21 @@
           if_block1.d(1);
           if_block1 = null;
         }
-        if (dirty[2] & 64 && t4_value !== (t4_value = ctx[206].mode.label + ""))
+        if (dirty[2] & 64 && t4_value !== (t4_value = ctx[208].mode.label + ""))
           set_data(t4, t4_value);
         if (dirty[2] & 64) {
-          toggle_class(td3, "dmg-submode", !ctx[206].first);
+          toggle_class(td3, "dmg-submode", !ctx[208].first);
         }
-        if (dirty[2] & 64 && t6_value !== (t6_value = ctx[120](ctx[206].mode.damage.min, 0) + ""))
+        if (dirty[2] & 64 && t6_value !== (t6_value = ctx[122](ctx[208].mode.damage.min, 0) + ""))
           set_data(t6, t6_value);
-        if (dirty[2] & 64 && t8_value !== (t8_value = ctx[120](ctx[206].mode.damage.max, 0) + ""))
+        if (dirty[2] & 64 && t8_value !== (t8_value = ctx[122](ctx[208].mode.damage.max, 0) + ""))
           set_data(t8, t8_value);
-        if (dirty[2] & 64 && t10_value !== (t10_value = Math.round(ctx[206].mode.damage.resist * 100) + ""))
+        if (dirty[2] & 64 && t10_value !== (t10_value = Math.round(ctx[208].mode.damage.resist * 100) + ""))
           set_data(t10, t10_value);
         if (dirty[2] & 64) {
-          toggle_class(span, "dmg-immune", ctx[206].mode.damage.resist == 0);
+          toggle_class(span, "dmg-immune", ctx[208].mode.damage.resist == 0);
         }
-        if (ctx[206].mode.damage.hitsPerAttack > 1) {
+        if (ctx[208].mode.damage.hitsPerAttack > 1) {
           if (if_block2) {
             if_block2.p(ctx, dirty);
           } else {
@@ -45324,41 +45509,41 @@
           if_block2.d(1);
           if_block2 = null;
         }
-        if (dirty[2] & 64 && t13_value !== (t13_value = (ctx[206].mode.attack.range == null ? "\u2013" : ctx[120](ctx[206].mode.attack.range, 0)) + ""))
+        if (dirty[2] & 64 && t13_value !== (t13_value = (ctx[208].mode.attack.range == null ? "\u2013" : ctx[122](ctx[208].mode.attack.range, 0)) + ""))
           set_data(t13, t13_value);
-        if (dirty[2] & 64 && td5_title_value !== (td5_title_value = ctx[123](ctx[206].mode))) {
+        if (dirty[2] & 64 && td5_title_value !== (td5_title_value = ctx[125](ctx[208].mode))) {
           attr(td5, "title", td5_title_value);
         }
         if (dirty[2] & 64) {
-          toggle_class(td5, "dmg-outofrange", outOfRange(ctx[206].mode));
+          toggle_class(td5, "dmg-outofrange", outOfRange(ctx[208].mode));
         }
         if (dirty[2] & 64) {
-          toggle_class(td5, "dmg-offrange", !rangeGoverns(ctx[206].mode));
+          toggle_class(td5, "dmg-offrange", !rangeGoverns(ctx[208].mode));
         }
-        if (dirty[2] & 64 && t15_value !== (t15_value = Math.round(ctx[206].mode.accuracy) + ""))
+        if (dirty[2] & 64 && t15_value !== (t15_value = Math.round(ctx[208].mode.accuracy) + ""))
           set_data(t15, t15_value);
-        if (dirty[2] & 64 && t18_value !== (t18_value = Math.round(ctx[206].mode.hitRate * 100) + ""))
+        if (dirty[2] & 64 && t18_value !== (t18_value = Math.round(ctx[208].mode.hitRate * 100) + ""))
           set_data(t18, t18_value);
-        if (dirty[2] & 64 && t21_value !== (t21_value = ctx[120](ctx[206].mode.perAttack) + ""))
+        if (dirty[2] & 64 && t21_value !== (t21_value = ctx[122](ctx[208].mode.perAttack) + ""))
           set_data(t21, t21_value);
-        if (dirty[2] & 64 && t23_value !== (t23_value = (ctx[206].mode.approachTu > 0 ? ctx[120](ctx[206].mode.approachTu, 0) : "\u2013") + ""))
+        if (dirty[2] & 64 && t23_value !== (t23_value = (ctx[208].mode.approachTu > 0 ? ctx[122](ctx[208].mode.approachTu, 0) : "\u2013") + ""))
           set_data(t23, t23_value);
-        if (dirty[2] & 64 && t25_value !== (t25_value = (ctx[206].mode.attacksToKill == null ? "\u2013" : ctx[120](ctx[206].mode.attacksToKill)) + ""))
+        if (dirty[2] & 64 && t25_value !== (t25_value = (ctx[208].mode.attacksToKill == null ? "\u2013" : ctx[122](ctx[208].mode.attacksToKill)) + ""))
           set_data(t25, t25_value);
-        if (dirty[2] & 64 && t27_value !== (t27_value = (ctx[206].mode.tuToKill == null ? "\u2013" : ctx[120](ctx[206].mode.tuToKill, 0)) + ""))
+        if (dirty[2] & 64 && t27_value !== (t27_value = (ctx[208].mode.tuToKill == null ? "\u2013" : ctx[122](ctx[208].mode.tuToKill, 0)) + ""))
           set_data(t27, t27_value);
-        if (dirty[2] & 64 && t29_value !== (t29_value = ctx[124](ctx[206].mode) + ""))
+        if (dirty[2] & 64 && t29_value !== (t29_value = ctx[126](ctx[208].mode) + ""))
           set_data(t29, t29_value);
-        if (dirty[2] & 64 && td12_title_value !== (td12_title_value = ctx[125](ctx[206].mode))) {
+        if (dirty[2] & 64 && td12_title_value !== (td12_title_value = ctx[127](ctx[208].mode))) {
           attr(td12, "title", td12_title_value);
         }
         if (dirty[2] & 64) {
-          toggle_class(tr2, "dmg-group-first", ctx[206].first);
+          toggle_class(tr2, "dmg-group-first", ctx[208].first);
         }
         if (dirty[1] & 268435456 | dirty[2] & 64) {
-          toggle_class(tr2, "dmg-open", ctx[59] == ctx[206].weapon.id);
+          toggle_class(tr2, "dmg-open", ctx[59] == ctx[208].weapon.id);
         }
-        if (ctx[59] == ctx[206].weapon.id && ctx[206].last) {
+        if (ctx[59] == ctx[208].weapon.id && ctx[208].last) {
           if (if_block3) {
             if_block3.p(ctx, dirty);
           } else {
@@ -45438,119 +45623,117 @@
     let t23;
     let button5;
     let t25;
-    let t26;
     let label0;
     let span2;
-    let t28;
+    let t27;
     let input1;
-    let t29;
+    let t28;
     let span3;
-    let t31;
+    let t30;
     let label1;
     let span4;
-    let t33;
+    let t32;
     let input2;
-    let t34;
+    let t33;
     let span5;
-    let t36;
+    let t35;
     let label2;
     let span6;
-    let t38;
+    let t37;
     let input3;
-    let t39;
+    let t38;
     let span7;
-    let t41;
+    let t40;
     let p;
     let b0;
-    let t43;
+    let t42;
     let b1;
+    let t44;
     let t45;
-    let t46;
     let label3;
     let span8;
-    let t48;
+    let t47;
     let select1;
-    let t49;
+    let t48;
     let label4;
     let input4;
+    let t49;
     let t50;
-    let t51;
     let label5;
     let input5;
+    let t51;
     let t52;
-    let t53;
     let label6;
     let input6;
+    let t53;
     let t54;
-    let t55;
     let label7;
     let input7;
     let input7_disabled_value;
-    let t56;
+    let t55;
     let label7_title_value;
-    let t57;
+    let t56;
     let label8;
     let span9;
-    let t59;
+    let t58;
     let select2;
     let option0;
     let option1;
     let option2;
-    let t63;
+    let t62;
     let label9;
     let span10;
-    let t65;
+    let t64;
     let select3;
     let option3;
     let option4;
     let option5;
+    let t68;
     let t69;
-    let t70;
     let main;
     let current;
     let mounted;
     let dispose;
-    let if_block0 = !ctx[86] && create_if_block_672(ctx);
+    let if_block0 = !ctx[86] && create_if_block_68(ctx);
     function select_block_type(ctx2, dirty) {
       if (!ctx2[61].length)
-        return create_if_block_562;
-      return create_else_block_11;
+        return create_if_block_572;
+      return create_else_block_10;
     }
     let current_block_type = select_block_type(ctx, [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1]);
     let if_block1 = current_block_type(ctx);
-    let if_block2 = ctx[32].length && create_if_block_552(ctx);
-    let each_value_27 = ctx[53].slice(0, 200);
+    let if_block2 = ctx[32].length && create_if_block_562(ctx);
+    let each_value_28 = ctx[53].slice(0, 200);
     let each_blocks_1 = [];
-    for (let i = 0; i < each_value_27.length; i += 1) {
-      each_blocks_1[i] = create_each_block_27(get_each_context_27(ctx, each_value_27, i));
+    for (let i = 0; i < each_value_28.length; i += 1) {
+      each_blocks_1[i] = create_each_block_28(get_each_context_28(ctx, each_value_28, i));
     }
-    let if_block3 = ctx[33] && create_if_block_542(ctx);
-    let if_block4 = ctx[50] && create_if_block_452(ctx);
-    let if_block5 = ctx[80] && create_if_block_422(ctx);
-    let each_value_23 = SIDES;
+    let if_block3 = ctx[33] && create_if_block_552(ctx);
+    let if_block4 = ctx[50] && create_if_block_462(ctx);
+    let each_value_25 = SIDES;
     let each_blocks = [];
-    for (let i = 0; i < each_value_23.length; i += 1) {
-      each_blocks[i] = create_each_block_232(get_each_context_232(ctx, each_value_23, i));
+    for (let i = 0; i < each_value_25.length; i += 1) {
+      each_blocks[i] = create_each_block_252(get_each_context_252(ctx, each_value_25, i));
     }
-    let if_block6 = ctx[51] != null && create_if_block_412(ctx);
-    function select_block_type_7(ctx2, dirty) {
+    let if_block5 = ctx[51] != null && create_if_block_452(ctx);
+    function select_block_type_6(ctx2, dirty) {
       if (ctx2[1] == "weapons")
-        return create_if_block_383;
+        return create_if_block_422;
       return create_else_block_72;
     }
-    let current_block_type_1 = select_block_type_7(ctx, [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1]);
-    let if_block7 = current_block_type_1(ctx);
-    function select_block_type_8(ctx2, dirty) {
+    let current_block_type_1 = select_block_type_6(ctx, [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1]);
+    let if_block6 = current_block_type_1(ctx);
+    function select_block_type_7(ctx2, dirty) {
       if (!ctx2[50])
         return create_if_block28;
       if (ctx2[1] == "weapons")
         return create_if_block_127;
       if (!ctx2[43])
-        return create_if_block_283;
+        return create_if_block_323;
       return create_else_block_52;
     }
-    let current_block_type_2 = select_block_type_8(ctx, [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1]);
-    let if_block8 = current_block_type_2(ctx);
+    let current_block_type_2 = select_block_type_7(ctx, [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1]);
+    let if_block7 = current_block_type_2(ctx);
     return {
       c() {
         div3 = element("div");
@@ -45612,75 +45795,72 @@
         button5 = element("button");
         button5.textContent = "Night";
         t25 = space();
-        if (if_block5)
-          if_block5.c();
-        t26 = space();
         label0 = element("label");
         span2 = element("span");
         span2.textContent = "Range";
-        t28 = space();
+        t27 = space();
         input1 = element("input");
-        t29 = space();
+        t28 = space();
         span3 = element("span");
         span3.textContent = "tiles";
-        t31 = space();
+        t30 = space();
         label1 = element("label");
         span4 = element("span");
         span4.textContent = "Walk";
-        t33 = space();
+        t32 = space();
         input2 = element("input");
-        t34 = space();
+        t33 = space();
         span5 = element("span");
         span5.textContent = "TU/tile";
-        t36 = space();
+        t35 = space();
         label2 = element("label");
         span6 = element("span");
         span6.textContent = "Free";
-        t38 = space();
+        t37 = space();
         input3 = element("input");
-        t39 = space();
+        t38 = space();
         span7 = element("span");
         span7.textContent = "tiles";
-        t41 = space();
+        t40 = space();
         p = element("p");
         b0 = element("b");
         b0.textContent = "Range";
-        t43 = text(" is the cutoff: reach it and APPR is nothing, fall short and you pay\r\n          ");
+        t42 = text(" is the cutoff: reach it and APPR is nothing, fall short and you pay\r\n          ");
         b1 = element("b");
         b1.textContent = "(Range \u2212 reach) \xD7 Walk";
-        t45 = text(" to close. Melee walks the lot. Sight above is shown\r\n          but does not feed APPR yet.");
-        t46 = space();
+        t44 = text(" to close. Melee walks the lot. Sight above is shown\r\n          but does not feed APPR yet.");
+        t45 = space();
         label3 = element("label");
         span8 = element("span");
         span8.textContent = "Hitting";
-        t48 = space();
+        t47 = space();
         select1 = element("select");
         for (let i = 0; i < each_blocks.length; i += 1) {
           each_blocks[i].c();
         }
-        t49 = space();
+        t48 = space();
         label4 = element("label");
         input4 = element("input");
-        t50 = text(" Kneeling");
-        t51 = space();
+        t49 = text(" Kneeling");
+        t50 = space();
         label5 = element("label");
         input5 = element("input");
-        t52 = text(" One-handed");
-        t53 = space();
+        t51 = text(" One-handed");
+        t52 = space();
         label6 = element("label");
         input6 = element("input");
-        t54 = text(" No line of sight");
-        t55 = space();
+        t53 = text(" Squad sight");
+        t54 = space();
         label7 = element("label");
         input7 = element("input");
-        t56 = text("\r\n          Range falloff\r\n          ");
-        if (if_block6)
-          if_block6.c();
-        t57 = space();
+        t55 = text("\r\n          Range falloff\r\n          ");
+        if (if_block5)
+          if_block5.c();
+        t56 = space();
         label8 = element("label");
         span9 = element("span");
         span9.textContent = "Goal";
-        t59 = space();
+        t58 = space();
         select2 = element("select");
         option0 = element("option");
         option0.textContent = "Take down";
@@ -45688,11 +45868,11 @@
         option1.textContent = "Kill outright";
         option2 = element("option");
         option2.textContent = "Capture (stun only)";
-        t63 = space();
+        t62 = space();
         label9 = element("label");
         span10 = element("span");
         span10.textContent = "Pellets";
-        t65 = space();
+        t64 = space();
         select3 = element("select");
         option3 = element("option");
         option3.textContent = "By spread";
@@ -45700,18 +45880,18 @@
         option4.textContent = "All hit";
         option5 = element("option");
         option5.textContent = "First only";
+        t68 = space();
+        if_block6.c();
         t69 = space();
-        if_block7.c();
-        t70 = space();
         main = element("main");
-        if_block8.c();
+        if_block7.c();
         attr(button0, "class", "dmg-tab");
         toggle_class(button0, "dmg-tab-on", ctx[1] == "weapons");
         attr(button1, "class", "dmg-tab");
         toggle_class(button1, "dmg-tab-on", ctx[1] == "targets");
         attr(span0, "class", "stretcher");
         attr(span1, "class", "dmg-note");
-        attr(span1, "title", ctx[108]);
+        attr(span1, "title", ctx[110]);
         attr(div0, "class", "dmg-toolbar");
         attr(section0, "class", "dmg-block");
         toggle_class(section0, "dmg-dropping", ctx[63]);
@@ -45726,38 +45906,38 @@
         attr(select0, "class", "dmg-input dmg-list");
         attr(select0, "size", select0_size_value = ctx[52].length > 1 ? 8 : 2);
         if (ctx[3] === void 0)
-          add_render_callback(() => ctx[151].call(select0));
+          add_render_callback(() => ctx[153].call(select0));
         attr(section1, "class", "dmg-block");
-        attr(header2, "title", ctx[101]);
+        attr(header2, "title", ctx[103]);
         attr(button4, "class", "dmg-chip");
         toggle_class(button4, "dmg-chip-on", ctx[8]);
         attr(button5, "class", "dmg-chip");
         toggle_class(button5, "dmg-chip-on", !ctx[8]);
         attr(div1, "class", "dmg-chips");
-        attr(div1, "title", ctx[102]);
+        attr(div1, "title", ctx[104]);
         attr(input1, "class", "dmg-input dmg-num");
         attr(input1, "type", "number");
         attr(input1, "min", "0");
         attr(span3, "class", "dmg-cap");
         attr(label0, "class", "dmg-row");
-        attr(label0, "title", ctx[103]);
+        attr(label0, "title", ctx[105]);
         attr(input2, "class", "dmg-input dmg-num");
         attr(input2, "type", "number");
         attr(input2, "min", "0");
         attr(span5, "class", "dmg-cap");
         attr(label1, "class", "dmg-row");
-        attr(label1, "title", ctx[106]);
+        attr(label1, "title", ctx[108]);
         attr(input3, "class", "dmg-input dmg-num");
         attr(input3, "type", "number");
         attr(input3, "min", "0");
         attr(span7, "class", "dmg-cap");
         attr(label2, "class", "dmg-row");
-        attr(label2, "title", ctx[107]);
+        attr(label2, "title", ctx[109]);
         attr(p, "class", "dmg-hint");
-        attr(p, "title", ctx[103]);
+        attr(p, "title", ctx[105]);
         attr(select1, "class", "dmg-input");
         if (ctx[4] === void 0)
-          add_render_callback(() => ctx[166].call(select1));
+          add_render_callback(() => ctx[167].call(select1));
         attr(label3, "class", "dmg-row");
         attr(input4, "type", "checkbox");
         attr(label4, "class", "dmg-check");
@@ -45765,6 +45945,7 @@
         attr(label5, "class", "dmg-check");
         attr(input6, "type", "checkbox");
         attr(label6, "class", "dmg-check");
+        attr(label6, "title", ctx[101]);
         attr(input7, "type", "checkbox");
         input7.disabled = input7_disabled_value = ctx[51] != null;
         attr(label7, "class", "dmg-check");
@@ -45779,7 +45960,7 @@
         attr(select2, "class", "dmg-input");
         attr(select2, "title", "Take down: health runs out OR stun exceeds the health that is left - the two add, which is why a rifle with ToStun can drop a target that the health damage alone would not. Kill outright: health damage only. Capture: stun only, for taking one alive.");
         if (ctx[15] === void 0)
-          add_render_callback(() => ctx[171].call(select2));
+          add_render_callback(() => ctx[172].call(select2));
         attr(label8, "class", "dmg-row");
         option3.__value = "derived";
         option3.value = option3.__value;
@@ -45790,7 +45971,7 @@
         attr(select3, "class", "dmg-input");
         attr(select3, "title", "Shotguns only. Whether scattered pellets are assumed to land. OXCE traces each pellet through voxels against the target's model, so this is an assumption rather than a calculation.");
         if (ctx[14] === void 0)
-          add_render_callback(() => ctx[172].call(select3));
+          add_render_callback(() => ctx[173].call(select3));
         attr(label9, "class", "dmg-row");
         attr(section2, "class", "dmg-block");
         attr(aside, "class", "dmg-side");
@@ -45856,116 +46037,113 @@
         append(div1, t23);
         append(div1, button5);
         append(section2, t25);
-        if (if_block5)
-          if_block5.m(section2, null);
-        append(section2, t26);
         append(section2, label0);
         append(label0, span2);
-        append(label0, t28);
+        append(label0, t27);
         append(label0, input1);
         set_input_value(input1, ctx[5]);
-        append(label0, t29);
+        append(label0, t28);
         append(label0, span3);
-        append(section2, t31);
+        append(section2, t30);
         append(section2, label1);
         append(label1, span4);
-        append(label1, t33);
+        append(label1, t32);
         append(label1, input2);
         set_input_value(input2, ctx[6]);
-        append(label1, t34);
+        append(label1, t33);
         append(label1, span5);
-        append(section2, t36);
+        append(section2, t35);
         append(section2, label2);
         append(label2, span6);
-        append(label2, t38);
+        append(label2, t37);
         append(label2, input3);
         set_input_value(input3, ctx[7]);
-        append(label2, t39);
+        append(label2, t38);
         append(label2, span7);
-        append(section2, t41);
+        append(section2, t40);
         append(section2, p);
         append(p, b0);
-        append(p, t43);
+        append(p, t42);
         append(p, b1);
-        append(p, t45);
-        append(section2, t46);
+        append(p, t44);
+        append(section2, t45);
         append(section2, label3);
         append(label3, span8);
-        append(label3, t48);
+        append(label3, t47);
         append(label3, select1);
         for (let i = 0; i < each_blocks.length; i += 1) {
           each_blocks[i].m(select1, null);
         }
         select_option(select1, ctx[4]);
-        append(section2, t49);
+        append(section2, t48);
         append(section2, label4);
         append(label4, input4);
         input4.checked = ctx[10];
-        append(label4, t50);
-        append(section2, t51);
+        append(label4, t49);
+        append(section2, t50);
         append(section2, label5);
         append(label5, input5);
         input5.checked = ctx[11];
-        append(label5, t52);
-        append(section2, t53);
+        append(label5, t51);
+        append(section2, t52);
         append(section2, label6);
         append(label6, input6);
         input6.checked = ctx[12];
-        append(label6, t54);
-        append(section2, t55);
+        append(label6, t53);
+        append(section2, t54);
         append(section2, label7);
         append(label7, input7);
         input7.checked = ctx[13];
-        append(label7, t56);
-        if (if_block6)
-          if_block6.m(label7, null);
-        append(section2, t57);
+        append(label7, t55);
+        if (if_block5)
+          if_block5.m(label7, null);
+        append(section2, t56);
         append(section2, label8);
         append(label8, span9);
-        append(label8, t59);
+        append(label8, t58);
         append(label8, select2);
         append(select2, option0);
         append(select2, option1);
         append(select2, option2);
         select_option(select2, ctx[15]);
-        append(section2, t63);
+        append(section2, t62);
         append(section2, label9);
         append(label9, span10);
-        append(label9, t65);
+        append(label9, t64);
         append(label9, select3);
         append(select3, option3);
         append(select3, option4);
         append(select3, option5);
         select_option(select3, ctx[14]);
-        append(aside, t69);
-        if_block7.m(aside, null);
-        append(div2, t70);
+        append(aside, t68);
+        if_block6.m(aside, null);
+        append(div2, t69);
         append(div2, main);
-        if_block8.m(main, null);
+        if_block7.m(main, null);
         current = true;
         if (!mounted) {
           dispose = [
-            listen(button0, "click", ctx[140]),
-            listen(button1, "click", ctx[141]),
-            listen(section0, "dragover", prevent_default(ctx[146])),
-            listen(section0, "dragleave", ctx[147]),
+            listen(button0, "click", ctx[142]),
+            listen(button1, "click", ctx[143]),
+            listen(section0, "dragover", prevent_default(ctx[148])),
+            listen(section0, "dragleave", ctx[149]),
             listen(section0, "drop", ctx[88]),
             listen(button2, "click", ctx[94]),
             listen(button3, "click", ctx[95]),
-            listen(input0, "input", ctx[150]),
-            listen(select0, "change", ctx[151]),
-            listen(button4, "click", ctx[160]),
-            listen(button5, "click", ctx[161]),
-            listen(input1, "input", ctx[163]),
-            listen(input2, "input", ctx[164]),
-            listen(input3, "input", ctx[165]),
-            listen(select1, "change", ctx[166]),
-            listen(input4, "change", ctx[167]),
-            listen(input5, "change", ctx[168]),
-            listen(input6, "change", ctx[169]),
-            listen(input7, "change", ctx[170]),
-            listen(select2, "change", ctx[171]),
-            listen(select3, "change", ctx[172])
+            listen(input0, "input", ctx[152]),
+            listen(select0, "change", ctx[153]),
+            listen(button4, "click", ctx[162]),
+            listen(button5, "click", ctx[163]),
+            listen(input1, "input", ctx[164]),
+            listen(input2, "input", ctx[165]),
+            listen(input3, "input", ctx[166]),
+            listen(select1, "change", ctx[167]),
+            listen(input4, "change", ctx[168]),
+            listen(input5, "change", ctx[169]),
+            listen(input6, "change", ctx[170]),
+            listen(input7, "change", ctx[171]),
+            listen(select2, "change", ctx[172]),
+            listen(select3, "change", ctx[173])
           ];
           mounted = true;
         }
@@ -46002,7 +46180,7 @@
           if (if_block2) {
             if_block2.p(ctx2, dirty);
           } else {
-            if_block2 = create_if_block_552(ctx2);
+            if_block2 = create_if_block_562(ctx2);
             if_block2.c();
             if_block2.m(section1, t15);
           }
@@ -46014,14 +46192,14 @@
           set_input_value(input0, ctx2[33]);
         }
         if (dirty[1] & 4194304) {
-          each_value_27 = ctx2[53].slice(0, 200);
+          each_value_28 = ctx2[53].slice(0, 200);
           let i;
-          for (i = 0; i < each_value_27.length; i += 1) {
-            const child_ctx = get_each_context_27(ctx2, each_value_27, i);
+          for (i = 0; i < each_value_28.length; i += 1) {
+            const child_ctx = get_each_context_28(ctx2, each_value_28, i);
             if (each_blocks_1[i]) {
               each_blocks_1[i].p(child_ctx, dirty);
             } else {
-              each_blocks_1[i] = create_each_block_27(child_ctx);
+              each_blocks_1[i] = create_each_block_28(child_ctx);
               each_blocks_1[i].c();
               each_blocks_1[i].m(select0, null);
             }
@@ -46029,7 +46207,7 @@
           for (; i < each_blocks_1.length; i += 1) {
             each_blocks_1[i].d(1);
           }
-          each_blocks_1.length = each_value_27.length;
+          each_blocks_1.length = each_value_28.length;
         }
         if (!current || dirty[1] & 2097152 && select0_size_value !== (select0_size_value = ctx2[52].length > 1 ? 8 : 2)) {
           attr(select0, "size", select0_size_value);
@@ -46041,7 +46219,7 @@
           if (if_block3) {
             if_block3.p(ctx2, dirty);
           } else {
-            if_block3 = create_if_block_542(ctx2);
+            if_block3 = create_if_block_552(ctx2);
             if_block3.c();
             if_block3.m(section1, t18);
           }
@@ -46056,7 +46234,7 @@
               transition_in(if_block4, 1);
             }
           } else {
-            if_block4 = create_if_block_452(ctx2);
+            if_block4 = create_if_block_462(ctx2);
             if_block4.c();
             transition_in(if_block4, 1);
             if_block4.m(section1, null);
@@ -46074,18 +46252,6 @@
         if (dirty[0] & 256) {
           toggle_class(button5, "dmg-chip-on", !ctx2[8]);
         }
-        if (ctx2[80]) {
-          if (if_block5) {
-            if_block5.p(ctx2, dirty);
-          } else {
-            if_block5 = create_if_block_422(ctx2);
-            if_block5.c();
-            if_block5.m(section2, t26);
-          }
-        } else if (if_block5) {
-          if_block5.d(1);
-          if_block5 = null;
-        }
         if (dirty[0] & 32 && to_number(input1.value) !== ctx2[5]) {
           set_input_value(input1, ctx2[5]);
         }
@@ -46096,14 +46262,14 @@
           set_input_value(input3, ctx2[7]);
         }
         if (dirty & 0) {
-          each_value_23 = SIDES;
+          each_value_25 = SIDES;
           let i;
-          for (i = 0; i < each_value_23.length; i += 1) {
-            const child_ctx = get_each_context_232(ctx2, each_value_23, i);
+          for (i = 0; i < each_value_25.length; i += 1) {
+            const child_ctx = get_each_context_252(ctx2, each_value_25, i);
             if (each_blocks[i]) {
               each_blocks[i].p(child_ctx, dirty);
             } else {
-              each_blocks[i] = create_each_block_232(child_ctx);
+              each_blocks[i] = create_each_block_252(child_ctx);
               each_blocks[i].c();
               each_blocks[i].m(select1, null);
             }
@@ -46111,7 +46277,7 @@
           for (; i < each_blocks.length; i += 1) {
             each_blocks[i].d(1);
           }
-          each_blocks.length = each_value_23.length;
+          each_blocks.length = each_value_25.length;
         }
         if (dirty[0] & 16) {
           select_option(select1, ctx2[4]);
@@ -46132,16 +46298,16 @@
           input7.checked = ctx2[13];
         }
         if (ctx2[51] != null) {
-          if (if_block6) {
-            if_block6.p(ctx2, dirty);
+          if (if_block5) {
+            if_block5.p(ctx2, dirty);
           } else {
-            if_block6 = create_if_block_412(ctx2);
-            if_block6.c();
-            if_block6.m(label7, null);
+            if_block5 = create_if_block_452(ctx2);
+            if_block5.c();
+            if_block5.m(label7, null);
           }
-        } else if (if_block6) {
-          if_block6.d(1);
-          if_block6 = null;
+        } else if (if_block5) {
+          if_block5.d(1);
+          if_block5 = null;
         }
         if (!current || dirty[1] & 1048576 && label7_title_value !== (label7_title_value = ctx2[51] != null ? "This mod pins UFO Extender accuracy " + (ctx2[51] ? "ON" : "OFF") + " through fixedUserOptions, which OXCE honours over your options.cfg - so this is not a choice you have in game." : "On: snap and auto fall off past their own short ranges. Off: every mode is judged against the AIMED range instead - which is not the same as no falloff. The minimum-range penalty applies either way.")) {
           attr(label7, "title", label7_title_value);
@@ -46155,24 +46321,24 @@
         if (dirty[0] & 16384) {
           select_option(select3, ctx2[14]);
         }
-        if (current_block_type_1 === (current_block_type_1 = select_block_type_7(ctx2, dirty)) && if_block7) {
+        if (current_block_type_1 === (current_block_type_1 = select_block_type_6(ctx2, dirty)) && if_block6) {
+          if_block6.p(ctx2, dirty);
+        } else {
+          if_block6.d(1);
+          if_block6 = current_block_type_1(ctx2);
+          if (if_block6) {
+            if_block6.c();
+            if_block6.m(aside, null);
+          }
+        }
+        if (current_block_type_2 === (current_block_type_2 = select_block_type_7(ctx2, dirty)) && if_block7) {
           if_block7.p(ctx2, dirty);
         } else {
           if_block7.d(1);
-          if_block7 = current_block_type_1(ctx2);
+          if_block7 = current_block_type_2(ctx2);
           if (if_block7) {
             if_block7.c();
-            if_block7.m(aside, null);
-          }
-        }
-        if (current_block_type_2 === (current_block_type_2 = select_block_type_8(ctx2, dirty)) && if_block8) {
-          if_block8.p(ctx2, dirty);
-        } else {
-          if_block8.d(1);
-          if_block8 = current_block_type_2(ctx2);
-          if (if_block8) {
-            if_block8.c();
-            if_block8.m(main, null);
+            if_block7.m(main, null);
           }
         }
       },
@@ -46199,13 +46365,11 @@
           if_block3.d();
         if (if_block4)
           if_block4.d();
+        destroy_each(each_blocks, detaching);
         if (if_block5)
           if_block5.d();
-        destroy_each(each_blocks, detaching);
-        if (if_block6)
-          if_block6.d();
+        if_block6.d();
         if_block7.d();
-        if_block8.d();
         mounted = false;
         run_all(dispose);
       }
@@ -46356,10 +46520,10 @@
     let allTargets = [];
     let armorChoices = [];
     onMount(() => {
-      $$invalidate(129, allWeapons = weaponList());
-      $$invalidate(130, allTargets = targetList());
+      $$invalidate(131, allWeapons = weaponList());
+      $$invalidate(132, allTargets = targetList());
       const targetable = new Set(allTargets.map((t) => t.id));
-      $$invalidate(127, allMissions = missionList((id) => targetable.has(id)));
+      $$invalidate(129, allMissions = missionList((id) => targetable.has(id)));
       $$invalidate(2, soldiers = loadSoldiers());
       if (!soldiers.length)
         $$invalidate(2, soldiers = [blankSoldier("Gal")]);
@@ -46395,9 +46559,9 @@
         try {
           const raw = JSON.parse(localStorage[CREW_ARMOR_PREF] || "{}");
           if (raw && typeof raw == "object")
-            $$invalidate(128, crewArmor = raw);
+            $$invalidate(130, crewArmor = raw);
         } catch (e) {
-          $$invalidate(128, crewArmor = {});
+          $$invalidate(130, crewArmor = {});
         }
       });
     }
@@ -46504,7 +46668,7 @@
         return;
       $$invalidate(27, armorFilter = "");
       if (current.fromSave) {
-        $$invalidate(128, crewArmor = __spreadProps(__spreadValues({}, crewArmor), { [current.id]: id }));
+        $$invalidate(130, crewArmor = __spreadProps(__spreadValues({}, crewArmor), { [current.id]: id }));
         try {
           localStorage[CREW_ARMOR_PREF] = JSON.stringify(crewArmor);
         } catch (e) {
@@ -46599,6 +46763,8 @@
       const t = +i;
       $$invalidate(19, dtFilters = dtFilters.includes(t) ? dtFilters.filter((x) => x != t) : [...dtFilters, t]);
     }
+    const SQUADSIGHT_TITLE = "Firing at an enemy YOU cannot see, that a squadmate has spotted. OXCE allows the shot at full range - it is not refused - but multiplies accuracy by the weapon's noLOSAccuracyPenalty (Projectile.cpp:401). This mod's global default is 50%, i.e. half accuracy. Items that state their own: 100 on 6 items (no penalty at all), 82, 77, 75 on 14, 67 on 6, 66, 65, and 0 on one (cannot be fired blind at all). Tick this when planning to shoot past your own vision - typically at night, or at a camouflaged enemy, where the Spots-at distance above is short but a spotter can still see it.";
+    const SIGHT_TITLE = "How far away this soldier spots THIS enemy, from the ruleset: her armour's day or night vision, minus the enemy's camouflage, plus her own anti-camouflage. A POSITIVE camouflage is a hard cap that replaces her vision outright rather than subtracting from it, which is why a camouflaged enemy collapses the number so hard. When this is shorter than the Range cutoff it becomes the cutoff, because a fight cannot open further away than you can see - which is what makes melee strong in the dark.";
     const SHOT_TITLE = "Where the fight starts. Range is the cutoff every approach is measured against - reach it and you pay nothing, fall short and you pay to close. Sight is how far away you spot THIS enemy with THIS armour in this light, computed from the ruleset; it is shown for reference but does not feed APPR yet.";
     const LIGHT_TITLE = "Daylight or darkness. A soldier sees maxViewDistance tiles by day (40 in XPiratez) but only 9 in the dark unless her armour states otherwise - CASTAWAY states 12. It changes the whole table, because a weapon you cannot shoot from spotting distance has to be walked into range.";
     const RANGE_TITLE = "The distance a fight opens at, and the cutoff every approach is measured against. A mode that reaches THIS FAR OR FURTHER pays no APPR - you can already act from where the fight starts, which is also the safer place to be. A shorter mode is charged for the tiles it has to close: a Sawed-Off reaching 4 at a cutoff of 16 pays (16 - 4) x 4 = 48 TU. Melee reaches nothing, so it walks the whole cutoff. 16 because the mod's median ranged reach is 18 tiles, so most guns sit free of it and only the genuinely short-ranged pay.";
@@ -46696,7 +46862,7 @@
       const col = tcolById(id);
       const fresh = { id, desc: !(col && col.asc) };
       if (!tSortTouched) {
-        $$invalidate(131, tSortTouched = true);
+        $$invalidate(133, tSortTouched = true);
         $$invalidate(39, tSortKeys = [fresh]);
         return;
       }
@@ -46717,7 +46883,7 @@
     }
     function tResetSort() {
       $$invalidate(39, tSortKeys = [{ id: "score", desc: true }]);
-      $$invalidate(131, tSortTouched = false);
+      $$invalidate(133, tSortTouched = false);
     }
     function tCmpChain(mA, tA, mB, tB, keys) {
       for (const k of keys) {
@@ -46746,7 +46912,7 @@
       const col = colById(id);
       const fresh = { id, desc: !(col && col.asc) };
       if (!sortTouched) {
-        $$invalidate(132, sortTouched = true);
+        $$invalidate(134, sortTouched = true);
         $$invalidate(40, sortKeys = [fresh]);
         return;
       }
@@ -46768,7 +46934,7 @@
     }
     function resetSort() {
       $$invalidate(40, sortKeys = [{ id: "score", desc: true }]);
-      $$invalidate(132, sortTouched = false);
+      $$invalidate(134, sortTouched = false);
     }
     const sortIndex = (keys, id) => keys.findIndex((k) => k.id == id);
     function cmpChain(mA, wA, mB, wB, keys) {
@@ -46892,7 +47058,7 @@
     }
     function input_input_handler() {
       current.name = this.value;
-      $$invalidate(50, current), $$invalidate(53, shownRoster), $$invalidate(52, roster), $$invalidate(3, currentId), $$invalidate(128, crewArmor), $$invalidate(33, crewFilter), $$invalidate(30, soldierSource), $$invalidate(32, saveCrew), $$invalidate(2, soldiers), $$invalidate(31, sourceTouched), $$invalidate(35, saveState);
+      $$invalidate(50, current), $$invalidate(53, shownRoster), $$invalidate(52, roster), $$invalidate(3, currentId), $$invalidate(130, crewArmor), $$invalidate(33, crewFilter), $$invalidate(30, soldierSource), $$invalidate(32, saveCrew), $$invalidate(2, soldiers), $$invalidate(31, sourceTouched), $$invalidate(35, saveState);
     }
     function input0_input_handler_1() {
       armorFilter = this.value;
@@ -46900,8 +47066,8 @@
     }
     function select_change_handler() {
       armorPick = select_value(this);
-      $$invalidate(64, armorPick), $$invalidate(50, current), $$invalidate(53, shownRoster), $$invalidate(52, roster), $$invalidate(3, currentId), $$invalidate(128, crewArmor), $$invalidate(33, crewFilter), $$invalidate(30, soldierSource), $$invalidate(32, saveCrew), $$invalidate(2, soldiers), $$invalidate(31, sourceTouched), $$invalidate(35, saveState);
-      $$invalidate(84, armorOptions), $$invalidate(54, shownArmors), $$invalidate(50, current), $$invalidate(27, armorFilter), $$invalidate(38, armorChoices), $$invalidate(53, shownRoster), $$invalidate(52, roster), $$invalidate(3, currentId), $$invalidate(128, crewArmor), $$invalidate(28, availMode), $$invalidate(35, saveState), $$invalidate(33, crewFilter), $$invalidate(30, soldierSource), $$invalidate(32, saveCrew), $$invalidate(2, soldiers), $$invalidate(29, availTouched), $$invalidate(31, sourceTouched);
+      $$invalidate(64, armorPick), $$invalidate(50, current), $$invalidate(53, shownRoster), $$invalidate(52, roster), $$invalidate(3, currentId), $$invalidate(130, crewArmor), $$invalidate(33, crewFilter), $$invalidate(30, soldierSource), $$invalidate(32, saveCrew), $$invalidate(2, soldiers), $$invalidate(31, sourceTouched), $$invalidate(35, saveState);
+      $$invalidate(84, armorOptions), $$invalidate(54, shownArmors), $$invalidate(50, current), $$invalidate(27, armorFilter), $$invalidate(38, armorChoices), $$invalidate(53, shownRoster), $$invalidate(52, roster), $$invalidate(3, currentId), $$invalidate(130, crewArmor), $$invalidate(28, availMode), $$invalidate(35, saveState), $$invalidate(33, crewFilter), $$invalidate(30, soldierSource), $$invalidate(32, saveCrew), $$invalidate(2, soldiers), $$invalidate(29, availTouched), $$invalidate(31, sourceTouched);
     }
     const change_handler_3 = (e) => setArmor(e.target.value);
     const click_handler_5 = () => $$invalidate(55, editing = !editing);
@@ -46915,7 +47081,6 @@
     const click_handler_7 = () => download("xpedia-soldiers.json", exportSoldiers(soldiers));
     const click_handler_8 = () => $$invalidate(8, isDay = true);
     const click_handler_9 = () => $$invalidate(8, isDay = false);
-    const click_handler_10 = () => $$invalidate(56, showSight = !showSight);
     function input1_input_handler() {
       distance = to_number(this.value);
       $$invalidate(5, distance);
@@ -46956,7 +47121,7 @@
       pelletModel = select_value(this);
       $$invalidate(14, pelletModel);
     }
-    const click_handler_11 = () => {
+    const click_handler_10 = () => {
       $$invalidate(23, missionId = "");
       $$invalidate(24, missionFilter = "");
     };
@@ -46967,7 +47132,7 @@
     function select0_change_handler_1() {
       missionId = select_value(this);
       $$invalidate(23, missionId);
-      $$invalidate(73, shownMissions), $$invalidate(24, missionFilter), $$invalidate(127, allMissions);
+      $$invalidate(73, shownMissions), $$invalidate(24, missionFilter), $$invalidate(129, allMissions);
     }
     function input1_input_handler_1() {
       targetFilter = this.value;
@@ -46975,8 +47140,8 @@
     }
     function select1_change_handler_1() {
       targetId = select_value(this);
-      $$invalidate(0, targetId), $$invalidate(137, missionRoster), $$invalidate(44, shownTargets), $$invalidate(23, missionId), $$invalidate(47, mission), $$invalidate(130, allTargets), $$invalidate(22, targetFilter), $$invalidate(127, allMissions);
-      $$invalidate(44, shownTargets), $$invalidate(130, allTargets), $$invalidate(137, missionRoster), $$invalidate(22, targetFilter), $$invalidate(23, missionId), $$invalidate(47, mission), $$invalidate(127, allMissions);
+      $$invalidate(0, targetId), $$invalidate(139, missionRoster), $$invalidate(44, shownTargets), $$invalidate(23, missionId), $$invalidate(47, mission), $$invalidate(132, allTargets), $$invalidate(22, targetFilter), $$invalidate(129, allMissions);
+      $$invalidate(44, shownTargets), $$invalidate(132, allTargets), $$invalidate(139, missionRoster), $$invalidate(22, targetFilter), $$invalidate(23, missionId), $$invalidate(47, mission), $$invalidate(129, allMissions);
     }
     function input_input_handler_1() {
       weaponFilter = this.value;
@@ -46985,8 +47150,9 @@
     function select_change_handler_1() {
       weaponId = select_value(this);
       $$invalidate(26, weaponId);
-      $$invalidate(46, shownWeapons), $$invalidate(129, allWeapons), $$invalidate(21, includeFixed), $$invalidate(17, kindFilter), $$invalidate(18, handsFilter), $$invalidate(19, dtFilters), $$invalidate(20, catFilters), $$invalidate(28, availMode), $$invalidate(49, availability), $$invalidate(16, weaponFilter), $$invalidate(35, saveState), $$invalidate(29, availTouched);
+      $$invalidate(46, shownWeapons), $$invalidate(131, allWeapons), $$invalidate(21, includeFixed), $$invalidate(17, kindFilter), $$invalidate(18, handsFilter), $$invalidate(19, dtFilters), $$invalidate(20, catFilters), $$invalidate(28, availMode), $$invalidate(49, availability), $$invalidate(16, weaponFilter), $$invalidate(35, saveState), $$invalidate(29, availTouched);
     }
+    const click_handler_11 = () => $$invalidate(56, showSight = !showSight);
     const click_handler_12 = (r) => toggleDt(r.i);
     const click_handler_13 = () => $$invalidate(19, dtFilters = []);
     const click_handler_14 = () => $$invalidate(25, showDeployment = !showDeployment);
@@ -47001,7 +47167,7 @@
     function select0_change_handler_2() {
       catPick = select_value(this);
       $$invalidate(58, catPick);
-      $$invalidate(76, catOptions), $$invalidate(129, allWeapons), $$invalidate(138, passing), $$invalidate(21, includeFixed), $$invalidate(17, kindFilter), $$invalidate(18, handsFilter), $$invalidate(19, dtFilters), $$invalidate(20, catFilters), $$invalidate(28, availMode), $$invalidate(49, availability), $$invalidate(35, saveState), $$invalidate(29, availTouched);
+      $$invalidate(76, catOptions), $$invalidate(131, allWeapons), $$invalidate(140, passing), $$invalidate(21, includeFixed), $$invalidate(17, kindFilter), $$invalidate(18, handsFilter), $$invalidate(19, dtFilters), $$invalidate(20, catFilters), $$invalidate(28, availMode), $$invalidate(49, availability), $$invalidate(35, saveState), $$invalidate(29, availTouched);
     }
     const change_handler_5 = () => {
       if (catPick != "all")
@@ -47012,7 +47178,7 @@
     function select1_change_handler_2() {
       dtPick = select_value(this);
       $$invalidate(57, dtPick);
-      $$invalidate(48, dtOptions), $$invalidate(129, allWeapons), $$invalidate(138, passing), $$invalidate(21, includeFixed), $$invalidate(17, kindFilter), $$invalidate(18, handsFilter), $$invalidate(19, dtFilters), $$invalidate(20, catFilters), $$invalidate(28, availMode), $$invalidate(49, availability), $$invalidate(35, saveState), $$invalidate(29, availTouched);
+      $$invalidate(48, dtOptions), $$invalidate(131, allWeapons), $$invalidate(140, passing), $$invalidate(21, includeFixed), $$invalidate(17, kindFilter), $$invalidate(18, handsFilter), $$invalidate(19, dtFilters), $$invalidate(20, catFilters), $$invalidate(28, availMode), $$invalidate(49, availability), $$invalidate(35, saveState), $$invalidate(29, availTouched);
     }
     const change_handler_6 = () => {
       if (dtPick != "all")
@@ -47069,7 +47235,7 @@
           if (roster.length && !roster.some((x) => x.id == currentId))
             $$invalidate(3, currentId = roster[0].id);
       }
-      if ($$self.$$.dirty[1] & 16 | $$self.$$.dirty[4] & 32) {
+      if ($$self.$$.dirty[1] & 16 | $$self.$$.dirty[4] & 128) {
         $:
           $$invalidate(49, availability = saveState && allWeapons.length ? buildAvailability(allWeapons, saveState) : /* @__PURE__ */ new Map());
       }
@@ -47082,7 +47248,7 @@
         $:
           $$invalidate(53, shownRoster = crewFilter ? roster.filter((s) => matchesSearch(s.name, crewFilter)) : roster);
       }
-      if ($$self.$$.dirty[0] & 8 | $$self.$$.dirty[1] & 6291456 | $$self.$$.dirty[4] & 16) {
+      if ($$self.$$.dirty[0] & 8 | $$self.$$.dirty[1] & 6291456 | $$self.$$.dirty[4] & 64) {
         $:
           $$invalidate(50, current = (() => {
             const list = shownRoster.length ? shownRoster : roster;
@@ -47145,26 +47311,26 @@
       }
       if ($$self.$$.dirty[1] & 16) {
         $:
-          $$invalidate(135, difficulty = saveState ? saveState.difficulty : null);
+          $$invalidate(137, difficulty = saveState ? saveState.difficulty : null);
       }
-      if ($$self.$$.dirty[0] & 8388608 | $$self.$$.dirty[4] & 8) {
+      if ($$self.$$.dirty[0] & 8388608 | $$self.$$.dirty[4] & 32) {
         $:
           $$invalidate(47, mission = missionId ? allMissions.find((m) => m.id == missionId) : null);
       }
       if ($$self.$$.dirty[0] & 8388608 | $$self.$$.dirty[1] & 65536) {
         $:
-          $$invalidate(137, missionRoster = missionId && mission && !mission.unresolved ? missionUnits(missionId) : null);
+          $$invalidate(139, missionRoster = missionId && mission && !mission.unresolved ? missionUnits(missionId) : null);
       }
-      if ($$self.$$.dirty[0] & 4194304 | $$self.$$.dirty[4] & 8256) {
+      if ($$self.$$.dirty[0] & 4194304 | $$self.$$.dirty[4] & 33024) {
         $:
           $$invalidate(44, shownTargets = allTargets.filter((t) => (!missionRoster || missionRoster.has(t.id)) && (!targetFilter || matchesSearch(t.title, targetFilter))));
       }
-      if ($$self.$$.dirty[0] & 1 | $$self.$$.dirty[1] & 8192 | $$self.$$.dirty[4] & 8192) {
+      if ($$self.$$.dirty[0] & 1 | $$self.$$.dirty[1] & 8192 | $$self.$$.dirty[4] & 32768) {
         $:
           if (missionRoster && targetId && !missionRoster.has(targetId))
             $$invalidate(0, targetId = shownTargets.length ? shownTargets[0].id : "");
       }
-      if ($$self.$$.dirty[0] & 1 | $$self.$$.dirty[4] & 2048) {
+      if ($$self.$$.dirty[0] & 1 | $$self.$$.dirty[4] & 8192) {
         $:
           $$invalidate(41, target = targetId ? resolveTarget(targetId, difficulty) : null);
       }
@@ -47175,11 +47341,11 @@
       }
       if ($$self.$$.dirty[1] & 524288) {
         $:
-          $$invalidate(139, soldierArmor = current && current.armor ? rul.armors[current.armor] : null);
+          $$invalidate(141, soldierArmor = current && current.armor ? rul.armors[current.armor] : null);
       }
-      if ($$self.$$.dirty[0] & 15840 | $$self.$$.dirty[4] & 32768) {
+      if ($$self.$$.dirty[0] & 15840 | $$self.$$.dirty[4] & 131072) {
         $:
-          $$invalidate(134, opts = {
+          $$invalidate(136, opts = {
             distance: +distance || 0,
             kneeling,
             oneHanded,
@@ -47191,11 +47357,11 @@
             soldierArmor
           });
       }
-      if ($$self.$$.dirty[0] & 256 | $$self.$$.dirty[1] & 1024 | $$self.$$.dirty[4] & 32768) {
+      if ($$self.$$.dirty[0] & 256 | $$self.$$.dirty[1] & 1024 | $$self.$$.dirty[4] & 131072) {
         $:
           $$invalidate(80, sight = target ? sightDistance(soldierArmor, target.armor, isDay) : null);
       }
-      if ($$self.$$.dirty[0] & 272564224 | $$self.$$.dirty[1] & 262144 | $$self.$$.dirty[4] & 32) {
+      if ($$self.$$.dirty[0] & 272564224 | $$self.$$.dirty[1] & 262144 | $$self.$$.dirty[4] & 128) {
         $:
           $$invalidate(46, shownWeapons = allWeapons.filter((w) => {
             if (!includeFixed && w.fixed)
@@ -47217,7 +47383,7 @@
       }
       if ($$self.$$.dirty[0] & 272498688 | $$self.$$.dirty[1] & 262144) {
         $:
-          $$invalidate(138, passing = (w, skip) => {
+          $$invalidate(140, passing = (w, skip) => {
             if (!includeFixed && w.fixed)
               return false;
             if (skip != "kind" && kindFilter != "all" && !w.kinds.includes(kindFilter))
@@ -47233,7 +47399,7 @@
             return true;
           });
       }
-      if ($$self.$$.dirty[1] & 262144 | $$self.$$.dirty[4] & 16416) {
+      if ($$self.$$.dirty[1] & 262144 | $$self.$$.dirty[4] & 65664) {
         $:
           $$invalidate(79, availCounts = (() => {
             const out = { off: 0, stores: 0, obtainable: 0 };
@@ -47252,7 +47418,7 @@
             return out;
           })());
       }
-      if ($$self.$$.dirty[4] & 16416) {
+      if ($$self.$$.dirty[4] & 65664) {
         $:
           $$invalidate(78, kindCounts = allWeapons.reduce((acc, w) => {
             if (!passing(w, "kind"))
@@ -47263,7 +47429,7 @@
             return acc;
           }, {}));
       }
-      if ($$self.$$.dirty[4] & 16416) {
+      if ($$self.$$.dirty[4] & 65664) {
         $:
           $$invalidate(77, handsCounts = allWeapons.reduce((acc, w) => {
             if (!passing(w, "hands"))
@@ -47273,7 +47439,7 @@
             return acc;
           }, {}));
       }
-      if ($$self.$$.dirty[4] & 16416) {
+      if ($$self.$$.dirty[4] & 65664) {
         $:
           $$invalidate(48, dtOptions = (() => {
             const counts = {};
@@ -47290,7 +47456,7 @@
             })).sort((a, b) => a.label < b.label ? -1 : 1);
           })());
       }
-      if ($$self.$$.dirty[4] & 16416) {
+      if ($$self.$$.dirty[4] & 65664) {
         $:
           $$invalidate(76, catOptions = (() => {
             const counts = {};
@@ -47311,13 +47477,13 @@
         $:
           $$invalidate(74, deploymentRows = missionId && showDeployment ? missionRows(missionId) : []);
       }
-      if ($$self.$$.dirty[0] & 16777216 | $$self.$$.dirty[4] & 8) {
+      if ($$self.$$.dirty[0] & 16777216 | $$self.$$.dirty[4] & 32) {
         $:
           $$invalidate(73, shownMissions = missionFilter ? allMissions.filter((m) => matchesSearch(m.title, missionFilter)) : allMissions);
       }
       if ($$self.$$.dirty[0] & 655872) {
         $:
-          $$invalidate(136, modeFilter = kindFilter == "all" && !dtFilters.length && !excludeDemo ? null : (attack) => {
+          $$invalidate(138, modeFilter = kindFilter == "all" && !dtFilters.length && !excludeDemo ? null : (attack) => {
             if (excludeDemo && isUtilityMode(attack))
               return false;
             if (kindFilter != "all" && modeKind(attack.mode) != kindFilter)
@@ -47327,19 +47493,19 @@
             return true;
           });
       }
-      if ($$self.$$.dirty[0] & 49170 | $$self.$$.dirty[1] & 35840 | $$self.$$.dirty[4] & 5120) {
+      if ($$self.$$.dirty[0] & 49170 | $$self.$$.dirty[1] & 35840 | $$self.$$.dirty[4] & 20480) {
         $:
-          $$invalidate(133, ranked = view == "weapons" && stats && target ? rankWeapons(shownWeapons, stats, target, side, opts, {}, pelletModel, goal, modeFilter) : []);
+          $$invalidate(135, ranked = view == "weapons" && stats && target ? rankWeapons(shownWeapons, stats, target, side, opts, {}, pelletModel, goal, modeFilter) : []);
       }
-      if ($$self.$$.dirty[0] & 67108864 | $$self.$$.dirty[4] & 32) {
+      if ($$self.$$.dirty[0] & 67108864 | $$self.$$.dirty[4] & 128) {
         $:
           $$invalidate(43, weapon = weaponId ? allWeapons.find((w) => w.id == weaponId) : null);
       }
-      if ($$self.$$.dirty[4] & 128) {
+      if ($$self.$$.dirty[4] & 512) {
         $:
           $$invalidate(72, tIsDefaultSort = !tSortTouched);
       }
-      if ($$self.$$.dirty[0] & 49170 | $$self.$$.dirty[1] & 14336 | $$self.$$.dirty[4] & 3072) {
+      if ($$self.$$.dirty[0] & 49170 | $$self.$$.dirty[1] & 14336 | $$self.$$.dirty[4] & 12288) {
         $:
           $$invalidate(45, byTarget = view == "targets" && stats && weapon ? shownTargets.map((t) => {
             const tgt = resolveTarget(t.id, difficulty);
@@ -47472,11 +47638,11 @@
             }
           ]);
       }
-      if ($$self.$$.dirty[1] & 512 | $$self.$$.dirty[4] & 256) {
+      if ($$self.$$.dirty[1] & 512 | $$self.$$.dirty[4] & 1024) {
         $:
           $$invalidate(69, isDefaultSort = !sortTouched && sortKeys.length == 1 && sortKeys[0].id == "score" && sortKeys[0].desc);
       }
-      if ($$self.$$.dirty[1] & 512 | $$self.$$.dirty[4] & 512) {
+      if ($$self.$$.dirty[1] & 512 | $$self.$$.dirty[4] & 2048) {
         $:
           $$invalidate(68, rows = (() => {
             const keys = sortKeys;
@@ -47629,6 +47795,8 @@
       HANDS,
       toggleCat,
       toggleDt,
+      SQUADSIGHT_TITLE,
+      SIGHT_TITLE,
       SHOT_TITLE,
       LIGHT_TITLE,
       RANGE_TITLE,
@@ -47690,7 +47858,6 @@
       click_handler_7,
       click_handler_8,
       click_handler_9,
-      click_handler_10,
       input1_input_handler,
       input2_input_handler,
       input3_input_handler,
@@ -47701,13 +47868,14 @@
       input7_change_handler,
       select2_change_handler,
       select3_change_handler,
-      click_handler_11,
+      click_handler_10,
       input0_input_handler_2,
       select0_change_handler_1,
       input1_input_handler_1,
       select1_change_handler_1,
       input_input_handler_1,
       select_change_handler_1,
+      click_handler_11,
       click_handler_12,
       click_handler_13,
       click_handler_14,
@@ -49397,7 +49565,7 @@
       }
     };
   }
-  function create_if_block_69(ctx) {
+  function create_if_block_610(ctx) {
     let tr_1;
     let br;
     let t;
@@ -49531,7 +49699,7 @@
     let if_block;
     let if_block_anchor;
     let current;
-    const if_block_creators = [create_if_block_411, create_if_block_511, create_if_block_69, create_else_block_19];
+    const if_block_creators = [create_if_block_411, create_if_block_511, create_if_block_610, create_else_block_19];
     const if_blocks = [];
     function select_block_type_4(ctx2, dirty) {
       if (ctx2[3] && ctx2[3].length > 0)

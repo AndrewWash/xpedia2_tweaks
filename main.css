@@ -2626,3 +2626,36 @@ tr.diff-row > td:first-child {
 .dmg-demo {
   margin-left: 0.3rem;
 }
+
+/* The spotting distance, beside the enemy it applies to. */
+.dmg-spot {
+  display: flex;
+  align-items: baseline;
+  gap: 0.3rem;
+  flex-wrap: wrap;
+  margin-top: 0.2rem;
+}
+
+.dmg-spotn {
+  font-size: 115%;
+}
+
+/* Highlighted when sight is shorter than the Range box, because that is the
+   case where it takes over as the APPR cutoff. */
+.dmg-spotlow {
+  color: var(--link);
+}
+
+.dmg-spotnote {
+  font-style: italic;
+}
+
+.dmg-sightsteps {
+  margin: 0.2rem 0 0.3rem;
+  padding-left: 1.2rem;
+  font-size: 90%;
+}
+
+.dmg-sightsteps li {
+  margin-bottom: 0.1rem;
+}

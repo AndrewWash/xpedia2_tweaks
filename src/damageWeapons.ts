@@ -474,7 +474,29 @@ export function scoreWeapon(
    * (with the 200-tile default capped at 30) is 18.6, so a cutoff near 16-18
    * sits right in the middle of what weapons actually do.
    */
-  const cutoff = Math.max(0, +opts.distance || 0);
+  /**
+   * The cutoff, pulled in by what you can actually see.
+   *
+   * The Range box says where a fight normally opens. But you cannot start a
+   * fight further away than you can spot the enemy, so when sight is the
+   * shorter of the two it is sight that sets the goalpost.
+   *
+   * This is what makes darkness and camouflage rewrite the table. A TOPLESS gal
+   * sees 13 tiles at night; a Smuggler Catgirl's armour carries
+   * `camouflageAtDark: 5`, which is a HARD CAP rather than a subtraction, so
+   * the base is thrown away and replaced by 5; her own `antiCamouflageAtDark: 1`
+   * claws one back. She spots that catgirl at 6 tiles. The cutoff drops 16 -> 6,
+   * so a melee weapon pays 6 x 4 = 24 TU instead of 64 and a short-ranged gun
+   * nearly stops paying at all.
+   *
+   * Applied to EVERY mode, not just melee, which is what keeps it fair. Squad
+   * sight means a gun is not actually range-limited by its holder's eyes - a
+   * spotter reveals the target and the shot lands at a noLOSAccuracyPenalty
+   * rather than being refused (Projectile.cpp:401). Charging only melee for the
+   * dark would therefore be wrong; moving the goalpost for everyone keeps the
+   * comparison honest, and the relative ordering is what this table is for.
+   */
+  const cutoff = Math.min(Math.max(0, +opts.distance || 0), sight.tiles);
 
   /**
    * The previous model, kept because it may come back rather than because it

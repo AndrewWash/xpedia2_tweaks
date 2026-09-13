@@ -1132,11 +1132,25 @@ export const GLOBALS = {
   noLOSAccuracyPenalty: 50,
 };
 
-/** Item value, else the mod global, else the engine default. */
+/**
+ * Item value, else the mod global, else the engine default.
+ *
+ * The global is named with a `Global` SUFFIX - `kneelBonusGlobal`,
+ * `oneHandedPenaltyGlobal`, `noLOSAccuracyPenaltyGlobal` - while the per-item
+ * field is the bare name. RuleItem does the same thing:
+ *
+ *   return _noLOSAccuracyPenalty != -1 ? _noLOSAccuracyPenalty
+ *                                      : mod->getNoLOSAccuracyPenaltyGlobal();
+ *
+ * Looking the bare name up at mod level never matched, so every one of these
+ * quietly fell through to the hardcoded default below. XPiratez happens to set
+ * exactly those values (120 / 50 / 50), which is why nothing looked wrong - but
+ * any mod that tuned them would have been misreported.
+ */
 function accuracyGlobal(item: any, key: string): number {
   const own = item ? +item[key] : NaN;
   if (!isNaN(own) && item[key] != null) return own;
-  return modGlobal(key, GLOBALS[key]);
+  return modGlobal(key + "Global", modGlobal(key, GLOBALS[key]));
 }
 
 export type AccuracyOpts = {

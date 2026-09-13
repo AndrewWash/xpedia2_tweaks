@@ -233,19 +233,54 @@ export function sightDistance(
   };
 }
 
-/** One line explaining a sight number, for the tooltip. */
+/**
+ * The arithmetic, step by step, for display beside the enemy.
+ *
+ * Each entry is one line of working. Worth showing in full rather than as a
+ * bare number, because the interesting bit - a positive camouflage REPLACING
+ * the base rather than subtracting from it - is invisible in the result.
+ */
+export function sightSteps(s: SightBreakdown): { text: string; value: number }[] {
+  if (!s) return [];
+  const light = s.isDay ? "day" : "night";
+  const out: { text: string; value: number }[] = [];
+  out.push({ text: "your armour's " + light + " vision", value: s.base });
+
+  let running = s.base;
+  if (s.camouflage > 0) {
+    running = s.camouflage;
+    out.push({
+      text: "enemy camouflage " + s.camouflage + " — a POSITIVE value is a hard cap, it replaces your vision outright",
+      value: running,
+    });
+  } else if (s.camouflage < 0) {
+    running = running + s.camouflage;
+    out.push({ text: "enemy camouflage " + s.camouflage + " (subtracted)", value: running });
+  }
+
+  if (running < 1) {
+    running = 1;
+    out.push({ text: "floored at 1 — you always spot what is next to you", value: running });
+  }
+
+  if (s.antiCamouflage) {
+    const before = running;
+    running = Math.min(s.base, running + s.antiCamouflage);
+    out.push({
+      text:
+        "your anti-camouflage +" + s.antiCamouflage +
+        (before + s.antiCamouflage > s.base ? ", capped at your own base vision" : ""),
+      value: running,
+    });
+  }
+  return out;
+}
+
+/** One line explaining a sight number, for a tooltip. */
 export function sightNote(s: SightBreakdown): string {
   if (!s) return "";
-  const light = s.isDay ? "day" : "night";
-  const parts = [s.base + " tiles " + light + " sight"];
-  if (s.capped)
-    parts.push("capped to " + s.camouflage + " by the enemy's camouflage (a positive value replaces your sight outright)");
-  else if (s.camouflage < 0)
-    parts.push(s.camouflage + " from the enemy's camouflage");
-  if (s.antiCamouflage > 0)
-    parts.push("+" + s.antiCamouflage + " anti-camouflage, which can never take you past your own base sight");
-  if (s.tiles <= 1) parts.push("floored at 1 - you always spot something standing next to you");
-  return parts.join(" · ") + " = " + s.tiles + " tiles";
+  const steps = sightSteps(s);
+  return steps.map((x) => x.text + " → " + x.value).join("  ·  ") + "  =  " + s.tiles + " tiles";
 }
 
 /** Armour lookup for a resolved target, which stores the armour object already. */

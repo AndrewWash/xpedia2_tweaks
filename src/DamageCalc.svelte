@@ -19,7 +19,7 @@
   import { onMount } from "svelte";
   import { resolveTarget, SIDES, armorValue, computeDamage,
     DEFAULT_TU_PER_TILE, DEFAULT_FREE_TILES } from "./damageCalc";
-  import { sightDistance, sightNote, maxViewDistance } from "./damageSight";
+  import { sightDistance, sightNote, sightSteps, maxViewDistance } from "./damageSight";
   import { damageTypes } from "./Ruleset";
   import {
     weaponList,
@@ -833,6 +833,21 @@
    * different facts, and conflating them is what made guns look worse here
    * than they play. Shown side by side so it cannot happen again.
    */
+  const SQUADSIGHT_TITLE =
+    "Firing at an enemy YOU cannot see, that a squadmate has spotted. OXCE allows the shot at full range - " +
+    "it is not refused - but multiplies accuracy by the weapon's noLOSAccuracyPenalty " +
+    "(Projectile.cpp:401). This mod's global default is 50%, i.e. half accuracy. Items that state their " +
+    "own: 100 on 6 items (no penalty at all), 82, 77, 75 on 14, 67 on 6, 66, 65, and 0 on one (cannot be " +
+    "fired blind at all). Tick this when planning to shoot past your own vision - typically at night, or " +
+    "at a camouflaged enemy, where the Spots-at distance above is short but a spotter can still see it.";
+
+  const SIGHT_TITLE =
+    "How far away this soldier spots THIS enemy, from the ruleset: her armour's day or night vision, minus " +
+    "the enemy's camouflage, plus her own anti-camouflage. A POSITIVE camouflage is a hard cap that replaces " +
+    "her vision outright rather than subtracting from it, which is why a camouflaged enemy collapses the " +
+    "number so hard. When this is shorter than the Range cutoff it becomes the cutoff, because a fight " +
+    "cannot open further away than you can see - which is what makes melee strong in the dark.";
+
   const SHOT_TITLE =
     "Where the fight starts. Range is the cutoff every approach is measured against - reach it and you pay " +
     "nothing, fall short and you pay to close. Sight is how far away you spot THIS enemy with THIS armour " +
@@ -1765,43 +1780,6 @@
           </button>
         </div>
 
-        {#if sight}
-          <p class="dmg-cap dmg-sight" title={sightNote(sight)}>
-            Spots this enemy at <b>{sight.tiles}</b>
-            {sight.tiles == 1 ? "tile" : "tiles"}
-            <button
-              class="dmg-mini dmg-sightmore"
-              title="Show every visibility value on both armours"
-              on:click={() => (showSight = !showSight)}>{showSight ? "hide" : "why"}</button
-            >
-          </p>
-          {#if showSight}
-            <div class="dmg-sightbox">
-              <p class="dmg-hint">{sightNote(sight)}</p>
-              {#if sight.fields.length}
-                <table class="dmg-sighttab">
-                  <tbody>
-                    {#each sight.fields as f}
-                      <tr class:dmg-sightunused={!f.used} title={f.note}>
-                        <td>{f.side}</td>
-                        <td>{f.label}</td>
-                        <td class="num">{f.value}</td>
-                        <td>{f.used ? "used" : "not modelled"}</td>
-                      </tr>
-                    {/each}
-                  </tbody>
-                </table>
-              {:else}
-                <p class="dmg-hint">Neither armour states any visibility value.</p>
-              {/if}
-              <p class="dmg-hint">
-                Mod ceiling <code>maxViewDistance: {maxViewDistance()}</code>. Unset dark
-                visibility falls back to 9 for a player unit.
-              </p>
-            </div>
-          {/if}
-        {/if}
-
         <label class="dmg-row" title={RANGE_TITLE}>
           <span>Range</span>
           <input class="dmg-input dmg-num" type="number" min="0" bind:value={distance} />
@@ -1830,7 +1808,9 @@
         </label>
         <label class="dmg-check"><input type="checkbox" bind:checked={kneeling} /> Kneeling</label>
         <label class="dmg-check"><input type="checkbox" bind:checked={oneHanded} /> One-handed</label>
-        <label class="dmg-check"><input type="checkbox" bind:checked={noLOS} /> No line of sight</label>
+        <label class="dmg-check" title={SQUADSIGHT_TITLE}>
+          <input type="checkbox" bind:checked={noLOS} /> Squad sight
+        </label>
         <label
           class="dmg-check"
           class:dmg-check-locked={forcedExtender != null}
@@ -1963,6 +1943,53 @@
                 </span>
               {/if}
             </div>
+
+            {#if sight}
+              <div class="dmg-spot">
+                <span class="dmg-resist-label" title={SIGHT_TITLE}>Spots this enemy at</span>
+                <b class="dmg-spotn" class:dmg-spotlow={sight.tiles < distance}>{sight.tiles}</b>
+                <span class="dmg-cap">{sight.tiles == 1 ? "tile" : "tiles"} · {sight.isDay ? "day" : "night"}</span>
+                <button
+                  class="dmg-mini"
+                  title="Show the arithmetic and every visibility value on both armours"
+                  on:click={() => (showSight = !showSight)}>{showSight ? "hide" : "why"}</button
+                >
+                {#if sight.tiles < distance}
+                  <span class="dmg-cap dmg-spotnote"
+                    >APPR measured from {sight.tiles}, not {distance}</span
+                  >
+                {/if}
+              </div>
+              {#if showSight}
+                <div class="dmg-sightbox">
+                  <ol class="dmg-sightsteps">
+                    {#each sightSteps(sight) as st}
+                      <li>{st.text} <b>→ {st.value}</b></li>
+                    {/each}
+                  </ol>
+                  <p class="dmg-hint">
+                    Spots at <b>{sight.tiles}</b>
+                    {sight.tiles == 1 ? "tile" : "tiles"}. Mod ceiling
+                    <code>maxViewDistance: {maxViewDistance()}</code>; unset night vision falls
+                    back to 9 for a player unit.
+                  </p>
+                  {#if sight.fields.length}
+                    <table class="dmg-sighttab">
+                      <tbody>
+                        {#each sight.fields as f}
+                          <tr class:dmg-sightunused={!f.used} title={f.note}>
+                            <td>{f.side}</td>
+                            <td>{f.label}</td>
+                            <td class="num">{f.value}</td>
+                            <td>{f.used ? "used" : "not modelled"}</td>
+                          </tr>
+                        {/each}
+                      </tbody>
+                    </table>
+                  {/if}
+                </div>
+              {/if}
+            {/if}
 
             {#if resistances.length}
               <div class="dmg-resists">

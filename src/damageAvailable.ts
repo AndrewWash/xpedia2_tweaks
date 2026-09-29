@@ -11,7 +11,9 @@
  *
  *   owned     it is in a base store or loaded on a craft, right now
  *   buyable   purchasable, and the research that gates buying is done
- *   makeable  some manufacture project builds it and its research is done
+ *   makeable  some project DECLARES it as output and its research is done -
+ *             not merely a project that might roll it as a lootbox prize; see
+ *             makesDirectly
  *
  * A NOTE ON WHERE GATES LIVE. compareDiff's fieldAcross() resolves a
  * requirement by looking at every collection sharing one STR_ id, which is the
@@ -109,9 +111,40 @@ function canMake(item: any, discovered: Set<string>): boolean {
     if (typeof projectId != "string") continue;
     const project = rul.manufacture && rul.manufacture[projectId];
     if (!project) continue;
+    if (!makesDirectly(project, item.id)) continue;
     if (allDone(asList(project.requires), discovered)) return true;
   }
   return false;
+}
+
+/**
+ * Does this project BUILD the item, or can it merely happen to drop one?
+ *
+ * The backlink is built from `totalProducedItems`, which folds
+ * `randomProducedItems` into `producedItems` - so "can be manufactured" ended up
+ * true for anything that is a possible prize in a lootbox. Four months into a
+ * campaign the ranked weapon list opened with a Heavy Laser and a Holy Hand
+ * Grenade of Antioch, neither of which has a recipe anywhere in the mod:
+ *
+ *   Heavy Laser        1.5% roll from opening an Old Earth Weapons Box
+ *   Holy Hand Grenade  6.5% from an Arcane lootbox, and weight 1 of 19,338
+ *                      from a Wastelander Backpack
+ *
+ * Having researched the box is not being able to build the gun. A gamble is a
+ * real way to end up holding something - the tech screen's "How to get it" says
+ * so, with the odds - but this filter answers "what can I field", so only a
+ * declared output counts.
+ *
+ * `producedItems` is always present on a parsed project: Manufacture's
+ * constructor defaults it to `{ [project id]: 1 }` when the ruleset omits it,
+ * which is how a project named after the thing it makes works. The fallback
+ * below covers that shape anyway rather than trusting it.
+ */
+function makesDirectly(project: any, itemId: string): boolean {
+  if (!itemId) return false;
+  const made = project.producedItems;
+  if (made && typeof made == "object") return +made[itemId] > 0;
+  return project.id == itemId || project.name == itemId;
 }
 
 /**

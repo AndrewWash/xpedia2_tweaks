@@ -38138,10 +38138,20 @@
       const project = rul.manufacture && rul.manufacture[projectId];
       if (!project)
         continue;
+      if (!makesDirectly(project, item.id))
+        continue;
       if (allDone(asList2(project.requires), discovered))
         return true;
     }
     return false;
+  }
+  function makesDirectly(project, itemId) {
+    if (!itemId)
+      return false;
+    const made = project.producedItems;
+    if (made && typeof made == "object")
+      return +made[itemId] > 0;
+    return project.id == itemId || project.name == itemId;
   }
   function buildAvailability(weapons, save) {
     const out = /* @__PURE__ */ new Map();

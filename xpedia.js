@@ -4386,7 +4386,7 @@
   }
   function handle_promise(promise, info) {
     const token = info.token = {};
-    function update2(type2, index, key, value) {
+    function update2(type2, index3, key, value) {
       if (info.token !== token)
         return;
       info.resolved = value;
@@ -4400,7 +4400,7 @@
       if (info.block) {
         if (info.blocks) {
           info.blocks.forEach((block2, i) => {
-            if (i !== index && block2) {
+            if (i !== index3 && block2) {
               group_outros();
               transition_out(block2, 1, 1, () => {
                 if (info.blocks[i] === block2) {
@@ -4420,7 +4420,7 @@
       }
       info.block = block;
       if (info.blocks)
-        info.blocks[index] = block;
+        info.blocks[index3] = block;
       if (needs_flush) {
         flush();
       }
@@ -4540,10 +4540,10 @@
     return new_blocks;
   }
   function bind(component, name, callback) {
-    const index = component.$$.props[name];
-    if (index !== void 0) {
-      component.$$.bound[index] = callback;
-      callback(component.$$.ctx[index]);
+    const index3 = component.$$.props[name];
+    if (index3 !== void 0) {
+      component.$$.bound[index3] = callback;
+      callback(component.$$.ctx[index3]);
     }
   }
   function create_component(block) {
@@ -4664,9 +4664,9 @@
         const callbacks = this.$$.callbacks[type2] || (this.$$.callbacks[type2] = []);
         callbacks.push(callback);
         return () => {
-          const index = callbacks.indexOf(callback);
-          if (index !== -1)
-            callbacks.splice(index, 1);
+          const index3 = callbacks.indexOf(callback);
+          if (index3 !== -1)
+            callbacks.splice(index3, 1);
         };
       }
       $set($$props) {
@@ -4687,9 +4687,9 @@
       const callbacks = this.$$.callbacks[type2] || (this.$$.callbacks[type2] = []);
       callbacks.push(callback);
       return () => {
-        const index = callbacks.indexOf(callback);
-        if (index !== -1)
-          callbacks.splice(index, 1);
+        const index3 = callbacks.indexOf(callback);
+        if (index3 !== -1)
+          callbacks.splice(index3, 1);
       };
     }
     $set($$props) {
@@ -5377,9 +5377,9 @@
     return showStepOptions ? addStepOptions({ options, currentPage, totalPages }) : options;
   }
   function generateUnlimitedOptions({ totalPages }) {
-    return new Array(totalPages).fill(null).map((value, index) => ({
+    return new Array(totalPages).fill(null).map((value, index3) => ({
       type: "number",
-      value: index + 1
+      value: index3 + 1
     }));
   }
   function generateLimitedOptions({ totalPages, limit, currentPage }) {
@@ -5388,13 +5388,13 @@
     const lastBoundary = totalPages - boundarySize;
     const totalShownPages = firstBoundary + 2;
     if (currentPage <= firstBoundary - limit) {
-      return Array(totalShownPages).fill(null).map((value, index) => {
-        if (index === totalShownPages - 1) {
+      return Array(totalShownPages).fill(null).map((value, index3) => {
+        if (index3 === totalShownPages - 1) {
           return {
             type: "number",
             value: totalPages
           };
-        } else if (index === totalShownPages - 2) {
+        } else if (index3 === totalShownPages - 2) {
           return {
             type: "symbol",
             symbol: ELLIPSIS,
@@ -5403,17 +5403,17 @@
         }
         return {
           type: "number",
-          value: index + 1
+          value: index3 + 1
         };
       });
     } else if (currentPage >= lastBoundary + limit) {
-      return Array(totalShownPages).fill(null).map((value, index) => {
-        if (index === 0) {
+      return Array(totalShownPages).fill(null).map((value, index3) => {
+        if (index3 === 0) {
           return {
             type: "number",
             value: 1
           };
-        } else if (index === 1) {
+        } else if (index3 === 1) {
           return {
             type: "symbol",
             symbol: ELLIPSIS,
@@ -5422,28 +5422,28 @@
         }
         return {
           type: "number",
-          value: lastBoundary + index - 2
+          value: lastBoundary + index3 - 2
         };
       });
     } else if (currentPage >= firstBoundary - limit && currentPage <= lastBoundary + limit) {
-      return Array(totalShownPages).fill(null).map((value, index) => {
-        if (index === 0) {
+      return Array(totalShownPages).fill(null).map((value, index3) => {
+        if (index3 === 0) {
           return {
             type: "number",
             value: 1
           };
-        } else if (index === 1) {
+        } else if (index3 === 1) {
           return {
             type: "symbol",
             symbol: ELLIPSIS,
-            value: currentPage - limit + (index - 2)
+            value: currentPage - limit + (index3 - 2)
           };
-        } else if (index === totalShownPages - 1) {
+        } else if (index3 === totalShownPages - 1) {
           return {
             type: "number",
             value: totalPages
           };
-        } else if (index === totalShownPages - 2) {
+        } else if (index3 === totalShownPages - 2) {
           return {
             type: "symbol",
             symbol: ELLIPSIS,
@@ -5452,7 +5452,7 @@
         }
         return {
           type: "number",
-          value: currentPage - limit + (index - 2)
+          value: currentPage - limit + (index3 - 2)
         };
       });
     }
@@ -6021,19 +6021,19 @@
     return [sequence];
   }
   function extend(target, source) {
-    var index, length, key, sourceKeys;
+    var index3, length, key, sourceKeys;
     if (source) {
       sourceKeys = Object.keys(source);
-      for (index = 0, length = sourceKeys.length; index < length; index += 1) {
-        key = sourceKeys[index];
+      for (index3 = 0, length = sourceKeys.length; index3 < length; index3 += 1) {
+        key = sourceKeys[index3];
         target[key] = source[key];
       }
     }
     return target;
   }
-  function repeat(string, count) {
+  function repeat(string, count2) {
     var result = "", cycle;
-    for (cycle = 0; cycle < count; cycle += 1) {
+    for (cycle = 0; cycle < count2; cycle += 1) {
       result += string;
     }
     return result;
@@ -6234,7 +6234,7 @@
         mapping: [],
         fallback: []
       }
-    }, index, length;
+    }, index3, length;
     function collectType(type2) {
       if (type2.multi) {
         result.multi[type2.kind].push(type2);
@@ -6243,8 +6243,8 @@
         result[type2.kind][type2.tag] = result["fallback"][type2.tag] = type2;
       }
     }
-    for (index = 0, length = arguments.length; index < length; index += 1) {
-      arguments[index].forEach(collectType);
+    for (index3 = 0, length = arguments.length; index3 < length; index3 += 1) {
+      arguments[index3].forEach(collectType);
     }
     return result;
   }
@@ -6394,21 +6394,21 @@
   function resolveYamlInteger(data) {
     if (data === null)
       return false;
-    var max = data.length, index = 0, hasDigits = false, ch;
+    var max = data.length, index3 = 0, hasDigits = false, ch;
     if (!max)
       return false;
-    ch = data[index];
+    ch = data[index3];
     if (ch === "-" || ch === "+") {
-      ch = data[++index];
+      ch = data[++index3];
     }
     if (ch === "0") {
-      if (index + 1 === max)
+      if (index3 + 1 === max)
         return true;
-      ch = data[++index];
+      ch = data[++index3];
       if (ch === "b") {
-        index++;
-        for (; index < max; index++) {
-          ch = data[index];
+        index3++;
+        for (; index3 < max; index3++) {
+          ch = data[index3];
           if (ch === "_")
             continue;
           if (ch !== "0" && ch !== "1")
@@ -6418,24 +6418,24 @@
         return hasDigits && ch !== "_";
       }
       if (ch === "x") {
-        index++;
-        for (; index < max; index++) {
-          ch = data[index];
+        index3++;
+        for (; index3 < max; index3++) {
+          ch = data[index3];
           if (ch === "_")
             continue;
-          if (!isHexCode(data.charCodeAt(index)))
+          if (!isHexCode(data.charCodeAt(index3)))
             return false;
           hasDigits = true;
         }
         return hasDigits && ch !== "_";
       }
       if (ch === "o") {
-        index++;
-        for (; index < max; index++) {
-          ch = data[index];
+        index3++;
+        for (; index3 < max; index3++) {
+          ch = data[index3];
           if (ch === "_")
             continue;
-          if (!isOctCode(data.charCodeAt(index)))
+          if (!isOctCode(data.charCodeAt(index3)))
             return false;
           hasDigits = true;
         }
@@ -6444,11 +6444,11 @@
     }
     if (ch === "_")
       return false;
-    for (; index < max; index++) {
-      ch = data[index];
+    for (; index3 < max; index3++) {
+      ch = data[index3];
       if (ch === "_")
         continue;
-      if (!isDecCode(data.charCodeAt(index))) {
+      if (!isDecCode(data.charCodeAt(index3))) {
         return false;
       }
       hasDigits = true;
@@ -6736,9 +6736,9 @@
   function resolveYamlOmap(data) {
     if (data === null)
       return true;
-    var objectKeys = [], index, length, pair, pairKey, pairHasKey, object = data;
-    for (index = 0, length = object.length; index < length; index += 1) {
-      pair = object[index];
+    var objectKeys = [], index3, length, pair, pairKey, pairHasKey, object = data;
+    for (index3 = 0, length = object.length; index3 < length; index3 += 1) {
+      pair = object[index3];
       pairHasKey = false;
       if (_toString$2.call(pair) !== "[object Object]")
         return false;
@@ -6771,28 +6771,28 @@
   function resolveYamlPairs(data) {
     if (data === null)
       return true;
-    var index, length, pair, keys, result, object = data;
+    var index3, length, pair, keys, result, object = data;
     result = new Array(object.length);
-    for (index = 0, length = object.length; index < length; index += 1) {
-      pair = object[index];
+    for (index3 = 0, length = object.length; index3 < length; index3 += 1) {
+      pair = object[index3];
       if (_toString$1.call(pair) !== "[object Object]")
         return false;
       keys = Object.keys(pair);
       if (keys.length !== 1)
         return false;
-      result[index] = [keys[0], pair[keys[0]]];
+      result[index3] = [keys[0], pair[keys[0]]];
     }
     return true;
   }
   function constructYamlPairs(data) {
     if (data === null)
       return [];
-    var index, length, pair, keys, result, object = data;
+    var index3, length, pair, keys, result, object = data;
     result = new Array(object.length);
-    for (index = 0, length = object.length; index < length; index += 1) {
-      pair = object[index];
+    for (index3 = 0, length = object.length; index3 < length; index3 += 1) {
+      pair = object[index3];
       keys = Object.keys(pair);
-      result[index] = [keys[0], pair[keys[0]]];
+      result[index3] = [keys[0], pair[keys[0]]];
     }
     return result;
   }
@@ -7010,13 +7010,13 @@
     }
   }
   function mergeMappings(state, destination, source, overridableKeys) {
-    var sourceKeys, key, index, quantity;
+    var sourceKeys, key, index3, quantity;
     if (!common.isObject(source)) {
       throwError(state, "cannot merge mappings; the provided source object is unacceptable");
     }
     sourceKeys = Object.keys(source);
-    for (index = 0, quantity = sourceKeys.length; index < quantity; index += 1) {
-      key = sourceKeys[index];
+    for (index3 = 0, quantity = sourceKeys.length; index3 < quantity; index3 += 1) {
+      key = sourceKeys[index3];
       if (!_hasOwnProperty$1.call(destination, key)) {
         destination[key] = source[key];
         overridableKeys[key] = true;
@@ -7024,15 +7024,15 @@
     }
   }
   function storeMappingPair(state, _result, overridableKeys, keyTag, keyNode, valueNode, startLine, startLineStart, startPos) {
-    var index, quantity;
+    var index3, quantity;
     if (Array.isArray(keyNode)) {
       keyNode = Array.prototype.slice.call(keyNode);
-      for (index = 0, quantity = keyNode.length; index < quantity; index += 1) {
-        if (Array.isArray(keyNode[index])) {
+      for (index3 = 0, quantity = keyNode.length; index3 < quantity; index3 += 1) {
+        if (Array.isArray(keyNode[index3])) {
           throwError(state, "nested arrays are not supported inside keys");
         }
-        if (typeof keyNode === "object" && _class(keyNode[index]) === "[object Object]") {
-          keyNode[index] = "[object Object]";
+        if (typeof keyNode === "object" && _class(keyNode[index3]) === "[object Object]") {
+          keyNode[index3] = "[object Object]";
         }
       }
     }
@@ -7045,8 +7045,8 @@
     }
     if (keyTag === "tag:yaml.org,2002:merge") {
       if (Array.isArray(valueNode)) {
-        for (index = 0, quantity = valueNode.length; index < quantity; index += 1) {
-          mergeMappings(state, _result, valueNode[index], overridableKeys);
+        for (index3 = 0, quantity = valueNode.length; index3 < quantity; index3 += 1) {
+          mergeMappings(state, _result, valueNode[index3], overridableKeys);
         }
       } else {
         mergeMappings(state, _result, valueNode, overridableKeys);
@@ -7133,11 +7133,11 @@
     }
     return false;
   }
-  function writeFoldedLines(state, count) {
-    if (count === 1) {
+  function writeFoldedLines(state, count2) {
+    if (count2 === 1) {
       state.result += " ";
-    } else if (count > 1) {
-      state.result += common.repeat("\n", count - 1);
+    } else if (count2 > 1) {
+      state.result += common.repeat("\n", count2 - 1);
     }
   }
   function readPlainScalar(state, nodeIndent, withinFlowCollection) {
@@ -7972,8 +7972,8 @@
     if (typeof iterator !== "function") {
       return documents;
     }
-    for (var index = 0, length = documents.length; index < length; index += 1) {
-      iterator(documents[index]);
+    for (var index3 = 0, length = documents.length; index3 < length; index3 += 1) {
+      iterator(documents[index3]);
     }
   }
   function load$1(input, options) {
@@ -8054,13 +8054,13 @@
   ];
   var DEPRECATED_BASE60_SYNTAX = /^[-+]?[0-9_]+(?::[0-9_]+)+(?:\.[0-9_]*)?$/;
   function compileStyleMap(schema2, map2) {
-    var result, keys, index, length, tag, style, type2;
+    var result, keys, index3, length, tag, style, type2;
     if (map2 === null)
       return {};
     result = {};
     keys = Object.keys(map2);
-    for (index = 0, length = keys.length; index < length; index += 1) {
-      tag = keys[index];
+    for (index3 = 0, length = keys.length; index3 < length; index3 += 1) {
+      tag = keys[index3];
       style = String(map2[tag]);
       if (tag.slice(0, 2) === "!!") {
         tag = "tag:yaml.org,2002:" + tag.slice(2);
@@ -8135,9 +8135,9 @@
     return "\n" + common.repeat(" ", state.indent * level);
   }
   function testImplicitResolving(state, str2) {
-    var index, length, type2;
-    for (index = 0, length = state.implicitTypes.length; index < length; index += 1) {
-      type2 = state.implicitTypes[index];
+    var index3, length, type2;
+    for (index3 = 0, length = state.implicitTypes.length; index3 < length; index3 += 1) {
+      type2 = state.implicitTypes[index3];
       if (type2.resolve(str2)) {
         return true;
       }
@@ -8191,14 +8191,14 @@
     var hasFoldableLine = false;
     var shouldTrackWidth = lineWidth !== -1;
     var previousLineBreak = -1;
-    var plain = isPlainSafeFirst(codePointAt(string, 0)) && isPlainSafeLast(codePointAt(string, string.length - 1));
+    var plain2 = isPlainSafeFirst(codePointAt(string, 0)) && isPlainSafeLast(codePointAt(string, string.length - 1));
     if (singleLineOnly || forceQuotes) {
       for (i = 0; i < string.length; char >= 65536 ? i += 2 : i++) {
         char = codePointAt(string, i);
         if (!isPrintable(char)) {
           return STYLE_DOUBLE;
         }
-        plain = plain && isPlainSafe(char, prevChar, inblock);
+        plain2 = plain2 && isPlainSafe(char, prevChar, inblock);
         prevChar = char;
       }
     } else {
@@ -8213,13 +8213,13 @@
         } else if (!isPrintable(char)) {
           return STYLE_DOUBLE;
         }
-        plain = plain && isPlainSafe(char, prevChar, inblock);
+        plain2 = plain2 && isPlainSafe(char, prevChar, inblock);
         prevChar = char;
       }
       hasFoldableLine = hasFoldableLine || shouldTrackWidth && (i - previousLineBreak - 1 > lineWidth && string[previousLineBreak + 1] !== " ");
     }
     if (!hasLineBreak && !hasFoldableLine) {
-      if (plain && !forceQuotes && !testAmbiguousType(string)) {
+      if (plain2 && !forceQuotes && !testAmbiguousType(string)) {
         return STYLE_PLAIN;
       }
       return quotingType === QUOTING_TYPE_DOUBLE ? STYLE_DOUBLE : STYLE_SINGLE;
@@ -8335,11 +8335,11 @@
     return result;
   }
   function writeFlowSequence(state, level, object) {
-    var _result = "", _tag = state.tag, index, length, value;
-    for (index = 0, length = object.length; index < length; index += 1) {
-      value = object[index];
+    var _result = "", _tag = state.tag, index3, length, value;
+    for (index3 = 0, length = object.length; index3 < length; index3 += 1) {
+      value = object[index3];
       if (state.replacer) {
-        value = state.replacer.call(object, String(index), value);
+        value = state.replacer.call(object, String(index3), value);
       }
       if (writeNode(state, level, value, false, false) || typeof value === "undefined" && writeNode(state, level, null, false, false)) {
         if (_result !== "")
@@ -8351,11 +8351,11 @@
     state.dump = "[" + _result + "]";
   }
   function writeBlockSequence(state, level, object, compact) {
-    var _result = "", _tag = state.tag, index, length, value;
-    for (index = 0, length = object.length; index < length; index += 1) {
-      value = object[index];
+    var _result = "", _tag = state.tag, index3, length, value;
+    for (index3 = 0, length = object.length; index3 < length; index3 += 1) {
+      value = object[index3];
       if (state.replacer) {
-        value = state.replacer.call(object, String(index), value);
+        value = state.replacer.call(object, String(index3), value);
       }
       if (writeNode(state, level + 1, value, true, true, false, true) || typeof value === "undefined" && writeNode(state, level + 1, null, true, true, false, true)) {
         if (!compact || _result !== "") {
@@ -8373,14 +8373,14 @@
     state.dump = _result || "[]";
   }
   function writeFlowMapping(state, level, object) {
-    var _result = "", _tag = state.tag, objectKeyList = Object.keys(object), index, length, objectKey, objectValue, pairBuffer;
-    for (index = 0, length = objectKeyList.length; index < length; index += 1) {
+    var _result = "", _tag = state.tag, objectKeyList = Object.keys(object), index3, length, objectKey, objectValue, pairBuffer;
+    for (index3 = 0, length = objectKeyList.length; index3 < length; index3 += 1) {
       pairBuffer = "";
       if (_result !== "")
         pairBuffer += ", ";
       if (state.condenseFlow)
         pairBuffer += '"';
-      objectKey = objectKeyList[index];
+      objectKey = objectKeyList[index3];
       objectValue = object[objectKey];
       if (state.replacer) {
         objectValue = state.replacer.call(object, objectKey, objectValue);
@@ -8401,7 +8401,7 @@
     state.dump = "{" + _result + "}";
   }
   function writeBlockMapping(state, level, object, compact) {
-    var _result = "", _tag = state.tag, objectKeyList = Object.keys(object), index, length, objectKey, objectValue, explicitPair, pairBuffer;
+    var _result = "", _tag = state.tag, objectKeyList = Object.keys(object), index3, length, objectKey, objectValue, explicitPair, pairBuffer;
     if (state.sortKeys === true) {
       objectKeyList.sort();
     } else if (typeof state.sortKeys === "function") {
@@ -8409,12 +8409,12 @@
     } else if (state.sortKeys) {
       throw new exception("sortKeys must be a boolean or a function");
     }
-    for (index = 0, length = objectKeyList.length; index < length; index += 1) {
+    for (index3 = 0, length = objectKeyList.length; index3 < length; index3 += 1) {
       pairBuffer = "";
       if (!compact || _result !== "") {
         pairBuffer += generateNextLine(state, level);
       }
-      objectKey = objectKeyList[index];
+      objectKey = objectKeyList[index3];
       objectValue = object[objectKey];
       if (state.replacer) {
         objectValue = state.replacer.call(object, objectKey, objectValue);
@@ -8449,10 +8449,10 @@
     state.dump = _result || "{}";
   }
   function detectType(state, object, explicit) {
-    var _result, typeList, index, length, type2, style;
+    var _result, typeList, index3, length, type2, style;
     typeList = explicit ? state.explicitTypes : state.implicitTypes;
-    for (index = 0, length = typeList.length; index < length; index += 1) {
-      type2 = typeList[index];
+    for (index3 = 0, length = typeList.length; index3 < length; index3 += 1) {
+      type2 = typeList[index3];
       if ((type2.instanceOf || type2.predicate) && (!type2.instanceOf || typeof object === "object" && object instanceof type2.instanceOf) && (!type2.predicate || type2.predicate(object))) {
         if (explicit) {
           if (type2.multi && type2.representName) {
@@ -8559,31 +8559,31 @@
     return true;
   }
   function getDuplicateReferences(object, state) {
-    var objects = [], duplicatesIndexes = [], index, length;
+    var objects = [], duplicatesIndexes = [], index3, length;
     inspectNode(object, objects, duplicatesIndexes);
-    for (index = 0, length = duplicatesIndexes.length; index < length; index += 1) {
-      state.duplicates.push(objects[duplicatesIndexes[index]]);
+    for (index3 = 0, length = duplicatesIndexes.length; index3 < length; index3 += 1) {
+      state.duplicates.push(objects[duplicatesIndexes[index3]]);
     }
     state.usedDuplicates = new Array(length);
   }
   function inspectNode(object, objects, duplicatesIndexes) {
-    var objectKeyList, index, length;
+    var objectKeyList, index3, length;
     if (object !== null && typeof object === "object") {
-      index = objects.indexOf(object);
-      if (index !== -1) {
-        if (duplicatesIndexes.indexOf(index) === -1) {
-          duplicatesIndexes.push(index);
+      index3 = objects.indexOf(object);
+      if (index3 !== -1) {
+        if (duplicatesIndexes.indexOf(index3) === -1) {
+          duplicatesIndexes.push(index3);
         }
       } else {
         objects.push(object);
         if (Array.isArray(object)) {
-          for (index = 0, length = object.length; index < length; index += 1) {
-            inspectNode(object[index], objects, duplicatesIndexes);
+          for (index3 = 0, length = object.length; index3 < length; index3 += 1) {
+            inspectNode(object[index3], objects, duplicatesIndexes);
           }
         } else {
           objectKeyList = Object.keys(object);
-          for (index = 0, length = objectKeyList.length; index < length; index += 1) {
-            inspectNode(object[objectKeyList[index]], objects, duplicatesIndexes);
+          for (index3 = 0, length = objectKeyList.length; index3 < length; index3 += 1) {
+            inspectNode(object[objectKeyList[index3]], objects, duplicatesIndexes);
           }
         }
       }
@@ -10666,7 +10666,7 @@
     let { sorted } = $$props;
     let sorter;
     if (sorted == null) {
-      sorted = items.length > 9;
+      sorted = true;
     }
     $$self.$$set = ($$props2) => {
       if ("items" in $$props2)
@@ -10908,7 +10908,12 @@
   function create_if_block_62(ctx) {
     let linkslist;
     let current;
-    linkslist = new LinksList_default({ props: { items: ctx[0] } });
+    linkslist = new LinksList_default({
+      props: {
+        items: ctx[0],
+        sorted: !ctx[8].has(ctx[6])
+      }
+    });
     return {
       c() {
         create_component(linkslist.$$.fragment);
@@ -10921,6 +10926,8 @@
         const linkslist_changes = {};
         if (dirty & 1)
           linkslist_changes.items = ctx2[0];
+        if (dirty & 64)
+          linkslist_changes.sorted = !ctx2[8].has(ctx2[6]);
         linkslist.$set(linkslist_changes);
       },
       i(local) {
@@ -10942,7 +10949,11 @@
     let linkslist;
     let current;
     linkslist = new LinksList_default({
-      props: { items: ctx[0], vertical: false }
+      props: {
+        items: ctx[0],
+        vertical: false,
+        sorted: !ctx[8].has(ctx[6])
+      }
     });
     return {
       c() {
@@ -10956,6 +10967,8 @@
         const linkslist_changes = {};
         if (dirty & 1)
           linkslist_changes.items = ctx2[0];
+        if (dirty & 64)
+          linkslist_changes.sorted = !ctx2[8].has(ctx2[6]);
         linkslist.$set(linkslist_changes);
       },
       i(local) {
@@ -11028,7 +11041,7 @@
       pending: create_pending_block2,
       then: create_then_block2,
       catch: create_catch_block2,
-      value: 8
+      value: 9
     };
     handle_promise(promise = rul.obsSprite(ctx[1], ctx[0]), info);
     return {
@@ -11165,7 +11178,7 @@
     return {
       c() {
         img = element("img");
-        if (!src_url_equal(img.src, img_src_value = ctx[8]))
+        if (!src_url_equal(img.src, img_src_value = ctx[9]))
           attr(img, "src", img_src_value);
         attr(img, "alt", ctx[0]);
         set_style(img, "max-width", "320px");
@@ -11174,7 +11187,7 @@
         insert(target, img, anchor);
       },
       p(ctx2, dirty) {
-        if (dirty & 3 && !src_url_equal(img.src, img_src_value = ctx2[8])) {
+        if (dirty & 3 && !src_url_equal(img.src, img_src_value = ctx2[9])) {
           attr(img, "src", img_src_value);
         }
         if (dirty & 1) {
@@ -11317,6 +11330,16 @@
     let { icon = null } = $$props;
     let { key = null } = $$props;
     let { capital: capital2 = false } = $$props;
+    const POSITIONAL_FIELDS = /* @__PURE__ */ new Set([
+      "members",
+      "membersRandom",
+      "mapDataSets",
+      "compatibleAmmo",
+      "weaponTypes",
+      "allWeaponTypes",
+      "itemSets",
+      "data"
+    ]);
     $$self.$$set = ($$props2) => {
       if ("val" in $$props2)
         $$invalidate(0, val = $$props2.val);
@@ -11335,16 +11358,7 @@
       if ("capital" in $$props2)
         $$invalidate(7, capital2 = $$props2.capital);
     };
-    $$self.$$.update = () => {
-      if ($$self.$$.dirty & 3) {
-        $: {
-          if (obs) {
-            clog(rul.obsSprite(obs, val));
-          }
-        }
-      }
-    };
-    return [val, obs, depth, simple, nobr, icon, key, capital2];
+    return [val, obs, depth, simple, nobr, icon, key, capital2, POSITIONAL_FIELDS];
   }
   var Value = class extends SvelteComponent {
     constructor(options) {
@@ -15063,12 +15077,12 @@
           let newPalette = H(data, 256 - palette.length - 1, { format, clearAlpha: transparent, oneBitAlpha: transparent });
           palette = [[0, 0, 0], ...newPalette, ...palette];
         }
-        const index = nt(data, palette, format);
-        for (let i = 0; i < index.length; i++) {
+        const index3 = nt(data, palette, format);
+        for (let i = 0; i < index3.length; i++) {
           if (data[i * 4 + 3] < 127)
-            index[i] = 0;
+            index3[i] = 0;
         }
-        gif.writeFrame(index, width, height, { palette, transparent, transparentIndex: 0 });
+        gif.writeFrame(index3, width, height, { palette, transparent, transparentIndex: 0 });
         gif.finish();
         const buffer = gif.bytesView();
         const blob = buffer instanceof Blob ? buffer : new Blob([buffer], { type: "image/gif" });
@@ -15145,8 +15159,8 @@
     function getFilesFromPasteEvent(event) {
       const items = (event.clipboardData || event.originalEvent.clipboardData).items;
       let files2 = [];
-      for (let index in items) {
-        const item = items[index];
+      for (let index3 in items) {
+        const item = items[index3];
         if (item.kind === "file") {
           files2.push(item.getAsFile());
         }
@@ -16148,7 +16162,7 @@
                 merged[id].files = files;
               } else {
                 if (Array.isArray(data)) {
-                  debugger;
+                  console.warn("mergeRuls: array entry for", categoryName, id);
                   merged[id] = merged[id].concat(data);
                 } else
                   Object.assign(merged[id], data);
@@ -16257,6 +16271,13 @@
       crosslink(this.items, "supportedInventorySections", "inventorySections", "items");
       crosslink(this.commendations, "damageTypes", this.damageTypes, "commendations");
       crosslink(this.events, "researchList", this.research, "events");
+      crosslink(this.events, (e) => [
+        .../* @__PURE__ */ new Set([
+          ...Array.isArray(e.everyItemList) ? e.everyItemList : [],
+          ...Array.isArray(e.randomItemList) ? e.randomItemList : [],
+          ...Object.keys(e.weightedItemList || {})
+        ])
+      ], this.items, "events");
       crosslink(this.armors, "builtInWeapons", this.items, "builtIn");
       crosslink(this.armors, "specialWeapon", this.items, "builtIn");
       crosslink(this.eventScripts, "_relatedEvents", this.events, "relatedScripts");
@@ -16411,9 +16432,9 @@
       if (sorted) {
         list2 = this.sortArticlesByName(list2);
       }
-      let index = list2.findIndex((a) => a.id == current.id);
-      if (index != void 0) {
-        let nextIndex = index + delta2;
+      let index3 = list2.findIndex((a) => a.id == current.id);
+      if (index3 != void 0) {
+        let nextIndex = index3 + delta2;
         let nextArticle = list2[nextIndex];
         return nextArticle;
       }
@@ -16544,7 +16565,7 @@
     }
     sortStrings(s) {
       let tl = s.map((s2) => [s2, this.tr(s2)]);
-      tl = tl.sort((a, b) => a[1] > b[1] ? 1 : -1);
+      tl = tl.sort((a, b) => String(a[1]).localeCompare(String(b[1])));
       return tl.map((a) => a[0]);
     }
   };
@@ -21175,7 +21196,12 @@
   function create_else_block_13(ctx) {
     let value;
     let current;
-    value = new Value_default({ props: { val: ctx[9] } });
+    value = new Value_default({
+      props: {
+        val: ctx[9],
+        key: ctx[8]
+      }
+    });
     return {
       c() {
         create_component(value.$$.fragment);
@@ -21188,6 +21214,8 @@
         const value_changes = {};
         if (dirty & 12)
           value_changes.val = ctx2[9];
+        if (dirty & 12)
+          value_changes.key = ctx2[8];
         value.$set(value_changes);
       },
       i(local) {
@@ -22261,7 +22289,6 @@
     $$self.$$.update = () => {
       if ($$self.$$.dirty & 3) {
         $: {
-          clog(entry);
           $$invalidate(1, attacks = entry.attacks().slice());
           let ohpen = entry.oneHandedPenalty || entry.battleType == 3 ? 67 : 50;
           $$invalidate(4, hand1bonus = entry.twoHanded ? entry.blockBothHands ? rul.tr("2handOnly") : `${rul.tr("1handPenalty")} ${ohpen}%` : "");
@@ -22304,6 +22331,7 @@
               "loot",
               "ufos",
               "terrains",
+              "events",
               "spawnUnit",
               "manufacture",
               "componentOf"
@@ -24233,7 +24261,7 @@
       this.src = emptyImg;
     };
     const click_handler = (e) => $$invalidate(2, seeAllVariants = !seeAllVariants);
-    const func6 = (a, b) => rul.bodiesCompare([a, b]);
+    const func7 = (a, b) => rul.bodiesCompare([a, b]);
     $$self.$$set = ($$props2) => {
       if ("entry" in $$props2)
         $$invalidate(0, entry = $$props2.entry);
@@ -24253,7 +24281,7 @@
         }
       }
     };
-    return [entry, seeAlso, seeAllVariants, imageNotFound, click_handler, func6];
+    return [entry, seeAlso, seeAllVariants, imageNotFound, click_handler, func7];
   }
   var Armor2 = class extends SvelteComponent {
     constructor(options) {
@@ -24595,7 +24623,7 @@
   }
   function instance25($$self, $$props, $$invalidate) {
     let { entry } = $$props;
-    const func6 = (slot) => rul.tr(slot).replace(">{ALT}{0}", "");
+    const func7 = (slot) => rul.tr(slot).replace(">{ALT}{0}", "");
     $$self.$$set = ($$props2) => {
       if ("entry" in $$props2)
         $$invalidate(0, entry = $$props2.entry);
@@ -24607,7 +24635,7 @@
         }
       }
     };
-    return [entry, func6];
+    return [entry, func7];
   }
   var Craft2 = class extends SvelteComponent {
     constructor(options) {
@@ -27730,7 +27758,7 @@
   function instance34($$self, $$props, $$invalidate) {
     let { entry } = $$props;
     let bonuses;
-    const func6 = (deeds) => deeds.map((deed) => deedDescription(deed)).join(` ${rul.tr("and")} `);
+    const func7 = (deeds) => deeds.map((deed) => deedDescription(deed)).join(` ${rul.tr("and")} `);
     $$self.$$set = ($$props2) => {
       if ("entry" in $$props2)
         $$invalidate(0, entry = $$props2.entry);
@@ -27754,7 +27782,7 @@
         }
       }
     };
-    return [entry, bonuses, func6];
+    return [entry, bonuses, func7];
   }
   var Commendation2 = class extends SvelteComponent {
     constructor(options) {
@@ -28173,7 +28201,7 @@
       eventScripts: { title: "Event Script" },
       inventorySections: {}
     };
-    const func6 = ([key]) => rul[key][id];
+    const func7 = ([key]) => rul[key][id];
     $$self.$$set = ($$props2) => {
       if ("text" in $$props2)
         $$invalidate(0, text2 = $$props2.text);
@@ -28187,7 +28215,7 @@
         }
       }
     };
-    return [text2, id, renderers, func6];
+    return [text2, id, renderers, func7];
   }
   var ArticleBody = class extends SvelteComponent {
     constructor(options) {
@@ -29744,9 +29772,9 @@
       if ($$self.$$.dirty & 1) {
         $: {
           if (article == null)
-            debugger;
-          $$invalidate(2, other = article.section == "OTHER" ? { BaseServices: BaseServices_default }[article.id] : false);
-          $$invalidate(3, aId = article.id);
+            console.warn("Article rendered with a null article");
+          $$invalidate(2, other = (article === null || article === void 0 ? void 0 : article.section) == "OTHER" ? { BaseServices: BaseServices_default }[article.id] : false);
+          $$invalidate(3, aId = article === null || article === void 0 ? void 0 : article.id);
         }
       }
     };
@@ -30536,7 +30564,7 @@
     let article;
     let recent;
     let { id = "" } = $$props;
-    let { index = 0 } = $$props;
+    let { index: index3 = 0 } = $$props;
     let { focused = false } = $$props;
     let { sortArticles = false } = $$props;
     let { autofocus = false } = $$props;
@@ -30684,14 +30712,14 @@
         $$invalidate(11, contentEl);
       });
     }
-    const scroll_handler = (e) => dispatch("scroll", { index, el: e.target });
+    const scroll_handler = (e) => dispatch("scroll", { index: index3, el: e.target });
     const mousedown_handler = () => dispatch("focus");
     const focusin_handler = () => dispatch("focus");
     $$self.$$set = ($$props2) => {
       if ("id" in $$props2)
         $$invalidate(0, id = $$props2.id);
       if ("index" in $$props2)
-        $$invalidate(1, index = $$props2.index);
+        $$invalidate(1, index3 = $$props2.index);
       if ("focused" in $$props2)
         $$invalidate(2, focused = $$props2.focused);
       if ("sortArticles" in $$props2)
@@ -30726,7 +30754,7 @@
     };
     return [
       id,
-      index,
+      index3,
       focused,
       step,
       hist,
@@ -30894,9 +30922,9 @@
       return [];
     const out = [];
     for (const kind of KINDS) {
-      const coll = rul[kind];
-      if (coll && coll[id])
-        out.push(coll[id]);
+      const coll2 = rul[kind];
+      if (coll2 && coll2[id])
+        out.push(coll2[id]);
     }
     return out;
   }
@@ -30987,9 +31015,9 @@
     if (!id)
       return null;
     for (const kind of KINDS) {
-      const coll = rul[kind];
-      if (coll && coll[id]) {
-        const entry = coll[id];
+      const coll2 = rul[kind];
+      if (coll2 && coll2[id]) {
+        const entry = coll2[id];
         const fields = {};
         flatten(entry, "", fields, FLATTEN_DEPTH);
         return {
@@ -35130,7 +35158,7 @@
       $$invalidate(0, showSame);
     }
     const change_handler = (e) => dispatch("highlight", e.target.checked);
-    const func6 = (id) => rul.tr(id);
+    const func7 = (id) => rul.tr(id);
     const change_handler_1 = (i, e) => dispatch("ammo", { index: i, id: e.target.value });
     $$self.$$set = ($$props2) => {
       if ("diff" in $$props2)
@@ -35196,7 +35224,7 @@
       click_handler,
       input0_change_handler,
       change_handler,
-      func6,
+      func7,
       change_handler_1
     ];
   }
@@ -35835,13 +35863,13 @@
     function emit(next) {
       dispatch("change", next);
     }
-    function setId(index, id) {
+    function setId(index3, id) {
       let next = [...ids];
-      next[index] = id;
+      next[index3] = id;
       emit(next);
     }
-    function setOther(index, id) {
-      let target = ids.length < 2 ? index : (index + 1) % ids.length;
+    function setOther(index3, id) {
+      let target = ids.length < 2 ? index3 : (index3 + 1) % ids.length;
       setId(target, id);
       $$invalidate(3, focusedPane = target);
       if (narrow)
@@ -37074,6 +37102,11 @@
       return "ranged";
     return "other";
   }
+  function isFixedWeapon(item) {
+    if (!item)
+      return false;
+    return !!(item.fixedWeapon || item.builtIn && item.recover === false);
+  }
   function weaponKinds(attacks) {
     const out = /* @__PURE__ */ new Set();
     for (const a of attacks) {
@@ -37112,7 +37145,7 @@
         kinds: weaponKinds(attacks),
         hands: weaponHands(item),
         damageTypes: weaponDamageTypes(item, attacks, ammoOptions),
-        fixed: !!(item.fixedWeapon || item.builtIn),
+        fixed: isFixedWeapon(item),
         categories: Array.isArray(item.categories) ? item.categories : []
       });
     }
@@ -37218,11 +37251,58 @@
       item: weapon.item,
       ammoId: clip,
       modes,
-      best: modes[0] || null
+      best: modes[0] || null,
+      clips: []
     };
   }
-  function rankWeapons(weapons, stats, target, side, opts, ammoBy = {}, pelletModel = "derived", goal = "kill", modeFilter = null) {
-    return weapons.map((w) => scoreWeapon(w, ammoBy[w.id], stats, target, side, opts, pelletModel, goal, modeFilter)).filter((r) => r.best).sort((a, b) => killRank(a.best) - killRank(b.best));
+  var finite = (v, fallback) => v == null || isNaN(+v) || !isFinite(+v) ? fallback : +v;
+  function clipRank(a, b) {
+    if (!a && !b)
+      return 0;
+    if (!a)
+      return 1;
+    if (!b)
+      return -1;
+    const byScore = killRank(a) - killRank(b);
+    if (byScore)
+      return byScore;
+    const byAttacks = finite(a.attacksToKill, Infinity) - finite(b.attacksToKill, Infinity);
+    if (byAttacks)
+      return byAttacks;
+    const byTu = finite(a.tuToKill, Infinity) - finite(b.tuToKill, Infinity);
+    if (byTu)
+      return byTu;
+    const byDamage = finite(b.perAttack, -Infinity) - finite(a.perAttack, -Infinity);
+    if (byDamage)
+      return byDamage;
+    return finite(b.damage && b.damage.max, -Infinity) - finite(a.damage && a.damage.max, -Infinity);
+  }
+  function scoreWeaponBestClip(weapon, ammoId, stats, target, side, opts, pelletModel = "derived", goal = "kill", modeFilter = null, allowClip = null) {
+    const run2 = (clip) => scoreWeapon(weapon, clip, stats, target, side, opts, pelletModel, goal, modeFilter);
+    const options = weapon.ammoOptions || [];
+    if (ammoId || options.length < 2)
+      return run2(ammoId || options[0] || null);
+    const canField = (id) => allowClip ? allowClip(id) : true;
+    const scored = options.map((clip) => ({ clip, result: run2(clip) }));
+    scored.sort((a, b) => clipRank(a.result.best, b.result.best));
+    const usable = scored.filter((s) => s.result.best);
+    const winner = (usable.find((s) => canField(s.clip)) || usable[0] || scored[0]).result;
+    winner.clips = scored.map((s) => ({
+      ammoId: s.clip,
+      title: rul.tr(s.clip),
+      best: s.result.best,
+      chosen: s.result === winner,
+      fieldable: canField(s.clip)
+    }));
+    return winner;
+  }
+  function chosenClip(r) {
+    if (!r || !r.clips.length)
+      return null;
+    return r.clips.find((c) => c.chosen) || r.clips[0];
+  }
+  function rankWeapons(weapons, stats, target, side, opts, ammoBy = {}, pelletModel = "derived", goal = "kill", modeFilter = null, allowClip = null) {
+    return weapons.map((w) => scoreWeaponBestClip(w, ammoBy[w.id], stats, target, side, opts, pelletModel, goal, modeFilter, allowClip)).filter((r) => r.best).sort((a, b) => killRank(a.best) - killRank(b.best));
   }
   var EXCLUDED_RACES = ["STR_DUMMY"];
   function targetList() {
@@ -37516,8 +37596,120 @@
         unitsAtRank(race, rank, into);
     }
   }
-  function missionUnits(id) {
-    const out = /* @__PURE__ */ new Set();
+  var spawnItems = null;
+  function buildSpawnItems() {
+    if (spawnItems)
+      return;
+    spawnItems = {};
+    for (const item of Object.values(rul.items || {})) {
+      const unit = item && item.spawnUnit;
+      if (typeof unit != "string" || !unit)
+        continue;
+      const faction = item.spawnUnitFaction;
+      if (faction === 0 || faction === 2)
+        continue;
+      spawnItems[item.id] = unit;
+    }
+  }
+  function blockSpawnItems(blocks) {
+    buildSpawnItems();
+    const out = {};
+    if (!blocks)
+      return out;
+    for (const block of Object.values(blocks)) {
+      if (!block || typeof block != "object")
+        continue;
+      for (const [item, spots] of Object.entries(block.items || {})) {
+        if (!spawnItems[item])
+          continue;
+        out[item] = (out[item] || 0) + (Array.isArray(spots) ? spots.length : 1);
+      }
+      for (const pick of Array.isArray(block.randomizedItems) ? block.randomizedItems : [])
+        for (const item of pick && pick.itemList || [])
+          if (spawnItems[item] && !out[item])
+            out[item] = 0;
+    }
+    return out;
+  }
+  function blocksOf(name) {
+    if (typeof name != "string" || !name)
+      return null;
+    const terrain = (rul.terrains || {})[name];
+    if (terrain && terrain.mapBlocks)
+      return terrain.mapBlocks;
+    for (const coll2 of ["ufos", "crafts"]) {
+      const e = (rul[coll2] || {})[name];
+      const data = e && e.battlescapeTerrainData;
+      if (data && data.mapBlocks)
+        return data.mapBlocks;
+    }
+    return null;
+  }
+  var mapSpawnCache = /* @__PURE__ */ new Map();
+  function mapSpawns(depId) {
+    const cached = mapSpawnCache.get(depId);
+    if (cached)
+      return cached;
+    const dep = (rul.alienDeployments || {})[depId];
+    const out = [];
+    if (!dep) {
+      mapSpawnCache.set(depId, out);
+      return out;
+    }
+    buildSpawnItems();
+    const found = /* @__PURE__ */ new Map();
+    const take = (name, kind, placements) => {
+      const blocks = blocksOf(name);
+      if (!blocks)
+        return;
+      for (const [item, per] of Object.entries(blockSpawnItems(blocks))) {
+        const qty = kind == "emplacement" ? per * placements : 0;
+        const cur = found.get(item);
+        if (cur) {
+          cur.qty += qty;
+          cur.from.add(name);
+          if (kind == "emplacement")
+            cur.kind = "emplacement";
+        } else {
+          found.set(item, { qty, from: /* @__PURE__ */ new Set([name]), kind });
+        }
+      }
+    };
+    for (const t of Array.isArray(dep.terrains) ? dep.terrains : [])
+      take(t, "map", 0);
+    const script = (rul.mapScripts || {})[dep.script];
+    const commands = script && Array.isArray(script.commands) ? script.commands : [];
+    for (const cmd of commands) {
+      if (!cmd || typeof cmd != "object")
+        continue;
+      const runs = Math.max(1, +cmd.executions || 1);
+      for (const key of ["UFOName", "craftName"])
+        if (typeof cmd[key] == "string" && cmd[key])
+          take(cmd[key], "emplacement", runs);
+      if (typeof cmd.terrain == "string" && cmd.terrain)
+        take(cmd.terrain, "map", 0);
+      for (const lvl of Array.isArray(cmd.verticalLevels) ? cmd.verticalLevels : []) {
+        if (!lvl || typeof lvl != "object")
+          continue;
+        if (typeof lvl.UFOName == "string" && lvl.UFOName)
+          take(lvl.UFOName, "emplacement", runs);
+        if (typeof lvl.terrain == "string" && lvl.terrain)
+          take(lvl.terrain, "map", 0);
+      }
+    }
+    for (const [item, info] of found)
+      out.push({
+        unit: spawnItems[item],
+        item,
+        qty: info.qty,
+        from: [...info.from],
+        kind: info.kind
+      });
+    out.sort((a, b) => b.qty - a.qty || (a.unit < b.unit ? -1 : 1));
+    mapSpawnCache.set(depId, out);
+    return out;
+  }
+  function walkStages(id, visit) {
     const seen = /* @__PURE__ */ new Set();
     let stage = id;
     while (stage && !seen.has(stage)) {
@@ -37525,37 +37717,105 @@
       const dep = rul.alienDeployments ? rul.alienDeployments[stage] : null;
       if (!dep)
         break;
+      visit(stage, dep);
+      stage = typeof dep.nextStage == "string" ? dep.nextStage : "";
+    }
+  }
+  function troopUnits(id) {
+    const out = /* @__PURE__ */ new Set();
+    walkStages(id, (stage, dep) => {
       const races = racesFor(stage, dep);
       readRows(dep.data, races, out);
       for (const wave of Array.isArray(dep.reinforcements) ? dep.reinforcements : [])
         readRows(wave && wave.data, races, out);
-      stage = typeof dep.nextStage == "string" ? dep.nextStage : "";
-    }
+    });
+    return out;
+  }
+  function placedUnits(id) {
+    const out = /* @__PURE__ */ new Set();
+    walkStages(id, (stage) => {
+      for (const s of mapSpawns(stage))
+        out.add(s.unit);
+    });
+    return out;
+  }
+  function missionUnits(id) {
+    const out = troopUnits(id);
+    for (const u of placedUnits(id))
+      out.add(u);
     return out;
   }
   function missionList(isTarget) {
     const out = [];
     for (const id of Object.keys(rul.alienDeployments || {})) {
       let units;
+      let troops;
       let rows;
       try {
+        troops = troopUnits(id);
         units = missionUnits(id);
         rows = missionRows(id);
       } catch (e) {
+        console.warn("[missions] skipped " + id + ":", e);
         continue;
       }
       let n = 0;
       for (const u of units)
         if (isTarget(u))
           n++;
+      const sig = JSON.stringify(rows);
       if (n) {
-        out.push({ id, title: rul.tr(id), count: n, unresolved: false });
+        out.push({ id, title: rul.tr(id), count: n, unresolved: false, variants: 1, sig });
         continue;
       }
-      if (!units.size && rows.length)
-        out.push({ id, title: rul.tr(id), count: 0, unresolved: true });
+      if (!troops.size && rows.length)
+        out.push({ id, title: rul.tr(id), count: 0, unresolved: true, variants: 1, sig });
     }
-    return out.sort((a, b) => a.title < b.title ? -1 : 1);
+    return mergeVariants(out);
+  }
+  function sharedPrefix(ids) {
+    const parts = ids.map((id) => id.split("_"));
+    let n = 0;
+    while (parts.every((p) => n < p.length && p[n] == parts[0][n]))
+      n++;
+    return parts[0].slice(0, n).join("_");
+  }
+  function variantTag(id, prefix) {
+    const rest = id.slice(prefix.length).replace(/^_+/, "");
+    if (!rest)
+      return "";
+    return rest.split("_").filter((w) => w).map((w) => w.length <= 2 ? w : w[0] + w.slice(1).toLowerCase()).join(" ");
+  }
+  function mergeVariants(raw) {
+    const byTitle = /* @__PURE__ */ new Map();
+    for (const r of raw) {
+      const cur = byTitle.get(r.title);
+      if (cur)
+        cur.push(r);
+      else
+        byTitle.set(r.title, [r]);
+    }
+    const out = [];
+    for (const [title, group] of byTitle) {
+      const bySig = /* @__PURE__ */ new Map();
+      for (const r of group) {
+        const cur = bySig.get(r.sig);
+        if (cur)
+          cur.push(r);
+        else
+          bySig.set(r.sig, [r]);
+      }
+      if (bySig.size == 1) {
+        out.push(__spreadProps(__spreadValues({}, group[0]), { title, variants: group.length }));
+        continue;
+      }
+      const prefix = sharedPrefix(group.map((r) => r.id));
+      for (const rs of bySig.values()) {
+        const tag = rs.map((r) => variantTag(r.id, prefix)).find((t) => t) || "";
+        out.push(__spreadProps(__spreadValues({}, rs[0]), { title: tag ? title + " \u2014 " + tag : title, variants: rs.length }));
+      }
+    }
+    return out.sort((a, b) => a.title.localeCompare(b.title));
   }
   function missionRows(id) {
     const out = [];
@@ -37597,6 +37857,17 @@
       push(dep.data, false);
       for (const wave of Array.isArray(dep.reinforcements) ? dep.reinforcements : [])
         push(wave && wave.data, true);
+      for (const s of mapSpawns(stage))
+        out.push({
+          units: [s.unit],
+          low: s.qty,
+          high: s.qty,
+          outside: 0,
+          reinforcement: false,
+          stage: label,
+          placedBy: s.from,
+          certain: s.kind == "emplacement" && s.qty > 0
+        });
       stage = typeof dep.nextStage == "string" ? dep.nextStage : "";
     }
     return out;
@@ -37860,7 +38131,10 @@
   function canMake(item, discovered) {
     if (!item || !item.manufacture)
       return false;
-    for (const projectId of Object.keys(item.manufacture)) {
+    const projects = Array.isArray(item.manufacture) ? item.manufacture : Object.keys(item.manufacture);
+    for (const projectId of projects) {
+      if (typeof projectId != "string")
+        continue;
       const project = rul.manufacture && rul.manufacture[projectId];
       if (!project)
         continue;
@@ -37875,15 +38149,15 @@
       return out;
     for (const w of weapons) {
       const item = w.item;
-      const count = save.owned.get(w.id) || 0;
-      const owned = count > 0;
+      const count2 = save.owned.get(w.id) || 0;
+      const owned = count2 > 0;
       const buyable = canBuy(item, save.discovered);
       const makeable = canMake(item, save.discovered);
       const selfLoading = !w.ammoOptions || !w.ammoOptions.length;
       const ammoOwned = selfLoading ? true : w.ammoOptions.some((a) => (save.owned.get(a) || 0) > 0);
       out.set(w.id, {
         owned,
-        count,
+        count: count2,
         buyable,
         makeable,
         obtainable: owned || buyable || makeable,
@@ -37908,6 +38182,18 @@
       return false;
     const item = rul.items ? rul.items[store] : null;
     return canBuy(item, save.discovered) || canMake(item, save.discovered);
+  }
+  function clipAllowed(mode, save) {
+    if (mode == "off" || !save)
+      return null;
+    if (mode == "stores")
+      return (id) => (save.owned.get(id) || 0) > 0;
+    return (id) => {
+      if ((save.owned.get(id) || 0) > 0)
+        return true;
+      const item = rul.items ? rul.items[id] : null;
+      return canBuy(item, save.discovered) || canMake(item, save.discovered);
+    };
   }
   function passesAvailability(id, mode, table) {
     if (mode == "off")
@@ -37936,11 +38222,175 @@
     return parts.join(" \xB7 ");
   }
 
+  // src/salvage.ts
+  var MCD_RECORD = 62;
+  var MCD_TARGET_TYPE = 59;
+  var CACHE_KEY = "xpediaSalvageIndex";
+  var index = null;
+  var pending = null;
+  var problem = "";
+  var salvageReady = () => index != null;
+  var salvageProblem = () => problem;
+  function terrainDirs() {
+    const out = /* @__PURE__ */ new Set();
+    const mods = rul.mods;
+    for (const m of Array.isArray(mods) ? mods : Object.values(mods || {}))
+      if (m && m.dir)
+        out.add(m.dir + "TERRAIN/");
+    out.add("/UFO/TERRAIN/");
+    out.add("/TFTD/TERRAIN/");
+    return [...out];
+  }
+  function mcdFiles(dir) {
+    return __async(this, null, function* () {
+      let names = [];
+      try {
+        names = yield listDir(dir);
+      } catch (e) {
+        return [];
+      }
+      return names.filter((n) => /\.mcd$/i.test(n));
+    });
+  }
+  function scanFile(path) {
+    return __async(this, null, function* () {
+      let buf;
+      try {
+        const res = yield fetch(path);
+        if (!res.ok)
+          return [];
+        buf = yield res.arrayBuffer();
+      } catch (e) {
+        return [];
+      }
+      const bytes = new Uint8Array(buf);
+      const out = [];
+      for (let i = 0; i + MCD_RECORD <= bytes.length; i += MCD_RECORD) {
+        const t = bytes[i + MCD_TARGET_TYPE];
+        if (t)
+          out.push(t);
+      }
+      return out;
+    });
+  }
+  function signature(files) {
+    let h = 2166136261;
+    const all = files.map((f) => (f.dir + f.name).toLowerCase()).sort().join("\n");
+    for (let i = 0; i < all.length; i++) {
+      h ^= all.charCodeAt(i);
+      h = h + (h << 1) + (h << 4) + (h << 7) + (h << 8) + (h << 24) >>> 0;
+    }
+    return files.length + ":" + h.toString(16);
+  }
+  function loadSalvageIndex() {
+    if (index)
+      return Promise.resolve();
+    const packed = window["xpediaSalvage"];
+    if (packed && typeof packed == "object") {
+      index = packed;
+      return Promise.resolve();
+    }
+    if (pending)
+      return pending;
+    pending = (() => __async(this, null, function* () {
+      try {
+        yield scan();
+      } catch (e) {
+        problem = "Could not read the tileset files, so the tiles this comes from cannot be named.";
+        index = {};
+      }
+    }))();
+    return pending;
+  }
+  function scan() {
+    return __async(this, null, function* () {
+      const dirs = terrainDirs();
+      const lists = yield Promise.all(dirs.map(mcdFiles));
+      const files = [];
+      for (let i = 0; i < dirs.length; i++)
+        for (const name of lists[i])
+          files.push({ dir: dirs[i], name });
+      if (!files.length) {
+        problem = "No tileset (.MCD) files found, so the tiles this comes from cannot be named.";
+        index = {};
+        return;
+      }
+      const sig = signature(files);
+      try {
+        const raw = JSON.parse(localStorage[CACHE_KEY] || "null");
+        if (raw && raw.sig == sig && raw.index) {
+          index = raw.index;
+          return;
+        }
+      } catch (e) {
+      }
+      const built = {};
+      const BATCH = 24;
+      for (let i = 0; i < files.length; i += BATCH) {
+        const slice = files.slice(i, i + BATCH);
+        const found = yield Promise.all(slice.map((f) => scanFile(f.dir + f.name)));
+        for (let j2 = 0; j2 < slice.length; j2++) {
+          const set2 = slice[j2].name.replace(/\.mcd$/i, "").toUpperCase();
+          for (const t of found[j2]) {
+            if (!built[t])
+              built[t] = {};
+            built[t][set2] = (built[t][set2] || 0) + 1;
+          }
+        }
+      }
+      index = built;
+      try {
+        localStorage[CACHE_KEY] = JSON.stringify({ sig, index: built });
+      } catch (e) {
+      }
+    });
+  }
+  function setsForType(type2) {
+    if (!index || !type2)
+      return [];
+    const hit = index[type2];
+    if (!hit)
+      return [];
+    return Object.keys(hit).map((name) => ({ name, tiles: hit[name] })).sort((a, b) => b.tiles - a.tiles || (a.name < b.name ? -1 : 1));
+  }
+  var usage = null;
+  function buildUsage() {
+    if (usage)
+      return;
+    usage = {};
+    const add = (set2, kind, id) => {
+      if (typeof set2 != "string")
+        return;
+      const key = set2.toUpperCase();
+      if (!usage[key])
+        usage[key] = { terrains: [], crafts: [] };
+      if (!usage[key][kind].includes(id))
+        usage[key][kind].push(id);
+    };
+    for (const t of Object.values(rul.terrains || {}))
+      for (const s of t.mapDataSets || [])
+        add(s, "terrains", t.id);
+    for (const u of Object.values(rul.ufos || {}))
+      for (const s of u.battlescapeTerrainData && u.battlescapeTerrainData.mapDataSets || [])
+        add(s, "crafts", u.id);
+    for (const c of Object.values(rul.crafts || {}))
+      for (const s of c.battlescapeTerrainData && c.battlescapeTerrainData.mapDataSets || [])
+        add(s, "crafts", c.id);
+  }
+  function usersOfSet(set2) {
+    buildUsage();
+    return usage[(set2 || "").toUpperCase()] || { terrains: [], crafts: [] };
+  }
+  function salvageIndex() {
+    return index || {};
+  }
+
   // src/exportPedia.ts
   function exportPedia(onlyCurrentLanguage = false) {
     return __async(this, null, function* () {
       var _a, _b;
       document.body.style.cursor = "wait";
+      yield loadSalvageIndex();
       let jsPath = (_a = document.getElementById("xpedia-js")) == null ? void 0 : _a.src;
       let js = yield (yield fetch(jsPath)).text();
       let style = yield readStyle("main-css");
@@ -37968,6 +38418,7 @@
   window.gameDir = ".";
   window.xpediaDir = "xpedia2/";
   window.xpedia = "${packed}";
+  window.xpediaSalvage = ${JSON.stringify(salvageIndex()).replace(/</g, "\\u003c")};
   window.GlobeMarkers = "${window["GlobeMarkers"]}"
   clog = (...args)=>{}
   <\/script>
@@ -38295,77 +38746,79 @@
 
   // src/DamageCalc.svelte
   var { Boolean: Boolean_1, Map: Map_1 } = globals;
-  function get_each_context_162(ctx, list2, i) {
-    const child_ctx = ctx.slice();
-    child_ctx[218] = list2[i];
-    return child_ctx;
-  }
   function get_each_context_172(ctx, list2, i) {
     const child_ctx = ctx.slice();
-    child_ctx[221] = list2[i];
+    child_ctx[222] = list2[i];
     return child_ctx;
   }
   function get_each_context_182(ctx, list2, i) {
     const child_ctx = ctx.slice();
-    child_ctx[246] = list2[i];
+    child_ctx[226] = list2[i];
     return child_ctx;
   }
   function get_each_context_192(ctx, list2, i) {
     const child_ctx = ctx.slice();
-    child_ctx[259] = list2[i];
+    child_ctx[252] = list2[i];
     return child_ctx;
   }
   function get_each_context_20(ctx, list2, i) {
     const child_ctx = ctx.slice();
-    child_ctx[225] = list2[i];
+    child_ctx[265] = list2[i];
     return child_ctx;
   }
   function get_each_context_21(ctx, list2, i) {
     const child_ctx = ctx.slice();
-    child_ctx[228] = list2[i];
-    child_ctx[230] = i;
+    child_ctx[225] = list2[i];
+    return child_ctx;
+  }
+  function get_each_context_222(ctx, list2, i) {
+    const child_ctx = ctx.slice();
+    child_ctx[234] = list2[i];
+    child_ctx[236] = i;
     return child_ctx;
   }
   function get_each_context29(ctx, list2, i) {
     const child_ctx = ctx.slice();
-    child_ctx[218] = list2[i];
+    child_ctx[222] = list2[i];
     return child_ctx;
   }
   function get_each_context_111(ctx, list2, i) {
     const child_ctx = ctx.slice();
-    child_ctx[221] = list2[i];
-    return child_ctx;
-  }
-  function get_if_ctx(ctx) {
-    const child_ctx = ctx.slice();
-    const constants_0 = child_ctx[49].get(child_ctx[218].weapon.id);
-    child_ctx[224] = constants_0;
+    child_ctx[225] = list2[i];
+    const constants_0 = child_ctx[225].best;
+    child_ctx[226] = constants_0;
     return child_ctx;
   }
   function get_each_context_26(ctx, list2, i) {
     const child_ctx = ctx.slice();
-    child_ctx[225] = list2[i];
+    child_ctx[226] = list2[i];
+    return child_ctx;
+  }
+  function get_if_ctx(ctx) {
+    const child_ctx = ctx.slice();
+    const constants_0 = child_ctx[49].get(child_ctx[222].weapon.id);
+    child_ctx[231] = constants_0;
     return child_ctx;
   }
   function get_each_context_36(ctx, list2, i) {
     const child_ctx = ctx.slice();
-    child_ctx[228] = list2[i];
-    child_ctx[230] = i;
+    child_ctx[225] = list2[i];
     return child_ctx;
   }
   function get_each_context_45(ctx, list2, i) {
     const child_ctx = ctx.slice();
-    child_ctx[231] = list2[i];
+    child_ctx[234] = list2[i];
+    child_ctx[236] = i;
     return child_ctx;
   }
   function get_each_context_54(ctx, list2, i) {
     const child_ctx = ctx.slice();
-    child_ctx[234] = list2[i];
+    child_ctx[237] = list2[i];
     return child_ctx;
   }
   function get_each_context_64(ctx, list2, i) {
     const child_ctx = ctx.slice();
-    child_ctx[225] = list2[i];
+    child_ctx[240] = list2[i];
     return child_ctx;
   }
   function get_each_context_73(ctx, list2, i) {
@@ -38375,96 +38828,101 @@
   }
   function get_each_context_82(ctx, list2, i) {
     const child_ctx = ctx.slice();
-    child_ctx[241] = list2[i];
+    child_ctx[225] = list2[i];
     return child_ctx;
   }
   function get_each_context_92(ctx, list2, i) {
     const child_ctx = ctx.slice();
-    child_ctx[228] = list2[i];
+    child_ctx[247] = list2[i];
     return child_ctx;
   }
   function get_each_context_102(ctx, list2, i) {
     const child_ctx = ctx.slice();
-    child_ctx[246] = list2[i];
+    child_ctx[234] = list2[i];
     return child_ctx;
   }
   function get_each_context_112(ctx, list2, i) {
     const child_ctx = ctx.slice();
-    child_ctx[246] = list2[i];
+    child_ctx[252] = list2[i];
     return child_ctx;
   }
   function get_each_context_123(ctx, list2, i) {
     const child_ctx = ctx.slice();
-    child_ctx[251] = list2[i];
+    child_ctx[252] = list2[i];
     return child_ctx;
   }
   function get_each_context_133(ctx, list2, i) {
     const child_ctx = ctx.slice();
-    child_ctx[254] = list2[i];
+    child_ctx[257] = list2[i];
     return child_ctx;
   }
   function get_each_context_143(ctx, list2, i) {
     const child_ctx = ctx.slice();
-    child_ctx[254] = list2[i];
+    child_ctx[260] = list2[i];
     return child_ctx;
   }
   function get_each_context_152(ctx, list2, i) {
     const child_ctx = ctx.slice();
-    child_ctx[259] = list2[i];
+    child_ctx[260] = list2[i];
     return child_ctx;
   }
-  function get_each_context_242(ctx, list2, i) {
+  function get_each_context_162(ctx, list2, i) {
     const child_ctx = ctx.slice();
-    child_ctx[277] = list2[i];
-    return child_ctx;
-  }
-  function get_each_context_222(ctx, list2, i) {
-    const child_ctx = ctx.slice();
-    child_ctx[231] = list2[i];
-    return child_ctx;
-  }
-  function get_each_context_232(ctx, list2, i) {
-    const child_ctx = ctx.slice();
-    child_ctx[221] = list2[i];
+    child_ctx[265] = list2[i];
     return child_ctx;
   }
   function get_each_context_252(ctx, list2, i) {
     const child_ctx = ctx.slice();
-    child_ctx[280] = list2[i];
+    child_ctx[283] = list2[i];
+    return child_ctx;
+  }
+  function get_each_context_232(ctx, list2, i) {
+    const child_ctx = ctx.slice();
+    child_ctx[237] = list2[i];
+    return child_ctx;
+  }
+  function get_each_context_242(ctx, list2, i) {
+    const child_ctx = ctx.slice();
+    child_ctx[226] = list2[i];
     return child_ctx;
   }
   function get_each_context_262(ctx, list2, i) {
     const child_ctx = ctx.slice();
-    child_ctx[228] = list2[i];
-    child_ctx[230] = i;
+    child_ctx[286] = list2[i];
     return child_ctx;
   }
   function get_each_context_27(ctx, list2, i) {
     const child_ctx = ctx.slice();
-    child_ctx[228] = list2[i];
+    child_ctx[234] = list2[i];
+    child_ctx[236] = i;
     return child_ctx;
   }
   function get_each_context_28(ctx, list2, i) {
     const child_ctx = ctx.slice();
-    child_ctx[286] = list2[i];
+    child_ctx[234] = list2[i];
     return child_ctx;
   }
   function get_each_context_29(ctx, list2, i) {
     const child_ctx = ctx.slice();
-    child_ctx[280] = list2[i];
+    child_ctx[292] = list2[i];
     return child_ctx;
   }
   function get_each_context_30(ctx, list2, i) {
     const child_ctx = ctx.slice();
-    child_ctx[221] = list2[i];
+    child_ctx[286] = list2[i];
     return child_ctx;
   }
   function get_each_context_31(ctx, list2, i) {
     const child_ctx = ctx.slice();
-    child_ctx[293] = list2[i];
+    child_ctx[226] = list2[i];
     return child_ctx;
   }
-  function create_if_block_722(ctx) {
+  function get_each_context_322(ctx, list2, i) {
+    const child_ctx = ctx.slice();
+    child_ctx[299] = list2[i];
+    return child_ctx;
+  }
+  function create_if_block_80(ctx) {
     let button;
     let t;
     let mounted;
@@ -38498,7 +38956,7 @@
       }
     };
   }
-  function create_else_block_132(ctx) {
+  function create_else_block_152(ctx) {
     let select;
     let option;
     let t1;
@@ -38511,25 +38969,25 @@
     let if_block_anchor;
     let mounted;
     let dispose;
-    let each_value_31 = ctx[65];
+    let each_value_32 = ctx[65];
     let each_blocks_1 = [];
-    for (let i = 0; i < each_value_31.length; i += 1) {
-      each_blocks_1[i] = create_each_block_31(get_each_context_31(ctx, each_value_31, i));
+    for (let i = 0; i < each_value_32.length; i += 1) {
+      each_blocks_1[i] = create_each_block_322(get_each_context_322(ctx, each_value_32, i));
     }
-    let each_value_30 = ctx[95];
+    let each_value_31 = ctx[95];
     let each_blocks = [];
-    for (let i = 0; i < each_value_30.length; i += 1) {
-      each_blocks[i] = create_each_block_30(get_each_context_30(ctx, each_value_30, i));
+    for (let i = 0; i < each_value_31.length; i += 1) {
+      each_blocks[i] = create_each_block_31(get_each_context_31(ctx, each_value_31, i));
     }
     function select_block_type_3(ctx2, dirty) {
       if (ctx2[36])
-        return create_if_block_652;
+        return create_if_block_732;
       if (ctx2[37])
-        return create_if_block_662;
+        return create_if_block_742;
       if (ctx2[35])
-        return create_if_block_672;
+        return create_if_block_752;
       if (ctx2[34])
-        return create_if_block_70;
+        return create_if_block_78;
     }
     let current_block_type = select_block_type_3(ctx, [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1]);
     let if_block = current_block_type && current_block_type(ctx);
@@ -38586,22 +39044,22 @@
         insert(target, if_block_anchor, anchor);
         if (!mounted) {
           dispose = [
-            listen(select, "change", ctx[152]),
-            listen(input, "change", ctx[153])
+            listen(select, "change", ctx[154]),
+            listen(input, "change", ctx[155])
           ];
           mounted = true;
         }
       },
       p(ctx2, dirty) {
         if (dirty[2] & 8) {
-          each_value_31 = ctx2[65];
+          each_value_32 = ctx2[65];
           let i;
-          for (i = 0; i < each_value_31.length; i += 1) {
-            const child_ctx = get_each_context_31(ctx2, each_value_31, i);
+          for (i = 0; i < each_value_32.length; i += 1) {
+            const child_ctx = get_each_context_322(ctx2, each_value_32, i);
             if (each_blocks_1[i]) {
               each_blocks_1[i].p(child_ctx, dirty);
             } else {
-              each_blocks_1[i] = create_each_block_31(child_ctx);
+              each_blocks_1[i] = create_each_block_322(child_ctx);
               each_blocks_1[i].c();
               each_blocks_1[i].m(select, null);
             }
@@ -38609,20 +39067,20 @@
           for (; i < each_blocks_1.length; i += 1) {
             each_blocks_1[i].d(1);
           }
-          each_blocks_1.length = each_value_31.length;
+          each_blocks_1.length = each_value_32.length;
         }
         if (dirty[1] & 8 | dirty[2] & 8) {
           select_option(select, ctx2[34]);
         }
         if (dirty[0] & 805306368 | dirty[1] & 24 | dirty[2] & 2097152 | dirty[3] & 4) {
-          each_value_30 = ctx2[95];
+          each_value_31 = ctx2[95];
           let i;
-          for (i = 0; i < each_value_30.length; i += 1) {
-            const child_ctx = get_each_context_30(ctx2, each_value_30, i);
+          for (i = 0; i < each_value_31.length; i += 1) {
+            const child_ctx = get_each_context_31(ctx2, each_value_31, i);
             if (each_blocks[i]) {
               each_blocks[i].p(child_ctx, dirty);
             } else {
-              each_blocks[i] = create_each_block_30(child_ctx);
+              each_blocks[i] = create_each_block_31(child_ctx);
               each_blocks[i].c();
               each_blocks[i].m(div, null);
             }
@@ -38630,7 +39088,7 @@
           for (; i < each_blocks.length; i += 1) {
             each_blocks[i].d(1);
           }
-          each_blocks.length = each_value_30.length;
+          each_blocks.length = each_value_31.length;
         }
         if (current_block_type === (current_block_type = select_block_type_3(ctx2, dirty)) && if_block) {
           if_block.p(ctx2, dirty);
@@ -38669,7 +39127,7 @@
       }
     };
   }
-  function create_if_block_61(ctx) {
+  function create_if_block_69(ctx) {
     let t0;
     let label;
     let t1;
@@ -38680,16 +39138,16 @@
     let dispose;
     function select_block_type_1(ctx2, dirty) {
       if (ctx2[91])
-        return create_if_block_642;
-      return create_else_block_122;
+        return create_if_block_722;
+      return create_else_block_142;
     }
     let current_block_type = select_block_type_1(ctx, [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1]);
     let if_block0 = current_block_type(ctx);
     function select_block_type_2(ctx2, dirty) {
       if (ctx2[36])
-        return create_if_block_622;
+        return create_if_block_70;
       if (ctx2[37])
-        return create_if_block_632;
+        return create_if_block_71;
     }
     let current_block_type_1 = select_block_type_2(ctx, [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1]);
     let if_block1 = current_block_type_1 && current_block_type_1(ctx);
@@ -38719,7 +39177,7 @@
           if_block1.m(target, anchor);
         insert(target, if_block1_anchor, anchor);
         if (!mounted) {
-          dispose = listen(input, "change", ctx[151]);
+          dispose = listen(input, "change", ctx[153]);
           mounted = true;
         }
       },
@@ -38754,16 +39212,16 @@
       }
     };
   }
-  function create_each_block_31(ctx) {
+  function create_each_block_322(ctx) {
     let option;
-    let t_value = ctx[293].file.replace(/\.a?sav$/, "") + "";
+    let t_value = ctx[299].file.replace(/\.a?sav$/, "") + "";
     let t;
     let option_value_value;
     return {
       c() {
         option = element("option");
         t = text(t_value);
-        option.__value = option_value_value = ctx[293].path;
+        option.__value = option_value_value = ctx[299].path;
         option.value = option.__value;
       },
       m(target, anchor) {
@@ -38771,9 +39229,9 @@
         append(option, t);
       },
       p(ctx2, dirty) {
-        if (dirty[2] & 8 && t_value !== (t_value = ctx2[293].file.replace(/\.a?sav$/, "") + ""))
+        if (dirty[2] & 8 && t_value !== (t_value = ctx2[299].file.replace(/\.a?sav$/, "") + ""))
           set_data(t, t_value);
-        if (dirty[2] & 8 && option_value_value !== (option_value_value = ctx2[293].path)) {
+        if (dirty[2] & 8 && option_value_value !== (option_value_value = ctx2[299].path)) {
           option.__value = option_value_value;
           option.value = option.__value;
         }
@@ -38784,9 +39242,9 @@
       }
     };
   }
-  function create_if_block_71(ctx) {
+  function create_if_block_79(ctx) {
     let span;
-    let t_value = ctx[83][ctx[221].id] + "";
+    let t_value = ctx[83][ctx[226].id] + "";
     let t;
     return {
       c() {
@@ -38799,7 +39257,7 @@
         append(span, t);
       },
       p(ctx2, dirty) {
-        if (dirty[2] & 2097152 && t_value !== (t_value = ctx2[83][ctx2[221].id] + ""))
+        if (dirty[2] & 2097152 && t_value !== (t_value = ctx2[83][ctx2[226].id] + ""))
           set_data(t, t_value);
       },
       d(detaching) {
@@ -38808,9 +39266,9 @@
       }
     };
   }
-  function create_each_block_30(ctx) {
+  function create_each_block_31(ctx) {
     let button;
-    let t0_value = ctx[221].label + "";
+    let t0_value = ctx[226].label + "";
     let t0;
     let t1;
     let t2;
@@ -38818,9 +39276,9 @@
     let button_disabled_value;
     let mounted;
     let dispose;
-    let if_block = ctx[221].id != "off" && ctx[35] && create_if_block_71(ctx);
+    let if_block = ctx[226].id != "off" && ctx[35] && create_if_block_79(ctx);
     function click_handler_2() {
-      return ctx[154](ctx[221]);
+      return ctx[156](ctx[226]);
     }
     return {
       c() {
@@ -38831,9 +39289,9 @@
           if_block.c();
         t2 = space();
         attr(button, "class", "dmg-chip");
-        attr(button, "title", button_title_value = ctx[221].title);
-        button.disabled = button_disabled_value = ctx[221].id != "off" && !ctx[34];
-        toggle_class(button, "dmg-chip-on", ctx[28] == ctx[221].id);
+        attr(button, "title", button_title_value = ctx[226].title);
+        button.disabled = button_disabled_value = ctx[226].id != "off" && !ctx[34];
+        toggle_class(button, "dmg-chip-on", ctx[28] == ctx[226].id);
       },
       m(target, anchor) {
         insert(target, button, anchor);
@@ -38849,11 +39307,11 @@
       },
       p(new_ctx, dirty) {
         ctx = new_ctx;
-        if (ctx[221].id != "off" && ctx[35]) {
+        if (ctx[226].id != "off" && ctx[35]) {
           if (if_block) {
             if_block.p(ctx, dirty);
           } else {
-            if_block = create_if_block_71(ctx);
+            if_block = create_if_block_79(ctx);
             if_block.c();
             if_block.m(button, t2);
           }
@@ -38861,11 +39319,11 @@
           if_block.d(1);
           if_block = null;
         }
-        if (dirty[1] & 8 | dirty[2] & 8 && button_disabled_value !== (button_disabled_value = ctx[221].id != "off" && !ctx[34])) {
+        if (dirty[1] & 8 | dirty[2] & 8 && button_disabled_value !== (button_disabled_value = ctx[226].id != "off" && !ctx[34])) {
           button.disabled = button_disabled_value;
         }
         if (dirty[0] & 268435456 | dirty[3] & 4) {
-          toggle_class(button, "dmg-chip-on", ctx[28] == ctx[221].id);
+          toggle_class(button, "dmg-chip-on", ctx[28] == ctx[226].id);
         }
       },
       d(detaching) {
@@ -38878,7 +39336,7 @@
       }
     };
   }
-  function create_if_block_70(ctx) {
+  function create_if_block_78(ctx) {
     let p;
     return {
       c() {
@@ -38896,7 +39354,7 @@
       }
     };
   }
-  function create_if_block_672(ctx) {
+  function create_if_block_752(ctx) {
     let p;
     let html_tag;
     let raw_value = (ctx[35].name || "save") + "";
@@ -38915,8 +39373,8 @@
     let t7_value = ctx[35].bases == 1 ? "base" : "bases";
     let t7;
     let t8;
-    let if_block0 = ctx[35].date && create_if_block_69(ctx);
-    let if_block1 = ctx[35].crafts && create_if_block_68(ctx);
+    let if_block0 = ctx[35].date && create_if_block_772(ctx);
+    let if_block1 = ctx[35].crafts && create_if_block_762(ctx);
     return {
       c() {
         p = element("p");
@@ -38965,7 +39423,7 @@
           if (if_block0) {
             if_block0.p(ctx2, dirty);
           } else {
-            if_block0 = create_if_block_69(ctx2);
+            if_block0 = create_if_block_772(ctx2);
             if_block0.c();
             if_block0.m(p, br);
           }
@@ -38985,7 +39443,7 @@
           if (if_block1) {
             if_block1.p(ctx2, dirty);
           } else {
-            if_block1 = create_if_block_68(ctx2);
+            if_block1 = create_if_block_762(ctx2);
             if_block1.c();
             if_block1.m(p, null);
           }
@@ -39004,7 +39462,7 @@
       }
     };
   }
-  function create_if_block_662(ctx) {
+  function create_if_block_742(ctx) {
     let p;
     let t0;
     let t1;
@@ -39030,7 +39488,7 @@
       }
     };
   }
-  function create_if_block_652(ctx) {
+  function create_if_block_732(ctx) {
     let p;
     return {
       c() {
@@ -39048,7 +39506,7 @@
       }
     };
   }
-  function create_if_block_69(ctx) {
+  function create_if_block_772(ctx) {
     let t0;
     let t1_value = ctx[35].date + "";
     let t1;
@@ -39073,7 +39531,7 @@
       }
     };
   }
-  function create_if_block_68(ctx) {
+  function create_if_block_762(ctx) {
     let t0;
     let t1_value = ctx[35].crafts + "";
     let t1;
@@ -39111,7 +39569,7 @@
       }
     };
   }
-  function create_else_block_122(ctx) {
+  function create_else_block_142(ctx) {
     let p;
     return {
       c() {
@@ -39130,7 +39588,7 @@
       }
     };
   }
-  function create_if_block_642(ctx) {
+  function create_if_block_722(ctx) {
     let p;
     return {
       c() {
@@ -39149,7 +39607,7 @@
       }
     };
   }
-  function create_if_block_632(ctx) {
+  function create_if_block_71(ctx) {
     let p;
     let t0;
     let t1;
@@ -39175,7 +39633,7 @@
       }
     };
   }
-  function create_if_block_622(ctx) {
+  function create_if_block_70(ctx) {
     let p;
     return {
       c() {
@@ -39193,7 +39651,7 @@
       }
     };
   }
-  function create_if_block_60(ctx) {
+  function create_if_block_68(ctx) {
     let div;
     let button0;
     let t0;
@@ -39243,8 +39701,8 @@
         append(span1, t4);
         if (!mounted) {
           dispose = [
-            listen(button0, "click", ctx[157]),
-            listen(button1, "click", ctx[158])
+            listen(button0, "click", ctx[159]),
+            listen(button1, "click", ctx[160])
           ];
           mounted = true;
         }
@@ -39269,11 +39727,11 @@
       }
     };
   }
-  function create_each_block_29(ctx) {
+  function create_each_block_30(ctx) {
     let option;
-    let t0_value = ctx[280].name + "";
+    let t0_value = ctx[286].name + "";
     let t0;
-    let t1_value = ctx[280].fromSave && ctx[280].fromSave.note ? " \xB7 " + ctx[280].fromSave.note : "";
+    let t1_value = ctx[286].fromSave && ctx[286].fromSave.note ? " \xB7 " + ctx[286].fromSave.note : "";
     let t1;
     let option_value_value;
     return {
@@ -39281,7 +39739,7 @@
         option = element("option");
         t0 = text(t0_value);
         t1 = text(t1_value);
-        option.__value = option_value_value = ctx[280].id;
+        option.__value = option_value_value = ctx[286].id;
         option.value = option.__value;
       },
       m(target, anchor) {
@@ -39290,11 +39748,11 @@
         append(option, t1);
       },
       p(ctx2, dirty) {
-        if (dirty[1] & 33554432 && t0_value !== (t0_value = ctx2[280].name + ""))
+        if (dirty[1] & 33554432 && t0_value !== (t0_value = ctx2[286].name + ""))
           set_data(t0, t0_value);
-        if (dirty[1] & 33554432 && t1_value !== (t1_value = ctx2[280].fromSave && ctx2[280].fromSave.note ? " \xB7 " + ctx2[280].fromSave.note : ""))
+        if (dirty[1] & 33554432 && t1_value !== (t1_value = ctx2[286].fromSave && ctx2[286].fromSave.note ? " \xB7 " + ctx2[286].fromSave.note : ""))
           set_data(t1, t1_value);
-        if (dirty[1] & 33554432 && option_value_value !== (option_value_value = ctx2[280].id)) {
+        if (dirty[1] & 33554432 && option_value_value !== (option_value_value = ctx2[286].id)) {
           option.__value = option_value_value;
           option.value = option.__value;
         }
@@ -39305,7 +39763,7 @@
       }
     };
   }
-  function create_if_block_59(ctx) {
+  function create_if_block_672(ctx) {
     let span;
     let t0_value = ctx[56].length + "";
     let t0;
@@ -39338,7 +39796,7 @@
       }
     };
   }
-  function create_if_block_462(ctx) {
+  function create_if_block_542(ctx) {
     let t0;
     let div1;
     let span;
@@ -39371,16 +39829,16 @@
     let current;
     let mounted;
     let dispose;
-    let if_block0 = !ctx[87] && create_if_block_582(ctx);
-    let each_value_28 = ctx[89];
+    let if_block0 = !ctx[87] && create_if_block_662(ctx);
+    let each_value_29 = ctx[89];
     let each_blocks = [];
-    for (let i = 0; i < each_value_28.length; i += 1) {
-      each_blocks[i] = create_each_block_28(get_each_context_28(ctx, each_value_28, i));
+    for (let i = 0; i < each_value_29.length; i += 1) {
+      each_blocks[i] = create_each_block_29(get_each_context_29(ctx, each_value_29, i));
     }
-    let if_block1 = ctx[54] && create_if_block_572(ctx);
-    let if_block2 = ctx[27] && create_if_block_562(ctx);
-    let if_block3 = ctx[58] && create_if_block_51(ctx);
-    const if_block_creators = [create_if_block_482, create_if_block_50];
+    let if_block1 = ctx[54] && create_if_block_652(ctx);
+    let if_block2 = ctx[27] && create_if_block_642(ctx);
+    let if_block3 = ctx[58] && create_if_block_59(ctx);
+    const if_block_creators = [create_if_block_562, create_if_block_582];
     const if_blocks = [];
     function select_block_type_7(ctx2, dirty) {
       if (ctx2[54])
@@ -39392,7 +39850,7 @@
     if (~(current_block_type_index = select_block_type_7(ctx, [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1]))) {
       if_block4 = if_blocks[current_block_type_index] = if_block_creators[current_block_type_index](ctx);
     }
-    let if_block5 = ctx[64] && create_if_block_472(ctx);
+    let if_block5 = ctx[64] && create_if_block_552(ctx);
     return {
       c() {
         if (if_block0)
@@ -39446,7 +39904,7 @@
         attr(select, "class", "dmg-input");
         attr(select, "size", select_size_value = ctx[27] ? 8 : 1);
         if (ctx[68] === void 0)
-          add_render_callback(() => ctx[163].call(select));
+          add_render_callback(() => ctx[165].call(select));
         attr(div0, "class", "dmg-armorrow");
         attr(div1, "class", "dmg-armorpick");
         attr(button0, "class", "dmg-mini dmg-wide");
@@ -39503,11 +39961,11 @@
         current = true;
         if (!mounted) {
           dispose = [
-            listen(input0, "input", ctx[162]),
-            listen(select, "change", ctx[163]),
-            listen(select, "change", ctx[164], true),
-            listen(button0, "click", ctx[166]),
-            listen(button1, "click", ctx[168]),
+            listen(input0, "input", ctx[164]),
+            listen(select, "change", ctx[165]),
+            listen(select, "change", ctx[166], true),
+            listen(button0, "click", ctx[168]),
+            listen(button1, "click", ctx[170]),
             listen(input1, "change", ctx[102])
           ];
           mounted = true;
@@ -39518,7 +39976,7 @@
           if (if_block0) {
             if_block0.p(ctx2, dirty);
           } else {
-            if_block0 = create_if_block_582(ctx2);
+            if_block0 = create_if_block_662(ctx2);
             if_block0.c();
             if_block0.m(t0.parentNode, t0);
           }
@@ -39530,14 +39988,14 @@
           set_input_value(input0, ctx2[27]);
         }
         if (dirty[2] & 134217728) {
-          each_value_28 = ctx2[89];
+          each_value_29 = ctx2[89];
           let i;
-          for (i = 0; i < each_value_28.length; i += 1) {
-            const child_ctx = get_each_context_28(ctx2, each_value_28, i);
+          for (i = 0; i < each_value_29.length; i += 1) {
+            const child_ctx = get_each_context_29(ctx2, each_value_29, i);
             if (each_blocks[i]) {
               each_blocks[i].p(child_ctx, dirty);
             } else {
-              each_blocks[i] = create_each_block_28(child_ctx);
+              each_blocks[i] = create_each_block_29(child_ctx);
               each_blocks[i].c();
               each_blocks[i].m(select, null);
             }
@@ -39545,7 +40003,7 @@
           for (; i < each_blocks.length; i += 1) {
             each_blocks[i].d(1);
           }
-          each_blocks.length = each_value_28.length;
+          each_blocks.length = each_value_29.length;
         }
         if (!current || dirty[0] & 134217728 && select_size_value !== (select_size_value = ctx2[27] ? 8 : 1)) {
           attr(select, "size", select_size_value);
@@ -39557,7 +40015,7 @@
           if (if_block1) {
             if_block1.p(ctx2, dirty);
           } else {
-            if_block1 = create_if_block_572(ctx2);
+            if_block1 = create_if_block_652(ctx2);
             if_block1.c();
             if_block1.m(div0, null);
           }
@@ -39569,7 +40027,7 @@
           if (if_block2) {
             if_block2.p(ctx2, dirty);
           } else {
-            if_block2 = create_if_block_562(ctx2);
+            if_block2 = create_if_block_642(ctx2);
             if_block2.c();
             if_block2.m(div1, null);
           }
@@ -39586,7 +40044,7 @@
               transition_in(if_block3, 1);
             }
           } else {
-            if_block3 = create_if_block_51(ctx2);
+            if_block3 = create_if_block_59(ctx2);
             if_block3.c();
             transition_in(if_block3, 1);
             if_block3.m(t10.parentNode, t10);
@@ -39630,7 +40088,7 @@
           if (if_block5) {
             if_block5.p(ctx2, dirty);
           } else {
-            if_block5 = create_if_block_472(ctx2);
+            if_block5 = create_if_block_552(ctx2);
             if_block5.c();
             if_block5.m(if_block5_anchor.parentNode, if_block5_anchor);
           }
@@ -39691,7 +40149,7 @@
       }
     };
   }
-  function create_if_block_582(ctx) {
+  function create_if_block_662(ctx) {
     let input;
     let mounted;
     let dispose;
@@ -39705,7 +40163,7 @@
         set_input_value(input, ctx[50].name);
         if (!mounted) {
           dispose = [
-            listen(input, "input", ctx[161]),
+            listen(input, "input", ctx[163]),
             listen(input, "change", ctx[99])
           ];
           mounted = true;
@@ -39724,14 +40182,14 @@
       }
     };
   }
-  function create_each_block_28(ctx) {
+  function create_each_block_29(ctx) {
     let option;
-    let raw_value = ctx[286].title + "";
+    let raw_value = ctx[292].title + "";
     let option_value_value;
     return {
       c() {
         option = element("option");
-        option.__value = option_value_value = ctx[286].id;
+        option.__value = option_value_value = ctx[292].id;
         option.value = option.__value;
       },
       m(target, anchor) {
@@ -39739,10 +40197,10 @@
         option.innerHTML = raw_value;
       },
       p(ctx2, dirty) {
-        if (dirty[2] & 134217728 && raw_value !== (raw_value = ctx2[286].title + ""))
+        if (dirty[2] & 134217728 && raw_value !== (raw_value = ctx2[292].title + ""))
           option.innerHTML = raw_value;
         ;
-        if (dirty[2] & 134217728 && option_value_value !== (option_value_value = ctx2[286].id)) {
+        if (dirty[2] & 134217728 && option_value_value !== (option_value_value = ctx2[292].id)) {
           option.__value = option_value_value;
           option.value = option.__value;
         }
@@ -39753,7 +40211,7 @@
       }
     };
   }
-  function create_if_block_572(ctx) {
+  function create_if_block_652(ctx) {
     let button;
     let t;
     let button_title_value;
@@ -39770,7 +40228,7 @@
         insert(target, button, anchor);
         append(button, t);
         if (!mounted) {
-          dispose = listen(button, "click", ctx[165]);
+          dispose = listen(button, "click", ctx[167]);
           mounted = true;
         }
       },
@@ -39787,7 +40245,7 @@
       }
     };
   }
-  function create_if_block_562(ctx) {
+  function create_if_block_642(ctx) {
     let span;
     let t0_value = ctx[57].length + "";
     let t0;
@@ -39820,22 +40278,22 @@
       }
     };
   }
-  function create_if_block_51(ctx) {
+  function create_if_block_59(ctx) {
     let t;
     let if_block_anchor;
     let current;
-    let each_value_27 = STAT_KEYS;
+    let each_value_28 = STAT_KEYS;
     let each_blocks = [];
-    for (let i = 0; i < each_value_27.length; i += 1) {
-      each_blocks[i] = create_each_block_27(get_each_context_27(ctx, each_value_27, i));
+    for (let i = 0; i < each_value_28.length; i += 1) {
+      each_blocks[i] = create_each_block_28(get_each_context_28(ctx, each_value_28, i));
     }
     const out = (i) => transition_out(each_blocks[i], 1, 1, () => {
       each_blocks[i] = null;
     });
     function select_block_type_5(ctx2, dirty) {
       if (ctx2[87])
-        return create_if_block_522;
-      return create_else_block_10;
+        return create_if_block_60;
+      return create_else_block_122;
     }
     let current_block_type = select_block_type_5(ctx, [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1]);
     let if_block = current_block_type(ctx);
@@ -39859,22 +40317,22 @@
       },
       p(ctx2, dirty) {
         if (dirty[1] & 15206400 | dirty[2] & 109051904 | dirty[3] & 64) {
-          each_value_27 = STAT_KEYS;
+          each_value_28 = STAT_KEYS;
           let i;
-          for (i = 0; i < each_value_27.length; i += 1) {
-            const child_ctx = get_each_context_27(ctx2, each_value_27, i);
+          for (i = 0; i < each_value_28.length; i += 1) {
+            const child_ctx = get_each_context_28(ctx2, each_value_28, i);
             if (each_blocks[i]) {
               each_blocks[i].p(child_ctx, dirty);
               transition_in(each_blocks[i], 1);
             } else {
-              each_blocks[i] = create_each_block_27(child_ctx);
+              each_blocks[i] = create_each_block_28(child_ctx);
               each_blocks[i].c();
               transition_in(each_blocks[i], 1);
               each_blocks[i].m(t.parentNode, t);
             }
           }
           group_outros();
-          for (i = each_value_27.length; i < each_blocks.length; i += 1) {
+          for (i = each_value_28.length; i < each_blocks.length; i += 1) {
             out(i);
           }
           check_outros();
@@ -39893,7 +40351,7 @@
       i(local) {
         if (current)
           return;
-        for (let i = 0; i < each_value_27.length; i += 1) {
+        for (let i = 0; i < each_value_28.length; i += 1) {
           transition_in(each_blocks[i]);
         }
         current = true;
@@ -39915,12 +40373,12 @@
       }
     };
   }
-  function create_if_block_542(ctx) {
+  function create_if_block_622(ctx) {
     let span;
     function select_block_type_4(ctx2, dirty) {
       if (ctx2[54])
-        return create_if_block_552;
-      return create_else_block_11;
+        return create_if_block_632;
+      return create_else_block_132;
     }
     let current_block_type = select_block_type_4(ctx, [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1]);
     let if_block = current_block_type(ctx);
@@ -39929,8 +40387,8 @@
         span = element("span");
         if_block.c();
         attr(span, "class", "dmg-statdelta");
-        toggle_class(span, "dmg-statdown", (ctx[54] ? ctx[52](ctx[228]) : ctx[53](ctx[228])) < 0);
-        toggle_class(span, "dmg-statsame", ctx[54] && !ctx[52](ctx[228]));
+        toggle_class(span, "dmg-statdown", (ctx[54] ? ctx[52](ctx[234]) : ctx[53](ctx[234])) < 0);
+        toggle_class(span, "dmg-statsame", ctx[54] && !ctx[52](ctx[234]));
       },
       m(target, anchor) {
         insert(target, span, anchor);
@@ -39948,10 +40406,10 @@
           }
         }
         if (dirty[1] & 14680064) {
-          toggle_class(span, "dmg-statdown", (ctx2[54] ? ctx2[52](ctx2[228]) : ctx2[53](ctx2[228])) < 0);
+          toggle_class(span, "dmg-statdown", (ctx2[54] ? ctx2[52](ctx2[234]) : ctx2[53](ctx2[234])) < 0);
         }
         if (dirty[1] & 10485760) {
-          toggle_class(span, "dmg-statsame", ctx2[54] && !ctx2[52](ctx2[228]));
+          toggle_class(span, "dmg-statsame", ctx2[54] && !ctx2[52](ctx2[234]));
         }
       },
       d(detaching) {
@@ -39961,8 +40419,8 @@
       }
     };
   }
-  function create_else_block_11(ctx) {
-    let t_value = ctx[53](ctx[228]) ? (ctx[53](ctx[228]) > 0 ? "+" : "") + ctx[53](ctx[228]) : "";
+  function create_else_block_132(ctx) {
+    let t_value = ctx[53](ctx[234]) ? (ctx[53](ctx[234]) > 0 ? "+" : "") + ctx[53](ctx[234]) : "";
     let t;
     return {
       c() {
@@ -39972,7 +40430,7 @@
         insert(target, t, anchor);
       },
       p(ctx2, dirty) {
-        if (dirty[1] & 4194304 && t_value !== (t_value = ctx2[53](ctx2[228]) ? (ctx2[53](ctx2[228]) > 0 ? "+" : "") + ctx2[53](ctx2[228]) : ""))
+        if (dirty[1] & 4194304 && t_value !== (t_value = ctx2[53](ctx2[234]) ? (ctx2[53](ctx2[234]) > 0 ? "+" : "") + ctx2[53](ctx2[234]) : ""))
           set_data(t, t_value);
       },
       d(detaching) {
@@ -39981,8 +40439,8 @@
       }
     };
   }
-  function create_if_block_552(ctx) {
-    let t_value = ctx[52](ctx[228]) ? (ctx[52](ctx[228]) > 0 ? "\u25B2+" : "\u25BC") + ctx[52](ctx[228]) : "=";
+  function create_if_block_632(ctx) {
+    let t_value = ctx[52](ctx[234]) ? (ctx[52](ctx[234]) > 0 ? "\u25B2+" : "\u25BC") + ctx[52](ctx[234]) : "=";
     let t;
     return {
       c() {
@@ -39992,7 +40450,7 @@
         insert(target, t, anchor);
       },
       p(ctx2, dirty) {
-        if (dirty[1] & 2097152 && t_value !== (t_value = ctx2[52](ctx2[228]) ? (ctx2[52](ctx2[228]) > 0 ? "\u25B2+" : "\u25BC") + ctx2[52](ctx2[228]) : "="))
+        if (dirty[1] & 2097152 && t_value !== (t_value = ctx2[52](ctx2[234]) ? (ctx2[52](ctx2[234]) > 0 ? "\u25B2+" : "\u25BC") + ctx2[52](ctx2[234]) : "="))
           set_data(t, t_value);
       },
       d(detaching) {
@@ -40001,7 +40459,7 @@
       }
     };
   }
-  function create_each_block_27(ctx) {
+  function create_each_block_28(ctx) {
     let label;
     let span0;
     let tr2;
@@ -40013,15 +40471,15 @@
     let input_value_value;
     let t2;
     let span1;
-    let t3_value = ctx[88][ctx[228]] ? "/ " + ctx[88][ctx[228]] : "";
+    let t3_value = ctx[88][ctx[234]] ? "/ " + ctx[88][ctx[234]] : "";
     let t3;
     let current;
     let mounted;
     let dispose;
-    tr2 = new Tr_default({ props: { s: ctx[228] } });
-    let if_block = ctx[87] && create_if_block_542(ctx);
+    tr2 = new Tr_default({ props: { s: ctx[234] } });
+    let if_block = ctx[87] && create_if_block_622(ctx);
     function change_handler_4(...args) {
-      return ctx[167](ctx[228], ...args);
+      return ctx[169](ctx[234], ...args);
     }
     return {
       c() {
@@ -40041,8 +40499,8 @@
         attr(input, "min", "0");
         input.readOnly = ctx[87];
         attr(input, "tabindex", input_tabindex_value = ctx[87] ? -1 : 0);
-        attr(input, "title", input_title_value = ctx[87] ? ctx[85](ctx[228]) : "");
-        input.value = input_value_value = ctx[87] ? ctx[42] ? ctx[42][ctx[228]] : 0 : ctx[50].stats[ctx[228]];
+        attr(input, "title", input_title_value = ctx[87] ? ctx[85](ctx[234]) : "");
+        input.value = input_value_value = ctx[87] ? ctx[42] ? ctx[42][ctx[234]] : 0 : ctx[50].stats[ctx[234]];
         toggle_class(input, "dmg-readonly", ctx[87]);
         attr(span1, "class", "dmg-cap dmg-statcap");
         attr(label, "class", "dmg-row dmg-stat");
@@ -40071,7 +40529,7 @@
           if (if_block) {
             if_block.p(ctx, dirty);
           } else {
-            if_block = create_if_block_542(ctx);
+            if_block = create_if_block_622(ctx);
             if_block.c();
             if_block.m(label, t1);
           }
@@ -40085,16 +40543,16 @@
         if (!current || dirty[2] & 33554432 && input_tabindex_value !== (input_tabindex_value = ctx[87] ? -1 : 0)) {
           attr(input, "tabindex", input_tabindex_value);
         }
-        if (!current || dirty[2] & 41943040 && input_title_value !== (input_title_value = ctx[87] ? ctx[85](ctx[228]) : "")) {
+        if (!current || dirty[2] & 41943040 && input_title_value !== (input_title_value = ctx[87] ? ctx[85](ctx[234]) : "")) {
           attr(input, "title", input_title_value);
         }
-        if (!current || dirty[1] & 526336 | dirty[2] & 33554432 && input_value_value !== (input_value_value = ctx[87] ? ctx[42] ? ctx[42][ctx[228]] : 0 : ctx[50].stats[ctx[228]]) && input.value !== input_value_value) {
+        if (!current || dirty[1] & 526336 | dirty[2] & 33554432 && input_value_value !== (input_value_value = ctx[87] ? ctx[42] ? ctx[42][ctx[234]] : 0 : ctx[50].stats[ctx[234]]) && input.value !== input_value_value) {
           input.value = input_value_value;
         }
         if (dirty[2] & 33554432) {
           toggle_class(input, "dmg-readonly", ctx[87]);
         }
-        if ((!current || dirty[2] & 67108864) && t3_value !== (t3_value = ctx[88][ctx[228]] ? "/ " + ctx[88][ctx[228]] : ""))
+        if ((!current || dirty[2] & 67108864) && t3_value !== (t3_value = ctx[88][ctx[234]] ? "/ " + ctx[88][ctx[234]] : ""))
           set_data(t3, t3_value);
       },
       i(local) {
@@ -40118,7 +40576,7 @@
       }
     };
   }
-  function create_else_block_10(ctx) {
+  function create_else_block_122(ctx) {
     let p;
     return {
       c() {
@@ -40136,7 +40594,7 @@
       }
     };
   }
-  function create_if_block_522(ctx) {
+  function create_if_block_60(ctx) {
     let p;
     let t0;
     let t1_value = ctx[54] ? "being tried on" : "worn";
@@ -40149,8 +40607,8 @@
     let dispose;
     function select_block_type_6(ctx2, dirty) {
       if (ctx2[54])
-        return create_if_block_532;
-      return create_else_block_92;
+        return create_if_block_61;
+      return create_else_block_11;
     }
     let current_block_type = select_block_type_6(ctx, [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1]);
     let if_block = current_block_type(ctx);
@@ -40209,7 +40667,7 @@
       }
     };
   }
-  function create_else_block_92(ctx) {
+  function create_else_block_11(ctx) {
     let t;
     return {
       c() {
@@ -40225,7 +40683,7 @@
       }
     };
   }
-  function create_if_block_532(ctx) {
+  function create_if_block_61(ctx) {
     let t0;
     let html_tag;
     let raw_value = (ctx[50].fromSave.wornArmor ? rul.tr(ctx[50].fromSave.wornArmor) : "no armour") + "";
@@ -40256,7 +40714,7 @@
       }
     };
   }
-  function create_if_block_50(ctx) {
+  function create_if_block_582(ctx) {
     let p;
     return {
       c() {
@@ -40276,7 +40734,7 @@
       }
     };
   }
-  function create_if_block_482(ctx) {
+  function create_if_block_562(ctx) {
     let p;
     let t0;
     let html_tag;
@@ -40285,7 +40743,7 @@
     let current_block_type_index;
     let if_block;
     let current;
-    const if_block_creators = [create_if_block_492, create_else_block_82];
+    const if_block_creators = [create_if_block_572, create_else_block_10];
     const if_blocks = [];
     function select_block_type_8(ctx2, dirty) {
       if (ctx2[86].length)
@@ -40353,7 +40811,7 @@
       }
     };
   }
-  function create_else_block_82(ctx) {
+  function create_else_block_10(ctx) {
     let br;
     let t;
     return {
@@ -40376,15 +40834,15 @@
       }
     };
   }
-  function create_if_block_492(ctx) {
+  function create_if_block_572(ctx) {
     let br;
     let t;
     let span;
     let current;
-    let each_value_26 = ctx[86];
+    let each_value_27 = ctx[86];
     let each_blocks = [];
-    for (let i = 0; i < each_value_26.length; i += 1) {
-      each_blocks[i] = create_each_block_26(get_each_context_262(ctx, each_value_26, i));
+    for (let i = 0; i < each_value_27.length; i += 1) {
+      each_blocks[i] = create_each_block_27(get_each_context_27(ctx, each_value_27, i));
     }
     const out = (i) => transition_out(each_blocks[i], 1, 1, () => {
       each_blocks[i] = null;
@@ -40410,22 +40868,22 @@
       },
       p(ctx2, dirty) {
         if (dirty[1] & 2097152 | dirty[2] & 16777216) {
-          each_value_26 = ctx2[86];
+          each_value_27 = ctx2[86];
           let i;
-          for (i = 0; i < each_value_26.length; i += 1) {
-            const child_ctx = get_each_context_262(ctx2, each_value_26, i);
+          for (i = 0; i < each_value_27.length; i += 1) {
+            const child_ctx = get_each_context_27(ctx2, each_value_27, i);
             if (each_blocks[i]) {
               each_blocks[i].p(child_ctx, dirty);
               transition_in(each_blocks[i], 1);
             } else {
-              each_blocks[i] = create_each_block_26(child_ctx);
+              each_blocks[i] = create_each_block_27(child_ctx);
               each_blocks[i].c();
               transition_in(each_blocks[i], 1);
               each_blocks[i].m(span, null);
             }
           }
           group_outros();
-          for (i = each_value_26.length; i < each_blocks.length; i += 1) {
+          for (i = each_value_27.length; i < each_blocks.length; i += 1) {
             out(i);
           }
           check_outros();
@@ -40434,7 +40892,7 @@
       i(local) {
         if (current)
           return;
-        for (let i = 0; i < each_value_26.length; i += 1) {
+        for (let i = 0; i < each_value_27.length; i += 1) {
           transition_in(each_blocks[i]);
         }
         current = true;
@@ -40457,16 +40915,16 @@
       }
     };
   }
-  function create_each_block_26(ctx) {
+  function create_each_block_27(ctx) {
     let span;
-    let t0_value = (ctx[52](ctx[228]) > 0 ? "+" : "") + ctx[52](ctx[228]);
+    let t0_value = (ctx[52](ctx[234]) > 0 ? "+" : "") + ctx[52](ctx[234]);
     let t0;
     let t1;
     let tr2;
-    let t2_value = ctx[230] < ctx[86].length - 1 ? ", " : "";
+    let t2_value = ctx[236] < ctx[86].length - 1 ? ", " : "";
     let t2;
     let current;
-    tr2 = new Tr_default({ props: { s: ctx[228] } });
+    tr2 = new Tr_default({ props: { s: ctx[234] } });
     return {
       c() {
         span = element("span");
@@ -40474,7 +40932,7 @@
         t1 = space();
         create_component(tr2.$$.fragment);
         t2 = text(t2_value);
-        toggle_class(span, "dmg-statdown", ctx[52](ctx[228]) < 0);
+        toggle_class(span, "dmg-statdown", ctx[52](ctx[234]) < 0);
       },
       m(target, anchor) {
         insert(target, span, anchor);
@@ -40485,16 +40943,16 @@
         current = true;
       },
       p(ctx2, dirty) {
-        if ((!current || dirty[1] & 2097152 | dirty[2] & 16777216) && t0_value !== (t0_value = (ctx2[52](ctx2[228]) > 0 ? "+" : "") + ctx2[52](ctx2[228])))
+        if ((!current || dirty[1] & 2097152 | dirty[2] & 16777216) && t0_value !== (t0_value = (ctx2[52](ctx2[234]) > 0 ? "+" : "") + ctx2[52](ctx2[234])))
           set_data(t0, t0_value);
         const tr_changes = {};
         if (dirty[2] & 16777216)
-          tr_changes.s = ctx2[228];
+          tr_changes.s = ctx2[234];
         tr2.$set(tr_changes);
         if (dirty[1] & 2097152 | dirty[2] & 16777216) {
-          toggle_class(span, "dmg-statdown", ctx2[52](ctx2[228]) < 0);
+          toggle_class(span, "dmg-statdown", ctx2[52](ctx2[234]) < 0);
         }
-        if ((!current || dirty[2] & 16777216) && t2_value !== (t2_value = ctx2[230] < ctx2[86].length - 1 ? ", " : ""))
+        if ((!current || dirty[2] & 16777216) && t2_value !== (t2_value = ctx2[236] < ctx2[86].length - 1 ? ", " : ""))
           set_data(t2, t2_value);
       },
       i(local) {
@@ -40516,7 +40974,7 @@
       }
     };
   }
-  function create_if_block_472(ctx) {
+  function create_if_block_552(ctx) {
     let p;
     let t;
     return {
@@ -40539,16 +40997,16 @@
       }
     };
   }
-  function create_each_block_252(ctx) {
+  function create_each_block_26(ctx) {
     let option;
-    let t_value = ctx[280] + "";
+    let t_value = ctx[286] + "";
     let t;
     let option_value_value;
     return {
       c() {
         option = element("option");
         t = text(t_value);
-        option.__value = option_value_value = ctx[280];
+        option.__value = option_value_value = ctx[286];
         option.value = option.__value;
       },
       m(target, anchor) {
@@ -40562,7 +41020,7 @@
       }
     };
   }
-  function create_if_block_452(ctx) {
+  function create_if_block_532(ctx) {
     let span;
     let t0;
     let t1_value = ctx[51] ? "on" : "off";
@@ -40592,7 +41050,7 @@
       }
     };
   }
-  function create_else_block_72(ctx) {
+  function create_else_block_92(ctx) {
     let section;
     let header;
     let t1;
@@ -40601,10 +41059,10 @@
     let select;
     let mounted;
     let dispose;
-    let each_value_24 = ctx[46].slice(0, 400);
+    let each_value_25 = ctx[46];
     let each_blocks = [];
-    for (let i = 0; i < each_value_24.length; i += 1) {
-      each_blocks[i] = create_each_block_242(get_each_context_242(ctx, each_value_24, i));
+    for (let i = 0; i < each_value_25.length; i += 1) {
+      each_blocks[i] = create_each_block_252(get_each_context_252(ctx, each_value_25, i));
     }
     return {
       c() {
@@ -40623,7 +41081,7 @@
         attr(select, "class", "dmg-input dmg-list");
         attr(select, "size", "12");
         if (ctx[26] === void 0)
-          add_render_callback(() => ctx[187].call(select));
+          add_render_callback(() => ctx[189].call(select));
         attr(section, "class", "dmg-block");
       },
       m(target, anchor) {
@@ -40640,8 +41098,8 @@
         select_option(select, ctx[26]);
         if (!mounted) {
           dispose = [
-            listen(input, "input", ctx[186]),
-            listen(select, "change", ctx[187])
+            listen(input, "input", ctx[188]),
+            listen(select, "change", ctx[189])
           ];
           mounted = true;
         }
@@ -40651,14 +41109,14 @@
           set_input_value(input, ctx2[16]);
         }
         if (dirty[1] & 32768) {
-          each_value_24 = ctx2[46].slice(0, 400);
+          each_value_25 = ctx2[46];
           let i;
-          for (i = 0; i < each_value_24.length; i += 1) {
-            const child_ctx = get_each_context_242(ctx2, each_value_24, i);
+          for (i = 0; i < each_value_25.length; i += 1) {
+            const child_ctx = get_each_context_252(ctx2, each_value_25, i);
             if (each_blocks[i]) {
               each_blocks[i].p(child_ctx, dirty);
             } else {
-              each_blocks[i] = create_each_block_242(child_ctx);
+              each_blocks[i] = create_each_block_252(child_ctx);
               each_blocks[i].c();
               each_blocks[i].m(select, null);
             }
@@ -40666,7 +41124,7 @@
           for (; i < each_blocks.length; i += 1) {
             each_blocks[i].d(1);
           }
-          each_blocks.length = each_value_24.length;
+          each_blocks.length = each_value_25.length;
         }
         if (dirty[0] & 67108864 | dirty[1] & 32768) {
           select_option(select, ctx2[26]);
@@ -40681,7 +41139,7 @@
       }
     };
   }
-  function create_if_block_422(ctx) {
+  function create_if_block_50(ctx) {
     let section0;
     let header0;
     let t0;
@@ -40700,17 +41158,17 @@
     let select1;
     let mounted;
     let dispose;
-    let if_block0 = ctx[23] && create_if_block_442(ctx);
-    let each_value_23 = ctx[77].slice(0, 400);
+    let if_block0 = ctx[23] && create_if_block_522(ctx);
+    let each_value_24 = ctx[77];
     let each_blocks_1 = [];
-    for (let i = 0; i < each_value_23.length; i += 1) {
-      each_blocks_1[i] = create_each_block_232(get_each_context_232(ctx, each_value_23, i));
+    for (let i = 0; i < each_value_24.length; i += 1) {
+      each_blocks_1[i] = create_each_block_242(get_each_context_242(ctx, each_value_24, i));
     }
-    let if_block1 = ctx[23] && create_if_block_432(ctx);
-    let each_value_22 = ctx[44].slice(0, 400);
+    let if_block1 = ctx[23] && create_if_block_51(ctx);
+    let each_value_23 = ctx[44];
     let each_blocks = [];
-    for (let i = 0; i < each_value_22.length; i += 1) {
-      each_blocks[i] = create_each_block_222(get_each_context_222(ctx, each_value_22, i));
+    for (let i = 0; i < each_value_23.length; i += 1) {
+      each_blocks[i] = create_each_block_232(get_each_context_232(ctx, each_value_23, i));
     }
     return {
       c() {
@@ -40749,7 +41207,7 @@
         attr(select0, "class", "dmg-input dmg-list");
         attr(select0, "size", "6");
         if (ctx[23] === void 0)
-          add_render_callback(() => ctx[183].call(select0));
+          add_render_callback(() => ctx[185].call(select0));
         attr(section0, "class", "dmg-block");
         attr(input1, "class", "dmg-input");
         attr(input1, "placeholder", "Filter enemies\u2026 (comma-separate)");
@@ -40757,7 +41215,7 @@
         attr(select1, "class", "dmg-input dmg-list");
         attr(select1, "size", "12");
         if (ctx[0] === void 0)
-          add_render_callback(() => ctx[185].call(select1));
+          add_render_callback(() => ctx[187].call(select1));
         attr(section1, "class", "dmg-block");
       },
       m(target, anchor) {
@@ -40793,10 +41251,10 @@
         select_option(select1, ctx[0]);
         if (!mounted) {
           dispose = [
-            listen(input0, "input", ctx[182]),
-            listen(select0, "change", ctx[183]),
-            listen(input1, "input", ctx[184]),
-            listen(select1, "change", ctx[185])
+            listen(input0, "input", ctx[184]),
+            listen(select0, "change", ctx[185]),
+            listen(input1, "input", ctx[186]),
+            listen(select1, "change", ctx[187])
           ];
           mounted = true;
         }
@@ -40806,7 +41264,7 @@
           if (if_block0) {
             if_block0.p(ctx2, dirty);
           } else {
-            if_block0 = create_if_block_442(ctx2);
+            if_block0 = create_if_block_522(ctx2);
             if_block0.c();
             if_block0.m(header0, null);
           }
@@ -40818,14 +41276,14 @@
           set_input_value(input0, ctx2[24]);
         }
         if (dirty[2] & 32768) {
-          each_value_23 = ctx2[77].slice(0, 400);
+          each_value_24 = ctx2[77];
           let i;
-          for (i = 0; i < each_value_23.length; i += 1) {
-            const child_ctx = get_each_context_232(ctx2, each_value_23, i);
+          for (i = 0; i < each_value_24.length; i += 1) {
+            const child_ctx = get_each_context_242(ctx2, each_value_24, i);
             if (each_blocks_1[i]) {
               each_blocks_1[i].p(child_ctx, dirty);
             } else {
-              each_blocks_1[i] = create_each_block_232(child_ctx);
+              each_blocks_1[i] = create_each_block_242(child_ctx);
               each_blocks_1[i].c();
               each_blocks_1[i].m(select0, null);
             }
@@ -40833,7 +41291,7 @@
           for (; i < each_blocks_1.length; i += 1) {
             each_blocks_1[i].d(1);
           }
-          each_blocks_1.length = each_value_23.length;
+          each_blocks_1.length = each_value_24.length;
         }
         if (dirty[0] & 8388608 | dirty[2] & 32768) {
           select_option(select0, ctx2[23]);
@@ -40841,7 +41299,7 @@
         if (ctx2[23]) {
           if (if_block1) {
           } else {
-            if_block1 = create_if_block_432(ctx2);
+            if_block1 = create_if_block_51(ctx2);
             if_block1.c();
             if_block1.m(section0, null);
           }
@@ -40853,14 +41311,14 @@
           set_input_value(input1, ctx2[22]);
         }
         if (dirty[1] & 8192) {
-          each_value_22 = ctx2[44].slice(0, 400);
+          each_value_23 = ctx2[44];
           let i;
-          for (i = 0; i < each_value_22.length; i += 1) {
-            const child_ctx = get_each_context_222(ctx2, each_value_22, i);
+          for (i = 0; i < each_value_23.length; i += 1) {
+            const child_ctx = get_each_context_232(ctx2, each_value_23, i);
             if (each_blocks[i]) {
               each_blocks[i].p(child_ctx, dirty);
             } else {
-              each_blocks[i] = create_each_block_222(child_ctx);
+              each_blocks[i] = create_each_block_232(child_ctx);
               each_blocks[i].c();
               each_blocks[i].m(select1, null);
             }
@@ -40868,7 +41326,7 @@
           for (; i < each_blocks.length; i += 1) {
             each_blocks[i].d(1);
           }
-          each_blocks.length = each_value_22.length;
+          each_blocks.length = each_value_23.length;
         }
         if (dirty[0] & 1 | dirty[1] & 8192) {
           select_option(select1, ctx2[0]);
@@ -40892,14 +41350,14 @@
       }
     };
   }
-  function create_each_block_242(ctx) {
+  function create_each_block_252(ctx) {
     let option;
-    let raw_value = ctx[277].title + "";
+    let raw_value = ctx[283].title + "";
     let option_value_value;
     return {
       c() {
         option = element("option");
-        option.__value = option_value_value = ctx[277].id;
+        option.__value = option_value_value = ctx[283].id;
         option.value = option.__value;
       },
       m(target, anchor) {
@@ -40907,10 +41365,10 @@
         option.innerHTML = raw_value;
       },
       p(ctx2, dirty) {
-        if (dirty[1] & 32768 && raw_value !== (raw_value = ctx2[277].title + ""))
+        if (dirty[1] & 32768 && raw_value !== (raw_value = ctx2[283].title + ""))
           option.innerHTML = raw_value;
         ;
-        if (dirty[1] & 32768 && option_value_value !== (option_value_value = ctx2[277].id)) {
+        if (dirty[1] & 32768 && option_value_value !== (option_value_value = ctx2[283].id)) {
           option.__value = option_value_value;
           option.value = option.__value;
         }
@@ -40921,7 +41379,7 @@
       }
     };
   }
-  function create_if_block_442(ctx) {
+  function create_if_block_522(ctx) {
     let button;
     let mounted;
     let dispose;
@@ -40935,7 +41393,7 @@
       m(target, anchor) {
         insert(target, button, anchor);
         if (!mounted) {
-          dispose = listen(button, "click", ctx[181]);
+          dispose = listen(button, "click", ctx[183]);
           mounted = true;
         }
       },
@@ -40948,12 +41406,12 @@
       }
     };
   }
-  function create_each_block_232(ctx) {
+  function create_each_block_242(ctx) {
     let option;
     let html_tag;
-    let raw_value = ctx[221].title + "";
+    let raw_value = ctx[226].title + "";
     let t0;
-    let t1_value = ctx[221].count + "";
+    let t1_value = ctx[226].count + "";
     let t1;
     let t2;
     let option_value_value;
@@ -40965,7 +41423,7 @@
         t1 = text(t1_value);
         t2 = text(")");
         html_tag.a = t0;
-        option.__value = option_value_value = ctx[221].id;
+        option.__value = option_value_value = ctx[226].id;
         option.value = option.__value;
       },
       m(target, anchor) {
@@ -40976,11 +41434,11 @@
         append(option, t2);
       },
       p(ctx2, dirty) {
-        if (dirty[2] & 32768 && raw_value !== (raw_value = ctx2[221].title + ""))
+        if (dirty[2] & 32768 && raw_value !== (raw_value = ctx2[226].title + ""))
           html_tag.p(raw_value);
-        if (dirty[2] & 32768 && t1_value !== (t1_value = ctx2[221].count + ""))
+        if (dirty[2] & 32768 && t1_value !== (t1_value = ctx2[226].count + ""))
           set_data(t1, t1_value);
-        if (dirty[2] & 32768 && option_value_value !== (option_value_value = ctx2[221].id)) {
+        if (dirty[2] & 32768 && option_value_value !== (option_value_value = ctx2[226].id)) {
           option.__value = option_value_value;
           option.value = option.__value;
         }
@@ -40991,7 +41449,7 @@
       }
     };
   }
-  function create_if_block_432(ctx) {
+  function create_if_block_51(ctx) {
     let p;
     return {
       c() {
@@ -41008,14 +41466,14 @@
       }
     };
   }
-  function create_each_block_222(ctx) {
+  function create_each_block_232(ctx) {
     let option;
-    let raw_value = ctx[231].title + "";
+    let raw_value = ctx[237].title + "";
     let option_value_value;
     return {
       c() {
         option = element("option");
-        option.__value = option_value_value = ctx[231].id;
+        option.__value = option_value_value = ctx[237].id;
         option.value = option.__value;
       },
       m(target, anchor) {
@@ -41023,10 +41481,10 @@
         option.innerHTML = raw_value;
       },
       p(ctx2, dirty) {
-        if (dirty[1] & 8192 && raw_value !== (raw_value = ctx2[231].title + ""))
+        if (dirty[1] & 8192 && raw_value !== (raw_value = ctx2[237].title + ""))
           option.innerHTML = raw_value;
         ;
-        if (dirty[1] & 8192 && option_value_value !== (option_value_value = ctx2[231].id)) {
+        if (dirty[1] & 8192 && option_value_value !== (option_value_value = ctx2[237].id)) {
           option.__value = option_value_value;
           option.value = option.__value;
         }
@@ -41037,7 +41495,7 @@
       }
     };
   }
-  function create_else_block_52(ctx) {
+  function create_else_block_72(ctx) {
     let div1;
     let h2;
     let button;
@@ -41063,27 +41521,30 @@
     let tbody;
     let each_blocks = [];
     let each1_lookup = new Map_1();
+    let t11;
+    let if_block1_anchor;
     let mounted;
     let dispose;
-    function select_block_type_16(ctx2, dirty) {
+    function select_block_type_18(ctx2, dirty) {
       if (ctx2[76])
-        return create_if_block_412;
-      return create_else_block_62;
+        return create_if_block_492;
+      return create_else_block_82;
     }
-    let current_block_type = select_block_type_16(ctx, [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1]);
-    let if_block = current_block_type(ctx);
-    let each_value_20 = ctx[117];
+    let current_block_type = select_block_type_18(ctx, [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1]);
+    let if_block0 = current_block_type(ctx);
+    let each_value_21 = ctx[117];
     let each_blocks_1 = [];
-    for (let i = 0; i < each_value_20.length; i += 1) {
-      each_blocks_1[i] = create_each_block_20(get_each_context_20(ctx, each_value_20, i));
+    for (let i = 0; i < each_value_21.length; i += 1) {
+      each_blocks_1[i] = create_each_block_21(get_each_context_21(ctx, each_value_21, i));
     }
-    let each_value_16 = ctx[75].slice(0, 400);
-    const get_key = (ctx2) => ctx2[218].id;
-    for (let i = 0; i < each_value_16.length; i += 1) {
-      let child_ctx = get_each_context_162(ctx, each_value_16, i);
+    let each_value_17 = ctx[75].slice(0, 400);
+    const get_key = (ctx2) => ctx2[222].id;
+    for (let i = 0; i < each_value_17.length; i += 1) {
+      let child_ctx = get_each_context_172(ctx, each_value_17, i);
       let key = get_key(child_ctx);
-      each1_lookup.set(key, each_blocks[i] = create_each_block_162(key, child_ctx));
+      each1_lookup.set(key, each_blocks[i] = create_each_block_172(key, child_ctx));
     }
+    let if_block1 = ctx[75].length > 400 && create_if_block_402(ctx);
     return {
       c() {
         div1 = element("div");
@@ -41101,7 +41562,7 @@
         t6 = text(" tiles, ");
         t7 = text(ctx[4]);
         t8 = space();
-        if_block.c();
+        if_block0.c();
         t9 = space();
         table = element("table");
         thead = element("thead");
@@ -41114,6 +41575,10 @@
         for (let i = 0; i < each_blocks.length; i += 1) {
           each_blocks[i].c();
         }
+        t11 = space();
+        if (if_block1)
+          if_block1.c();
+        if_block1_anchor = empty();
         attr(button, "class", "dmg-peekname");
         attr(button, "title", "Open this weapon's XPedia article over the top");
         attr(div0, "class", "dmg-target-stats");
@@ -41137,7 +41602,7 @@
         append(span1, t6);
         append(span1, t7);
         append(div0, t8);
-        if_block.m(div0, null);
+        if_block0.m(div0, null);
         insert(target, t9, anchor);
         insert(target, table, anchor);
         append(table, thead);
@@ -41150,8 +41615,12 @@
         for (let i = 0; i < each_blocks.length; i += 1) {
           each_blocks[i].m(tbody, null);
         }
+        insert(target, t11, anchor);
+        if (if_block1)
+          if_block1.m(target, anchor);
+        insert(target, if_block1_anchor, anchor);
         if (!mounted) {
-          dispose = listen(button, "click", ctx[209]);
+          dispose = listen(button, "click", ctx[212]);
           mounted = true;
         }
       },
@@ -41165,25 +41634,25 @@
           set_data(t5, ctx2[5]);
         if (dirty[0] & 16)
           set_data(t7, ctx2[4]);
-        if (current_block_type === (current_block_type = select_block_type_16(ctx2, dirty)) && if_block) {
-          if_block.p(ctx2, dirty);
+        if (current_block_type === (current_block_type = select_block_type_18(ctx2, dirty)) && if_block0) {
+          if_block0.p(ctx2, dirty);
         } else {
-          if_block.d(1);
-          if_block = current_block_type(ctx2);
-          if (if_block) {
-            if_block.c();
-            if_block.m(div0, null);
+          if_block0.d(1);
+          if_block0 = current_block_type(ctx2);
+          if (if_block0) {
+            if_block0.c();
+            if_block0.m(div0, null);
           }
         }
         if (dirty[1] & 256 | dirty[3] & 83886080 | dirty[4] & 8) {
-          each_value_20 = ctx2[117];
+          each_value_21 = ctx2[117];
           let i;
-          for (i = 0; i < each_value_20.length; i += 1) {
-            const child_ctx = get_each_context_20(ctx2, each_value_20, i);
+          for (i = 0; i < each_value_21.length; i += 1) {
+            const child_ctx = get_each_context_21(ctx2, each_value_21, i);
             if (each_blocks_1[i]) {
               each_blocks_1[i].p(child_ctx, dirty);
             } else {
-              each_blocks_1[i] = create_each_block_20(child_ctx);
+              each_blocks_1[i] = create_each_block_21(child_ctx);
               each_blocks_1[i].c();
               each_blocks_1[i].m(tr2, null);
             }
@@ -41191,17 +41660,29 @@
           for (; i < each_blocks_1.length; i += 1) {
             each_blocks_1[i].d(1);
           }
-          each_blocks_1.length = each_value_20.length;
+          each_blocks_1.length = each_value_21.length;
         }
         if (dirty[0] & 16 | dirty[2] & 8320 | dirty[3] & 565182464 | dirty[4] & 1008) {
-          each_value_16 = ctx2[75].slice(0, 400);
-          each_blocks = update_keyed_each(each_blocks, dirty, get_key, 1, ctx2, each_value_16, each1_lookup, tbody, destroy_block, create_each_block_162, null, get_each_context_162);
+          each_value_17 = ctx2[75].slice(0, 400);
+          each_blocks = update_keyed_each(each_blocks, dirty, get_key, 1, ctx2, each_value_17, each1_lookup, tbody, destroy_block, create_each_block_172, null, get_each_context_172);
+        }
+        if (ctx2[75].length > 400) {
+          if (if_block1) {
+            if_block1.p(ctx2, dirty);
+          } else {
+            if_block1 = create_if_block_402(ctx2);
+            if_block1.c();
+            if_block1.m(if_block1_anchor.parentNode, if_block1_anchor);
+          }
+        } else if (if_block1) {
+          if_block1.d(1);
+          if_block1 = null;
         }
       },
       d(detaching) {
         if (detaching)
           detach(div1);
-        if_block.d();
+        if_block0.d();
         if (detaching)
           detach(t9);
         if (detaching)
@@ -41210,12 +41691,18 @@
         for (let i = 0; i < each_blocks.length; i += 1) {
           each_blocks[i].d();
         }
+        if (detaching)
+          detach(t11);
+        if (if_block1)
+          if_block1.d(detaching);
+        if (detaching)
+          detach(if_block1_anchor);
         mounted = false;
         dispose();
       }
     };
   }
-  function create_if_block_323(ctx) {
+  function create_if_block_393(ctx) {
     let p;
     return {
       c() {
@@ -41288,17 +41775,17 @@
       }
     };
   }
-  function create_else_block_62(ctx) {
+  function create_else_block_82(ctx) {
     let span;
     let t1;
     let t2;
     let button;
     let mounted;
     let dispose;
-    let each_value_21 = ctx[39];
+    let each_value_22 = ctx[39];
     let each_blocks = [];
-    for (let i = 0; i < each_value_21.length; i += 1) {
-      each_blocks[i] = create_each_block_21(get_each_context_21(ctx, each_value_21, i));
+    for (let i = 0; i < each_value_22.length; i += 1) {
+      each_blocks[i] = create_each_block_222(get_each_context_222(ctx, each_value_22, i));
     }
     return {
       c() {
@@ -41329,14 +41816,14 @@
       },
       p(ctx2, dirty) {
         if (dirty[1] & 256 | dirty[3] & 167772160) {
-          each_value_21 = ctx2[39];
+          each_value_22 = ctx2[39];
           let i;
-          for (i = 0; i < each_value_21.length; i += 1) {
-            const child_ctx = get_each_context_21(ctx2, each_value_21, i);
+          for (i = 0; i < each_value_22.length; i += 1) {
+            const child_ctx = get_each_context_222(ctx2, each_value_22, i);
             if (each_blocks[i]) {
               each_blocks[i].p(child_ctx, dirty);
             } else {
-              each_blocks[i] = create_each_block_21(child_ctx);
+              each_blocks[i] = create_each_block_222(child_ctx);
               each_blocks[i].c();
               each_blocks[i].m(t2.parentNode, t2);
             }
@@ -41344,7 +41831,7 @@
           for (; i < each_blocks.length; i += 1) {
             each_blocks[i].d(1);
           }
-          each_blocks.length = each_value_21.length;
+          each_blocks.length = each_value_22.length;
         }
       },
       d(detaching) {
@@ -41362,7 +41849,7 @@
       }
     };
   }
-  function create_if_block_412(ctx) {
+  function create_if_block_492(ctx) {
     let span;
     return {
       c() {
@@ -41380,22 +41867,22 @@
       }
     };
   }
-  function create_each_block_21(ctx) {
+  function create_each_block_222(ctx) {
     let button;
-    let t0_value = ctx[230] + 1 + "";
+    let t0_value = ctx[236] + 1 + "";
     let t0;
     let t1;
-    let t2_value = ctx[118](ctx[228].id).label + "";
+    let t2_value = ctx[118](ctx[234].id).label + "";
     let t2;
     let t3;
-    let t4_value = ctx[228].desc ? "\u25BC" : "\u25B2";
+    let t4_value = ctx[234].desc ? "\u25BC" : "\u25B2";
     let t4;
     let t5;
     let span;
     let mounted;
     let dispose;
     function click_handler_26() {
-      return ctx[210](ctx[228]);
+      return ctx[213](ctx[234]);
     }
     return {
       c() {
@@ -41428,9 +41915,9 @@
       },
       p(new_ctx, dirty) {
         ctx = new_ctx;
-        if (dirty[1] & 256 && t2_value !== (t2_value = ctx[118](ctx[228].id).label + ""))
+        if (dirty[1] & 256 && t2_value !== (t2_value = ctx[118](ctx[234].id).label + ""))
           set_data(t2, t2_value);
-        if (dirty[1] & 256 && t4_value !== (t4_value = ctx[228].desc ? "\u25BC" : "\u25B2"))
+        if (dirty[1] & 256 && t4_value !== (t4_value = ctx[234].desc ? "\u25BC" : "\u25B2"))
           set_data(t4, t4_value);
       },
       d(detaching) {
@@ -41441,11 +41928,11 @@
       }
     };
   }
-  function create_if_block_393(ctx) {
+  function create_if_block_472(ctx) {
     let span;
     let t_value = ctx[39][ctx[127](ctx[39], ctx[225].id)].desc ? "\u25BC" : "\u25B2";
     let t;
-    let if_block = ctx[39].length > 1 && create_if_block_402(ctx);
+    let if_block = ctx[39].length > 1 && create_if_block_482(ctx);
     return {
       c() {
         span = element("span");
@@ -41467,7 +41954,7 @@
           if (if_block) {
             if_block.p(ctx2, dirty);
           } else {
-            if_block = create_if_block_402(ctx2);
+            if_block = create_if_block_482(ctx2);
             if_block.c();
             if_block.m(span, null);
           }
@@ -41484,7 +41971,7 @@
       }
     };
   }
-  function create_if_block_402(ctx) {
+  function create_if_block_482(ctx) {
     let sup;
     let t_value = ctx[127](ctx[39], ctx[225].id) + 1 + "";
     let t;
@@ -41507,7 +41994,7 @@
       }
     };
   }
-  function create_each_block_20(ctx) {
+  function create_each_block_21(ctx) {
     let td;
     let t0_value = ctx[225].label + "";
     let t0;
@@ -41516,9 +42003,9 @@
     let td_title_value;
     let mounted;
     let dispose;
-    let if_block = show_if && create_if_block_393(ctx);
+    let if_block = show_if && create_if_block_472(ctx);
     function click_handler_27() {
-      return ctx[211](ctx[225]);
+      return ctx[214](ctx[225]);
     }
     return {
       c() {
@@ -41550,7 +42037,7 @@
           if (if_block) {
             if_block.p(ctx, dirty);
           } else {
-            if_block = create_if_block_393(ctx);
+            if_block = create_if_block_472(ctx);
             if_block.c();
             if_block.m(td, t1);
           }
@@ -41572,12 +42059,12 @@
       }
     };
   }
-  function create_if_block_373(ctx) {
+  function create_if_block_452(ctx) {
     let html_tag;
-    let raw_value = ctx[218].target.title + "";
+    let raw_value = ctx[222].target.title + "";
     let t;
     let if_block_anchor;
-    let if_block = ctx[218].modeCount > 1 && create_if_block_383(ctx);
+    let if_block = ctx[222].modeCount > 1 && create_if_block_462(ctx);
     return {
       c() {
         html_tag = new HtmlTag(false);
@@ -41595,13 +42082,13 @@
         insert(target, if_block_anchor, anchor);
       },
       p(ctx2, dirty) {
-        if (dirty[2] & 8192 && raw_value !== (raw_value = ctx2[218].target.title + ""))
+        if (dirty[2] & 8192 && raw_value !== (raw_value = ctx2[222].target.title + ""))
           html_tag.p(raw_value);
-        if (ctx2[218].modeCount > 1) {
+        if (ctx2[222].modeCount > 1) {
           if (if_block) {
             if_block.p(ctx2, dirty);
           } else {
-            if_block = create_if_block_383(ctx2);
+            if_block = create_if_block_462(ctx2);
             if_block.c();
             if_block.m(if_block_anchor.parentNode, if_block_anchor);
           }
@@ -41622,9 +42109,9 @@
       }
     };
   }
-  function create_if_block_383(ctx) {
+  function create_if_block_462(ctx) {
     let span;
-    let t0_value = ctx[218].modeCount + "";
+    let t0_value = ctx[222].modeCount + "";
     let t0;
     let t1;
     return {
@@ -41640,7 +42127,7 @@
         append(span, t1);
       },
       p(ctx2, dirty) {
-        if (dirty[2] & 8192 && t0_value !== (t0_value = ctx2[218].modeCount + ""))
+        if (dirty[2] & 8192 && t0_value !== (t0_value = ctx2[222].modeCount + ""))
           set_data(t0, t0_value);
       },
       d(detaching) {
@@ -41649,10 +42136,10 @@
       }
     };
   }
-  function create_if_block_363(ctx) {
+  function create_if_block_442(ctx) {
     let span;
     let t0;
-    let t1_value = ctx[218].mode.damage.hitsPerAttack + "";
+    let t1_value = ctx[222].mode.damage.hitsPerAttack + "";
     let t1;
     let span_title_value;
     return {
@@ -41661,7 +42148,7 @@
         t0 = text("\xD7");
         t1 = text(t1_value);
         attr(span, "class", "dmg-hits");
-        attr(span, "title", span_title_value = ctx[218].mode.damage.hitsPerAttack + " projectiles per attack, each rolled and armour-checked separately");
+        attr(span, "title", span_title_value = ctx[222].mode.damage.hitsPerAttack + " projectiles per attack, each rolled and armour-checked separately");
       },
       m(target, anchor) {
         insert(target, span, anchor);
@@ -41669,9 +42156,9 @@
         append(span, t1);
       },
       p(ctx2, dirty) {
-        if (dirty[2] & 8192 && t1_value !== (t1_value = ctx2[218].mode.damage.hitsPerAttack + ""))
+        if (dirty[2] & 8192 && t1_value !== (t1_value = ctx2[222].mode.damage.hitsPerAttack + ""))
           set_data(t1, t1_value);
-        if (dirty[2] & 8192 && span_title_value !== (span_title_value = ctx2[218].mode.damage.hitsPerAttack + " projectiles per attack, each rolled and armour-checked separately")) {
+        if (dirty[2] & 8192 && span_title_value !== (span_title_value = ctx2[222].mode.damage.hitsPerAttack + " projectiles per attack, each rolled and armour-checked separately")) {
           attr(span, "title", span_title_value);
         }
       },
@@ -41681,14 +42168,14 @@
       }
     };
   }
-  function create_if_block_333(ctx) {
+  function create_if_block_412(ctx) {
     let tr1;
     let td14;
     let div;
     let span;
     let t0;
     let t1;
-    let show_if = ctx[122](ctx[218].target).length;
+    let show_if = ctx[122](ctx[222].target).length;
     let t2;
     let table;
     let thead;
@@ -41715,24 +42202,24 @@
     let t20;
     let p;
     let html_tag;
-    let raw_value = (ctx[218].result.best.damage.damageTypeName ? rul.tr(ctx[218].result.best.damage.damageTypeName) : "") + "";
+    let raw_value = (ctx[222].result.best.damage.damageTypeName ? rul.tr(ctx[222].result.best.damage.damageTypeName) : "") + "";
     let t21;
-    let t22_value = ctx[128](ctx[218].result.best.damage.effectiveArmor, 0) + "";
+    let t22_value = ctx[128](ctx[222].result.best.damage.effectiveArmor, 0) + "";
     let t22;
     let t23;
     let td14_colspan_value;
     let t24;
-    let each_value_19 = SIDES;
+    let each_value_20 = SIDES;
     let each_blocks_1 = [];
-    for (let i = 0; i < each_value_19.length; i += 1) {
-      each_blocks_1[i] = create_each_block_192(get_each_context_192(ctx, each_value_19, i));
+    for (let i = 0; i < each_value_20.length; i += 1) {
+      each_blocks_1[i] = create_each_block_20(get_each_context_20(ctx, each_value_20, i));
     }
-    let if_block0 = ctx[218].target.shield && create_if_block_353(ctx);
-    let if_block1 = show_if && create_if_block_343(ctx);
-    let each_value_17 = ctx[218].result.modes;
+    let if_block0 = ctx[222].target.shield && create_if_block_432(ctx);
+    let if_block1 = show_if && create_if_block_422(ctx);
+    let each_value_18 = ctx[222].result.modes;
     let each_blocks = [];
-    for (let i = 0; i < each_value_17.length; i += 1) {
-      each_blocks[i] = create_each_block_172(get_each_context_172(ctx, each_value_17, i));
+    for (let i = 0; i < each_value_18.length; i += 1) {
+      each_blocks[i] = create_each_block_182(get_each_context_182(ctx, each_value_18, i));
     }
     return {
       c() {
@@ -41856,14 +42343,14 @@
       },
       p(ctx2, dirty) {
         if (dirty[0] & 16 | dirty[2] & 8192) {
-          each_value_19 = SIDES;
+          each_value_20 = SIDES;
           let i;
-          for (i = 0; i < each_value_19.length; i += 1) {
-            const child_ctx = get_each_context_192(ctx2, each_value_19, i);
+          for (i = 0; i < each_value_20.length; i += 1) {
+            const child_ctx = get_each_context_20(ctx2, each_value_20, i);
             if (each_blocks_1[i]) {
               each_blocks_1[i].p(child_ctx, dirty);
             } else {
-              each_blocks_1[i] = create_each_block_192(child_ctx);
+              each_blocks_1[i] = create_each_block_20(child_ctx);
               each_blocks_1[i].c();
               each_blocks_1[i].m(span, null);
             }
@@ -41871,13 +42358,13 @@
           for (; i < each_blocks_1.length; i += 1) {
             each_blocks_1[i].d(1);
           }
-          each_blocks_1.length = each_value_19.length;
+          each_blocks_1.length = each_value_20.length;
         }
-        if (ctx2[218].target.shield) {
+        if (ctx2[222].target.shield) {
           if (if_block0) {
             if_block0.p(ctx2, dirty);
           } else {
-            if_block0 = create_if_block_353(ctx2);
+            if_block0 = create_if_block_432(ctx2);
             if_block0.c();
             if_block0.m(div, null);
           }
@@ -41886,12 +42373,12 @@
           if_block0 = null;
         }
         if (dirty[2] & 8192)
-          show_if = ctx2[122](ctx2[218].target).length;
+          show_if = ctx2[122](ctx2[222].target).length;
         if (show_if) {
           if (if_block1) {
             if_block1.p(ctx2, dirty);
           } else {
-            if_block1 = create_if_block_343(ctx2);
+            if_block1 = create_if_block_422(ctx2);
             if_block1.c();
             if_block1.m(td14, t2);
           }
@@ -41900,14 +42387,14 @@
           if_block1 = null;
         }
         if (dirty[2] & 8192 | dirty[4] & 944) {
-          each_value_17 = ctx2[218].result.modes;
+          each_value_18 = ctx2[222].result.modes;
           let i;
-          for (i = 0; i < each_value_17.length; i += 1) {
-            const child_ctx = get_each_context_172(ctx2, each_value_17, i);
+          for (i = 0; i < each_value_18.length; i += 1) {
+            const child_ctx = get_each_context_182(ctx2, each_value_18, i);
             if (each_blocks[i]) {
               each_blocks[i].p(child_ctx, dirty);
             } else {
-              each_blocks[i] = create_each_block_172(child_ctx);
+              each_blocks[i] = create_each_block_182(child_ctx);
               each_blocks[i].c();
               each_blocks[i].m(tbody, null);
             }
@@ -41915,11 +42402,11 @@
           for (; i < each_blocks.length; i += 1) {
             each_blocks[i].d(1);
           }
-          each_blocks.length = each_value_17.length;
+          each_blocks.length = each_value_18.length;
         }
-        if (dirty[2] & 8192 && raw_value !== (raw_value = (ctx2[218].result.best.damage.damageTypeName ? rul.tr(ctx2[218].result.best.damage.damageTypeName) : "") + ""))
+        if (dirty[2] & 8192 && raw_value !== (raw_value = (ctx2[222].result.best.damage.damageTypeName ? rul.tr(ctx2[222].result.best.damage.damageTypeName) : "") + ""))
           html_tag.p(raw_value);
-        if (dirty[2] & 8192 && t22_value !== (t22_value = ctx2[128](ctx2[218].result.best.damage.effectiveArmor, 0) + ""))
+        if (dirty[2] & 8192 && t22_value !== (t22_value = ctx2[128](ctx2[222].result.best.damage.effectiveArmor, 0) + ""))
           set_data(t22, t22_value);
       },
       d(detaching) {
@@ -41934,13 +42421,13 @@
       }
     };
   }
-  function create_each_block_192(ctx) {
+  function create_each_block_20(ctx) {
     let span;
-    let t0_value = ctx[259] + "";
+    let t0_value = ctx[265] + "";
     let t0;
     let t1;
     let b;
-    let t2_value = armorValue(ctx[218].target, ctx[259]) + "";
+    let t2_value = armorValue(ctx[222].target, ctx[265]) + "";
     let t2;
     let t3;
     return {
@@ -41952,7 +42439,7 @@
         t2 = text(t2_value);
         t3 = space();
         attr(span, "class", "dmg-armor");
-        toggle_class(span, "dmg-armor-on", ctx[259] == ctx[4]);
+        toggle_class(span, "dmg-armor-on", ctx[265] == ctx[4]);
       },
       m(target, anchor) {
         insert(target, span, anchor);
@@ -41963,10 +42450,10 @@
         append(span, t3);
       },
       p(ctx2, dirty) {
-        if (dirty[2] & 8192 && t2_value !== (t2_value = armorValue(ctx2[218].target, ctx2[259]) + ""))
+        if (dirty[2] & 8192 && t2_value !== (t2_value = armorValue(ctx2[222].target, ctx2[265]) + ""))
           set_data(t2, t2_value);
         if (dirty[0] & 16) {
-          toggle_class(span, "dmg-armor-on", ctx2[259] == ctx2[4]);
+          toggle_class(span, "dmg-armor-on", ctx2[265] == ctx2[4]);
         }
       },
       d(detaching) {
@@ -41975,10 +42462,10 @@
       }
     };
   }
-  function create_if_block_353(ctx) {
+  function create_if_block_432(ctx) {
     let span;
     let t0;
-    let t1_value = ctx[218].target.shield.capacity + "";
+    let t1_value = ctx[222].target.shield.capacity + "";
     let t1;
     let t2;
     return {
@@ -41996,7 +42483,7 @@
         append(span, t2);
       },
       p(ctx2, dirty) {
-        if (dirty[2] & 8192 && t1_value !== (t1_value = ctx2[218].target.shield.capacity + ""))
+        if (dirty[2] & 8192 && t1_value !== (t1_value = ctx2[222].target.shield.capacity + ""))
           set_data(t1, t1_value);
       },
       d(detaching) {
@@ -42005,14 +42492,14 @@
       }
     };
   }
-  function create_if_block_343(ctx) {
+  function create_if_block_422(ctx) {
     let div;
     let span;
     let t1;
-    let each_value_18 = ctx[122](ctx[218].target);
+    let each_value_19 = ctx[122](ctx[222].target);
     let each_blocks = [];
-    for (let i = 0; i < each_value_18.length; i += 1) {
-      each_blocks[i] = create_each_block_182(get_each_context_182(ctx, each_value_18, i));
+    for (let i = 0; i < each_value_19.length; i += 1) {
+      each_blocks[i] = create_each_block_192(get_each_context_192(ctx, each_value_19, i));
     }
     return {
       c() {
@@ -42036,14 +42523,14 @@
       },
       p(ctx2, dirty) {
         if (dirty[2] & 8192 | dirty[3] & 536870912) {
-          each_value_18 = ctx2[122](ctx2[218].target);
+          each_value_19 = ctx2[122](ctx2[222].target);
           let i;
-          for (i = 0; i < each_value_18.length; i += 1) {
-            const child_ctx = get_each_context_182(ctx2, each_value_18, i);
+          for (i = 0; i < each_value_19.length; i += 1) {
+            const child_ctx = get_each_context_192(ctx2, each_value_19, i);
             if (each_blocks[i]) {
               each_blocks[i].p(child_ctx, dirty);
             } else {
-              each_blocks[i] = create_each_block_182(child_ctx);
+              each_blocks[i] = create_each_block_192(child_ctx);
               each_blocks[i].c();
               each_blocks[i].m(div, null);
             }
@@ -42051,7 +42538,7 @@
           for (; i < each_blocks.length; i += 1) {
             each_blocks[i].d(1);
           }
-          each_blocks.length = each_value_18.length;
+          each_blocks.length = each_value_19.length;
         }
       },
       d(detaching) {
@@ -42061,13 +42548,13 @@
       }
     };
   }
-  function create_each_block_182(ctx) {
+  function create_each_block_192(ctx) {
     let span;
     let html_tag;
-    let raw_value = ctx[246].name + "";
+    let raw_value = ctx[252].name + "";
     let t0;
     let b;
-    let t1_value = ctx[246].pct + "";
+    let t1_value = ctx[252].pct + "";
     let t1;
     let t2;
     let t3;
@@ -42082,9 +42569,9 @@
         t3 = space();
         html_tag.a = t0;
         attr(span, "class", "dmg-resist");
-        toggle_class(span, "dmg-resist-weak", ctx[246].pct > 100);
-        toggle_class(span, "dmg-resist-strong", ctx[246].pct < 100);
-        toggle_class(span, "dmg-immune", ctx[246].pct == 0);
+        toggle_class(span, "dmg-resist-weak", ctx[252].pct > 100);
+        toggle_class(span, "dmg-resist-strong", ctx[252].pct < 100);
+        toggle_class(span, "dmg-immune", ctx[252].pct == 0);
       },
       m(target, anchor) {
         insert(target, span, anchor);
@@ -42096,18 +42583,18 @@
         append(span, t3);
       },
       p(ctx2, dirty) {
-        if (dirty[2] & 8192 && raw_value !== (raw_value = ctx2[246].name + ""))
+        if (dirty[2] & 8192 && raw_value !== (raw_value = ctx2[252].name + ""))
           html_tag.p(raw_value);
-        if (dirty[2] & 8192 && t1_value !== (t1_value = ctx2[246].pct + ""))
+        if (dirty[2] & 8192 && t1_value !== (t1_value = ctx2[252].pct + ""))
           set_data(t1, t1_value);
         if (dirty[2] & 8192 | dirty[3] & 536870912) {
-          toggle_class(span, "dmg-resist-weak", ctx2[246].pct > 100);
+          toggle_class(span, "dmg-resist-weak", ctx2[252].pct > 100);
         }
         if (dirty[2] & 8192 | dirty[3] & 536870912) {
-          toggle_class(span, "dmg-resist-strong", ctx2[246].pct < 100);
+          toggle_class(span, "dmg-resist-strong", ctx2[252].pct < 100);
         }
         if (dirty[2] & 8192 | dirty[3] & 536870912) {
-          toggle_class(span, "dmg-immune", ctx2[246].pct == 0);
+          toggle_class(span, "dmg-immune", ctx2[252].pct == 0);
         }
       },
       d(detaching) {
@@ -42116,71 +42603,71 @@
       }
     };
   }
-  function create_each_block_172(ctx) {
+  function create_each_block_182(ctx) {
     let tr2;
     let td0;
-    let t0_value = ctx[221].label + "";
+    let t0_value = ctx[226].label + "";
     let t0;
     let t1;
     let td1;
-    let t2_value = ctx[128](ctx[221].damage.power, 0) + "";
+    let t2_value = ctx[128](ctx[226].damage.power, 0) + "";
     let t2;
     let t3;
     let td2;
-    let t4_value = ctx[128](ctx[221].damage.rollMin, 0) + "";
+    let t4_value = ctx[128](ctx[226].damage.rollMin, 0) + "";
     let t4;
     let t5;
-    let t6_value = ctx[128](ctx[221].damage.rollMax, 0) + "";
+    let t6_value = ctx[128](ctx[226].damage.rollMax, 0) + "";
     let t6;
     let t7;
     let td3;
-    let t8_value = ctx[128](ctx[221].damage.min, 0) + "";
+    let t8_value = ctx[128](ctx[226].damage.min, 0) + "";
     let t8;
     let t9;
-    let t10_value = ctx[128](ctx[221].damage.max, 0) + "";
+    let t10_value = ctx[128](ctx[226].damage.max, 0) + "";
     let t10;
     let t11;
     let td4;
-    let t12_value = ctx[129](ctx[221].damage.pZero) + "";
+    let t12_value = ctx[129](ctx[226].damage.pZero) + "";
     let t12;
     let t13;
     let td5;
-    let t14_value = ctx[221].damage.hitsPerAttack + "";
+    let t14_value = ctx[226].damage.hitsPerAttack + "";
     let t14;
     let t15;
     let td6;
-    let t16_value = ctx[128](ctx[221].damage.expectedHitsPerAttack, 1) + "";
+    let t16_value = ctx[128](ctx[226].damage.expectedHitsPerAttack, 1) + "";
     let t16;
     let t17;
     let td7;
-    let t18_value = (ctx[221].attack.range == null ? "\u2013" : ctx[128](ctx[221].attack.range, 0)) + "";
+    let t18_value = (ctx[226].attack.range == null ? "\u2013" : ctx[128](ctx[226].attack.range, 0)) + "";
     let t18;
     let td7_title_value;
     let t19;
     let td8;
-    let t20_value = Math.round(ctx[221].accuracy) + "";
+    let t20_value = Math.round(ctx[226].accuracy) + "";
     let t20;
     let t21;
     let t22;
     let td9;
-    let t23_value = Math.round(ctx[221].hitRate * 100) + "";
+    let t23_value = Math.round(ctx[226].hitRate * 100) + "";
     let t23;
     let t24;
     let t25;
     let td10;
-    let t26_value = ctx[128](ctx[221].tuCost, 0) + "";
+    let t26_value = ctx[128](ctx[226].tuCost, 0) + "";
     let t26;
     let t27;
     let td11;
-    let t28_value = ctx[128](ctx[221].perAttack) + "";
+    let t28_value = ctx[128](ctx[226].perAttack) + "";
     let t28;
     let t29;
     let td12;
-    let t30_value = (ctx[221].attacksToKill == null ? "\u2013" : ctx[128](ctx[221].attacksToKill)) + "";
+    let t30_value = (ctx[226].attacksToKill == null ? "\u2013" : ctx[128](ctx[226].attacksToKill)) + "";
     let t30;
     let t31;
     let td13;
-    let t32_value = ctx[132](ctx[221]) + "";
+    let t32_value = ctx[132](ctx[226]) + "";
     let t32;
     let td13_title_value;
     let t33;
@@ -42239,20 +42726,20 @@
         attr(td2, "class", "num");
         attr(td3, "class", "num");
         attr(td4, "class", "num");
-        toggle_class(td4, "dmg-immune", ctx[221].damage.pZero > 0.5);
+        toggle_class(td4, "dmg-immune", ctx[226].damage.pZero > 0.5);
         attr(td5, "class", "num");
         attr(td6, "class", "num");
         attr(td7, "class", "num");
-        attr(td7, "title", td7_title_value = ctx[131](ctx[221]));
-        toggle_class(td7, "dmg-outofrange", outOfRange(ctx[221]));
-        toggle_class(td7, "dmg-offrange", !rangeGoverns(ctx[221]));
+        attr(td7, "title", td7_title_value = ctx[131](ctx[226]));
+        toggle_class(td7, "dmg-outofrange", outOfRange(ctx[226]));
+        toggle_class(td7, "dmg-offrange", !rangeGoverns(ctx[226]));
         attr(td8, "class", "num");
         attr(td9, "class", "num");
         attr(td10, "class", "num");
         attr(td11, "class", "num");
         attr(td12, "class", "num");
         attr(td13, "class", "num dmg-key");
-        attr(td13, "title", td13_title_value = ctx[133](ctx[221]));
+        attr(td13, "title", td13_title_value = ctx[133](ctx[226]));
       },
       m(target, anchor) {
         insert(target, tr2, anchor);
@@ -42306,51 +42793,51 @@
         append(tr2, t33);
       },
       p(ctx2, dirty) {
-        if (dirty[2] & 8192 && t0_value !== (t0_value = ctx2[221].label + ""))
+        if (dirty[2] & 8192 && t0_value !== (t0_value = ctx2[226].label + ""))
           set_data(t0, t0_value);
-        if (dirty[2] & 8192 && t2_value !== (t2_value = ctx2[128](ctx2[221].damage.power, 0) + ""))
+        if (dirty[2] & 8192 && t2_value !== (t2_value = ctx2[128](ctx2[226].damage.power, 0) + ""))
           set_data(t2, t2_value);
-        if (dirty[2] & 8192 && t4_value !== (t4_value = ctx2[128](ctx2[221].damage.rollMin, 0) + ""))
+        if (dirty[2] & 8192 && t4_value !== (t4_value = ctx2[128](ctx2[226].damage.rollMin, 0) + ""))
           set_data(t4, t4_value);
-        if (dirty[2] & 8192 && t6_value !== (t6_value = ctx2[128](ctx2[221].damage.rollMax, 0) + ""))
+        if (dirty[2] & 8192 && t6_value !== (t6_value = ctx2[128](ctx2[226].damage.rollMax, 0) + ""))
           set_data(t6, t6_value);
-        if (dirty[2] & 8192 && t8_value !== (t8_value = ctx2[128](ctx2[221].damage.min, 0) + ""))
+        if (dirty[2] & 8192 && t8_value !== (t8_value = ctx2[128](ctx2[226].damage.min, 0) + ""))
           set_data(t8, t8_value);
-        if (dirty[2] & 8192 && t10_value !== (t10_value = ctx2[128](ctx2[221].damage.max, 0) + ""))
+        if (dirty[2] & 8192 && t10_value !== (t10_value = ctx2[128](ctx2[226].damage.max, 0) + ""))
           set_data(t10, t10_value);
-        if (dirty[2] & 8192 && t12_value !== (t12_value = ctx2[129](ctx2[221].damage.pZero) + ""))
+        if (dirty[2] & 8192 && t12_value !== (t12_value = ctx2[129](ctx2[226].damage.pZero) + ""))
           set_data(t12, t12_value);
         if (dirty[2] & 8192) {
-          toggle_class(td4, "dmg-immune", ctx2[221].damage.pZero > 0.5);
+          toggle_class(td4, "dmg-immune", ctx2[226].damage.pZero > 0.5);
         }
-        if (dirty[2] & 8192 && t14_value !== (t14_value = ctx2[221].damage.hitsPerAttack + ""))
+        if (dirty[2] & 8192 && t14_value !== (t14_value = ctx2[226].damage.hitsPerAttack + ""))
           set_data(t14, t14_value);
-        if (dirty[2] & 8192 && t16_value !== (t16_value = ctx2[128](ctx2[221].damage.expectedHitsPerAttack, 1) + ""))
+        if (dirty[2] & 8192 && t16_value !== (t16_value = ctx2[128](ctx2[226].damage.expectedHitsPerAttack, 1) + ""))
           set_data(t16, t16_value);
-        if (dirty[2] & 8192 && t18_value !== (t18_value = (ctx2[221].attack.range == null ? "\u2013" : ctx2[128](ctx2[221].attack.range, 0)) + ""))
+        if (dirty[2] & 8192 && t18_value !== (t18_value = (ctx2[226].attack.range == null ? "\u2013" : ctx2[128](ctx2[226].attack.range, 0)) + ""))
           set_data(t18, t18_value);
-        if (dirty[2] & 8192 && td7_title_value !== (td7_title_value = ctx2[131](ctx2[221]))) {
+        if (dirty[2] & 8192 && td7_title_value !== (td7_title_value = ctx2[131](ctx2[226]))) {
           attr(td7, "title", td7_title_value);
         }
         if (dirty[2] & 8192) {
-          toggle_class(td7, "dmg-outofrange", outOfRange(ctx2[221]));
+          toggle_class(td7, "dmg-outofrange", outOfRange(ctx2[226]));
         }
         if (dirty[2] & 8192) {
-          toggle_class(td7, "dmg-offrange", !rangeGoverns(ctx2[221]));
+          toggle_class(td7, "dmg-offrange", !rangeGoverns(ctx2[226]));
         }
-        if (dirty[2] & 8192 && t20_value !== (t20_value = Math.round(ctx2[221].accuracy) + ""))
+        if (dirty[2] & 8192 && t20_value !== (t20_value = Math.round(ctx2[226].accuracy) + ""))
           set_data(t20, t20_value);
-        if (dirty[2] & 8192 && t23_value !== (t23_value = Math.round(ctx2[221].hitRate * 100) + ""))
+        if (dirty[2] & 8192 && t23_value !== (t23_value = Math.round(ctx2[226].hitRate * 100) + ""))
           set_data(t23, t23_value);
-        if (dirty[2] & 8192 && t26_value !== (t26_value = ctx2[128](ctx2[221].tuCost, 0) + ""))
+        if (dirty[2] & 8192 && t26_value !== (t26_value = ctx2[128](ctx2[226].tuCost, 0) + ""))
           set_data(t26, t26_value);
-        if (dirty[2] & 8192 && t28_value !== (t28_value = ctx2[128](ctx2[221].perAttack) + ""))
+        if (dirty[2] & 8192 && t28_value !== (t28_value = ctx2[128](ctx2[226].perAttack) + ""))
           set_data(t28, t28_value);
-        if (dirty[2] & 8192 && t30_value !== (t30_value = (ctx2[221].attacksToKill == null ? "\u2013" : ctx2[128](ctx2[221].attacksToKill)) + ""))
+        if (dirty[2] & 8192 && t30_value !== (t30_value = (ctx2[226].attacksToKill == null ? "\u2013" : ctx2[128](ctx2[226].attacksToKill)) + ""))
           set_data(t30, t30_value);
-        if (dirty[2] & 8192 && t32_value !== (t32_value = ctx2[132](ctx2[221]) + ""))
+        if (dirty[2] & 8192 && t32_value !== (t32_value = ctx2[132](ctx2[226]) + ""))
           set_data(t32, t32_value);
-        if (dirty[2] & 8192 && td13_title_value !== (td13_title_value = ctx2[133](ctx2[221]))) {
+        if (dirty[2] & 8192 && td13_title_value !== (td13_title_value = ctx2[133](ctx2[226]))) {
           attr(td13, "title", td13_title_value);
         }
       },
@@ -42360,75 +42847,75 @@
       }
     };
   }
-  function create_each_block_162(key_1, ctx) {
+  function create_each_block_172(key_1, ctx) {
     let tr2;
     let td0;
-    let t0_value = (scoreOf(ctx[218]) == null ? "?" : scoreOf(ctx[218])) + "";
+    let t0_value = (scoreOf(ctx[222]) == null ? "?" : scoreOf(ctx[222])) + "";
     let t0;
     let td0_title_value;
     let t1;
     let td1;
+    let t2_value = ctx[132](ctx[222].mode) + "";
     let t2;
-    let td2;
-    let t3_value = (ctx[218].first ? armorValue(ctx[218].target, ctx[4]) : "") + "";
+    let td1_title_value;
     let t3;
+    let td2;
     let t4;
     let td3;
-    let t5_value = (ctx[218].first ? ctx[218].target.health || "\u2013" : "") + "";
+    let t5_value = (ctx[222].first ? armorValue(ctx[222].target, ctx[4]) : "") + "";
     let t5;
     let t6;
     let td4;
-    let t7_value = ctx[218].mode.label + "";
+    let t7_value = (ctx[222].first ? ctx[222].target.health || "\u2013" : "") + "";
     let t7;
     let t8;
     let td5;
-    let t9_value = ctx[128](ctx[218].mode.damage.min, 0) + "";
+    let t9_value = ctx[222].mode.label + "";
     let t9;
     let t10;
-    let t11_value = ctx[128](ctx[218].mode.damage.max, 0) + "";
-    let t11;
-    let span;
-    let t12;
-    let t13_value = Math.round(ctx[218].mode.damage.resist * 100) + "";
-    let t13;
-    let t14;
-    let t15;
     let td6;
-    let t16_value = Math.round(ctx[218].mode.accuracy) + "";
+    let t11_value = ctx[128](ctx[222].mode.damage.min, 0) + "";
+    let t11;
+    let t12;
+    let t13_value = ctx[128](ctx[222].mode.damage.max, 0) + "";
+    let t13;
+    let span;
+    let t14;
+    let t15_value = Math.round(ctx[222].mode.damage.resist * 100) + "";
+    let t15;
     let t16;
     let t17;
-    let t18;
     let td7;
-    let t19_value = Math.round(ctx[218].mode.hitRate * 100) + "";
+    let t18_value = Math.round(ctx[222].mode.accuracy) + "";
+    let t18;
     let t19;
     let t20;
-    let t21;
     let td8;
-    let t22_value = ctx[128](ctx[218].mode.perAttack) + "";
+    let t21_value = Math.round(ctx[222].mode.hitRate * 100) + "";
+    let t21;
     let t22;
     let t23;
     let td9;
-    let t24_value = (ctx[218].mode.approachTu > 0 ? ctx[128](ctx[218].mode.approachTu, 0) : "\u2013") + "";
+    let t24_value = ctx[128](ctx[222].mode.perAttack) + "";
     let t24;
     let t25;
     let td10;
-    let t26_value = (ctx[218].mode.tuToKill == null ? "\u2013" : ctx[128](ctx[218].mode.tuToKill, 0)) + "";
+    let t26_value = (ctx[222].mode.approachTu > 0 ? ctx[128](ctx[222].mode.approachTu, 0) : "\u2013") + "";
     let t26;
     let t27;
     let td11;
-    let t28_value = ctx[132](ctx[218].mode) + "";
+    let t28_value = (ctx[222].mode.tuToKill == null ? "\u2013" : ctx[128](ctx[222].mode.tuToKill, 0)) + "";
     let t28;
-    let td11_title_value;
     let t29;
     let if_block2_anchor;
     let mounted;
     let dispose;
-    let if_block0 = ctx[218].first && create_if_block_373(ctx);
-    let if_block1 = ctx[218].mode.damage.hitsPerAttack > 1 && create_if_block_363(ctx);
+    let if_block0 = ctx[222].first && create_if_block_452(ctx);
+    let if_block1 = ctx[222].mode.damage.hitsPerAttack > 1 && create_if_block_442(ctx);
     function click_handler_28() {
-      return ctx[212](ctx[218]);
+      return ctx[215](ctx[222]);
     }
-    let if_block2 = ctx[69] == ctx[218].target.id && ctx[218].last && create_if_block_333(ctx);
+    let if_block2 = ctx[69] == ctx[222].target.id && ctx[222].last && create_if_block_412(ctx);
     return {
       key: key_1,
       first: null,
@@ -42438,11 +42925,11 @@
         t0 = text(t0_value);
         t1 = space();
         td1 = element("td");
+        t2 = text(t2_value);
+        t3 = space();
+        td2 = element("td");
         if (if_block0)
           if_block0.c();
-        t2 = space();
-        td2 = element("td");
-        t3 = text(t3_value);
         t4 = space();
         td3 = element("td");
         t5 = text(t5_value);
@@ -42452,25 +42939,25 @@
         t8 = space();
         td5 = element("td");
         t9 = text(t9_value);
-        t10 = text("\u2013");
+        t10 = space();
+        td6 = element("td");
         t11 = text(t11_value);
-        span = element("span");
-        t12 = text("\xA0(");
+        t12 = text("\u2013");
         t13 = text(t13_value);
-        t14 = text("%)");
+        span = element("span");
+        t14 = text("\xA0(");
+        t15 = text(t15_value);
+        t16 = text("%)");
         if (if_block1)
           if_block1.c();
-        t15 = space();
-        td6 = element("td");
-        t16 = text(t16_value);
-        t17 = text("%");
-        t18 = space();
+        t17 = space();
         td7 = element("td");
-        t19 = text(t19_value);
-        t20 = text("%");
-        t21 = space();
+        t18 = text(t18_value);
+        t19 = text("%");
+        t20 = space();
         td8 = element("td");
-        t22 = text(t22_value);
+        t21 = text(t21_value);
+        t22 = text("%");
         t23 = space();
         td9 = element("td");
         t24 = text(t24_value);
@@ -42485,33 +42972,33 @@
           if_block2.c();
         if_block2_anchor = empty();
         attr(td0, "class", "num dmg-score");
-        attr(td0, "title", td0_title_value = ctx[130](ctx[218]));
-        toggle_class(td0, "dmg-score-sub", !ctx[218].first);
-        toggle_class(td0, "dmg-score-good", scoreBand(scoreOf(ctx[218])) == "good");
-        toggle_class(td0, "dmg-score-fair", scoreBand(scoreOf(ctx[218])) == "fair");
-        toggle_class(td0, "dmg-score-poor", scoreBand(scoreOf(ctx[218])) == "poor");
-        toggle_class(td0, "dmg-score-none", scoreBand(scoreOf(ctx[218])) == "none");
-        attr(td1, "class", "dmg-name");
-        attr(td2, "class", "num");
+        attr(td0, "title", td0_title_value = ctx[130](ctx[222]));
+        toggle_class(td0, "dmg-score-sub", !ctx[222].first);
+        toggle_class(td0, "dmg-score-good", scoreBand(scoreOf(ctx[222])) == "good");
+        toggle_class(td0, "dmg-score-fair", scoreBand(scoreOf(ctx[222])) == "fair");
+        toggle_class(td0, "dmg-score-poor", scoreBand(scoreOf(ctx[222])) == "poor");
+        toggle_class(td0, "dmg-score-none", scoreBand(scoreOf(ctx[222])) == "none");
+        attr(td1, "class", "num");
+        attr(td1, "title", td1_title_value = ctx[133](ctx[222].mode));
+        attr(td2, "class", "dmg-name");
         attr(td3, "class", "num");
-        toggle_class(td4, "dmg-submode", !ctx[218].first);
+        attr(td4, "class", "num");
+        toggle_class(td5, "dmg-submode", !ctx[222].first);
         attr(span, "class", "dmg-resist");
         attr(span, "title", ctx[113]);
-        toggle_class(span, "dmg-immune", ctx[218].mode.damage.resist == 0);
-        attr(td5, "class", "num");
+        toggle_class(span, "dmg-immune", ctx[222].mode.damage.resist == 0);
         attr(td6, "class", "num");
-        toggle_class(td6, "dmg-outofrange", outOfRange(ctx[218].mode));
         attr(td7, "class", "num");
-        toggle_class(td7, "dmg-outofrange", outOfRange(ctx[218].mode));
+        toggle_class(td7, "dmg-outofrange", outOfRange(ctx[222].mode));
         attr(td8, "class", "num");
+        toggle_class(td8, "dmg-outofrange", outOfRange(ctx[222].mode));
         attr(td9, "class", "num");
-        attr(td9, "title", ctx[114]);
-        attr(td10, "class", "num dmg-key");
-        attr(td11, "class", "num");
-        attr(td11, "title", td11_title_value = ctx[133](ctx[218].mode));
+        attr(td10, "class", "num");
+        attr(td10, "title", ctx[114]);
+        attr(td11, "class", "num dmg-key");
         attr(tr2, "class", "dmg-click");
-        toggle_class(tr2, "dmg-group-first", ctx[218].first);
-        toggle_class(tr2, "dmg-open", ctx[69] == ctx[218].target.id);
+        toggle_class(tr2, "dmg-group-first", ctx[222].first);
+        toggle_class(tr2, "dmg-open", ctx[69] == ctx[222].target.id);
         this.first = tr2;
       },
       m(target, anchor) {
@@ -42520,11 +43007,11 @@
         append(td0, t0);
         append(tr2, t1);
         append(tr2, td1);
-        if (if_block0)
-          if_block0.m(td1, null);
-        append(tr2, t2);
+        append(td1, t2);
+        append(tr2, t3);
         append(tr2, td2);
-        append(td2, t3);
+        if (if_block0)
+          if_block0.m(td2, null);
         append(tr2, t4);
         append(tr2, td3);
         append(td3, t5);
@@ -42534,24 +43021,24 @@
         append(tr2, t8);
         append(tr2, td5);
         append(td5, t9);
-        append(td5, t10);
-        append(td5, t11);
-        append(td5, span);
-        append(span, t12);
-        append(span, t13);
-        append(span, t14);
-        if (if_block1)
-          if_block1.m(td5, null);
-        append(tr2, t15);
+        append(tr2, t10);
         append(tr2, td6);
-        append(td6, t16);
-        append(td6, t17);
-        append(tr2, t18);
+        append(td6, t11);
+        append(td6, t12);
+        append(td6, t13);
+        append(td6, span);
+        append(span, t14);
+        append(span, t15);
+        append(span, t16);
+        if (if_block1)
+          if_block1.m(td6, null);
+        append(tr2, t17);
         append(tr2, td7);
+        append(td7, t18);
         append(td7, t19);
-        append(td7, t20);
-        append(tr2, t21);
+        append(tr2, t20);
         append(tr2, td8);
+        append(td8, t21);
         append(td8, t22);
         append(tr2, t23);
         append(tr2, td9);
@@ -42573,100 +43060,100 @@
       },
       p(new_ctx, dirty) {
         ctx = new_ctx;
-        if (dirty[2] & 8192 && t0_value !== (t0_value = (scoreOf(ctx[218]) == null ? "?" : scoreOf(ctx[218])) + ""))
+        if (dirty[2] & 8192 && t0_value !== (t0_value = (scoreOf(ctx[222]) == null ? "?" : scoreOf(ctx[222])) + ""))
           set_data(t0, t0_value);
-        if (dirty[2] & 8192 && td0_title_value !== (td0_title_value = ctx[130](ctx[218]))) {
+        if (dirty[2] & 8192 && td0_title_value !== (td0_title_value = ctx[130](ctx[222]))) {
           attr(td0, "title", td0_title_value);
         }
         if (dirty[2] & 8192) {
-          toggle_class(td0, "dmg-score-sub", !ctx[218].first);
+          toggle_class(td0, "dmg-score-sub", !ctx[222].first);
         }
         if (dirty[2] & 8192) {
-          toggle_class(td0, "dmg-score-good", scoreBand(scoreOf(ctx[218])) == "good");
+          toggle_class(td0, "dmg-score-good", scoreBand(scoreOf(ctx[222])) == "good");
         }
         if (dirty[2] & 8192) {
-          toggle_class(td0, "dmg-score-fair", scoreBand(scoreOf(ctx[218])) == "fair");
+          toggle_class(td0, "dmg-score-fair", scoreBand(scoreOf(ctx[222])) == "fair");
         }
         if (dirty[2] & 8192) {
-          toggle_class(td0, "dmg-score-poor", scoreBand(scoreOf(ctx[218])) == "poor");
+          toggle_class(td0, "dmg-score-poor", scoreBand(scoreOf(ctx[222])) == "poor");
         }
         if (dirty[2] & 8192) {
-          toggle_class(td0, "dmg-score-none", scoreBand(scoreOf(ctx[218])) == "none");
+          toggle_class(td0, "dmg-score-none", scoreBand(scoreOf(ctx[222])) == "none");
         }
-        if (ctx[218].first) {
+        if (dirty[2] & 8192 && t2_value !== (t2_value = ctx[132](ctx[222].mode) + ""))
+          set_data(t2, t2_value);
+        if (dirty[2] & 8192 && td1_title_value !== (td1_title_value = ctx[133](ctx[222].mode))) {
+          attr(td1, "title", td1_title_value);
+        }
+        if (ctx[222].first) {
           if (if_block0) {
             if_block0.p(ctx, dirty);
           } else {
-            if_block0 = create_if_block_373(ctx);
+            if_block0 = create_if_block_452(ctx);
             if_block0.c();
-            if_block0.m(td1, null);
+            if_block0.m(td2, null);
           }
         } else if (if_block0) {
           if_block0.d(1);
           if_block0 = null;
         }
-        if (dirty[0] & 16 | dirty[2] & 8192 && t3_value !== (t3_value = (ctx[218].first ? armorValue(ctx[218].target, ctx[4]) : "") + ""))
-          set_data(t3, t3_value);
-        if (dirty[2] & 8192 && t5_value !== (t5_value = (ctx[218].first ? ctx[218].target.health || "\u2013" : "") + ""))
+        if (dirty[0] & 16 | dirty[2] & 8192 && t5_value !== (t5_value = (ctx[222].first ? armorValue(ctx[222].target, ctx[4]) : "") + ""))
           set_data(t5, t5_value);
-        if (dirty[2] & 8192 && t7_value !== (t7_value = ctx[218].mode.label + ""))
+        if (dirty[2] & 8192 && t7_value !== (t7_value = (ctx[222].first ? ctx[222].target.health || "\u2013" : "") + ""))
           set_data(t7, t7_value);
-        if (dirty[2] & 8192) {
-          toggle_class(td4, "dmg-submode", !ctx[218].first);
-        }
-        if (dirty[2] & 8192 && t9_value !== (t9_value = ctx[128](ctx[218].mode.damage.min, 0) + ""))
+        if (dirty[2] & 8192 && t9_value !== (t9_value = ctx[222].mode.label + ""))
           set_data(t9, t9_value);
-        if (dirty[2] & 8192 && t11_value !== (t11_value = ctx[128](ctx[218].mode.damage.max, 0) + ""))
-          set_data(t11, t11_value);
-        if (dirty[2] & 8192 && t13_value !== (t13_value = Math.round(ctx[218].mode.damage.resist * 100) + ""))
-          set_data(t13, t13_value);
         if (dirty[2] & 8192) {
-          toggle_class(span, "dmg-immune", ctx[218].mode.damage.resist == 0);
+          toggle_class(td5, "dmg-submode", !ctx[222].first);
         }
-        if (ctx[218].mode.damage.hitsPerAttack > 1) {
+        if (dirty[2] & 8192 && t11_value !== (t11_value = ctx[128](ctx[222].mode.damage.min, 0) + ""))
+          set_data(t11, t11_value);
+        if (dirty[2] & 8192 && t13_value !== (t13_value = ctx[128](ctx[222].mode.damage.max, 0) + ""))
+          set_data(t13, t13_value);
+        if (dirty[2] & 8192 && t15_value !== (t15_value = Math.round(ctx[222].mode.damage.resist * 100) + ""))
+          set_data(t15, t15_value);
+        if (dirty[2] & 8192) {
+          toggle_class(span, "dmg-immune", ctx[222].mode.damage.resist == 0);
+        }
+        if (ctx[222].mode.damage.hitsPerAttack > 1) {
           if (if_block1) {
             if_block1.p(ctx, dirty);
           } else {
-            if_block1 = create_if_block_363(ctx);
+            if_block1 = create_if_block_442(ctx);
             if_block1.c();
-            if_block1.m(td5, null);
+            if_block1.m(td6, null);
           }
         } else if (if_block1) {
           if_block1.d(1);
           if_block1 = null;
         }
-        if (dirty[2] & 8192 && t16_value !== (t16_value = Math.round(ctx[218].mode.accuracy) + ""))
-          set_data(t16, t16_value);
+        if (dirty[2] & 8192 && t18_value !== (t18_value = Math.round(ctx[222].mode.accuracy) + ""))
+          set_data(t18, t18_value);
         if (dirty[2] & 8192) {
-          toggle_class(td6, "dmg-outofrange", outOfRange(ctx[218].mode));
+          toggle_class(td7, "dmg-outofrange", outOfRange(ctx[222].mode));
         }
-        if (dirty[2] & 8192 && t19_value !== (t19_value = Math.round(ctx[218].mode.hitRate * 100) + ""))
-          set_data(t19, t19_value);
+        if (dirty[2] & 8192 && t21_value !== (t21_value = Math.round(ctx[222].mode.hitRate * 100) + ""))
+          set_data(t21, t21_value);
         if (dirty[2] & 8192) {
-          toggle_class(td7, "dmg-outofrange", outOfRange(ctx[218].mode));
+          toggle_class(td8, "dmg-outofrange", outOfRange(ctx[222].mode));
         }
-        if (dirty[2] & 8192 && t22_value !== (t22_value = ctx[128](ctx[218].mode.perAttack) + ""))
-          set_data(t22, t22_value);
-        if (dirty[2] & 8192 && t24_value !== (t24_value = (ctx[218].mode.approachTu > 0 ? ctx[128](ctx[218].mode.approachTu, 0) : "\u2013") + ""))
+        if (dirty[2] & 8192 && t24_value !== (t24_value = ctx[128](ctx[222].mode.perAttack) + ""))
           set_data(t24, t24_value);
-        if (dirty[2] & 8192 && t26_value !== (t26_value = (ctx[218].mode.tuToKill == null ? "\u2013" : ctx[128](ctx[218].mode.tuToKill, 0)) + ""))
+        if (dirty[2] & 8192 && t26_value !== (t26_value = (ctx[222].mode.approachTu > 0 ? ctx[128](ctx[222].mode.approachTu, 0) : "\u2013") + ""))
           set_data(t26, t26_value);
-        if (dirty[2] & 8192 && t28_value !== (t28_value = ctx[132](ctx[218].mode) + ""))
+        if (dirty[2] & 8192 && t28_value !== (t28_value = (ctx[222].mode.tuToKill == null ? "\u2013" : ctx[128](ctx[222].mode.tuToKill, 0)) + ""))
           set_data(t28, t28_value);
-        if (dirty[2] & 8192 && td11_title_value !== (td11_title_value = ctx[133](ctx[218].mode))) {
-          attr(td11, "title", td11_title_value);
-        }
         if (dirty[2] & 8192) {
-          toggle_class(tr2, "dmg-group-first", ctx[218].first);
+          toggle_class(tr2, "dmg-group-first", ctx[222].first);
         }
         if (dirty[2] & 8320) {
-          toggle_class(tr2, "dmg-open", ctx[69] == ctx[218].target.id);
+          toggle_class(tr2, "dmg-open", ctx[69] == ctx[222].target.id);
         }
-        if (ctx[69] == ctx[218].target.id && ctx[218].last) {
+        if (ctx[69] == ctx[222].target.id && ctx[222].last) {
           if (if_block2) {
             if_block2.p(ctx, dirty);
           } else {
-            if_block2 = create_if_block_333(ctx);
+            if_block2 = create_if_block_412(ctx);
             if_block2.c();
             if_block2.m(if_block2_anchor.parentNode, if_block2_anchor);
           }
@@ -42690,6 +43177,36 @@
           detach(if_block2_anchor);
         mounted = false;
         dispose();
+      }
+    };
+  }
+  function create_if_block_402(ctx) {
+    let p;
+    let t0;
+    let t1_value = ctx[75].length + "";
+    let t1;
+    let t2;
+    return {
+      c() {
+        p = element("p");
+        t0 = text("Showing the first 400 of ");
+        t1 = text(t1_value);
+        t2 = text(". Narrow it with the enemy filter.");
+        attr(p, "class", "dmg-cap");
+      },
+      m(target, anchor) {
+        insert(target, p, anchor);
+        append(p, t0);
+        append(p, t1);
+        append(p, t2);
+      },
+      p(ctx2, dirty) {
+        if (dirty[2] & 8192 && t1_value !== (t1_value = ctx2[75].length + ""))
+          set_data(t1, t1_value);
+      },
+      d(detaching) {
+        if (detaching)
+          detach(p);
       }
     };
   }
@@ -42745,69 +43262,72 @@
     let tbody;
     let each_blocks = [];
     let each8_lookup = new Map_1();
+    let t26;
+    let if_block8_anchor;
     let mounted;
     let dispose;
-    let if_block0 = ctx[41].health && create_if_block_314(ctx);
-    let each_value_15 = SIDES;
+    let if_block0 = ctx[41].health && create_if_block_383(ctx);
+    let each_value_16 = SIDES;
     let each_blocks_8 = [];
-    for (let i = 0; i < each_value_15.length; i += 1) {
-      each_blocks_8[i] = create_each_block_152(get_each_context_152(ctx, each_value_15, i));
+    for (let i = 0; i < each_value_16.length; i += 1) {
+      each_blocks_8[i] = create_each_block_162(get_each_context_162(ctx, each_value_16, i));
     }
-    let if_block1 = ctx[70].length && create_if_block_302(ctx);
-    let if_block2 = ctx[84] && create_if_block_263(ctx);
-    let if_block3 = ctx[71].length && create_if_block_243(ctx);
-    let if_block4 = ctx[47] && create_if_block_204(ctx);
-    let if_block5 = ctx[41].shield && create_if_block_194(ctx);
-    let each_value_9 = ctx[103];
+    let if_block1 = ctx[70].length && create_if_block_373(ctx);
+    let if_block2 = ctx[84] && create_if_block_333(ctx);
+    let if_block3 = ctx[71].length && create_if_block_314(ctx);
+    let if_block4 = ctx[47] && create_if_block_243(ctx);
+    let if_block5 = ctx[41].shield && create_if_block_233(ctx);
+    let each_value_10 = ctx[103];
     let each_blocks_7 = [];
-    for (let i = 0; i < each_value_9.length; i += 1) {
-      each_blocks_7[i] = create_each_block_92(get_each_context_92(ctx, each_value_9, i));
+    for (let i = 0; i < each_value_10.length; i += 1) {
+      each_blocks_7[i] = create_each_block_102(get_each_context_102(ctx, each_value_10, i));
     }
-    let each_value_8 = ctx[104];
+    let each_value_9 = ctx[104];
     let each_blocks_6 = [];
-    for (let i = 0; i < each_value_8.length; i += 1) {
-      each_blocks_6[i] = create_each_block_82(get_each_context_82(ctx, each_value_8, i));
+    for (let i = 0; i < each_value_9.length; i += 1) {
+      each_blocks_6[i] = create_each_block_92(get_each_context_92(ctx, each_value_9, i));
     }
-    let each_value_7 = ctx[80];
+    let each_value_8 = ctx[80];
     let each_blocks_5 = [];
-    for (let i = 0; i < each_value_7.length; i += 1) {
-      each_blocks_5[i] = create_each_block_73(get_each_context_73(ctx, each_value_7, i));
+    for (let i = 0; i < each_value_8.length; i += 1) {
+      each_blocks_5[i] = create_each_block_82(get_each_context_82(ctx, each_value_8, i));
     }
-    let each_value_6 = ctx[20];
+    let each_value_7 = ctx[20];
     let each_blocks_4 = [];
-    for (let i = 0; i < each_value_6.length; i += 1) {
-      each_blocks_4[i] = create_each_block_64(get_each_context_64(ctx, each_value_6, i));
+    for (let i = 0; i < each_value_7.length; i += 1) {
+      each_blocks_4[i] = create_each_block_73(get_each_context_73(ctx, each_value_7, i));
     }
-    let each_value_5 = ctx[48];
+    let each_value_6 = ctx[48];
     let each_blocks_3 = [];
-    for (let i = 0; i < each_value_5.length; i += 1) {
-      each_blocks_3[i] = create_each_block_54(get_each_context_54(ctx, each_value_5, i));
+    for (let i = 0; i < each_value_6.length; i += 1) {
+      each_blocks_3[i] = create_each_block_64(get_each_context_64(ctx, each_value_6, i));
     }
-    let each_value_4 = ctx[19];
+    let each_value_5 = ctx[19];
     let each_blocks_2 = [];
-    for (let i = 0; i < each_value_4.length; i += 1) {
-      each_blocks_2[i] = create_each_block_45(get_each_context_45(ctx, each_value_4, i));
+    for (let i = 0; i < each_value_5.length; i += 1) {
+      each_blocks_2[i] = create_each_block_54(get_each_context_54(ctx, each_value_5, i));
     }
-    function select_block_type_14(ctx2, dirty) {
+    function select_block_type_16(ctx2, dirty) {
       if (ctx2[73])
-        return create_if_block_165;
+        return create_if_block_204;
       return create_else_block_23;
     }
-    let current_block_type = select_block_type_14(ctx, [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1]);
+    let current_block_type = select_block_type_16(ctx, [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1]);
     let if_block6 = current_block_type(ctx);
-    let if_block7 = (ctx[16] || ctx[17] != "all" || ctx[18] != "all" || ctx[19].length || ctx[20].length || ctx[21]) && create_if_block_155(ctx);
-    let each_value_2 = ctx[74];
+    let if_block7 = (ctx[16] || ctx[17] != "all" || ctx[18] != "all" || ctx[19].length || ctx[20].length || ctx[21]) && create_if_block_194(ctx);
+    let each_value_3 = ctx[74];
     let each_blocks_1 = [];
-    for (let i = 0; i < each_value_2.length; i += 1) {
-      each_blocks_1[i] = create_each_block_210(get_each_context_26(ctx, each_value_2, i));
+    for (let i = 0; i < each_value_3.length; i += 1) {
+      each_blocks_1[i] = create_each_block_36(get_each_context_36(ctx, each_value_3, i));
     }
     let each_value = ctx[72].slice(0, 400);
-    const get_key = (ctx2) => ctx2[218].id;
+    const get_key = (ctx2) => ctx2[222].id;
     for (let i = 0; i < each_value.length; i += 1) {
       let child_ctx = get_each_context29(ctx, each_value, i);
       let key = get_key(child_ctx);
       each8_lookup.set(key, each_blocks[i] = create_each_block29(key, child_ctx));
     }
+    let if_block8 = ctx[72].length > 400 && create_if_block_315(ctx);
     return {
       c() {
         div1 = element("div");
@@ -42898,6 +43418,10 @@
         for (let i = 0; i < each_blocks.length; i += 1) {
           each_blocks[i].c();
         }
+        t26 = space();
+        if (if_block8)
+          if_block8.c();
+        if_block8_anchor = empty();
         attr(button0, "class", "dmg-peekname");
         attr(button0, "title", "Open this enemy's XPedia article over the top - your soldier, filters and selection all stay put");
         attr(span, "class", "dmg-armors");
@@ -42916,13 +43440,13 @@
         attr(select0, "class", "dmg-input dmg-dtpick");
         attr(select0, "title", "Filter by the mod's own weapon types - pistols, shotguns, rifles and so on. Pick several to combine them.");
         if (ctx[62] === void 0)
-          add_render_callback(() => ctx[198].call(select0));
+          add_render_callback(() => ctx[201].call(select0));
         option1.__value = "all";
         option1.value = option1.__value;
         attr(select1, "class", "dmg-input dmg-dtpick");
         attr(select1, "title", "Add a damage type to the filter. The enemy's resistance chips above do the same thing.");
         if (ctx[61] === void 0)
-          add_render_callback(() => ctx[201].call(select1));
+          add_render_callback(() => ctx[204].call(select1));
         attr(input1, "type", "checkbox");
         attr(label, "class", "dmg-check dmg-inline");
         attr(div4, "class", "dmg-filters");
@@ -43022,16 +43546,20 @@
         for (let i = 0; i < each_blocks.length; i += 1) {
           each_blocks[i].m(tbody, null);
         }
+        insert(target, t26, anchor);
+        if (if_block8)
+          if_block8.m(target, anchor);
+        insert(target, if_block8_anchor, anchor);
         if (!mounted) {
           dispose = [
-            listen(button0, "click", ctx[188]),
-            listen(input0, "input", ctx[194]),
-            listen(button1, "click", ctx[195]),
-            listen(select0, "change", ctx[198]),
-            listen(select0, "change", ctx[199]),
-            listen(select1, "change", ctx[201]),
-            listen(select1, "change", ctx[202]),
-            listen(input1, "change", ctx[204])
+            listen(button0, "click", ctx[190]),
+            listen(input0, "input", ctx[197]),
+            listen(button1, "click", ctx[198]),
+            listen(select0, "change", ctx[201]),
+            listen(select0, "change", ctx[202]),
+            listen(select1, "change", ctx[204]),
+            listen(select1, "change", ctx[205]),
+            listen(input1, "change", ctx[207])
           ];
           mounted = true;
         }
@@ -43044,7 +43572,7 @@
           if (if_block0) {
             if_block0.p(ctx2, dirty);
           } else {
-            if_block0 = create_if_block_314(ctx2);
+            if_block0 = create_if_block_383(ctx2);
             if_block0.c();
             if_block0.m(div0, t1);
           }
@@ -43053,14 +43581,14 @@
           if_block0 = null;
         }
         if (dirty[0] & 16 | dirty[1] & 1024) {
-          each_value_15 = SIDES;
+          each_value_16 = SIDES;
           let i;
-          for (i = 0; i < each_value_15.length; i += 1) {
-            const child_ctx = get_each_context_152(ctx2, each_value_15, i);
+          for (i = 0; i < each_value_16.length; i += 1) {
+            const child_ctx = get_each_context_162(ctx2, each_value_16, i);
             if (each_blocks_8[i]) {
               each_blocks_8[i].p(child_ctx, dirty);
             } else {
-              each_blocks_8[i] = create_each_block_152(child_ctx);
+              each_blocks_8[i] = create_each_block_162(child_ctx);
               each_blocks_8[i].c();
               each_blocks_8[i].m(span, null);
             }
@@ -43068,13 +43596,13 @@
           for (; i < each_blocks_8.length; i += 1) {
             each_blocks_8[i].d(1);
           }
-          each_blocks_8.length = each_value_15.length;
+          each_blocks_8.length = each_value_16.length;
         }
         if (ctx2[70].length) {
           if (if_block1) {
             if_block1.p(ctx2, dirty);
           } else {
-            if_block1 = create_if_block_302(ctx2);
+            if_block1 = create_if_block_373(ctx2);
             if_block1.c();
             if_block1.m(div0, null);
           }
@@ -43086,7 +43614,7 @@
           if (if_block2) {
             if_block2.p(ctx2, dirty);
           } else {
-            if_block2 = create_if_block_263(ctx2);
+            if_block2 = create_if_block_333(ctx2);
             if_block2.c();
             if_block2.m(div1, t4);
           }
@@ -43098,7 +43626,7 @@
           if (if_block3) {
             if_block3.p(ctx2, dirty);
           } else {
-            if_block3 = create_if_block_243(ctx2);
+            if_block3 = create_if_block_314(ctx2);
             if_block3.c();
             if_block3.m(div1, t5);
           }
@@ -43110,7 +43638,7 @@
           if (if_block4) {
             if_block4.p(ctx2, dirty);
           } else {
-            if_block4 = create_if_block_204(ctx2);
+            if_block4 = create_if_block_243(ctx2);
             if_block4.c();
             if_block4.m(div1, t6);
           }
@@ -43122,7 +43650,7 @@
           if (if_block5) {
             if_block5.p(ctx2, dirty);
           } else {
-            if_block5 = create_if_block_194(ctx2);
+            if_block5 = create_if_block_233(ctx2);
             if_block5.c();
             if_block5.m(div1, null);
           }
@@ -43137,14 +43665,14 @@
           toggle_class(button1, "dmg-chip-on", ctx2[9]);
         }
         if (dirty[0] & 131072 | dirty[2] & 1048576 | dirty[3] & 1024) {
-          each_value_9 = ctx2[103];
+          each_value_10 = ctx2[103];
           let i;
-          for (i = 0; i < each_value_9.length; i += 1) {
-            const child_ctx = get_each_context_92(ctx2, each_value_9, i);
+          for (i = 0; i < each_value_10.length; i += 1) {
+            const child_ctx = get_each_context_102(ctx2, each_value_10, i);
             if (each_blocks_7[i]) {
               each_blocks_7[i].p(child_ctx, dirty);
             } else {
-              each_blocks_7[i] = create_each_block_92(child_ctx);
+              each_blocks_7[i] = create_each_block_102(child_ctx);
               each_blocks_7[i].c();
               each_blocks_7[i].m(div2, null);
             }
@@ -43152,17 +43680,17 @@
           for (; i < each_blocks_7.length; i += 1) {
             each_blocks_7[i].d(1);
           }
-          each_blocks_7.length = each_value_9.length;
+          each_blocks_7.length = each_value_10.length;
         }
         if (dirty[0] & 262144 | dirty[2] & 524288 | dirty[3] & 2048) {
-          each_value_8 = ctx2[104];
+          each_value_9 = ctx2[104];
           let i;
-          for (i = 0; i < each_value_8.length; i += 1) {
-            const child_ctx = get_each_context_82(ctx2, each_value_8, i);
+          for (i = 0; i < each_value_9.length; i += 1) {
+            const child_ctx = get_each_context_92(ctx2, each_value_9, i);
             if (each_blocks_6[i]) {
               each_blocks_6[i].p(child_ctx, dirty);
             } else {
-              each_blocks_6[i] = create_each_block_82(child_ctx);
+              each_blocks_6[i] = create_each_block_92(child_ctx);
               each_blocks_6[i].c();
               each_blocks_6[i].m(div3, null);
             }
@@ -43170,19 +43698,19 @@
           for (; i < each_blocks_6.length; i += 1) {
             each_blocks_6[i].d(1);
           }
-          each_blocks_6.length = each_value_8.length;
+          each_blocks_6.length = each_value_9.length;
         }
         if (dirty[0] & 1048576 && t13_value !== (t13_value = ctx2[20].length ? "Add a weapon type\u2026" : "Any weapon type"))
           set_data(t13, t13_value);
         if (dirty[0] & 1048576 | dirty[2] & 262144) {
-          each_value_7 = ctx2[80];
+          each_value_8 = ctx2[80];
           let i;
-          for (i = 0; i < each_value_7.length; i += 1) {
-            const child_ctx = get_each_context_73(ctx2, each_value_7, i);
+          for (i = 0; i < each_value_8.length; i += 1) {
+            const child_ctx = get_each_context_82(ctx2, each_value_8, i);
             if (each_blocks_5[i]) {
               each_blocks_5[i].p(child_ctx, dirty);
             } else {
-              each_blocks_5[i] = create_each_block_73(child_ctx);
+              each_blocks_5[i] = create_each_block_82(child_ctx);
               each_blocks_5[i].c();
               each_blocks_5[i].m(select0, null);
             }
@@ -43190,20 +43718,20 @@
           for (; i < each_blocks_5.length; i += 1) {
             each_blocks_5[i].d(1);
           }
-          each_blocks_5.length = each_value_7.length;
+          each_blocks_5.length = each_value_8.length;
         }
         if (dirty[2] & 262145) {
           select_option(select0, ctx2[62]);
         }
         if (dirty[0] & 1048576 | dirty[3] & 4096) {
-          each_value_6 = ctx2[20];
+          each_value_7 = ctx2[20];
           let i;
-          for (i = 0; i < each_value_6.length; i += 1) {
-            const child_ctx = get_each_context_64(ctx2, each_value_6, i);
+          for (i = 0; i < each_value_7.length; i += 1) {
+            const child_ctx = get_each_context_73(ctx2, each_value_7, i);
             if (each_blocks_4[i]) {
               each_blocks_4[i].p(child_ctx, dirty);
             } else {
-              each_blocks_4[i] = create_each_block_64(child_ctx);
+              each_blocks_4[i] = create_each_block_73(child_ctx);
               each_blocks_4[i].c();
               each_blocks_4[i].m(div4, t16);
             }
@@ -43211,19 +43739,19 @@
           for (; i < each_blocks_4.length; i += 1) {
             each_blocks_4[i].d(1);
           }
-          each_blocks_4.length = each_value_6.length;
+          each_blocks_4.length = each_value_7.length;
         }
         if (dirty[0] & 524288 && t17_value !== (t17_value = ctx2[19].length ? "Add a damage type\u2026" : "Any damage type"))
           set_data(t17, t17_value);
         if (dirty[0] & 524288 | dirty[1] & 131072) {
-          each_value_5 = ctx2[48];
+          each_value_6 = ctx2[48];
           let i;
-          for (i = 0; i < each_value_5.length; i += 1) {
-            const child_ctx = get_each_context_54(ctx2, each_value_5, i);
+          for (i = 0; i < each_value_6.length; i += 1) {
+            const child_ctx = get_each_context_64(ctx2, each_value_6, i);
             if (each_blocks_3[i]) {
               each_blocks_3[i].p(child_ctx, dirty);
             } else {
-              each_blocks_3[i] = create_each_block_54(child_ctx);
+              each_blocks_3[i] = create_each_block_64(child_ctx);
               each_blocks_3[i].c();
               each_blocks_3[i].m(select1, null);
             }
@@ -43231,20 +43759,20 @@
           for (; i < each_blocks_3.length; i += 1) {
             each_blocks_3[i].d(1);
           }
-          each_blocks_3.length = each_value_5.length;
+          each_blocks_3.length = each_value_6.length;
         }
         if (dirty[1] & 1073872896) {
           select_option(select1, ctx2[61]);
         }
         if (dirty[0] & 524288 | dirty[3] & 8192) {
-          each_value_4 = ctx2[19];
+          each_value_5 = ctx2[19];
           let i;
-          for (i = 0; i < each_value_4.length; i += 1) {
-            const child_ctx = get_each_context_45(ctx2, each_value_4, i);
+          for (i = 0; i < each_value_5.length; i += 1) {
+            const child_ctx = get_each_context_54(ctx2, each_value_5, i);
             if (each_blocks_2[i]) {
               each_blocks_2[i].p(child_ctx, dirty);
             } else {
-              each_blocks_2[i] = create_each_block_45(child_ctx);
+              each_blocks_2[i] = create_each_block_54(child_ctx);
               each_blocks_2[i].c();
               each_blocks_2[i].m(div4, t20);
             }
@@ -43252,12 +43780,12 @@
           for (; i < each_blocks_2.length; i += 1) {
             each_blocks_2[i].d(1);
           }
-          each_blocks_2.length = each_value_4.length;
+          each_blocks_2.length = each_value_5.length;
         }
         if (dirty[0] & 2097152) {
           input1.checked = ctx2[21];
         }
-        if (current_block_type === (current_block_type = select_block_type_14(ctx2, dirty)) && if_block6) {
+        if (current_block_type === (current_block_type = select_block_type_16(ctx2, dirty)) && if_block6) {
           if_block6.p(ctx2, dirty);
         } else {
           if_block6.d(1);
@@ -43271,7 +43799,7 @@
           if (if_block7) {
             if_block7.p(ctx2, dirty);
           } else {
-            if_block7 = create_if_block_155(ctx2);
+            if_block7 = create_if_block_194(ctx2);
             if_block7.c();
             if_block7.m(div4, null);
           }
@@ -43280,14 +43808,14 @@
           if_block7 = null;
         }
         if (dirty[1] & 512 | dirty[2] & 4096 | dirty[4] & 9) {
-          each_value_2 = ctx2[74];
+          each_value_3 = ctx2[74];
           let i;
-          for (i = 0; i < each_value_2.length; i += 1) {
-            const child_ctx = get_each_context_26(ctx2, each_value_2, i);
+          for (i = 0; i < each_value_3.length; i += 1) {
+            const child_ctx = get_each_context_36(ctx2, each_value_3, i);
             if (each_blocks_1[i]) {
               each_blocks_1[i].p(child_ctx, dirty);
             } else {
-              each_blocks_1[i] = create_each_block_210(child_ctx);
+              each_blocks_1[i] = create_each_block_36(child_ctx);
               each_blocks_1[i].c();
               each_blocks_1[i].m(tr2, null);
             }
@@ -43295,11 +43823,23 @@
           for (; i < each_blocks_1.length; i += 1) {
             each_blocks_1[i].d(1);
           }
-          each_blocks_1.length = each_value_2.length;
+          each_blocks_1.length = each_value_3.length;
         }
-        if (dirty[0] & 268435456 | dirty[1] & 262144 | dirty[2] & 5122 | dirty[3] & 11534336 | dirty[4] & 2032) {
+        if (dirty[0] & 268435456 | dirty[1] & 262144 | dirty[2] & 5122 | dirty[3] & 11534336 | dirty[4] & 4080) {
           each_value = ctx2[72].slice(0, 400);
           each_blocks = update_keyed_each(each_blocks, dirty, get_key, 1, ctx2, each_value, each8_lookup, tbody, destroy_block, create_each_block29, null, get_each_context29);
+        }
+        if (ctx2[72].length > 400) {
+          if (if_block8) {
+            if_block8.p(ctx2, dirty);
+          } else {
+            if_block8 = create_if_block_315(ctx2);
+            if_block8.c();
+            if_block8.m(if_block8_anchor.parentNode, if_block8_anchor);
+          }
+        } else if (if_block8) {
+          if_block8.d(1);
+          if_block8 = null;
         }
       },
       d(detaching) {
@@ -43339,6 +43879,12 @@
         for (let i = 0; i < each_blocks.length; i += 1) {
           each_blocks[i].d();
         }
+        if (detaching)
+          detach(t26);
+        if (if_block8)
+          if_block8.d(detaching);
+        if (detaching)
+          detach(if_block8_anchor);
         mounted = false;
         run_all(dispose);
       }
@@ -43362,7 +43908,7 @@
       }
     };
   }
-  function create_if_block_314(ctx) {
+  function create_if_block_383(ctx) {
     let span;
     let b;
     let t0_value = ctx[41].health + "";
@@ -43391,13 +43937,13 @@
       }
     };
   }
-  function create_each_block_152(ctx) {
+  function create_each_block_162(ctx) {
     let span;
-    let t0_value = ctx[259] + "";
+    let t0_value = ctx[265] + "";
     let t0;
     let t1;
     let b;
-    let t2_value = armorValue(ctx[41], ctx[259]) + "";
+    let t2_value = armorValue(ctx[41], ctx[265]) + "";
     let t2;
     let t3;
     return {
@@ -43409,7 +43955,7 @@
         t2 = text(t2_value);
         t3 = space();
         attr(span, "class", "dmg-armor");
-        toggle_class(span, "dmg-armor-on", ctx[259] == ctx[4]);
+        toggle_class(span, "dmg-armor-on", ctx[265] == ctx[4]);
       },
       m(target, anchor) {
         insert(target, span, anchor);
@@ -43420,10 +43966,10 @@
         append(span, t3);
       },
       p(ctx2, dirty) {
-        if (dirty[1] & 1024 && t2_value !== (t2_value = armorValue(ctx2[41], ctx2[259]) + ""))
+        if (dirty[1] & 1024 && t2_value !== (t2_value = armorValue(ctx2[41], ctx2[265]) + ""))
           set_data(t2, t2_value);
         if (dirty[0] & 16) {
-          toggle_class(span, "dmg-armor-on", ctx2[259] == ctx2[4]);
+          toggle_class(span, "dmg-armor-on", ctx2[265] == ctx2[4]);
         }
       },
       d(detaching) {
@@ -43432,12 +43978,12 @@
       }
     };
   }
-  function create_if_block_302(ctx) {
+  function create_if_block_373(ctx) {
     let span;
-    let each_value_14 = ctx[70];
+    let each_value_15 = ctx[70];
     let each_blocks = [];
-    for (let i = 0; i < each_value_14.length; i += 1) {
-      each_blocks[i] = create_each_block_143(get_each_context_143(ctx, each_value_14, i));
+    for (let i = 0; i < each_value_15.length; i += 1) {
+      each_blocks[i] = create_each_block_152(get_each_context_152(ctx, each_value_15, i));
     }
     return {
       c() {
@@ -43455,14 +44001,14 @@
       },
       p(ctx2, dirty) {
         if (dirty[2] & 256) {
-          each_value_14 = ctx2[70];
+          each_value_15 = ctx2[70];
           let i;
-          for (i = 0; i < each_value_14.length; i += 1) {
-            const child_ctx = get_each_context_143(ctx2, each_value_14, i);
+          for (i = 0; i < each_value_15.length; i += 1) {
+            const child_ctx = get_each_context_152(ctx2, each_value_15, i);
             if (each_blocks[i]) {
               each_blocks[i].p(child_ctx, dirty);
             } else {
-              each_blocks[i] = create_each_block_143(child_ctx);
+              each_blocks[i] = create_each_block_152(child_ctx);
               each_blocks[i].c();
               each_blocks[i].m(span, null);
             }
@@ -43470,7 +44016,7 @@
           for (; i < each_blocks.length; i += 1) {
             each_blocks[i].d(1);
           }
-          each_blocks.length = each_value_14.length;
+          each_blocks.length = each_value_15.length;
         }
       },
       d(detaching) {
@@ -43480,9 +44026,9 @@
       }
     };
   }
-  function create_each_block_143(ctx) {
+  function create_each_block_152(ctx) {
     let span;
-    let t_value = ctx[254] + "";
+    let t_value = ctx[260] + "";
     let t;
     return {
       c() {
@@ -43494,7 +44040,7 @@
         append(span, t);
       },
       p(ctx2, dirty) {
-        if (dirty[2] & 256 && t_value !== (t_value = ctx2[254] + ""))
+        if (dirty[2] & 256 && t_value !== (t_value = ctx2[260] + ""))
           set_data(t, t_value);
       },
       d(detaching) {
@@ -43503,7 +44049,7 @@
       }
     };
   }
-  function create_if_block_263(ctx) {
+  function create_if_block_333(ctx) {
     let div;
     let span0;
     let t0;
@@ -43527,8 +44073,8 @@
     let if_block1_anchor;
     let mounted;
     let dispose;
-    let if_block0 = ctx[84].tiles < ctx[5] && create_if_block_293(ctx);
-    let if_block1 = ctx[59] && create_if_block_273(ctx);
+    let if_block0 = ctx[84].tiles < ctx[5] && create_if_block_363(ctx);
+    let if_block1 = ctx[59] && create_if_block_343(ctx);
     return {
       c() {
         div = element("div");
@@ -43584,7 +44130,7 @@
           if_block1.m(target, anchor);
         insert(target, if_block1_anchor, anchor);
         if (!mounted) {
-          dispose = listen(button, "click", ctx[189]);
+          dispose = listen(button, "click", ctx[191]);
           mounted = true;
         }
       },
@@ -43604,7 +44150,7 @@
           if (if_block0) {
             if_block0.p(ctx2, dirty);
           } else {
-            if_block0 = create_if_block_293(ctx2);
+            if_block0 = create_if_block_363(ctx2);
             if_block0.c();
             if_block0.m(div, null);
           }
@@ -43616,7 +44162,7 @@
           if (if_block1) {
             if_block1.p(ctx2, dirty);
           } else {
-            if_block1 = create_if_block_273(ctx2);
+            if_block1 = create_if_block_343(ctx2);
             if_block1.c();
             if_block1.m(if_block1_anchor.parentNode, if_block1_anchor);
           }
@@ -43641,7 +44187,7 @@
       }
     };
   }
-  function create_if_block_293(ctx) {
+  function create_if_block_363(ctx) {
     let span;
     let t0;
     let t1_value = ctx[84].tiles + "";
@@ -43676,7 +44222,7 @@
       }
     };
   }
-  function create_if_block_273(ctx) {
+  function create_if_block_343(ctx) {
     let div;
     let ol;
     let t0;
@@ -43692,12 +44238,12 @@
     let code;
     let t8;
     let t9;
-    let each_value_13 = sightSteps(ctx[84]);
+    let each_value_14 = sightSteps(ctx[84]);
     let each_blocks = [];
-    for (let i = 0; i < each_value_13.length; i += 1) {
-      each_blocks[i] = create_each_block_133(get_each_context_133(ctx, each_value_13, i));
+    for (let i = 0; i < each_value_14.length; i += 1) {
+      each_blocks[i] = create_each_block_143(get_each_context_143(ctx, each_value_14, i));
     }
-    let if_block = ctx[84].fields.length && create_if_block_283(ctx);
+    let if_block = ctx[84].fields.length && create_if_block_353(ctx);
     return {
       c() {
         div = element("div");
@@ -43745,14 +44291,14 @@
       },
       p(ctx2, dirty) {
         if (dirty[2] & 4194304) {
-          each_value_13 = sightSteps(ctx2[84]);
+          each_value_14 = sightSteps(ctx2[84]);
           let i;
-          for (i = 0; i < each_value_13.length; i += 1) {
-            const child_ctx = get_each_context_133(ctx2, each_value_13, i);
+          for (i = 0; i < each_value_14.length; i += 1) {
+            const child_ctx = get_each_context_143(ctx2, each_value_14, i);
             if (each_blocks[i]) {
               each_blocks[i].p(child_ctx, dirty);
             } else {
-              each_blocks[i] = create_each_block_133(child_ctx);
+              each_blocks[i] = create_each_block_143(child_ctx);
               each_blocks[i].c();
               each_blocks[i].m(ol, null);
             }
@@ -43760,7 +44306,7 @@
           for (; i < each_blocks.length; i += 1) {
             each_blocks[i].d(1);
           }
-          each_blocks.length = each_value_13.length;
+          each_blocks.length = each_value_14.length;
         }
         if (dirty[2] & 4194304 && t2_value !== (t2_value = ctx2[84].tiles + ""))
           set_data(t2, t2_value);
@@ -43770,7 +44316,7 @@
           if (if_block) {
             if_block.p(ctx2, dirty);
           } else {
-            if_block = create_if_block_283(ctx2);
+            if_block = create_if_block_353(ctx2);
             if_block.c();
             if_block.m(div, null);
           }
@@ -43788,14 +44334,14 @@
       }
     };
   }
-  function create_each_block_133(ctx) {
+  function create_each_block_143(ctx) {
     let li;
-    let t0_value = ctx[254].text + "";
+    let t0_value = ctx[260].text + "";
     let t0;
     let t1;
     let b;
     let t2;
-    let t3_value = ctx[254].value + "";
+    let t3_value = ctx[260].value + "";
     let t3;
     return {
       c() {
@@ -43815,9 +44361,9 @@
         append(b, t3);
       },
       p(ctx2, dirty) {
-        if (dirty[2] & 4194304 && t0_value !== (t0_value = ctx2[254].text + ""))
+        if (dirty[2] & 4194304 && t0_value !== (t0_value = ctx2[260].text + ""))
           set_data(t0, t0_value);
-        if (dirty[2] & 4194304 && t3_value !== (t3_value = ctx2[254].value + ""))
+        if (dirty[2] & 4194304 && t3_value !== (t3_value = ctx2[260].value + ""))
           set_data(t3, t3_value);
       },
       d(detaching) {
@@ -43826,13 +44372,13 @@
       }
     };
   }
-  function create_if_block_283(ctx) {
+  function create_if_block_353(ctx) {
     let table;
     let tbody;
-    let each_value_12 = ctx[84].fields;
+    let each_value_13 = ctx[84].fields;
     let each_blocks = [];
-    for (let i = 0; i < each_value_12.length; i += 1) {
-      each_blocks[i] = create_each_block_123(get_each_context_123(ctx, each_value_12, i));
+    for (let i = 0; i < each_value_13.length; i += 1) {
+      each_blocks[i] = create_each_block_133(get_each_context_133(ctx, each_value_13, i));
     }
     return {
       c() {
@@ -43852,14 +44398,14 @@
       },
       p(ctx2, dirty) {
         if (dirty[2] & 4194304) {
-          each_value_12 = ctx2[84].fields;
+          each_value_13 = ctx2[84].fields;
           let i;
-          for (i = 0; i < each_value_12.length; i += 1) {
-            const child_ctx = get_each_context_123(ctx2, each_value_12, i);
+          for (i = 0; i < each_value_13.length; i += 1) {
+            const child_ctx = get_each_context_133(ctx2, each_value_13, i);
             if (each_blocks[i]) {
               each_blocks[i].p(child_ctx, dirty);
             } else {
-              each_blocks[i] = create_each_block_123(child_ctx);
+              each_blocks[i] = create_each_block_133(child_ctx);
               each_blocks[i].c();
               each_blocks[i].m(tbody, null);
             }
@@ -43867,7 +44413,7 @@
           for (; i < each_blocks.length; i += 1) {
             each_blocks[i].d(1);
           }
-          each_blocks.length = each_value_12.length;
+          each_blocks.length = each_value_13.length;
         }
       },
       d(detaching) {
@@ -43877,22 +44423,22 @@
       }
     };
   }
-  function create_each_block_123(ctx) {
+  function create_each_block_133(ctx) {
     let tr2;
     let td0;
-    let t0_value = ctx[251].side + "";
+    let t0_value = ctx[257].side + "";
     let t0;
     let t1;
     let td1;
-    let t2_value = ctx[251].label + "";
+    let t2_value = ctx[257].label + "";
     let t2;
     let t3;
     let td2;
-    let t4_value = ctx[251].value + "";
+    let t4_value = ctx[257].value + "";
     let t4;
     let t5;
     let td3;
-    let t6_value = ctx[251].used ? "used" : "not modelled";
+    let t6_value = ctx[257].used ? "used" : "not modelled";
     let t6;
     let t7;
     let tr_title_value;
@@ -43912,8 +44458,8 @@
         t6 = text(t6_value);
         t7 = space();
         attr(td2, "class", "num");
-        attr(tr2, "title", tr_title_value = ctx[251].note);
-        toggle_class(tr2, "dmg-sightunused", !ctx[251].used);
+        attr(tr2, "title", tr_title_value = ctx[257].note);
+        toggle_class(tr2, "dmg-sightunused", !ctx[257].used);
       },
       m(target, anchor) {
         insert(target, tr2, anchor);
@@ -43931,19 +44477,19 @@
         append(tr2, t7);
       },
       p(ctx2, dirty) {
-        if (dirty[2] & 4194304 && t0_value !== (t0_value = ctx2[251].side + ""))
+        if (dirty[2] & 4194304 && t0_value !== (t0_value = ctx2[257].side + ""))
           set_data(t0, t0_value);
-        if (dirty[2] & 4194304 && t2_value !== (t2_value = ctx2[251].label + ""))
+        if (dirty[2] & 4194304 && t2_value !== (t2_value = ctx2[257].label + ""))
           set_data(t2, t2_value);
-        if (dirty[2] & 4194304 && t4_value !== (t4_value = ctx2[251].value + ""))
+        if (dirty[2] & 4194304 && t4_value !== (t4_value = ctx2[257].value + ""))
           set_data(t4, t4_value);
-        if (dirty[2] & 4194304 && t6_value !== (t6_value = ctx2[251].used ? "used" : "not modelled"))
+        if (dirty[2] & 4194304 && t6_value !== (t6_value = ctx2[257].used ? "used" : "not modelled"))
           set_data(t6, t6_value);
-        if (dirty[2] & 4194304 && tr_title_value !== (tr_title_value = ctx2[251].note)) {
+        if (dirty[2] & 4194304 && tr_title_value !== (tr_title_value = ctx2[257].note)) {
           attr(tr2, "title", tr_title_value);
         }
         if (dirty[2] & 4194304) {
-          toggle_class(tr2, "dmg-sightunused", !ctx2[251].used);
+          toggle_class(tr2, "dmg-sightunused", !ctx2[257].used);
         }
       },
       d(detaching) {
@@ -43952,17 +44498,17 @@
       }
     };
   }
-  function create_if_block_243(ctx) {
+  function create_if_block_314(ctx) {
     let div;
     let span;
     let t1;
     let t2;
-    let each_value_11 = ctx[71];
+    let each_value_12 = ctx[71];
     let each_blocks = [];
-    for (let i = 0; i < each_value_11.length; i += 1) {
-      each_blocks[i] = create_each_block_112(get_each_context_112(ctx, each_value_11, i));
+    for (let i = 0; i < each_value_12.length; i += 1) {
+      each_blocks[i] = create_each_block_123(get_each_context_123(ctx, each_value_12, i));
     }
-    let if_block = ctx[19].length && create_if_block_253(ctx);
+    let if_block = ctx[19].length && create_if_block_323(ctx);
     return {
       c() {
         div = element("div");
@@ -43992,14 +44538,14 @@
       },
       p(ctx2, dirty) {
         if (dirty[0] & 524288 | dirty[2] & 131584 | dirty[3] & 8192) {
-          each_value_11 = ctx2[71];
+          each_value_12 = ctx2[71];
           let i;
-          for (i = 0; i < each_value_11.length; i += 1) {
-            const child_ctx = get_each_context_112(ctx2, each_value_11, i);
+          for (i = 0; i < each_value_12.length; i += 1) {
+            const child_ctx = get_each_context_123(ctx2, each_value_12, i);
             if (each_blocks[i]) {
               each_blocks[i].p(child_ctx, dirty);
             } else {
-              each_blocks[i] = create_each_block_112(child_ctx);
+              each_blocks[i] = create_each_block_123(child_ctx);
               each_blocks[i].c();
               each_blocks[i].m(div, t2);
             }
@@ -44007,13 +44553,13 @@
           for (; i < each_blocks.length; i += 1) {
             each_blocks[i].d(1);
           }
-          each_blocks.length = each_value_11.length;
+          each_blocks.length = each_value_12.length;
         }
         if (ctx2[19].length) {
           if (if_block) {
             if_block.p(ctx2, dirty);
           } else {
-            if_block = create_if_block_253(ctx2);
+            if_block = create_if_block_323(ctx2);
             if_block.c();
             if_block.m(div, null);
           }
@@ -44031,20 +44577,20 @@
       }
     };
   }
-  function create_each_block_112(ctx) {
+  function create_each_block_123(ctx) {
     let button;
     let html_tag;
-    let raw_value = ctx[246].name + "";
+    let raw_value = ctx[252].name + "";
     let t0;
     let b;
-    let t1_value = ctx[246].pct + "";
+    let t1_value = ctx[252].pct + "";
     let t1;
     let t2;
     let button_title_value;
     let mounted;
     let dispose;
     function click_handler_13() {
-      return ctx[190](ctx[246]);
+      return ctx[192](ctx[252]);
     }
     return {
       c() {
@@ -44056,11 +44602,11 @@
         t2 = text("%");
         html_tag.a = t0;
         attr(button, "class", "dmg-resist dmg-resist-pick");
-        attr(button, "title", button_title_value = (ctx[19].includes(ctx[246].i) ? "Showing" : "Show") + " only weapons that deal this damage type" + (ctx[79][ctx[246].i] ? " (" + ctx[79][ctx[246].i] + " of them)" : " - none in the list") + (ctx[19].includes(ctx[246].i) ? ". Click to drop it." : ". Click to add it."));
-        toggle_class(button, "dmg-resist-weak", ctx[246].pct > 100);
-        toggle_class(button, "dmg-resist-strong", ctx[246].pct < 100);
-        toggle_class(button, "dmg-immune", ctx[246].pct == 0);
-        toggle_class(button, "dmg-resist-on", ctx[19].includes(ctx[246].i));
+        attr(button, "title", button_title_value = (ctx[19].includes(ctx[252].i) ? "Showing" : "Show") + " only weapons that deal this damage type" + (ctx[79][ctx[252].i] ? " (" + ctx[79][ctx[252].i] + " of them)" : " - none in the list") + (ctx[19].includes(ctx[252].i) ? ". Click to drop it." : ". Click to add it."));
+        toggle_class(button, "dmg-resist-weak", ctx[252].pct > 100);
+        toggle_class(button, "dmg-resist-strong", ctx[252].pct < 100);
+        toggle_class(button, "dmg-immune", ctx[252].pct == 0);
+        toggle_class(button, "dmg-resist-on", ctx[19].includes(ctx[252].i));
       },
       m(target, anchor) {
         insert(target, button, anchor);
@@ -44076,24 +44622,24 @@
       },
       p(new_ctx, dirty) {
         ctx = new_ctx;
-        if (dirty[2] & 512 && raw_value !== (raw_value = ctx[246].name + ""))
+        if (dirty[2] & 512 && raw_value !== (raw_value = ctx[252].name + ""))
           html_tag.p(raw_value);
-        if (dirty[2] & 512 && t1_value !== (t1_value = ctx[246].pct + ""))
+        if (dirty[2] & 512 && t1_value !== (t1_value = ctx[252].pct + ""))
           set_data(t1, t1_value);
-        if (dirty[0] & 524288 | dirty[2] & 131584 && button_title_value !== (button_title_value = (ctx[19].includes(ctx[246].i) ? "Showing" : "Show") + " only weapons that deal this damage type" + (ctx[79][ctx[246].i] ? " (" + ctx[79][ctx[246].i] + " of them)" : " - none in the list") + (ctx[19].includes(ctx[246].i) ? ". Click to drop it." : ". Click to add it."))) {
+        if (dirty[0] & 524288 | dirty[2] & 131584 && button_title_value !== (button_title_value = (ctx[19].includes(ctx[252].i) ? "Showing" : "Show") + " only weapons that deal this damage type" + (ctx[79][ctx[252].i] ? " (" + ctx[79][ctx[252].i] + " of them)" : " - none in the list") + (ctx[19].includes(ctx[252].i) ? ". Click to drop it." : ". Click to add it."))) {
           attr(button, "title", button_title_value);
         }
         if (dirty[2] & 512) {
-          toggle_class(button, "dmg-resist-weak", ctx[246].pct > 100);
+          toggle_class(button, "dmg-resist-weak", ctx[252].pct > 100);
         }
         if (dirty[2] & 512) {
-          toggle_class(button, "dmg-resist-strong", ctx[246].pct < 100);
+          toggle_class(button, "dmg-resist-strong", ctx[252].pct < 100);
         }
         if (dirty[2] & 512) {
-          toggle_class(button, "dmg-immune", ctx[246].pct == 0);
+          toggle_class(button, "dmg-immune", ctx[252].pct == 0);
         }
         if (dirty[0] & 524288 | dirty[2] & 512) {
-          toggle_class(button, "dmg-resist-on", ctx[19].includes(ctx[246].i));
+          toggle_class(button, "dmg-resist-on", ctx[19].includes(ctx[252].i));
         }
       },
       d(detaching) {
@@ -44104,7 +44650,7 @@
       }
     };
   }
-  function create_if_block_253(ctx) {
+  function create_if_block_323(ctx) {
     let button;
     let mounted;
     let dispose;
@@ -44118,7 +44664,7 @@
       m(target, anchor) {
         insert(target, button, anchor);
         if (!mounted) {
-          dispose = listen(button, "click", ctx[191]);
+          dispose = listen(button, "click", ctx[193]);
           mounted = true;
         }
       },
@@ -44131,7 +44677,7 @@
       }
     };
   }
-  function create_if_block_204(ctx) {
+  function create_if_block_243(ctx) {
     let div;
     let span;
     let t1;
@@ -44149,12 +44695,12 @@
     let dispose;
     function select_block_type_12(ctx2, dirty) {
       if (ctx2[47].unresolved)
-        return create_if_block_233;
-      return create_else_block_42;
+        return create_if_block_293;
+      return create_else_block_62;
     }
     let current_block_type = select_block_type_12(ctx, [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1]);
     let if_block0 = current_block_type(ctx);
-    let if_block1 = ctx[25] && create_if_block_218(ctx);
+    let if_block1 = ctx[25] && create_if_block_253(ctx);
     return {
       c() {
         div = element("div");
@@ -44194,7 +44740,7 @@
           if_block1.m(target, anchor);
         insert(target, if_block1_anchor, anchor);
         if (!mounted) {
-          dispose = listen(button, "click", ctx[192]);
+          dispose = listen(button, "click", ctx[194]);
           mounted = true;
         }
       },
@@ -44218,7 +44764,7 @@
           if (if_block1) {
             if_block1.p(ctx2, dirty);
           } else {
-            if_block1 = create_if_block_218(ctx2);
+            if_block1 = create_if_block_253(ctx2);
             if_block1.c();
             if_block1.m(if_block1_anchor.parentNode, if_block1_anchor);
           }
@@ -44242,34 +44788,53 @@
       }
     };
   }
-  function create_else_block_42(ctx) {
+  function create_else_block_62(ctx) {
     let span;
     let t0_value = ctx[47].count + "";
     let t0;
     let t1;
+    let if_block = ctx[47].variants > 1 && create_if_block_302(ctx);
     return {
       c() {
         span = element("span");
         t0 = text(t0_value);
         t1 = text(" possible enemies");
+        if (if_block)
+          if_block.c();
         attr(span, "class", "dmg-cap");
       },
       m(target, anchor) {
         insert(target, span, anchor);
         append(span, t0);
         append(span, t1);
+        if (if_block)
+          if_block.m(span, null);
       },
       p(ctx2, dirty) {
         if (dirty[1] & 65536 && t0_value !== (t0_value = ctx2[47].count + ""))
           set_data(t0, t0_value);
+        if (ctx2[47].variants > 1) {
+          if (if_block) {
+            if_block.p(ctx2, dirty);
+          } else {
+            if_block = create_if_block_302(ctx2);
+            if_block.c();
+            if_block.m(span, null);
+          }
+        } else if (if_block) {
+          if_block.d(1);
+          if_block = null;
+        }
       },
       d(detaching) {
         if (detaching)
           detach(span);
+        if (if_block)
+          if_block.d();
       }
     };
   }
-  function create_if_block_233(ctx) {
+  function create_if_block_293(ctx) {
     let span;
     return {
       c() {
@@ -44287,15 +44852,35 @@
       }
     };
   }
-  function create_if_block_218(ctx) {
+  function create_if_block_302(ctx) {
+    let t_value = " \xB7 one of " + ctx[47].variants + " map variants with this same garrison";
+    let t;
+    return {
+      c() {
+        t = text(t_value);
+      },
+      m(target, anchor) {
+        insert(target, t, anchor);
+      },
+      p(ctx2, dirty) {
+        if (dirty[1] & 65536 && t_value !== (t_value = " \xB7 one of " + ctx2[47].variants + " map variants with this same garrison"))
+          set_data(t, t_value);
+      },
+      d(detaching) {
+        if (detaching)
+          detach(t);
+      }
+    };
+  }
+  function create_if_block_253(ctx) {
     let table;
     let thead;
     let t7;
     let tbody;
-    let each_value_10 = ctx[78];
+    let each_value_11 = ctx[78];
     let each_blocks = [];
-    for (let i = 0; i < each_value_10.length; i += 1) {
-      each_blocks[i] = create_each_block_102(get_each_context_102(ctx, each_value_10, i));
+    for (let i = 0; i < each_value_11.length; i += 1) {
+      each_blocks[i] = create_each_block_112(get_each_context_112(ctx, each_value_11, i));
     }
     return {
       c() {
@@ -44323,14 +44908,14 @@
       },
       p(ctx2, dirty) {
         if (dirty[2] & 65536) {
-          each_value_10 = ctx2[78];
+          each_value_11 = ctx2[78];
           let i;
-          for (i = 0; i < each_value_10.length; i += 1) {
-            const child_ctx = get_each_context_102(ctx2, each_value_10, i);
+          for (i = 0; i < each_value_11.length; i += 1) {
+            const child_ctx = get_each_context_112(ctx2, each_value_11, i);
             if (each_blocks[i]) {
               each_blocks[i].p(child_ctx, dirty);
             } else {
-              each_blocks[i] = create_each_block_102(child_ctx);
+              each_blocks[i] = create_each_block_112(child_ctx);
               each_blocks[i].c();
               each_blocks[i].m(tbody, null);
             }
@@ -44338,7 +44923,7 @@
           for (; i < each_blocks.length; i += 1) {
             each_blocks[i].d(1);
           }
-          each_blocks.length = each_value_10.length;
+          each_blocks.length = each_value_11.length;
         }
       },
       d(detaching) {
@@ -44348,7 +44933,7 @@
       }
     };
   }
-  function create_else_block_33(ctx) {
+  function create_else_block_52(ctx) {
     let span;
     return {
       c() {
@@ -44366,9 +44951,9 @@
       }
     };
   }
-  function create_if_block_224(ctx) {
+  function create_if_block_283(ctx) {
     let html_tag;
-    let raw_value = ctx[246].units.map(ctx[193]).join(", ") + "";
+    let raw_value = ctx[252].units.map(ctx[195]).join(", ") + "";
     let html_anchor;
     return {
       c() {
@@ -44381,7 +44966,7 @@
         insert(target, html_anchor, anchor);
       },
       p(ctx2, dirty) {
-        if (dirty[2] & 65536 && raw_value !== (raw_value = ctx2[246].units.map(ctx2[193]).join(", ") + ""))
+        if (dirty[2] & 65536 && raw_value !== (raw_value = ctx2[252].units.map(ctx2[195]).join(", ") + ""))
           html_tag.p(raw_value);
       },
       d(detaching) {
@@ -44392,102 +44977,233 @@
       }
     };
   }
-  function create_each_block_102(ctx) {
+  function create_else_block_42(ctx) {
+    let t_value = (ctx[252].low == ctx[252].high ? ctx[252].low : ctx[252].low + "\u2013" + ctx[252].high) + "";
+    let t;
+    return {
+      c() {
+        t = text(t_value);
+      },
+      m(target, anchor) {
+        insert(target, t, anchor);
+      },
+      p(ctx2, dirty) {
+        if (dirty[2] & 65536 && t_value !== (t_value = (ctx2[252].low == ctx2[252].high ? ctx2[252].low : ctx2[252].low + "\u2013" + ctx2[252].high) + ""))
+          set_data(t, t_value);
+      },
+      d(detaching) {
+        if (detaching)
+          detach(t);
+      }
+    };
+  }
+  function create_if_block_273(ctx) {
+    let span;
+    return {
+      c() {
+        span = element("span");
+        span.textContent = "?";
+        attr(span, "class", "dmg-cap");
+        attr(span, "title", "It sits in a block the map generator may or may not roll, so there is no count to give");
+      },
+      m(target, anchor) {
+        insert(target, span, anchor);
+      },
+      p: noop,
+      d(detaching) {
+        if (detaching)
+          detach(span);
+      }
+    };
+  }
+  function create_else_block_33(ctx) {
+    let t0_value = ctx[252].reinforcement ? "reinforcement" : "start";
+    let t0;
+    let t1;
+    return {
+      c() {
+        t0 = text(t0_value);
+        t1 = space();
+      },
+      m(target, anchor) {
+        insert(target, t0, anchor);
+        insert(target, t1, anchor);
+      },
+      p(ctx2, dirty) {
+        if (dirty[2] & 65536 && t0_value !== (t0_value = ctx2[252].reinforcement ? "reinforcement" : "start"))
+          set_data(t0, t0_value);
+      },
+      d(detaching) {
+        if (detaching)
+          detach(t0);
+        if (detaching)
+          detach(t1);
+      }
+    };
+  }
+  function create_if_block_263(ctx) {
+    let span;
+    let t0_value = ctx[252].certain ? "emplacement" : "on the map";
+    let t0;
+    let t1;
+    let t2_value = ctx[252].placedBy.map(ctx[196]).join(", ") + "";
+    let t2;
+    let span_title_value;
+    let t3;
+    return {
+      c() {
+        span = element("span");
+        t0 = text(t0_value);
+        t1 = text(" \xB7 ");
+        t2 = text(t2_value);
+        t3 = space();
+        attr(span, "title", span_title_value = ctx[252].certain ? "Placed by the map script every time, not by the deployment's troop table" : "Sits in a map block the generator may or may not roll, so it is not guaranteed");
+      },
+      m(target, anchor) {
+        insert(target, span, anchor);
+        append(span, t0);
+        append(span, t1);
+        append(span, t2);
+        insert(target, t3, anchor);
+      },
+      p(ctx2, dirty) {
+        if (dirty[2] & 65536 && t0_value !== (t0_value = ctx2[252].certain ? "emplacement" : "on the map"))
+          set_data(t0, t0_value);
+        if (dirty[2] & 65536 && t2_value !== (t2_value = ctx2[252].placedBy.map(ctx2[196]).join(", ") + ""))
+          set_data(t2, t2_value);
+        if (dirty[2] & 65536 && span_title_value !== (span_title_value = ctx2[252].certain ? "Placed by the map script every time, not by the deployment's troop table" : "Sits in a map block the generator may or may not roll, so it is not guaranteed")) {
+          attr(span, "title", span_title_value);
+        }
+      },
+      d(detaching) {
+        if (detaching)
+          detach(span);
+        if (detaching)
+          detach(t3);
+      }
+    };
+  }
+  function create_each_block_112(ctx) {
     let tr2;
     let td0;
     let t0;
     let td1;
-    let t1_value = (ctx[246].low == ctx[246].high ? ctx[246].low : ctx[246].low + "\u2013" + ctx[246].high) + "";
     let t1;
-    let t2;
     let td2;
-    let t3_value = ctx[246].outside + "";
+    let t2_value = ctx[252].placedBy ? "\u2014" : ctx[252].outside + "%";
+    let t2;
     let t3;
+    let td3;
+    let t4_value = ctx[252].stage ? " \xB7 " + ctx[252].stage : "";
     let t4;
     let t5;
-    let td3;
-    let t6_value = ctx[246].reinforcement ? "reinforcement" : "start";
-    let t6;
-    let t7_value = ctx[246].stage ? " \xB7 " + ctx[246].stage : "";
-    let t7;
-    let t8;
     function select_block_type_13(ctx2, dirty) {
-      if (ctx2[246].units.length)
-        return create_if_block_224;
-      return create_else_block_33;
+      if (ctx2[252].units.length)
+        return create_if_block_283;
+      return create_else_block_52;
     }
     let current_block_type = select_block_type_13(ctx, [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1]);
-    let if_block = current_block_type(ctx);
+    let if_block0 = current_block_type(ctx);
+    function select_block_type_14(ctx2, dirty) {
+      if (ctx2[252].placedBy && !ctx2[252].certain)
+        return create_if_block_273;
+      return create_else_block_42;
+    }
+    let current_block_type_1 = select_block_type_14(ctx, [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1]);
+    let if_block1 = current_block_type_1(ctx);
+    function select_block_type_15(ctx2, dirty) {
+      if (ctx2[252].placedBy)
+        return create_if_block_263;
+      return create_else_block_33;
+    }
+    let current_block_type_2 = select_block_type_15(ctx, [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1]);
+    let if_block2 = current_block_type_2(ctx);
     return {
       c() {
         tr2 = element("tr");
         td0 = element("td");
-        if_block.c();
+        if_block0.c();
         t0 = space();
         td1 = element("td");
-        t1 = text(t1_value);
-        t2 = space();
+        if_block1.c();
+        t1 = space();
         td2 = element("td");
-        t3 = text(t3_value);
-        t4 = text("%");
-        t5 = space();
+        t2 = text(t2_value);
+        t3 = space();
         td3 = element("td");
-        t6 = text(t6_value);
-        t7 = text(t7_value);
-        t8 = space();
+        if_block2.c();
+        t4 = text(t4_value);
+        t5 = space();
         attr(td1, "class", "num");
         attr(td2, "class", "num");
-        toggle_class(td2, "dmg-outofrange", ctx[246].outside >= 50);
+        toggle_class(td2, "dmg-outofrange", !ctx[252].placedBy && ctx[252].outside >= 50);
         attr(td3, "class", "dmg-cap");
       },
       m(target, anchor) {
         insert(target, tr2, anchor);
         append(tr2, td0);
-        if_block.m(td0, null);
+        if_block0.m(td0, null);
         append(tr2, t0);
         append(tr2, td1);
-        append(td1, t1);
-        append(tr2, t2);
+        if_block1.m(td1, null);
+        append(tr2, t1);
         append(tr2, td2);
-        append(td2, t3);
-        append(td2, t4);
-        append(tr2, t5);
+        append(td2, t2);
+        append(tr2, t3);
         append(tr2, td3);
-        append(td3, t6);
-        append(td3, t7);
-        append(tr2, t8);
+        if_block2.m(td3, null);
+        append(td3, t4);
+        append(tr2, t5);
       },
       p(ctx2, dirty) {
-        if (current_block_type === (current_block_type = select_block_type_13(ctx2, dirty)) && if_block) {
-          if_block.p(ctx2, dirty);
+        if (current_block_type === (current_block_type = select_block_type_13(ctx2, dirty)) && if_block0) {
+          if_block0.p(ctx2, dirty);
         } else {
-          if_block.d(1);
-          if_block = current_block_type(ctx2);
-          if (if_block) {
-            if_block.c();
-            if_block.m(td0, null);
+          if_block0.d(1);
+          if_block0 = current_block_type(ctx2);
+          if (if_block0) {
+            if_block0.c();
+            if_block0.m(td0, null);
           }
         }
-        if (dirty[2] & 65536 && t1_value !== (t1_value = (ctx2[246].low == ctx2[246].high ? ctx2[246].low : ctx2[246].low + "\u2013" + ctx2[246].high) + ""))
-          set_data(t1, t1_value);
-        if (dirty[2] & 65536 && t3_value !== (t3_value = ctx2[246].outside + ""))
-          set_data(t3, t3_value);
-        if (dirty[2] & 65536) {
-          toggle_class(td2, "dmg-outofrange", ctx2[246].outside >= 50);
+        if (current_block_type_1 === (current_block_type_1 = select_block_type_14(ctx2, dirty)) && if_block1) {
+          if_block1.p(ctx2, dirty);
+        } else {
+          if_block1.d(1);
+          if_block1 = current_block_type_1(ctx2);
+          if (if_block1) {
+            if_block1.c();
+            if_block1.m(td1, null);
+          }
         }
-        if (dirty[2] & 65536 && t6_value !== (t6_value = ctx2[246].reinforcement ? "reinforcement" : "start"))
-          set_data(t6, t6_value);
-        if (dirty[2] & 65536 && t7_value !== (t7_value = ctx2[246].stage ? " \xB7 " + ctx2[246].stage : ""))
-          set_data(t7, t7_value);
+        if (dirty[2] & 65536 && t2_value !== (t2_value = ctx2[252].placedBy ? "\u2014" : ctx2[252].outside + "%"))
+          set_data(t2, t2_value);
+        if (dirty[2] & 65536) {
+          toggle_class(td2, "dmg-outofrange", !ctx2[252].placedBy && ctx2[252].outside >= 50);
+        }
+        if (current_block_type_2 === (current_block_type_2 = select_block_type_15(ctx2, dirty)) && if_block2) {
+          if_block2.p(ctx2, dirty);
+        } else {
+          if_block2.d(1);
+          if_block2 = current_block_type_2(ctx2);
+          if (if_block2) {
+            if_block2.c();
+            if_block2.m(td3, t4);
+          }
+        }
+        if (dirty[2] & 65536 && t4_value !== (t4_value = ctx2[252].stage ? " \xB7 " + ctx2[252].stage : ""))
+          set_data(t4, t4_value);
       },
       d(detaching) {
         if (detaching)
           detach(tr2);
-        if_block.d();
+        if_block0.d();
+        if_block1.d();
+        if_block2.d();
       }
     };
   }
-  function create_if_block_194(ctx) {
+  function create_if_block_233(ctx) {
     let p;
     let t0;
     let t1_value = ctx[41].shield.capacity + "";
@@ -44526,19 +45242,19 @@
       }
     };
   }
-  function create_if_block_185(ctx) {
+  function create_if_block_224(ctx) {
     let button;
-    let t0_value = ctx[228].label + "";
+    let t0_value = ctx[234].label + "";
     let t0;
     let t1;
     let span;
-    let t2_value = (ctx[82][ctx[228].id] || 0) + "";
+    let t2_value = (ctx[82][ctx[234].id] || 0) + "";
     let t2;
     let t3;
     let mounted;
     let dispose;
     function click_handler_17() {
-      return ctx[196](ctx[228]);
+      return ctx[199](ctx[234]);
     }
     return {
       c() {
@@ -44550,7 +45266,7 @@
         t3 = space();
         attr(span, "class", "dmg-chip-n");
         attr(button, "class", "dmg-chip");
-        toggle_class(button, "dmg-chip-on", ctx[17] == ctx[228].id);
+        toggle_class(button, "dmg-chip-on", ctx[17] == ctx[234].id);
       },
       m(target, anchor) {
         insert(target, button, anchor);
@@ -44566,10 +45282,10 @@
       },
       p(new_ctx, dirty) {
         ctx = new_ctx;
-        if (dirty[2] & 1048576 && t2_value !== (t2_value = (ctx[82][ctx[228].id] || 0) + ""))
+        if (dirty[2] & 1048576 && t2_value !== (t2_value = (ctx[82][ctx[234].id] || 0) + ""))
           set_data(t2, t2_value);
         if (dirty[0] & 131072 | dirty[3] & 1024) {
-          toggle_class(button, "dmg-chip-on", ctx[17] == ctx[228].id);
+          toggle_class(button, "dmg-chip-on", ctx[17] == ctx[234].id);
         }
       },
       d(detaching) {
@@ -44580,9 +45296,9 @@
       }
     };
   }
-  function create_each_block_92(ctx) {
+  function create_each_block_102(ctx) {
     let if_block_anchor;
-    let if_block = (ctx[228].id == "all" || ctx[82][ctx[228].id] || ctx[17] == ctx[228].id) && create_if_block_185(ctx);
+    let if_block = (ctx[234].id == "all" || ctx[82][ctx[234].id] || ctx[17] == ctx[234].id) && create_if_block_224(ctx);
     return {
       c() {
         if (if_block)
@@ -44595,11 +45311,11 @@
         insert(target, if_block_anchor, anchor);
       },
       p(ctx2, dirty) {
-        if (ctx2[228].id == "all" || ctx2[82][ctx2[228].id] || ctx2[17] == ctx2[228].id) {
+        if (ctx2[234].id == "all" || ctx2[82][ctx2[234].id] || ctx2[17] == ctx2[234].id) {
           if (if_block) {
             if_block.p(ctx2, dirty);
           } else {
-            if_block = create_if_block_185(ctx2);
+            if_block = create_if_block_224(ctx2);
             if_block.c();
             if_block.m(if_block_anchor.parentNode, if_block_anchor);
           }
@@ -44616,20 +45332,20 @@
       }
     };
   }
-  function create_if_block_175(ctx) {
+  function create_if_block_218(ctx) {
     let button;
-    let t0_value = ctx[241].label + "";
+    let t0_value = ctx[247].label + "";
     let t0;
     let t1;
     let span;
-    let t2_value = (ctx[81][ctx[241].id] || 0) + "";
+    let t2_value = (ctx[81][ctx[247].id] || 0) + "";
     let t2;
     let t3;
     let button_title_value;
     let mounted;
     let dispose;
     function click_handler_18() {
-      return ctx[197](ctx[241]);
+      return ctx[200](ctx[247]);
     }
     return {
       c() {
@@ -44641,8 +45357,8 @@
         t3 = space();
         attr(span, "class", "dmg-chip-n");
         attr(button, "class", "dmg-chip");
-        attr(button, "title", button_title_value = ctx[241].title);
-        toggle_class(button, "dmg-chip-on", ctx[18] == ctx[241].id);
+        attr(button, "title", button_title_value = ctx[247].title);
+        toggle_class(button, "dmg-chip-on", ctx[18] == ctx[247].id);
       },
       m(target, anchor) {
         insert(target, button, anchor);
@@ -44658,10 +45374,10 @@
       },
       p(new_ctx, dirty) {
         ctx = new_ctx;
-        if (dirty[2] & 524288 && t2_value !== (t2_value = (ctx[81][ctx[241].id] || 0) + ""))
+        if (dirty[2] & 524288 && t2_value !== (t2_value = (ctx[81][ctx[247].id] || 0) + ""))
           set_data(t2, t2_value);
         if (dirty[0] & 262144 | dirty[3] & 2048) {
-          toggle_class(button, "dmg-chip-on", ctx[18] == ctx[241].id);
+          toggle_class(button, "dmg-chip-on", ctx[18] == ctx[247].id);
         }
       },
       d(detaching) {
@@ -44672,9 +45388,9 @@
       }
     };
   }
-  function create_each_block_82(ctx) {
+  function create_each_block_92(ctx) {
     let if_block_anchor;
-    let if_block = (ctx[241].id == "all" || ctx[81][ctx[241].id] || ctx[18] == ctx[241].id) && create_if_block_175(ctx);
+    let if_block = (ctx[247].id == "all" || ctx[81][ctx[247].id] || ctx[18] == ctx[247].id) && create_if_block_218(ctx);
     return {
       c() {
         if (if_block)
@@ -44687,11 +45403,11 @@
         insert(target, if_block_anchor, anchor);
       },
       p(ctx2, dirty) {
-        if (ctx2[241].id == "all" || ctx2[81][ctx2[241].id] || ctx2[18] == ctx2[241].id) {
+        if (ctx2[247].id == "all" || ctx2[81][ctx2[247].id] || ctx2[18] == ctx2[247].id) {
           if (if_block) {
             if_block.p(ctx2, dirty);
           } else {
-            if_block = create_if_block_175(ctx2);
+            if_block = create_if_block_218(ctx2);
             if_block.c();
             if_block.m(if_block_anchor.parentNode, if_block_anchor);
           }
@@ -44708,7 +45424,7 @@
       }
     };
   }
-  function create_each_block_73(ctx) {
+  function create_each_block_82(ctx) {
     let option;
     let t0_value = ctx[20].includes(ctx[225].id) ? "\u2713 " : "";
     let t0;
@@ -44757,7 +45473,7 @@
       }
     };
   }
-  function create_each_block_64(ctx) {
+  function create_each_block_73(ctx) {
     let button;
     let html_tag;
     let raw_value = rul.tr(ctx[225]) + "";
@@ -44767,7 +45483,7 @@
     let mounted;
     let dispose;
     function click_handler_19() {
-      return ctx[200](ctx[225]);
+      return ctx[203](ctx[225]);
     }
     return {
       c() {
@@ -44806,14 +45522,14 @@
       }
     };
   }
-  function create_each_block_54(ctx) {
+  function create_each_block_64(ctx) {
     let option;
-    let t0_value = ctx[19].includes(+ctx[234].id) ? "\u2713 " : "";
+    let t0_value = ctx[19].includes(+ctx[240].id) ? "\u2713 " : "";
     let t0;
     let html_tag;
-    let raw_value = ctx[234].label + "";
+    let raw_value = ctx[240].label + "";
     let t1;
-    let t2_value = ctx[234].n + "";
+    let t2_value = ctx[240].n + "";
     let t2;
     let t3;
     let option_value_value;
@@ -44826,7 +45542,7 @@
         t2 = text(t2_value);
         t3 = text(")\n                ");
         html_tag.a = t1;
-        option.__value = option_value_value = ctx[234].id;
+        option.__value = option_value_value = ctx[240].id;
         option.value = option.__value;
       },
       m(target, anchor) {
@@ -44838,13 +45554,13 @@
         append(option, t3);
       },
       p(ctx2, dirty) {
-        if (dirty[0] & 524288 | dirty[1] & 131072 && t0_value !== (t0_value = ctx2[19].includes(+ctx2[234].id) ? "\u2713 " : ""))
+        if (dirty[0] & 524288 | dirty[1] & 131072 && t0_value !== (t0_value = ctx2[19].includes(+ctx2[240].id) ? "\u2713 " : ""))
           set_data(t0, t0_value);
-        if (dirty[1] & 131072 && raw_value !== (raw_value = ctx2[234].label + ""))
+        if (dirty[1] & 131072 && raw_value !== (raw_value = ctx2[240].label + ""))
           html_tag.p(raw_value);
-        if (dirty[1] & 131072 && t2_value !== (t2_value = ctx2[234].n + ""))
+        if (dirty[1] & 131072 && t2_value !== (t2_value = ctx2[240].n + ""))
           set_data(t2, t2_value);
-        if (dirty[1] & 131072 && option_value_value !== (option_value_value = ctx2[234].id)) {
+        if (dirty[1] & 131072 && option_value_value !== (option_value_value = ctx2[240].id)) {
           option.__value = option_value_value;
           option.value = option.__value;
         }
@@ -44855,16 +45571,16 @@
       }
     };
   }
-  function create_each_block_45(ctx) {
+  function create_each_block_54(ctx) {
     let button;
     let html_tag;
-    let raw_value = rul.tr(damageTypes[ctx[231]] || "type " + ctx[231]) + "";
+    let raw_value = rul.tr(damageTypes[ctx[237]] || "type " + ctx[237]) + "";
     let t0;
     let span;
     let mounted;
     let dispose;
     function click_handler_20() {
-      return ctx[203](ctx[231]);
+      return ctx[206](ctx[237]);
     }
     return {
       c() {
@@ -44890,7 +45606,7 @@
       },
       p(new_ctx, dirty) {
         ctx = new_ctx;
-        if (dirty[0] & 524288 && raw_value !== (raw_value = rul.tr(damageTypes[ctx[231]] || "type " + ctx[231]) + ""))
+        if (dirty[0] & 524288 && raw_value !== (raw_value = rul.tr(damageTypes[ctx[237]] || "type " + ctx[237]) + ""))
           html_tag.p(raw_value);
       },
       d(detaching) {
@@ -44908,10 +45624,10 @@
     let button;
     let mounted;
     let dispose;
-    let each_value_3 = ctx[40];
+    let each_value_4 = ctx[40];
     let each_blocks = [];
-    for (let i = 0; i < each_value_3.length; i += 1) {
-      each_blocks[i] = create_each_block_36(get_each_context_36(ctx, each_value_3, i));
+    for (let i = 0; i < each_value_4.length; i += 1) {
+      each_blocks[i] = create_each_block_45(get_each_context_45(ctx, each_value_4, i));
     }
     return {
       c() {
@@ -44943,14 +45659,14 @@
       },
       p(ctx2, dirty) {
         if (dirty[1] & 512 | dirty[3] & 1073741824 | dirty[4] & 2) {
-          each_value_3 = ctx2[40];
+          each_value_4 = ctx2[40];
           let i;
-          for (i = 0; i < each_value_3.length; i += 1) {
-            const child_ctx = get_each_context_36(ctx2, each_value_3, i);
+          for (i = 0; i < each_value_4.length; i += 1) {
+            const child_ctx = get_each_context_45(ctx2, each_value_4, i);
             if (each_blocks[i]) {
               each_blocks[i].p(child_ctx, dirty);
             } else {
-              each_blocks[i] = create_each_block_36(child_ctx);
+              each_blocks[i] = create_each_block_45(child_ctx);
               each_blocks[i].c();
               each_blocks[i].m(t2.parentNode, t2);
             }
@@ -44958,7 +45674,7 @@
           for (; i < each_blocks.length; i += 1) {
             each_blocks[i].d(1);
           }
-          each_blocks.length = each_value_3.length;
+          each_blocks.length = each_value_4.length;
         }
       },
       d(detaching) {
@@ -44976,7 +45692,7 @@
       }
     };
   }
-  function create_if_block_165(ctx) {
+  function create_if_block_204(ctx) {
     let span;
     return {
       c() {
@@ -44994,22 +45710,22 @@
       }
     };
   }
-  function create_each_block_36(ctx) {
+  function create_each_block_45(ctx) {
     let button;
-    let t0_value = ctx[230] + 1 + "";
+    let t0_value = ctx[236] + 1 + "";
     let t0;
     let t1;
-    let t2_value = ctx[123](ctx[228].id).label + "";
+    let t2_value = ctx[123](ctx[234].id).label + "";
     let t2;
     let t3;
-    let t4_value = ctx[228].desc ? "\u25BC" : "\u25B2";
+    let t4_value = ctx[234].desc ? "\u25BC" : "\u25B2";
     let t4;
     let t5;
     let span;
     let mounted;
     let dispose;
     function click_handler_21() {
-      return ctx[205](ctx[228]);
+      return ctx[208](ctx[234]);
     }
     return {
       c() {
@@ -45042,9 +45758,9 @@
       },
       p(new_ctx, dirty) {
         ctx = new_ctx;
-        if (dirty[1] & 512 && t2_value !== (t2_value = ctx[123](ctx[228].id).label + ""))
+        if (dirty[1] & 512 && t2_value !== (t2_value = ctx[123](ctx[234].id).label + ""))
           set_data(t2, t2_value);
-        if (dirty[1] & 512 && t4_value !== (t4_value = ctx[228].desc ? "\u25BC" : "\u25B2"))
+        if (dirty[1] & 512 && t4_value !== (t4_value = ctx[234].desc ? "\u25BC" : "\u25B2"))
           set_data(t4, t4_value);
       },
       d(detaching) {
@@ -45055,7 +45771,7 @@
       }
     };
   }
-  function create_if_block_155(ctx) {
+  function create_if_block_194(ctx) {
     let button;
     let mounted;
     let dispose;
@@ -45068,7 +45784,7 @@
       m(target, anchor) {
         insert(target, button, anchor);
         if (!mounted) {
-          dispose = listen(button, "click", ctx[206]);
+          dispose = listen(button, "click", ctx[209]);
           mounted = true;
         }
       },
@@ -45081,11 +45797,11 @@
       }
     };
   }
-  function create_if_block_136(ctx) {
+  function create_if_block_175(ctx) {
     let span;
     let t_value = ctx[40][ctx[127](ctx[40], ctx[225].id)].desc ? "\u25BC" : "\u25B2";
     let t;
-    let if_block = ctx[40].length > 1 && create_if_block_145(ctx);
+    let if_block = ctx[40].length > 1 && create_if_block_185(ctx);
     return {
       c() {
         span = element("span");
@@ -45107,7 +45823,7 @@
           if (if_block) {
             if_block.p(ctx2, dirty);
           } else {
-            if_block = create_if_block_145(ctx2);
+            if_block = create_if_block_185(ctx2);
             if_block.c();
             if_block.m(span, null);
           }
@@ -45124,7 +45840,7 @@
       }
     };
   }
-  function create_if_block_145(ctx) {
+  function create_if_block_185(ctx) {
     let sup;
     let t_value = ctx[127](ctx[40], ctx[225].id) + 1 + "";
     let t;
@@ -45147,7 +45863,7 @@
       }
     };
   }
-  function create_each_block_210(ctx) {
+  function create_each_block_36(ctx) {
     let td;
     let t0_value = ctx[225].label + "";
     let t0;
@@ -45156,9 +45872,9 @@
     let td_title_value;
     let mounted;
     let dispose;
-    let if_block = show_if && create_if_block_136(ctx);
+    let if_block = show_if && create_if_block_175(ctx);
     function click_handler_23() {
-      return ctx[207](ctx[225]);
+      return ctx[210](ctx[225]);
     }
     return {
       c() {
@@ -45192,7 +45908,7 @@
           if (if_block) {
             if_block.p(ctx, dirty);
           } else {
-            if_block = create_if_block_136(ctx);
+            if_block = create_if_block_175(ctx);
             if_block.c();
             if_block.m(td, t1);
           }
@@ -45217,15 +45933,17 @@
       }
     };
   }
-  function create_if_block_78(ctx) {
+  function create_if_block_106(ctx) {
     let html_tag;
-    let raw_value = ctx[218].weapon.title + "";
+    let raw_value = ctx[222].weapon.title + "";
     let t0;
-    let show_if = ctx[28] != "off" && ctx[49].get(ctx[218].weapon.id);
+    let show_if = ctx[28] != "off" && ctx[49].get(ctx[222].weapon.id);
     let t1;
-    let if_block1_anchor;
-    let if_block0 = show_if && create_if_block_96(get_if_ctx(ctx));
-    let if_block1 = ctx[218].modeCount > 1 && create_if_block_87(ctx);
+    let t2;
+    let if_block2_anchor;
+    let if_block0 = show_if && create_if_block_136(get_if_ctx(ctx));
+    let if_block1 = ctx[222].weapon.clips.length > 1 && create_if_block_129(ctx);
+    let if_block2 = ctx[222].modeCount > 1 && create_if_block_1111(ctx);
     return {
       c() {
         html_tag = new HtmlTag(false);
@@ -45235,7 +45953,10 @@
         t1 = space();
         if (if_block1)
           if_block1.c();
-        if_block1_anchor = empty();
+        t2 = space();
+        if (if_block2)
+          if_block2.c();
+        if_block2_anchor = empty();
         html_tag.a = t0;
       },
       m(target, anchor) {
@@ -45246,18 +45967,21 @@
         insert(target, t1, anchor);
         if (if_block1)
           if_block1.m(target, anchor);
-        insert(target, if_block1_anchor, anchor);
+        insert(target, t2, anchor);
+        if (if_block2)
+          if_block2.m(target, anchor);
+        insert(target, if_block2_anchor, anchor);
       },
       p(ctx2, dirty) {
-        if (dirty[2] & 1024 && raw_value !== (raw_value = ctx2[218].weapon.title + ""))
+        if (dirty[2] & 1024 && raw_value !== (raw_value = ctx2[222].weapon.title + ""))
           html_tag.p(raw_value);
         if (dirty[0] & 268435456 | dirty[1] & 262144 | dirty[2] & 1024)
-          show_if = ctx2[28] != "off" && ctx2[49].get(ctx2[218].weapon.id);
+          show_if = ctx2[28] != "off" && ctx2[49].get(ctx2[222].weapon.id);
         if (show_if) {
           if (if_block0) {
             if_block0.p(get_if_ctx(ctx2), dirty);
           } else {
-            if_block0 = create_if_block_96(get_if_ctx(ctx2));
+            if_block0 = create_if_block_136(get_if_ctx(ctx2));
             if_block0.c();
             if_block0.m(t1.parentNode, t1);
           }
@@ -45265,17 +45989,29 @@
           if_block0.d(1);
           if_block0 = null;
         }
-        if (ctx2[218].modeCount > 1) {
+        if (ctx2[222].weapon.clips.length > 1) {
           if (if_block1) {
             if_block1.p(ctx2, dirty);
           } else {
-            if_block1 = create_if_block_87(ctx2);
+            if_block1 = create_if_block_129(ctx2);
             if_block1.c();
-            if_block1.m(if_block1_anchor.parentNode, if_block1_anchor);
+            if_block1.m(t2.parentNode, t2);
           }
         } else if (if_block1) {
           if_block1.d(1);
           if_block1 = null;
+        }
+        if (ctx2[222].modeCount > 1) {
+          if (if_block2) {
+            if_block2.p(ctx2, dirty);
+          } else {
+            if_block2 = create_if_block_1111(ctx2);
+            if_block2.c();
+            if_block2.m(if_block2_anchor.parentNode, if_block2_anchor);
+          }
+        } else if (if_block2) {
+          if_block2.d(1);
+          if_block2 = null;
         }
       },
       d(detaching) {
@@ -45290,24 +46026,28 @@
         if (if_block1)
           if_block1.d(detaching);
         if (detaching)
-          detach(if_block1_anchor);
+          detach(t2);
+        if (if_block2)
+          if_block2.d(detaching);
+        if (detaching)
+          detach(if_block2_anchor);
       }
     };
   }
-  function create_if_block_96(ctx) {
+  function create_if_block_136(ctx) {
     let span;
     let if_block0_anchor;
     let span_title_value;
-    function select_block_type_15(ctx2, dirty) {
-      if (ctx2[224].owned)
-        return create_if_block_1111;
-      if (ctx2[224].buyable)
-        return create_if_block_129;
+    function select_block_type_17(ctx2, dirty) {
+      if (ctx2[231].owned)
+        return create_if_block_155;
+      if (ctx2[231].buyable)
+        return create_if_block_165;
       return create_else_block_18;
     }
-    let current_block_type = select_block_type_15(ctx, [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1]);
+    let current_block_type = select_block_type_17(ctx, [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1]);
     let if_block0 = current_block_type(ctx);
-    let if_block1 = !ctx[224].ammoOwned && create_if_block_106(ctx);
+    let if_block1 = !ctx[231].ammoOwned && create_if_block_145(ctx);
     return {
       c() {
         span = element("span");
@@ -45316,8 +46056,8 @@
         if (if_block1)
           if_block1.c();
         attr(span, "class", "dmg-avail");
-        attr(span, "title", span_title_value = availabilityNote(ctx[224]));
-        toggle_class(span, "dmg-avail-dry", !ctx[224].ammoOwned);
+        attr(span, "title", span_title_value = availabilityNote(ctx[231]));
+        toggle_class(span, "dmg-avail-dry", !ctx[231].ammoOwned);
       },
       m(target, anchor) {
         insert(target, span, anchor);
@@ -45327,7 +46067,7 @@
           if_block1.m(span, null);
       },
       p(ctx2, dirty) {
-        if (current_block_type === (current_block_type = select_block_type_15(ctx2, dirty)) && if_block0) {
+        if (current_block_type === (current_block_type = select_block_type_17(ctx2, dirty)) && if_block0) {
           if_block0.p(ctx2, dirty);
         } else {
           if_block0.d(1);
@@ -45337,10 +46077,10 @@
             if_block0.m(span, if_block0_anchor);
           }
         }
-        if (!ctx2[224].ammoOwned) {
+        if (!ctx2[231].ammoOwned) {
           if (if_block1) {
           } else {
-            if_block1 = create_if_block_106(ctx2);
+            if_block1 = create_if_block_145(ctx2);
             if_block1.c();
             if_block1.m(span, null);
           }
@@ -45348,11 +46088,11 @@
           if_block1.d(1);
           if_block1 = null;
         }
-        if (dirty[1] & 262144 | dirty[2] & 1024 && span_title_value !== (span_title_value = availabilityNote(ctx2[224]))) {
+        if (dirty[1] & 262144 | dirty[2] & 1024 && span_title_value !== (span_title_value = availabilityNote(ctx2[231]))) {
           attr(span, "title", span_title_value);
         }
         if (dirty[1] & 262144 | dirty[2] & 1024) {
-          toggle_class(span, "dmg-avail-dry", !ctx2[224].ammoOwned);
+          toggle_class(span, "dmg-avail-dry", !ctx2[231].ammoOwned);
         }
       },
       d(detaching) {
@@ -45380,7 +46120,7 @@
       }
     };
   }
-  function create_if_block_129(ctx) {
+  function create_if_block_165(ctx) {
     let t;
     return {
       c() {
@@ -45396,9 +46136,9 @@
       }
     };
   }
-  function create_if_block_1111(ctx) {
+  function create_if_block_155(ctx) {
     let t0;
-    let t1_value = ctx[224].count + "";
+    let t1_value = ctx[231].count + "";
     let t1;
     return {
       c() {
@@ -45410,7 +46150,7 @@
         insert(target, t1, anchor);
       },
       p(ctx2, dirty) {
-        if (dirty[1] & 262144 | dirty[2] & 1024 && t1_value !== (t1_value = ctx2[224].count + ""))
+        if (dirty[1] & 262144 | dirty[2] & 1024 && t1_value !== (t1_value = ctx2[231].count + ""))
           set_data(t1, t1_value);
       },
       d(detaching) {
@@ -45421,7 +46161,7 @@
       }
     };
   }
-  function create_if_block_106(ctx) {
+  function create_if_block_145(ctx) {
     let t;
     return {
       c() {
@@ -45436,9 +46176,37 @@
       }
     };
   }
-  function create_if_block_87(ctx) {
+  function create_if_block_129(ctx) {
     let span;
-    let t0_value = ctx[218].modeCount + "";
+    let raw_value = chosenClip(ctx[222].weapon).title + "";
+    let span_title_value;
+    return {
+      c() {
+        span = element("span");
+        attr(span, "class", "dmg-clip");
+        attr(span, "title", span_title_value = ctx[134](ctx[222].weapon));
+      },
+      m(target, anchor) {
+        insert(target, span, anchor);
+        span.innerHTML = raw_value;
+      },
+      p(ctx2, dirty) {
+        if (dirty[2] & 1024 && raw_value !== (raw_value = chosenClip(ctx2[222].weapon).title + ""))
+          span.innerHTML = raw_value;
+        ;
+        if (dirty[2] & 1024 && span_title_value !== (span_title_value = ctx2[134](ctx2[222].weapon))) {
+          attr(span, "title", span_title_value);
+        }
+      },
+      d(detaching) {
+        if (detaching)
+          detach(span);
+      }
+    };
+  }
+  function create_if_block_1111(ctx) {
+    let span;
+    let t0_value = ctx[222].modeCount + "";
     let t0;
     let t1;
     return {
@@ -45454,7 +46222,7 @@
         append(span, t1);
       },
       p(ctx2, dirty) {
-        if (dirty[2] & 1024 && t0_value !== (t0_value = ctx2[218].modeCount + ""))
+        if (dirty[2] & 1024 && t0_value !== (t0_value = ctx2[222].modeCount + ""))
           set_data(t0, t0_value);
       },
       d(detaching) {
@@ -45463,11 +46231,11 @@
       }
     };
   }
-  function create_if_block_610(ctx) {
-    let t0_value = (+ctx[218].weapon.item.invWidth || 1) + "";
+  function create_if_block_96(ctx) {
+    let t0_value = (+ctx[222].weapon.item.invWidth || 1) + "";
     let t0;
     let t1;
-    let t2_value = (+ctx[218].weapon.item.invHeight || 1) + "";
+    let t2_value = (+ctx[222].weapon.item.invHeight || 1) + "";
     let t2;
     return {
       c() {
@@ -45481,9 +46249,9 @@
         insert(target, t2, anchor);
       },
       p(ctx2, dirty) {
-        if (dirty[2] & 1024 && t0_value !== (t0_value = (+ctx2[218].weapon.item.invWidth || 1) + ""))
+        if (dirty[2] & 1024 && t0_value !== (t0_value = (+ctx2[222].weapon.item.invWidth || 1) + ""))
           set_data(t0, t0_value);
-        if (dirty[2] & 1024 && t2_value !== (t2_value = (+ctx2[218].weapon.item.invHeight || 1) + ""))
+        if (dirty[2] & 1024 && t2_value !== (t2_value = (+ctx2[222].weapon.item.invHeight || 1) + ""))
           set_data(t2, t2_value);
       },
       d(detaching) {
@@ -45496,13 +46264,13 @@
       }
     };
   }
-  function create_if_block_410(ctx) {
+  function create_if_block_710(ctx) {
     let span;
     let t0;
-    let t1_value = ctx[218].mode.damage.hitsPerAttack + "";
+    let t1_value = ctx[222].mode.damage.hitsPerAttack + "";
     let t1;
     let span_title_value;
-    let if_block = ctx[218].mode.damage.expectedHitsPerAttack < ctx[218].mode.damage.hitsPerAttack - 0.05 && create_if_block_510(ctx);
+    let if_block = ctx[222].mode.damage.expectedHitsPerAttack < ctx[222].mode.damage.hitsPerAttack - 0.05 && create_if_block_87(ctx);
     return {
       c() {
         span = element("span");
@@ -45511,7 +46279,7 @@
         if (if_block)
           if_block.c();
         attr(span, "class", "dmg-hits");
-        attr(span, "title", span_title_value = ctx[218].mode.damage.hitsPerAttack + " projectiles fired, about " + ctx[128](ctx[218].mode.damage.expectedHitsPerAttack, 1) + " assumed to land");
+        attr(span, "title", span_title_value = ctx[222].mode.damage.hitsPerAttack + " projectiles fired, about " + ctx[128](ctx[222].mode.damage.expectedHitsPerAttack, 1) + " assumed to land");
       },
       m(target, anchor) {
         insert(target, span, anchor);
@@ -45521,13 +46289,13 @@
           if_block.m(span, null);
       },
       p(ctx2, dirty) {
-        if (dirty[2] & 1024 && t1_value !== (t1_value = ctx2[218].mode.damage.hitsPerAttack + ""))
+        if (dirty[2] & 1024 && t1_value !== (t1_value = ctx2[222].mode.damage.hitsPerAttack + ""))
           set_data(t1, t1_value);
-        if (ctx2[218].mode.damage.expectedHitsPerAttack < ctx2[218].mode.damage.hitsPerAttack - 0.05) {
+        if (ctx2[222].mode.damage.expectedHitsPerAttack < ctx2[222].mode.damage.hitsPerAttack - 0.05) {
           if (if_block) {
             if_block.p(ctx2, dirty);
           } else {
-            if_block = create_if_block_510(ctx2);
+            if_block = create_if_block_87(ctx2);
             if_block.c();
             if_block.m(span, null);
           }
@@ -45535,7 +46303,7 @@
           if_block.d(1);
           if_block = null;
         }
-        if (dirty[2] & 1024 && span_title_value !== (span_title_value = ctx2[218].mode.damage.hitsPerAttack + " projectiles fired, about " + ctx2[128](ctx2[218].mode.damage.expectedHitsPerAttack, 1) + " assumed to land")) {
+        if (dirty[2] & 1024 && span_title_value !== (span_title_value = ctx2[222].mode.damage.hitsPerAttack + " projectiles fired, about " + ctx2[128](ctx2[222].mode.damage.expectedHitsPerAttack, 1) + " assumed to land")) {
           attr(span, "title", span_title_value);
         }
       },
@@ -45547,10 +46315,10 @@
       }
     };
   }
-  function create_if_block_510(ctx) {
+  function create_if_block_87(ctx) {
     let span;
     let t0;
-    let t1_value = ctx[128](ctx[218].mode.damage.expectedHitsPerAttack, 1) + "";
+    let t1_value = ctx[128](ctx[222].mode.damage.expectedHitsPerAttack, 1) + "";
     let t1;
     return {
       c() {
@@ -45565,7 +46333,7 @@
         append(span, t1);
       },
       p(ctx2, dirty) {
-        if (dirty[2] & 1024 && t1_value !== (t1_value = ctx2[128](ctx2[218].mode.damage.expectedHitsPerAttack, 1) + ""))
+        if (dirty[2] & 1024 && t1_value !== (t1_value = ctx2[128](ctx2[222].mode.damage.expectedHitsPerAttack, 1) + ""))
           set_data(t1, t1_value);
       },
       d(detaching) {
@@ -45574,7 +46342,7 @@
       }
     };
   }
-  function create_if_block_315(ctx) {
+  function create_if_block_410(ctx) {
     let tr1;
     let td15;
     let table;
@@ -45604,20 +46372,22 @@
     let t20;
     let tbody;
     let t21;
+    let t22;
     let p;
     let html_tag;
-    let raw_value = (ctx[218].weapon.best.damage.damageTypeName ? rul.tr(ctx[218].weapon.best.damage.damageTypeName) : "") + "";
-    let t22;
-    let t23_value = ctx[128](ctx[218].weapon.best.damage.effectiveArmor, 0) + "";
+    let raw_value = (ctx[222].weapon.best.damage.damageTypeName ? rul.tr(ctx[222].weapon.best.damage.damageTypeName) : "") + "";
     let t23;
+    let t24_value = ctx[128](ctx[222].weapon.best.damage.effectiveArmor, 0) + "";
     let t24;
-    let td15_colspan_value;
     let t25;
-    let each_value_1 = ctx[218].weapon.modes;
+    let td15_colspan_value;
+    let t26;
+    let each_value_2 = ctx[222].weapon.modes;
     let each_blocks = [];
-    for (let i = 0; i < each_value_1.length; i += 1) {
-      each_blocks[i] = create_each_block_111(get_each_context_111(ctx, each_value_1, i));
+    for (let i = 0; i < each_value_2.length; i += 1) {
+      each_blocks[i] = create_each_block_210(get_each_context_26(ctx, each_value_2, i));
     }
+    let if_block = ctx[222].weapon.clips.length > 1 && create_if_block_510(ctx);
     return {
       c() {
         tr1 = element("tr");
@@ -45666,19 +46436,22 @@
           each_blocks[i].c();
         }
         t21 = space();
+        if (if_block)
+          if_block.c();
+        t22 = space();
         p = element("p");
         html_tag = new HtmlTag(false);
-        t22 = text("\n                        \xB7 armour ");
-        t23 = text(t23_value);
-        t24 = text(" effective\n                        after ArmorEffectiveness \xB7 resistance applied before armour");
-        t25 = space();
+        t23 = text("\n                        \xB7 armour ");
+        t24 = text(t24_value);
+        t25 = text(" effective\n                        after ArmorEffectiveness \xB7 resistance applied before armour");
+        t26 = space();
         attr(td0, "title", "0-100; 50 is one full turn of this soldier's TU");
         attr(td5, "title", "Shots that HIT and still did nothing - the roll came in at or below the armour, so no damage got through. Misses are not counted here; that is the Acc column. Worth watching because a healthy average can hide a weapon most of whose shots bounce off.");
         attr(td7, "title", "Projectiles assumed to land on the target");
         attr(td9, "title", ctx[116]);
         attr(td12, "title", "Armour stripped per attack: ToArmorPre off the roll plus ToArmor off what got through");
         attr(table, "class", "dmg-modes");
-        html_tag.a = t22;
+        html_tag.a = t23;
         attr(p, "class", "dmg-hint");
         attr(td15, "colspan", td15_colspan_value = ctx[74].length);
         attr(tr1, "class", "dmg-detail");
@@ -45716,23 +46489,26 @@
           each_blocks[i].m(tbody, null);
         }
         append(td15, t21);
+        if (if_block)
+          if_block.m(td15, null);
+        append(td15, t22);
         append(td15, p);
         html_tag.m(raw_value, p);
-        append(p, t22);
         append(p, t23);
         append(p, t24);
-        append(tr1, t25);
+        append(p, t25);
+        append(tr1, t26);
       },
       p(ctx2, dirty) {
-        if (dirty[2] & 1024 | dirty[4] & 1904) {
-          each_value_1 = ctx2[218].weapon.modes;
+        if (dirty[2] & 1024 | dirty[4] & 2928) {
+          each_value_2 = ctx2[222].weapon.modes;
           let i;
-          for (i = 0; i < each_value_1.length; i += 1) {
-            const child_ctx = get_each_context_111(ctx2, each_value_1, i);
+          for (i = 0; i < each_value_2.length; i += 1) {
+            const child_ctx = get_each_context_26(ctx2, each_value_2, i);
             if (each_blocks[i]) {
               each_blocks[i].p(child_ctx, dirty);
             } else {
-              each_blocks[i] = create_each_block_111(child_ctx);
+              each_blocks[i] = create_each_block_210(child_ctx);
               each_blocks[i].c();
               each_blocks[i].m(tbody, null);
             }
@@ -45740,12 +46516,24 @@
           for (; i < each_blocks.length; i += 1) {
             each_blocks[i].d(1);
           }
-          each_blocks.length = each_value_1.length;
+          each_blocks.length = each_value_2.length;
         }
-        if (dirty[2] & 1024 && raw_value !== (raw_value = (ctx2[218].weapon.best.damage.damageTypeName ? rul.tr(ctx2[218].weapon.best.damage.damageTypeName) : "") + ""))
+        if (ctx2[222].weapon.clips.length > 1) {
+          if (if_block) {
+            if_block.p(ctx2, dirty);
+          } else {
+            if_block = create_if_block_510(ctx2);
+            if_block.c();
+            if_block.m(td15, t22);
+          }
+        } else if (if_block) {
+          if_block.d(1);
+          if_block = null;
+        }
+        if (dirty[2] & 1024 && raw_value !== (raw_value = (ctx2[222].weapon.best.damage.damageTypeName ? rul.tr(ctx2[222].weapon.best.damage.damageTypeName) : "") + ""))
           html_tag.p(raw_value);
-        if (dirty[2] & 1024 && t23_value !== (t23_value = ctx2[128](ctx2[218].weapon.best.damage.effectiveArmor, 0) + ""))
-          set_data(t23, t23_value);
+        if (dirty[2] & 1024 && t24_value !== (t24_value = ctx2[128](ctx2[222].weapon.best.damage.effectiveArmor, 0) + ""))
+          set_data(t24, t24_value);
         if (dirty[2] & 4096 && td15_colspan_value !== (td15_colspan_value = ctx2[74].length)) {
           attr(td15, "colspan", td15_colspan_value);
         }
@@ -45754,79 +46542,81 @@
         if (detaching)
           detach(tr1);
         destroy_each(each_blocks, detaching);
+        if (if_block)
+          if_block.d();
       }
     };
   }
-  function create_each_block_111(ctx) {
+  function create_each_block_210(ctx) {
     let tr2;
     let td0;
-    let t0_value = (ctx[221].score == null ? "?" : ctx[221].score) + "";
+    let t0_value = (ctx[226].score == null ? "?" : ctx[226].score) + "";
     let t0;
     let td0_title_value;
     let t1;
     let td1;
-    let t2_value = ctx[221].label + "";
+    let t2_value = ctx[226].label + "";
     let t2;
     let t3;
     let td2;
-    let t4_value = ctx[128](ctx[221].damage.power, 0) + "";
+    let t4_value = ctx[128](ctx[226].damage.power, 0) + "";
     let t4;
     let t5;
     let td3;
-    let t6_value = ctx[128](ctx[221].damage.rollMin, 0) + "";
+    let t6_value = ctx[128](ctx[226].damage.rollMin, 0) + "";
     let t6;
     let t7;
-    let t8_value = ctx[128](ctx[221].damage.rollMax, 0) + "";
+    let t8_value = ctx[128](ctx[226].damage.rollMax, 0) + "";
     let t8;
     let t9;
     let td4;
-    let t10_value = ctx[128](ctx[221].damage.min, 0) + "";
+    let t10_value = ctx[128](ctx[226].damage.min, 0) + "";
     let t10;
     let t11;
-    let t12_value = ctx[128](ctx[221].damage.max, 0) + "";
+    let t12_value = ctx[128](ctx[226].damage.max, 0) + "";
     let t12;
     let t13;
     let td5;
-    let t14_value = ctx[129](ctx[221].damage.pZero) + "";
+    let t14_value = ctx[129](ctx[226].damage.pZero) + "";
     let t14;
     let t15;
     let td6;
-    let t16_value = ctx[221].damage.hitsPerAttack + "";
+    let t16_value = ctx[226].damage.hitsPerAttack + "";
     let t16;
     let t17;
     let td7;
-    let t18_value = ctx[128](ctx[221].damage.expectedHitsPerAttack, 1) + "";
+    let t18_value = ctx[128](ctx[226].damage.expectedHitsPerAttack, 1) + "";
     let t18;
     let t19;
     let td8;
-    let t20_value = Math.round(ctx[221].accuracy) + "";
+    let t20_value = Math.round(ctx[226].accuracy) + "";
     let t20;
     let t21;
     let t22;
     let td9;
-    let t23_value = Math.round(ctx[221].hitRate * 100) + "";
+    let t23_value = Math.round(ctx[226].hitRate * 100) + "";
     let t23;
     let t24;
     let t25;
     let td10;
-    let t26_value = ctx[128](ctx[221].tuCost, 0) + "";
+    let t26_value = ctx[128](ctx[226].tuCost, 0) + "";
     let t26;
     let t27;
     let td11;
-    let t28_value = ctx[128](ctx[221].perAttack) + "";
+    let t28_value = ctx[128](ctx[226].perAttack) + "";
     let t28;
     let t29;
     let td12;
-    let t30_value = (ctx[221].armorPerAttack > 0.05 ? ctx[128](ctx[221].armorPerAttack) : "\u2013") + "";
+    let t30_value = (ctx[226].armorPerAttack > 0.05 ? ctx[128](ctx[226].armorPerAttack) : "\u2013") + "";
     let t30;
     let td12_title_value;
     let t31;
     let td13;
-    let t32_value = (ctx[221].attacksToKill == null ? "\u2013" : ctx[128](ctx[221].attacksToKill)) + "";
+    let t32_value = (ctx[226].attacksToKill == null ? "\u2013" : ctx[128](ctx[226].attacksToKill)) + "";
     let t32;
     let t33;
     let td14;
-    let t34_value = ctx[132](ctx[221]) + "";
+    let t34_value = ctx[132](ctx[226]) + "";
     let t34;
     let td14_title_value;
     let t35;
@@ -45885,16 +46675,16 @@
         t34 = text(t34_value);
         t35 = space();
         attr(td0, "class", "num dmg-score");
-        attr(td0, "title", td0_title_value = ctx[130]({ mode: ctx[221], first: false }));
-        toggle_class(td0, "dmg-score-good", scoreBand(ctx[221].score) == "good");
-        toggle_class(td0, "dmg-score-fair", scoreBand(ctx[221].score) == "fair");
-        toggle_class(td0, "dmg-score-poor", scoreBand(ctx[221].score) == "poor");
-        toggle_class(td0, "dmg-score-none", scoreBand(ctx[221].score) == "none");
+        attr(td0, "title", td0_title_value = ctx[130]({ mode: ctx[226], first: false }));
+        toggle_class(td0, "dmg-score-good", scoreBand(ctx[226].score) == "good");
+        toggle_class(td0, "dmg-score-fair", scoreBand(ctx[226].score) == "fair");
+        toggle_class(td0, "dmg-score-poor", scoreBand(ctx[226].score) == "poor");
+        toggle_class(td0, "dmg-score-none", scoreBand(ctx[226].score) == "none");
         attr(td2, "class", "num");
         attr(td3, "class", "num");
         attr(td4, "class", "num");
         attr(td5, "class", "num");
-        toggle_class(td5, "dmg-immune", ctx[221].damage.pZero > 0.5);
+        toggle_class(td5, "dmg-immune", ctx[226].damage.pZero > 0.5);
         attr(td6, "class", "num");
         attr(td7, "class", "num");
         attr(td8, "class", "num");
@@ -45902,10 +46692,10 @@
         attr(td10, "class", "num");
         attr(td11, "class", "num");
         attr(td12, "class", "num");
-        attr(td12, "title", td12_title_value = ctx[134](ctx[221]));
+        attr(td12, "title", td12_title_value = ctx[135](ctx[226]));
         attr(td13, "class", "num");
         attr(td14, "class", "num dmg-key");
-        attr(td14, "title", td14_title_value = ctx[133](ctx[221]));
+        attr(td14, "title", td14_title_value = ctx[133](ctx[226]));
       },
       m(target, anchor) {
         insert(target, tr2, anchor);
@@ -45962,62 +46752,62 @@
         append(tr2, t35);
       },
       p(ctx2, dirty) {
-        if (dirty[2] & 1024 && t0_value !== (t0_value = (ctx2[221].score == null ? "?" : ctx2[221].score) + ""))
+        if (dirty[2] & 1024 && t0_value !== (t0_value = (ctx2[226].score == null ? "?" : ctx2[226].score) + ""))
           set_data(t0, t0_value);
-        if (dirty[2] & 1024 && td0_title_value !== (td0_title_value = ctx2[130]({ mode: ctx2[221], first: false }))) {
+        if (dirty[2] & 1024 && td0_title_value !== (td0_title_value = ctx2[130]({ mode: ctx2[226], first: false }))) {
           attr(td0, "title", td0_title_value);
         }
         if (dirty[2] & 1024) {
-          toggle_class(td0, "dmg-score-good", scoreBand(ctx2[221].score) == "good");
+          toggle_class(td0, "dmg-score-good", scoreBand(ctx2[226].score) == "good");
         }
         if (dirty[2] & 1024) {
-          toggle_class(td0, "dmg-score-fair", scoreBand(ctx2[221].score) == "fair");
+          toggle_class(td0, "dmg-score-fair", scoreBand(ctx2[226].score) == "fair");
         }
         if (dirty[2] & 1024) {
-          toggle_class(td0, "dmg-score-poor", scoreBand(ctx2[221].score) == "poor");
+          toggle_class(td0, "dmg-score-poor", scoreBand(ctx2[226].score) == "poor");
         }
         if (dirty[2] & 1024) {
-          toggle_class(td0, "dmg-score-none", scoreBand(ctx2[221].score) == "none");
+          toggle_class(td0, "dmg-score-none", scoreBand(ctx2[226].score) == "none");
         }
-        if (dirty[2] & 1024 && t2_value !== (t2_value = ctx2[221].label + ""))
+        if (dirty[2] & 1024 && t2_value !== (t2_value = ctx2[226].label + ""))
           set_data(t2, t2_value);
-        if (dirty[2] & 1024 && t4_value !== (t4_value = ctx2[128](ctx2[221].damage.power, 0) + ""))
+        if (dirty[2] & 1024 && t4_value !== (t4_value = ctx2[128](ctx2[226].damage.power, 0) + ""))
           set_data(t4, t4_value);
-        if (dirty[2] & 1024 && t6_value !== (t6_value = ctx2[128](ctx2[221].damage.rollMin, 0) + ""))
+        if (dirty[2] & 1024 && t6_value !== (t6_value = ctx2[128](ctx2[226].damage.rollMin, 0) + ""))
           set_data(t6, t6_value);
-        if (dirty[2] & 1024 && t8_value !== (t8_value = ctx2[128](ctx2[221].damage.rollMax, 0) + ""))
+        if (dirty[2] & 1024 && t8_value !== (t8_value = ctx2[128](ctx2[226].damage.rollMax, 0) + ""))
           set_data(t8, t8_value);
-        if (dirty[2] & 1024 && t10_value !== (t10_value = ctx2[128](ctx2[221].damage.min, 0) + ""))
+        if (dirty[2] & 1024 && t10_value !== (t10_value = ctx2[128](ctx2[226].damage.min, 0) + ""))
           set_data(t10, t10_value);
-        if (dirty[2] & 1024 && t12_value !== (t12_value = ctx2[128](ctx2[221].damage.max, 0) + ""))
+        if (dirty[2] & 1024 && t12_value !== (t12_value = ctx2[128](ctx2[226].damage.max, 0) + ""))
           set_data(t12, t12_value);
-        if (dirty[2] & 1024 && t14_value !== (t14_value = ctx2[129](ctx2[221].damage.pZero) + ""))
+        if (dirty[2] & 1024 && t14_value !== (t14_value = ctx2[129](ctx2[226].damage.pZero) + ""))
           set_data(t14, t14_value);
         if (dirty[2] & 1024) {
-          toggle_class(td5, "dmg-immune", ctx2[221].damage.pZero > 0.5);
+          toggle_class(td5, "dmg-immune", ctx2[226].damage.pZero > 0.5);
         }
-        if (dirty[2] & 1024 && t16_value !== (t16_value = ctx2[221].damage.hitsPerAttack + ""))
+        if (dirty[2] & 1024 && t16_value !== (t16_value = ctx2[226].damage.hitsPerAttack + ""))
           set_data(t16, t16_value);
-        if (dirty[2] & 1024 && t18_value !== (t18_value = ctx2[128](ctx2[221].damage.expectedHitsPerAttack, 1) + ""))
+        if (dirty[2] & 1024 && t18_value !== (t18_value = ctx2[128](ctx2[226].damage.expectedHitsPerAttack, 1) + ""))
           set_data(t18, t18_value);
-        if (dirty[2] & 1024 && t20_value !== (t20_value = Math.round(ctx2[221].accuracy) + ""))
+        if (dirty[2] & 1024 && t20_value !== (t20_value = Math.round(ctx2[226].accuracy) + ""))
           set_data(t20, t20_value);
-        if (dirty[2] & 1024 && t23_value !== (t23_value = Math.round(ctx2[221].hitRate * 100) + ""))
+        if (dirty[2] & 1024 && t23_value !== (t23_value = Math.round(ctx2[226].hitRate * 100) + ""))
           set_data(t23, t23_value);
-        if (dirty[2] & 1024 && t26_value !== (t26_value = ctx2[128](ctx2[221].tuCost, 0) + ""))
+        if (dirty[2] & 1024 && t26_value !== (t26_value = ctx2[128](ctx2[226].tuCost, 0) + ""))
           set_data(t26, t26_value);
-        if (dirty[2] & 1024 && t28_value !== (t28_value = ctx2[128](ctx2[221].perAttack) + ""))
+        if (dirty[2] & 1024 && t28_value !== (t28_value = ctx2[128](ctx2[226].perAttack) + ""))
           set_data(t28, t28_value);
-        if (dirty[2] & 1024 && t30_value !== (t30_value = (ctx2[221].armorPerAttack > 0.05 ? ctx2[128](ctx2[221].armorPerAttack) : "\u2013") + ""))
+        if (dirty[2] & 1024 && t30_value !== (t30_value = (ctx2[226].armorPerAttack > 0.05 ? ctx2[128](ctx2[226].armorPerAttack) : "\u2013") + ""))
           set_data(t30, t30_value);
-        if (dirty[2] & 1024 && td12_title_value !== (td12_title_value = ctx2[134](ctx2[221]))) {
+        if (dirty[2] & 1024 && td12_title_value !== (td12_title_value = ctx2[135](ctx2[226]))) {
           attr(td12, "title", td12_title_value);
         }
-        if (dirty[2] & 1024 && t32_value !== (t32_value = (ctx2[221].attacksToKill == null ? "\u2013" : ctx2[128](ctx2[221].attacksToKill)) + ""))
+        if (dirty[2] & 1024 && t32_value !== (t32_value = (ctx2[226].attacksToKill == null ? "\u2013" : ctx2[128](ctx2[226].attacksToKill)) + ""))
           set_data(t32, t32_value);
-        if (dirty[2] & 1024 && t34_value !== (t34_value = ctx2[132](ctx2[221]) + ""))
+        if (dirty[2] & 1024 && t34_value !== (t34_value = ctx2[132](ctx2[226]) + ""))
           set_data(t34, t34_value);
-        if (dirty[2] & 1024 && td14_title_value !== (td14_title_value = ctx2[133](ctx2[221]))) {
+        if (dirty[2] & 1024 && td14_title_value !== (td14_title_value = ctx2[133](ctx2[226]))) {
           attr(td14, "title", td14_title_value);
         }
       },
@@ -46027,79 +46817,575 @@
       }
     };
   }
-  function create_each_block29(key_1, ctx) {
+  function create_if_block_510(ctx) {
+    let table;
+    let thead;
     let tr2;
     let td0;
-    let t0_value = (scoreOf(ctx[218]) == null ? "?" : scoreOf(ctx[218])) + "";
+    let t1;
+    let td1;
+    let td2;
+    let td3;
+    let td4;
+    let td5;
+    let t7;
+    let td6;
+    let t9;
+    let td7;
+    let t11;
+    let td8;
+    let td9;
+    let t14;
+    let td10;
+    let td11;
+    let t16;
+    let td12;
+    let t18;
+    let td13;
+    let t20;
+    let td14;
+    let t22;
+    let td15;
+    let td16;
+    let t25;
+    let td17;
+    let t27;
+    let tbody;
+    let each_value_1 = ctx[222].weapon.clips;
+    let each_blocks = [];
+    for (let i = 0; i < each_value_1.length; i += 1) {
+      each_blocks[i] = create_each_block_111(get_each_context_111(ctx, each_value_1, i));
+    }
+    return {
+      c() {
+        table = element("table");
+        thead = element("thead");
+        tr2 = element("tr");
+        td0 = element("td");
+        td0.textContent = "Score";
+        t1 = space();
+        td1 = element("td");
+        td1.textContent = "Clip";
+        td2 = element("td");
+        td2.textContent = "Type";
+        td3 = element("td");
+        td3.textContent = "Mode";
+        td4 = element("td");
+        td4.textContent = "Power";
+        td5 = element("td");
+        td5.textContent = "Roll";
+        t7 = space();
+        td6 = element("td");
+        td6.textContent = "After armour";
+        t9 = space();
+        td7 = element("td");
+        td7.textContent = "Bounces";
+        t11 = space();
+        td8 = element("td");
+        td8.textContent = "Shots";
+        td9 = element("td");
+        td9.textContent = "Land";
+        t14 = space();
+        td10 = element("td");
+        td10.textContent = "Acc";
+        td11 = element("td");
+        t16 = text("Hit%");
+        td12 = element("td");
+        td12.textContent = "TU";
+        t18 = space();
+        td13 = element("td");
+        td13.textContent = "Per attack";
+        t20 = space();
+        td14 = element("td");
+        td14.textContent = "Armour\u2193";
+        t22 = space();
+        td15 = element("td");
+        td15.textContent = "Attacks";
+        td16 = element("td");
+        td16.textContent = "Turns";
+        t25 = space();
+        td17 = element("td");
+        td17.textContent = "Can field";
+        t27 = space();
+        tbody = element("tbody");
+        for (let i = 0; i < each_blocks.length; i += 1) {
+          each_blocks[i].c();
+        }
+        attr(td0, "title", "0-100; 50 is one full turn of this soldier's TU");
+        attr(td7, "title", "Shots that HIT and still did nothing - the roll came in at or below the armour, so no damage got through.");
+        attr(td9, "title", "Projectiles assumed to land on the target");
+        attr(td11, "title", ctx[116]);
+        attr(td14, "title", "Armour stripped per attack: ToArmorPre off the roll plus ToArmor off what got through");
+        attr(td17, "title", "Whether this campaign can put this clip in the gun, under the Campaign filter");
+        attr(table, "class", "dmg-modes dmg-clips");
+      },
+      m(target, anchor) {
+        insert(target, table, anchor);
+        append(table, thead);
+        append(thead, tr2);
+        append(tr2, td0);
+        append(tr2, t1);
+        append(tr2, td1);
+        append(tr2, td2);
+        append(tr2, td3);
+        append(tr2, td4);
+        append(tr2, td5);
+        append(tr2, t7);
+        append(tr2, td6);
+        append(tr2, t9);
+        append(tr2, td7);
+        append(tr2, t11);
+        append(tr2, td8);
+        append(tr2, td9);
+        append(tr2, t14);
+        append(tr2, td10);
+        append(tr2, td11);
+        append(td11, t16);
+        append(tr2, td12);
+        append(tr2, t18);
+        append(tr2, td13);
+        append(tr2, t20);
+        append(tr2, td14);
+        append(tr2, t22);
+        append(tr2, td15);
+        append(tr2, td16);
+        append(tr2, t25);
+        append(tr2, td17);
+        append(table, t27);
+        append(table, tbody);
+        for (let i = 0; i < each_blocks.length; i += 1) {
+          each_blocks[i].m(tbody, null);
+        }
+      },
+      p(ctx2, dirty) {
+        if (dirty[2] & 1024 | dirty[4] & 2928) {
+          each_value_1 = ctx2[222].weapon.clips;
+          let i;
+          for (i = 0; i < each_value_1.length; i += 1) {
+            const child_ctx = get_each_context_111(ctx2, each_value_1, i);
+            if (each_blocks[i]) {
+              each_blocks[i].p(child_ctx, dirty);
+            } else {
+              each_blocks[i] = create_each_block_111(child_ctx);
+              each_blocks[i].c();
+              each_blocks[i].m(tbody, null);
+            }
+          }
+          for (; i < each_blocks.length; i += 1) {
+            each_blocks[i].d(1);
+          }
+          each_blocks.length = each_value_1.length;
+        }
+      },
+      d(detaching) {
+        if (detaching)
+          detach(table);
+        destroy_each(each_blocks, detaching);
+      }
+    };
+  }
+  function create_if_block_610(ctx) {
+    let span;
+    return {
+      c() {
+        span = element("span");
+        span.textContent = "ranked on this";
+        attr(span, "class", "dmg-modecount");
+      },
+      m(target, anchor) {
+        insert(target, span, anchor);
+      },
+      d(detaching) {
+        if (detaching)
+          detach(span);
+      }
+    };
+  }
+  function create_each_block_111(ctx) {
+    let tr2;
+    let td0;
+    let t0_value = (ctx[226] && ctx[226].score != null ? ctx[226].score : "?") + "";
     let t0;
     let td0_title_value;
     let t1;
     let td1;
+    let html_tag;
+    let raw0_value = ctx[225].title + "";
+    let html_anchor;
     let t2;
     let td2;
+    let raw1_value = (ctx[226] && ctx[226].damage.damageTypeName ? rul.tr(ctx[226].damage.damageTypeName) : "\u2013") + "";
     let t3;
     let td3;
-    let t4_value = ctx[218].mode.label + "";
+    let t4_value = (ctx[226] ? ctx[226].label : "\u2013") + "";
     let t4;
     let t5;
     let td4;
-    let t6_value = ctx[128](ctx[218].mode.damage.min, 0) + "";
+    let t6_value = (ctx[226] ? ctx[128](ctx[226].damage.power, 0) : "\u2013") + "";
     let t6;
     let t7;
-    let t8_value = ctx[128](ctx[218].mode.damage.max, 0) + "";
+    let td5;
+    let t8_value = ctx[226] ? ctx[128](ctx[226].damage.rollMin, 0) + "\u2013" + ctx[128](ctx[226].damage.rollMax, 0) : "\u2013";
     let t8;
-    let span;
     let t9;
-    let t10_value = Math.round(ctx[218].mode.damage.resist * 100) + "";
+    let td6;
+    let t10_value = ctx[226] ? ctx[128](ctx[226].damage.min, 0) + "\u2013" + ctx[128](ctx[226].damage.max, 0) : "\u2013";
     let t10;
     let t11;
+    let td7;
+    let t12_value = (ctx[226] ? ctx[129](ctx[226].damage.pZero) : "\u2013") + "";
     let t12;
-    let td5;
-    let t13_value = (ctx[218].mode.attack.range == null ? "\u2013" : ctx[128](ctx[218].mode.attack.range, 0)) + "";
     let t13;
-    let td5_title_value;
+    let td8;
+    let t14_value = (ctx[226] ? ctx[226].damage.hitsPerAttack : "\u2013") + "";
     let t14;
-    let td6;
-    let t15_value = Math.round(ctx[218].mode.accuracy) + "";
     let t15;
+    let td9;
+    let t16_value = (ctx[226] ? ctx[128](ctx[226].damage.expectedHitsPerAttack, 1) : "\u2013") + "";
     let t16;
     let t17;
-    let td7;
-    let t18_value = Math.round(ctx[218].mode.hitRate * 100) + "";
+    let td10;
+    let t18_value = ctx[226] ? Math.round(ctx[226].accuracy) + "%" : "\u2013";
     let t18;
     let t19;
+    let td11;
+    let t20_value = ctx[226] ? Math.round(ctx[226].hitRate * 100) + "%" : "\u2013";
     let t20;
+    let t21;
+    let td12;
+    let t22_value = (ctx[226] ? ctx[128](ctx[226].tuCost, 0) : "\u2013") + "";
+    let t22;
+    let t23;
+    let td13;
+    let t24_value = (ctx[226] ? ctx[128](ctx[226].perAttack) : "\u2013") + "";
+    let t24;
+    let t25;
+    let td14;
+    let t26_value = (ctx[226] && ctx[226].armorPerAttack > 0.05 ? ctx[128](ctx[226].armorPerAttack) : "\u2013") + "";
+    let t26;
+    let td14_title_value;
+    let t27;
+    let td15;
+    let t28_value = (ctx[226] && ctx[226].attacksToKill != null ? ctx[128](ctx[226].attacksToKill) : "\u2013") + "";
+    let t28;
+    let t29;
+    let td16;
+    let t30_value = (ctx[226] ? ctx[132](ctx[226]) : "\u2013") + "";
+    let t30;
+    let td16_title_value;
+    let t31;
+    let td17;
+    let t32_value = ctx[225].fieldable ? "yes" : "no";
+    let t32;
+    let t33;
+    let if_block = ctx[225].chosen && create_if_block_610(ctx);
+    return {
+      c() {
+        tr2 = element("tr");
+        td0 = element("td");
+        t0 = text(t0_value);
+        t1 = space();
+        td1 = element("td");
+        html_tag = new HtmlTag(false);
+        html_anchor = empty();
+        if (if_block)
+          if_block.c();
+        t2 = space();
+        td2 = element("td");
+        t3 = space();
+        td3 = element("td");
+        t4 = text(t4_value);
+        t5 = space();
+        td4 = element("td");
+        t6 = text(t6_value);
+        t7 = space();
+        td5 = element("td");
+        t8 = text(t8_value);
+        t9 = space();
+        td6 = element("td");
+        t10 = text(t10_value);
+        t11 = space();
+        td7 = element("td");
+        t12 = text(t12_value);
+        t13 = space();
+        td8 = element("td");
+        t14 = text(t14_value);
+        t15 = space();
+        td9 = element("td");
+        t16 = text(t16_value);
+        t17 = space();
+        td10 = element("td");
+        t18 = text(t18_value);
+        t19 = space();
+        td11 = element("td");
+        t20 = text(t20_value);
+        t21 = space();
+        td12 = element("td");
+        t22 = text(t22_value);
+        t23 = space();
+        td13 = element("td");
+        t24 = text(t24_value);
+        t25 = space();
+        td14 = element("td");
+        t26 = text(t26_value);
+        t27 = space();
+        td15 = element("td");
+        t28 = text(t28_value);
+        t29 = space();
+        td16 = element("td");
+        t30 = text(t30_value);
+        t31 = space();
+        td17 = element("td");
+        t32 = text(t32_value);
+        t33 = space();
+        attr(td0, "class", "num dmg-score");
+        attr(td0, "title", td0_title_value = ctx[226] ? ctx[130]({ mode: ctx[226], first: false }) : "");
+        toggle_class(td0, "dmg-score-good", scoreBand(ctx[226] && ctx[226].score) == "good");
+        toggle_class(td0, "dmg-score-fair", scoreBand(ctx[226] && ctx[226].score) == "fair");
+        toggle_class(td0, "dmg-score-poor", scoreBand(ctx[226] && ctx[226].score) == "poor");
+        toggle_class(td0, "dmg-score-none", scoreBand(ctx[226] && ctx[226].score) == "none");
+        html_tag.a = html_anchor;
+        attr(td4, "class", "num");
+        attr(td5, "class", "num");
+        attr(td6, "class", "num");
+        attr(td7, "class", "num");
+        toggle_class(td7, "dmg-immune", ctx[226] && ctx[226].damage.pZero > 0.5);
+        attr(td8, "class", "num");
+        attr(td9, "class", "num");
+        attr(td10, "class", "num");
+        attr(td11, "class", "num");
+        attr(td12, "class", "num");
+        attr(td13, "class", "num");
+        attr(td14, "class", "num");
+        attr(td14, "title", td14_title_value = ctx[226] ? ctx[135](ctx[226]) : "");
+        attr(td15, "class", "num");
+        attr(td16, "class", "num dmg-key");
+        attr(td16, "title", td16_title_value = ctx[226] ? ctx[133](ctx[226]) : "");
+        attr(td17, "class", "num");
+        toggle_class(tr2, "dmg-clip-off", !ctx[225].fieldable);
+        toggle_class(tr2, "dmg-clip-on", ctx[225].chosen);
+      },
+      m(target, anchor) {
+        insert(target, tr2, anchor);
+        append(tr2, td0);
+        append(td0, t0);
+        append(tr2, t1);
+        append(tr2, td1);
+        html_tag.m(raw0_value, td1);
+        append(td1, html_anchor);
+        if (if_block)
+          if_block.m(td1, null);
+        append(tr2, t2);
+        append(tr2, td2);
+        td2.innerHTML = raw1_value;
+        append(tr2, t3);
+        append(tr2, td3);
+        append(td3, t4);
+        append(tr2, t5);
+        append(tr2, td4);
+        append(td4, t6);
+        append(tr2, t7);
+        append(tr2, td5);
+        append(td5, t8);
+        append(tr2, t9);
+        append(tr2, td6);
+        append(td6, t10);
+        append(tr2, t11);
+        append(tr2, td7);
+        append(td7, t12);
+        append(tr2, t13);
+        append(tr2, td8);
+        append(td8, t14);
+        append(tr2, t15);
+        append(tr2, td9);
+        append(td9, t16);
+        append(tr2, t17);
+        append(tr2, td10);
+        append(td10, t18);
+        append(tr2, t19);
+        append(tr2, td11);
+        append(td11, t20);
+        append(tr2, t21);
+        append(tr2, td12);
+        append(td12, t22);
+        append(tr2, t23);
+        append(tr2, td13);
+        append(td13, t24);
+        append(tr2, t25);
+        append(tr2, td14);
+        append(td14, t26);
+        append(tr2, t27);
+        append(tr2, td15);
+        append(td15, t28);
+        append(tr2, t29);
+        append(tr2, td16);
+        append(td16, t30);
+        append(tr2, t31);
+        append(tr2, td17);
+        append(td17, t32);
+        append(tr2, t33);
+      },
+      p(ctx2, dirty) {
+        if (dirty[2] & 1024 && t0_value !== (t0_value = (ctx2[226] && ctx2[226].score != null ? ctx2[226].score : "?") + ""))
+          set_data(t0, t0_value);
+        if (dirty[2] & 1024 && td0_title_value !== (td0_title_value = ctx2[226] ? ctx2[130]({ mode: ctx2[226], first: false }) : "")) {
+          attr(td0, "title", td0_title_value);
+        }
+        if (dirty[2] & 1024) {
+          toggle_class(td0, "dmg-score-good", scoreBand(ctx2[226] && ctx2[226].score) == "good");
+        }
+        if (dirty[2] & 1024) {
+          toggle_class(td0, "dmg-score-fair", scoreBand(ctx2[226] && ctx2[226].score) == "fair");
+        }
+        if (dirty[2] & 1024) {
+          toggle_class(td0, "dmg-score-poor", scoreBand(ctx2[226] && ctx2[226].score) == "poor");
+        }
+        if (dirty[2] & 1024) {
+          toggle_class(td0, "dmg-score-none", scoreBand(ctx2[226] && ctx2[226].score) == "none");
+        }
+        if (dirty[2] & 1024 && raw0_value !== (raw0_value = ctx2[225].title + ""))
+          html_tag.p(raw0_value);
+        if (ctx2[225].chosen) {
+          if (if_block) {
+          } else {
+            if_block = create_if_block_610(ctx2);
+            if_block.c();
+            if_block.m(td1, null);
+          }
+        } else if (if_block) {
+          if_block.d(1);
+          if_block = null;
+        }
+        if (dirty[2] & 1024 && raw1_value !== (raw1_value = (ctx2[226] && ctx2[226].damage.damageTypeName ? rul.tr(ctx2[226].damage.damageTypeName) : "\u2013") + ""))
+          td2.innerHTML = raw1_value;
+        ;
+        if (dirty[2] & 1024 && t4_value !== (t4_value = (ctx2[226] ? ctx2[226].label : "\u2013") + ""))
+          set_data(t4, t4_value);
+        if (dirty[2] & 1024 && t6_value !== (t6_value = (ctx2[226] ? ctx2[128](ctx2[226].damage.power, 0) : "\u2013") + ""))
+          set_data(t6, t6_value);
+        if (dirty[2] & 1024 && t8_value !== (t8_value = ctx2[226] ? ctx2[128](ctx2[226].damage.rollMin, 0) + "\u2013" + ctx2[128](ctx2[226].damage.rollMax, 0) : "\u2013"))
+          set_data(t8, t8_value);
+        if (dirty[2] & 1024 && t10_value !== (t10_value = ctx2[226] ? ctx2[128](ctx2[226].damage.min, 0) + "\u2013" + ctx2[128](ctx2[226].damage.max, 0) : "\u2013"))
+          set_data(t10, t10_value);
+        if (dirty[2] & 1024 && t12_value !== (t12_value = (ctx2[226] ? ctx2[129](ctx2[226].damage.pZero) : "\u2013") + ""))
+          set_data(t12, t12_value);
+        if (dirty[2] & 1024) {
+          toggle_class(td7, "dmg-immune", ctx2[226] && ctx2[226].damage.pZero > 0.5);
+        }
+        if (dirty[2] & 1024 && t14_value !== (t14_value = (ctx2[226] ? ctx2[226].damage.hitsPerAttack : "\u2013") + ""))
+          set_data(t14, t14_value);
+        if (dirty[2] & 1024 && t16_value !== (t16_value = (ctx2[226] ? ctx2[128](ctx2[226].damage.expectedHitsPerAttack, 1) : "\u2013") + ""))
+          set_data(t16, t16_value);
+        if (dirty[2] & 1024 && t18_value !== (t18_value = ctx2[226] ? Math.round(ctx2[226].accuracy) + "%" : "\u2013"))
+          set_data(t18, t18_value);
+        if (dirty[2] & 1024 && t20_value !== (t20_value = ctx2[226] ? Math.round(ctx2[226].hitRate * 100) + "%" : "\u2013"))
+          set_data(t20, t20_value);
+        if (dirty[2] & 1024 && t22_value !== (t22_value = (ctx2[226] ? ctx2[128](ctx2[226].tuCost, 0) : "\u2013") + ""))
+          set_data(t22, t22_value);
+        if (dirty[2] & 1024 && t24_value !== (t24_value = (ctx2[226] ? ctx2[128](ctx2[226].perAttack) : "\u2013") + ""))
+          set_data(t24, t24_value);
+        if (dirty[2] & 1024 && t26_value !== (t26_value = (ctx2[226] && ctx2[226].armorPerAttack > 0.05 ? ctx2[128](ctx2[226].armorPerAttack) : "\u2013") + ""))
+          set_data(t26, t26_value);
+        if (dirty[2] & 1024 && td14_title_value !== (td14_title_value = ctx2[226] ? ctx2[135](ctx2[226]) : "")) {
+          attr(td14, "title", td14_title_value);
+        }
+        if (dirty[2] & 1024 && t28_value !== (t28_value = (ctx2[226] && ctx2[226].attacksToKill != null ? ctx2[128](ctx2[226].attacksToKill) : "\u2013") + ""))
+          set_data(t28, t28_value);
+        if (dirty[2] & 1024 && t30_value !== (t30_value = (ctx2[226] ? ctx2[132](ctx2[226]) : "\u2013") + ""))
+          set_data(t30, t30_value);
+        if (dirty[2] & 1024 && td16_title_value !== (td16_title_value = ctx2[226] ? ctx2[133](ctx2[226]) : "")) {
+          attr(td16, "title", td16_title_value);
+        }
+        if (dirty[2] & 1024 && t32_value !== (t32_value = ctx2[225].fieldable ? "yes" : "no"))
+          set_data(t32, t32_value);
+        if (dirty[2] & 1024) {
+          toggle_class(tr2, "dmg-clip-off", !ctx2[225].fieldable);
+        }
+        if (dirty[2] & 1024) {
+          toggle_class(tr2, "dmg-clip-on", ctx2[225].chosen);
+        }
+      },
+      d(detaching) {
+        if (detaching)
+          detach(tr2);
+        if (if_block)
+          if_block.d();
+      }
+    };
+  }
+  function create_each_block29(key_1, ctx) {
+    let tr2;
+    let td0;
+    let t0_value = (scoreOf(ctx[222]) == null ? "?" : scoreOf(ctx[222])) + "";
+    let t0;
+    let td0_title_value;
+    let t1;
+    let td1;
+    let t2_value = ctx[132](ctx[222].mode) + "";
+    let t2;
+    let td1_title_value;
+    let t3;
+    let td2;
+    let t4;
+    let td3;
+    let t5;
+    let td4;
+    let t6_value = ctx[222].mode.label + "";
+    let t6;
+    let t7;
+    let td5;
+    let t8_value = ctx[128](ctx[222].mode.damage.min, 0) + "";
+    let t8;
+    let t9;
+    let t10_value = ctx[128](ctx[222].mode.damage.max, 0) + "";
+    let t10;
+    let span;
+    let t11;
+    let t12_value = Math.round(ctx[222].mode.damage.resist * 100) + "";
+    let t12;
+    let t13;
+    let t14;
+    let td6;
+    let t15_value = (ctx[222].mode.attack.range == null ? "\u2013" : ctx[128](ctx[222].mode.attack.range, 0)) + "";
+    let t15;
+    let td6_title_value;
+    let t16;
+    let td7;
+    let t17_value = Math.round(ctx[222].mode.accuracy) + "";
+    let t17;
+    let t18;
+    let t19;
     let td8;
-    let t21_value = ctx[128](ctx[218].mode.perAttack) + "";
+    let t20_value = Math.round(ctx[222].mode.hitRate * 100) + "";
+    let t20;
     let t21;
     let t22;
     let td9;
-    let t23_value = (ctx[218].mode.approachTu > 0 ? ctx[128](ctx[218].mode.approachTu, 0) : "\u2013") + "";
+    let t23_value = ctx[128](ctx[222].mode.perAttack) + "";
     let t23;
     let t24;
     let td10;
-    let t25_value = (ctx[218].mode.attacksToKill == null ? "\u2013" : ctx[128](ctx[218].mode.attacksToKill)) + "";
+    let t25_value = (ctx[222].mode.approachTu > 0 ? ctx[128](ctx[222].mode.approachTu, 0) : "\u2013") + "";
     let t25;
     let t26;
     let td11;
-    let t27_value = (ctx[218].mode.tuToKill == null ? "\u2013" : ctx[128](ctx[218].mode.tuToKill, 0)) + "";
+    let t27_value = (ctx[222].mode.attacksToKill == null ? "\u2013" : ctx[128](ctx[222].mode.attacksToKill)) + "";
     let t27;
     let t28;
     let td12;
-    let t29_value = ctx[132](ctx[218].mode) + "";
+    let t29_value = (ctx[222].mode.tuToKill == null ? "\u2013" : ctx[128](ctx[222].mode.tuToKill, 0)) + "";
     let t29;
-    let td12_title_value;
     let t30;
     let if_block3_anchor;
     let mounted;
     let dispose;
-    let if_block0 = ctx[218].first && create_if_block_78(ctx);
-    let if_block1 = ctx[218].first && create_if_block_610(ctx);
-    let if_block2 = ctx[218].mode.damage.hitsPerAttack > 1 && create_if_block_410(ctx);
+    let if_block0 = ctx[222].first && create_if_block_106(ctx);
+    let if_block1 = ctx[222].first && create_if_block_96(ctx);
+    let if_block2 = ctx[222].mode.damage.hitsPerAttack > 1 && create_if_block_710(ctx);
     function click_handler_24() {
-      return ctx[208](ctx[218]);
+      return ctx[211](ctx[222]);
     }
-    let if_block3 = ctx[63] == ctx[218].weapon.id && ctx[218].last && create_if_block_315(ctx);
+    let if_block3 = ctx[63] == ctx[222].weapon.id && ctx[222].last && create_if_block_410(ctx);
     return {
       key: key_1,
       first: null,
@@ -46109,40 +47395,40 @@
         t0 = text(t0_value);
         t1 = space();
         td1 = element("td");
+        t2 = text(t2_value);
+        t3 = space();
+        td2 = element("td");
         if (if_block0)
           if_block0.c();
-        t2 = space();
-        td2 = element("td");
+        t4 = space();
+        td3 = element("td");
         if (if_block1)
           if_block1.c();
-        t3 = space();
-        td3 = element("td");
-        t4 = text(t4_value);
         t5 = space();
         td4 = element("td");
         t6 = text(t6_value);
-        t7 = text("\u2013");
+        t7 = space();
+        td5 = element("td");
         t8 = text(t8_value);
-        span = element("span");
-        t9 = text("\xA0(");
+        t9 = text("\u2013");
         t10 = text(t10_value);
-        t11 = text("%)");
+        span = element("span");
+        t11 = text("\xA0(");
+        t12 = text(t12_value);
+        t13 = text("%)");
         if (if_block2)
           if_block2.c();
-        t12 = space();
-        td5 = element("td");
-        t13 = text(t13_value);
         t14 = space();
         td6 = element("td");
         t15 = text(t15_value);
-        t16 = text("%");
-        t17 = space();
+        t16 = space();
         td7 = element("td");
-        t18 = text(t18_value);
-        t19 = text("%");
-        t20 = space();
+        t17 = text(t17_value);
+        t18 = text("%");
+        t19 = space();
         td8 = element("td");
-        t21 = text(t21_value);
+        t20 = text(t20_value);
+        t21 = text("%");
         t22 = space();
         td9 = element("td");
         t23 = text(t23_value);
@@ -46160,35 +47446,35 @@
           if_block3.c();
         if_block3_anchor = empty();
         attr(td0, "class", "num dmg-score");
-        attr(td0, "title", td0_title_value = ctx[130](ctx[218]));
-        toggle_class(td0, "dmg-score-sub", !ctx[218].first);
-        toggle_class(td0, "dmg-score-good", scoreBand(scoreOf(ctx[218])) == "good");
-        toggle_class(td0, "dmg-score-fair", scoreBand(scoreOf(ctx[218])) == "fair");
-        toggle_class(td0, "dmg-score-poor", scoreBand(scoreOf(ctx[218])) == "poor");
-        toggle_class(td0, "dmg-score-none", scoreBand(scoreOf(ctx[218])) == "none");
-        attr(td1, "class", "dmg-name");
-        attr(td2, "class", "num dmg-cap");
-        toggle_class(td3, "dmg-submode", !ctx[218].first);
+        attr(td0, "title", td0_title_value = ctx[130](ctx[222]));
+        toggle_class(td0, "dmg-score-sub", !ctx[222].first);
+        toggle_class(td0, "dmg-score-good", scoreBand(scoreOf(ctx[222])) == "good");
+        toggle_class(td0, "dmg-score-fair", scoreBand(scoreOf(ctx[222])) == "fair");
+        toggle_class(td0, "dmg-score-poor", scoreBand(scoreOf(ctx[222])) == "poor");
+        toggle_class(td0, "dmg-score-none", scoreBand(scoreOf(ctx[222])) == "none");
+        attr(td1, "class", "num");
+        attr(td1, "title", td1_title_value = ctx[133](ctx[222].mode));
+        attr(td2, "class", "dmg-name");
+        attr(td3, "class", "num dmg-cap");
+        toggle_class(td4, "dmg-submode", !ctx[222].first);
         attr(span, "class", "dmg-resist");
         attr(span, "title", ctx[113]);
-        toggle_class(span, "dmg-immune", ctx[218].mode.damage.resist == 0);
-        attr(td4, "class", "num");
+        toggle_class(span, "dmg-immune", ctx[222].mode.damage.resist == 0);
         attr(td5, "class", "num");
-        attr(td5, "title", td5_title_value = ctx[131](ctx[218].mode));
-        toggle_class(td5, "dmg-outofrange", outOfRange(ctx[218].mode));
-        toggle_class(td5, "dmg-offrange", !rangeGoverns(ctx[218].mode));
         attr(td6, "class", "num");
+        attr(td6, "title", td6_title_value = ctx[131](ctx[222].mode));
+        toggle_class(td6, "dmg-outofrange", outOfRange(ctx[222].mode));
+        toggle_class(td6, "dmg-offrange", !rangeGoverns(ctx[222].mode));
         attr(td7, "class", "num");
         attr(td8, "class", "num");
         attr(td9, "class", "num");
-        attr(td9, "title", ctx[114]);
         attr(td10, "class", "num");
-        attr(td11, "class", "num dmg-key");
-        attr(td12, "class", "num");
-        attr(td12, "title", td12_title_value = ctx[133](ctx[218].mode));
+        attr(td10, "title", ctx[114]);
+        attr(td11, "class", "num");
+        attr(td12, "class", "num dmg-key");
         attr(tr2, "class", "dmg-click");
-        toggle_class(tr2, "dmg-group-first", ctx[218].first);
-        toggle_class(tr2, "dmg-open", ctx[63] == ctx[218].weapon.id);
+        toggle_class(tr2, "dmg-group-first", ctx[222].first);
+        toggle_class(tr2, "dmg-open", ctx[63] == ctx[222].weapon.id);
         this.first = tr2;
       },
       m(target, anchor) {
@@ -46197,39 +47483,39 @@
         append(td0, t0);
         append(tr2, t1);
         append(tr2, td1);
-        if (if_block0)
-          if_block0.m(td1, null);
-        append(tr2, t2);
-        append(tr2, td2);
-        if (if_block1)
-          if_block1.m(td2, null);
+        append(td1, t2);
         append(tr2, t3);
+        append(tr2, td2);
+        if (if_block0)
+          if_block0.m(td2, null);
+        append(tr2, t4);
         append(tr2, td3);
-        append(td3, t4);
+        if (if_block1)
+          if_block1.m(td3, null);
         append(tr2, t5);
         append(tr2, td4);
         append(td4, t6);
-        append(td4, t7);
-        append(td4, t8);
-        append(td4, span);
-        append(span, t9);
-        append(span, t10);
-        append(span, t11);
-        if (if_block2)
-          if_block2.m(td4, null);
-        append(tr2, t12);
+        append(tr2, t7);
         append(tr2, td5);
-        append(td5, t13);
+        append(td5, t8);
+        append(td5, t9);
+        append(td5, t10);
+        append(td5, span);
+        append(span, t11);
+        append(span, t12);
+        append(span, t13);
+        if (if_block2)
+          if_block2.m(td5, null);
         append(tr2, t14);
         append(tr2, td6);
         append(td6, t15);
-        append(td6, t16);
-        append(tr2, t17);
+        append(tr2, t16);
         append(tr2, td7);
+        append(td7, t17);
         append(td7, t18);
-        append(td7, t19);
-        append(tr2, t20);
+        append(tr2, t19);
         append(tr2, td8);
+        append(td8, t20);
         append(td8, t21);
         append(tr2, t22);
         append(tr2, td9);
@@ -46254,115 +47540,115 @@
       },
       p(new_ctx, dirty) {
         ctx = new_ctx;
-        if (dirty[2] & 1024 && t0_value !== (t0_value = (scoreOf(ctx[218]) == null ? "?" : scoreOf(ctx[218])) + ""))
+        if (dirty[2] & 1024 && t0_value !== (t0_value = (scoreOf(ctx[222]) == null ? "?" : scoreOf(ctx[222])) + ""))
           set_data(t0, t0_value);
-        if (dirty[2] & 1024 && td0_title_value !== (td0_title_value = ctx[130](ctx[218]))) {
+        if (dirty[2] & 1024 && td0_title_value !== (td0_title_value = ctx[130](ctx[222]))) {
           attr(td0, "title", td0_title_value);
         }
         if (dirty[2] & 1024) {
-          toggle_class(td0, "dmg-score-sub", !ctx[218].first);
+          toggle_class(td0, "dmg-score-sub", !ctx[222].first);
         }
         if (dirty[2] & 1024) {
-          toggle_class(td0, "dmg-score-good", scoreBand(scoreOf(ctx[218])) == "good");
+          toggle_class(td0, "dmg-score-good", scoreBand(scoreOf(ctx[222])) == "good");
         }
         if (dirty[2] & 1024) {
-          toggle_class(td0, "dmg-score-fair", scoreBand(scoreOf(ctx[218])) == "fair");
+          toggle_class(td0, "dmg-score-fair", scoreBand(scoreOf(ctx[222])) == "fair");
         }
         if (dirty[2] & 1024) {
-          toggle_class(td0, "dmg-score-poor", scoreBand(scoreOf(ctx[218])) == "poor");
+          toggle_class(td0, "dmg-score-poor", scoreBand(scoreOf(ctx[222])) == "poor");
         }
         if (dirty[2] & 1024) {
-          toggle_class(td0, "dmg-score-none", scoreBand(scoreOf(ctx[218])) == "none");
+          toggle_class(td0, "dmg-score-none", scoreBand(scoreOf(ctx[222])) == "none");
         }
-        if (ctx[218].first) {
+        if (dirty[2] & 1024 && t2_value !== (t2_value = ctx[132](ctx[222].mode) + ""))
+          set_data(t2, t2_value);
+        if (dirty[2] & 1024 && td1_title_value !== (td1_title_value = ctx[133](ctx[222].mode))) {
+          attr(td1, "title", td1_title_value);
+        }
+        if (ctx[222].first) {
           if (if_block0) {
             if_block0.p(ctx, dirty);
           } else {
-            if_block0 = create_if_block_78(ctx);
+            if_block0 = create_if_block_106(ctx);
             if_block0.c();
-            if_block0.m(td1, null);
+            if_block0.m(td2, null);
           }
         } else if (if_block0) {
           if_block0.d(1);
           if_block0 = null;
         }
-        if (ctx[218].first) {
+        if (ctx[222].first) {
           if (if_block1) {
             if_block1.p(ctx, dirty);
           } else {
-            if_block1 = create_if_block_610(ctx);
+            if_block1 = create_if_block_96(ctx);
             if_block1.c();
-            if_block1.m(td2, null);
+            if_block1.m(td3, null);
           }
         } else if (if_block1) {
           if_block1.d(1);
           if_block1 = null;
         }
-        if (dirty[2] & 1024 && t4_value !== (t4_value = ctx[218].mode.label + ""))
-          set_data(t4, t4_value);
-        if (dirty[2] & 1024) {
-          toggle_class(td3, "dmg-submode", !ctx[218].first);
-        }
-        if (dirty[2] & 1024 && t6_value !== (t6_value = ctx[128](ctx[218].mode.damage.min, 0) + ""))
+        if (dirty[2] & 1024 && t6_value !== (t6_value = ctx[222].mode.label + ""))
           set_data(t6, t6_value);
-        if (dirty[2] & 1024 && t8_value !== (t8_value = ctx[128](ctx[218].mode.damage.max, 0) + ""))
-          set_data(t8, t8_value);
-        if (dirty[2] & 1024 && t10_value !== (t10_value = Math.round(ctx[218].mode.damage.resist * 100) + ""))
-          set_data(t10, t10_value);
         if (dirty[2] & 1024) {
-          toggle_class(span, "dmg-immune", ctx[218].mode.damage.resist == 0);
+          toggle_class(td4, "dmg-submode", !ctx[222].first);
         }
-        if (ctx[218].mode.damage.hitsPerAttack > 1) {
+        if (dirty[2] & 1024 && t8_value !== (t8_value = ctx[128](ctx[222].mode.damage.min, 0) + ""))
+          set_data(t8, t8_value);
+        if (dirty[2] & 1024 && t10_value !== (t10_value = ctx[128](ctx[222].mode.damage.max, 0) + ""))
+          set_data(t10, t10_value);
+        if (dirty[2] & 1024 && t12_value !== (t12_value = Math.round(ctx[222].mode.damage.resist * 100) + ""))
+          set_data(t12, t12_value);
+        if (dirty[2] & 1024) {
+          toggle_class(span, "dmg-immune", ctx[222].mode.damage.resist == 0);
+        }
+        if (ctx[222].mode.damage.hitsPerAttack > 1) {
           if (if_block2) {
             if_block2.p(ctx, dirty);
           } else {
-            if_block2 = create_if_block_410(ctx);
+            if_block2 = create_if_block_710(ctx);
             if_block2.c();
-            if_block2.m(td4, null);
+            if_block2.m(td5, null);
           }
         } else if (if_block2) {
           if_block2.d(1);
           if_block2 = null;
         }
-        if (dirty[2] & 1024 && t13_value !== (t13_value = (ctx[218].mode.attack.range == null ? "\u2013" : ctx[128](ctx[218].mode.attack.range, 0)) + ""))
-          set_data(t13, t13_value);
-        if (dirty[2] & 1024 && td5_title_value !== (td5_title_value = ctx[131](ctx[218].mode))) {
-          attr(td5, "title", td5_title_value);
-        }
-        if (dirty[2] & 1024) {
-          toggle_class(td5, "dmg-outofrange", outOfRange(ctx[218].mode));
-        }
-        if (dirty[2] & 1024) {
-          toggle_class(td5, "dmg-offrange", !rangeGoverns(ctx[218].mode));
-        }
-        if (dirty[2] & 1024 && t15_value !== (t15_value = Math.round(ctx[218].mode.accuracy) + ""))
+        if (dirty[2] & 1024 && t15_value !== (t15_value = (ctx[222].mode.attack.range == null ? "\u2013" : ctx[128](ctx[222].mode.attack.range, 0)) + ""))
           set_data(t15, t15_value);
-        if (dirty[2] & 1024 && t18_value !== (t18_value = Math.round(ctx[218].mode.hitRate * 100) + ""))
-          set_data(t18, t18_value);
-        if (dirty[2] & 1024 && t21_value !== (t21_value = ctx[128](ctx[218].mode.perAttack) + ""))
-          set_data(t21, t21_value);
-        if (dirty[2] & 1024 && t23_value !== (t23_value = (ctx[218].mode.approachTu > 0 ? ctx[128](ctx[218].mode.approachTu, 0) : "\u2013") + ""))
-          set_data(t23, t23_value);
-        if (dirty[2] & 1024 && t25_value !== (t25_value = (ctx[218].mode.attacksToKill == null ? "\u2013" : ctx[128](ctx[218].mode.attacksToKill)) + ""))
-          set_data(t25, t25_value);
-        if (dirty[2] & 1024 && t27_value !== (t27_value = (ctx[218].mode.tuToKill == null ? "\u2013" : ctx[128](ctx[218].mode.tuToKill, 0)) + ""))
-          set_data(t27, t27_value);
-        if (dirty[2] & 1024 && t29_value !== (t29_value = ctx[132](ctx[218].mode) + ""))
-          set_data(t29, t29_value);
-        if (dirty[2] & 1024 && td12_title_value !== (td12_title_value = ctx[133](ctx[218].mode))) {
-          attr(td12, "title", td12_title_value);
+        if (dirty[2] & 1024 && td6_title_value !== (td6_title_value = ctx[131](ctx[222].mode))) {
+          attr(td6, "title", td6_title_value);
         }
         if (dirty[2] & 1024) {
-          toggle_class(tr2, "dmg-group-first", ctx[218].first);
+          toggle_class(td6, "dmg-outofrange", outOfRange(ctx[222].mode));
+        }
+        if (dirty[2] & 1024) {
+          toggle_class(td6, "dmg-offrange", !rangeGoverns(ctx[222].mode));
+        }
+        if (dirty[2] & 1024 && t17_value !== (t17_value = Math.round(ctx[222].mode.accuracy) + ""))
+          set_data(t17, t17_value);
+        if (dirty[2] & 1024 && t20_value !== (t20_value = Math.round(ctx[222].mode.hitRate * 100) + ""))
+          set_data(t20, t20_value);
+        if (dirty[2] & 1024 && t23_value !== (t23_value = ctx[128](ctx[222].mode.perAttack) + ""))
+          set_data(t23, t23_value);
+        if (dirty[2] & 1024 && t25_value !== (t25_value = (ctx[222].mode.approachTu > 0 ? ctx[128](ctx[222].mode.approachTu, 0) : "\u2013") + ""))
+          set_data(t25, t25_value);
+        if (dirty[2] & 1024 && t27_value !== (t27_value = (ctx[222].mode.attacksToKill == null ? "\u2013" : ctx[128](ctx[222].mode.attacksToKill)) + ""))
+          set_data(t27, t27_value);
+        if (dirty[2] & 1024 && t29_value !== (t29_value = (ctx[222].mode.tuToKill == null ? "\u2013" : ctx[128](ctx[222].mode.tuToKill, 0)) + ""))
+          set_data(t29, t29_value);
+        if (dirty[2] & 1024) {
+          toggle_class(tr2, "dmg-group-first", ctx[222].first);
         }
         if (dirty[2] & 1026) {
-          toggle_class(tr2, "dmg-open", ctx[63] == ctx[218].weapon.id);
+          toggle_class(tr2, "dmg-open", ctx[63] == ctx[222].weapon.id);
         }
-        if (ctx[63] == ctx[218].weapon.id && ctx[218].last) {
+        if (ctx[63] == ctx[222].weapon.id && ctx[222].last) {
           if (if_block3) {
             if_block3.p(ctx, dirty);
           } else {
-            if_block3 = create_if_block_315(ctx);
+            if_block3 = create_if_block_410(ctx);
             if_block3.c();
             if_block3.m(if_block3_anchor.parentNode, if_block3_anchor);
           }
@@ -46388,6 +47674,36 @@
           detach(if_block3_anchor);
         mounted = false;
         dispose();
+      }
+    };
+  }
+  function create_if_block_315(ctx) {
+    let p;
+    let t0;
+    let t1_value = ctx[72].length + "";
+    let t1;
+    let t2;
+    return {
+      c() {
+        p = element("p");
+        t0 = text("Showing the first 400 of ");
+        t1 = text(t1_value);
+        t2 = text(". Narrow it with the weapon search.");
+        attr(p, "class", "dmg-cap");
+      },
+      m(target, anchor) {
+        insert(target, p, anchor);
+        append(p, t0);
+        append(p, t1);
+        append(p, t2);
+      },
+      p(ctx2, dirty) {
+        if (dirty[2] & 1024 && t1_value !== (t1_value = ctx2[72].length + ""))
+          set_data(t1, t1_value);
+      },
+      d(detaching) {
+        if (detaching)
+          detach(p);
       }
     };
   }
@@ -46512,32 +47828,32 @@
     let current;
     let mounted;
     let dispose;
-    let if_block0 = !ctx[91] && create_if_block_722(ctx);
+    let if_block0 = !ctx[91] && create_if_block_80(ctx);
     function select_block_type(ctx2, dirty) {
       if (!ctx2[65].length)
-        return create_if_block_61;
-      return create_else_block_132;
+        return create_if_block_69;
+      return create_else_block_152;
     }
     let current_block_type = select_block_type(ctx, [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1]);
     let if_block1 = current_block_type(ctx);
-    let if_block2 = ctx[32].length && create_if_block_60(ctx);
-    let each_value_29 = ctx[56].slice(0, 200);
+    let if_block2 = ctx[32].length && create_if_block_68(ctx);
+    let each_value_30 = ctx[56];
     let each_blocks_1 = [];
-    for (let i = 0; i < each_value_29.length; i += 1) {
-      each_blocks_1[i] = create_each_block_29(get_each_context_29(ctx, each_value_29, i));
+    for (let i = 0; i < each_value_30.length; i += 1) {
+      each_blocks_1[i] = create_each_block_30(get_each_context_30(ctx, each_value_30, i));
     }
-    let if_block3 = ctx[33] && create_if_block_59(ctx);
-    let if_block4 = ctx[50] && create_if_block_462(ctx);
-    let each_value_25 = SIDES;
+    let if_block3 = ctx[33] && create_if_block_672(ctx);
+    let if_block4 = ctx[50] && create_if_block_542(ctx);
+    let each_value_26 = SIDES;
     let each_blocks = [];
-    for (let i = 0; i < each_value_25.length; i += 1) {
-      each_blocks[i] = create_each_block_252(get_each_context_252(ctx, each_value_25, i));
+    for (let i = 0; i < each_value_26.length; i += 1) {
+      each_blocks[i] = create_each_block_26(get_each_context_262(ctx, each_value_26, i));
     }
-    let if_block5 = ctx[51] != null && create_if_block_452(ctx);
+    let if_block5 = ctx[51] != null && create_if_block_532(ctx);
     function select_block_type_9(ctx2, dirty) {
       if (ctx2[1] == "weapons")
-        return create_if_block_422;
-      return create_else_block_72;
+        return create_if_block_50;
+      return create_else_block_92;
     }
     let current_block_type_1 = select_block_type_9(ctx, [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1]);
     let if_block6 = current_block_type_1(ctx);
@@ -46547,13 +47863,13 @@
       if (ctx2[1] == "weapons")
         return create_if_block_128;
       if (!ctx2[43])
-        return create_if_block_323;
-      return create_else_block_52;
+        return create_if_block_393;
+      return create_else_block_72;
     }
     let current_block_type_2 = select_block_type_10(ctx, [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1]);
     let if_block7 = current_block_type_2(ctx);
     function articlepeek_id_binding(value) {
-      ctx[213](value);
+      ctx[216](value);
     }
     let articlepeek_props = {};
     if (ctx[60] !== void 0) {
@@ -46735,7 +48051,7 @@
         attr(select0, "class", "dmg-input dmg-list");
         attr(select0, "size", select0_size_value = ctx[55].length > 1 ? 8 : 2);
         if (ctx[3] === void 0)
-          add_render_callback(() => ctx[160].call(select0));
+          add_render_callback(() => ctx[162].call(select0));
         attr(section1, "class", "dmg-block");
         attr(header2, "title", ctx[109]);
         attr(button4, "class", "dmg-chip");
@@ -46766,7 +48082,7 @@
         attr(p, "title", ctx[111]);
         attr(select1, "class", "dmg-input");
         if (ctx[4] === void 0)
-          add_render_callback(() => ctx[174].call(select1));
+          add_render_callback(() => ctx[176].call(select1));
         attr(label3, "class", "dmg-row");
         attr(input4, "type", "checkbox");
         attr(label4, "class", "dmg-check");
@@ -46789,7 +48105,7 @@
         attr(select2, "class", "dmg-input");
         attr(select2, "title", "Take down: health runs out OR stun exceeds the health that is left - the two add, which is why a rifle with ToStun can drop a target that the health damage alone would not. Kill outright: health damage only. Capture: stun only, for taking one alive.");
         if (ctx[15] === void 0)
-          add_render_callback(() => ctx[179].call(select2));
+          add_render_callback(() => ctx[181].call(select2));
         attr(label8, "class", "dmg-row");
         option3.__value = "derived";
         option3.value = option3.__value;
@@ -46800,7 +48116,7 @@
         attr(select3, "class", "dmg-input");
         attr(select3, "title", "Shotguns only. Whether scattered pellets are assumed to land. OXCE traces each pellet through voxels against the target's model, so this is an assumption rather than a calculation.");
         if (ctx[14] === void 0)
-          add_render_callback(() => ctx[180].call(select3));
+          add_render_callback(() => ctx[182].call(select3));
         attr(label9, "class", "dmg-row");
         attr(section2, "class", "dmg-block");
         attr(aside, "class", "dmg-side");
@@ -46954,27 +48270,27 @@
         current = true;
         if (!mounted) {
           dispose = [
-            listen(button0, "click", ctx[149]),
-            listen(button1, "click", ctx[150]),
-            listen(section0, "dragover", prevent_default(ctx[155])),
-            listen(section0, "dragleave", ctx[156]),
+            listen(button0, "click", ctx[151]),
+            listen(button1, "click", ctx[152]),
+            listen(section0, "dragover", prevent_default(ctx[157])),
+            listen(section0, "dragleave", ctx[158]),
             listen(section0, "drop", ctx[93]),
             listen(button2, "click", ctx[100]),
             listen(button3, "click", ctx[101]),
-            listen(input0, "input", ctx[159]),
-            listen(select0, "change", ctx[160]),
-            listen(button4, "click", ctx[169]),
-            listen(button5, "click", ctx[170]),
-            listen(input1, "input", ctx[171]),
-            listen(input2, "input", ctx[172]),
-            listen(input3, "input", ctx[173]),
-            listen(select1, "change", ctx[174]),
-            listen(input4, "change", ctx[175]),
-            listen(input5, "change", ctx[176]),
-            listen(input6, "change", ctx[177]),
-            listen(input7, "change", ctx[178]),
-            listen(select2, "change", ctx[179]),
-            listen(select3, "change", ctx[180])
+            listen(input0, "input", ctx[161]),
+            listen(select0, "change", ctx[162]),
+            listen(button4, "click", ctx[171]),
+            listen(button5, "click", ctx[172]),
+            listen(input1, "input", ctx[173]),
+            listen(input2, "input", ctx[174]),
+            listen(input3, "input", ctx[175]),
+            listen(select1, "change", ctx[176]),
+            listen(input4, "change", ctx[177]),
+            listen(input5, "change", ctx[178]),
+            listen(input6, "change", ctx[179]),
+            listen(input7, "change", ctx[180]),
+            listen(select2, "change", ctx[181]),
+            listen(select3, "change", ctx[182])
           ];
           mounted = true;
         }
@@ -47011,7 +48327,7 @@
           if (if_block2) {
             if_block2.p(ctx2, dirty);
           } else {
-            if_block2 = create_if_block_60(ctx2);
+            if_block2 = create_if_block_68(ctx2);
             if_block2.c();
             if_block2.m(section1, t15);
           }
@@ -47023,14 +48339,14 @@
           set_input_value(input0, ctx2[33]);
         }
         if (dirty[1] & 33554432) {
-          each_value_29 = ctx2[56].slice(0, 200);
+          each_value_30 = ctx2[56];
           let i;
-          for (i = 0; i < each_value_29.length; i += 1) {
-            const child_ctx = get_each_context_29(ctx2, each_value_29, i);
+          for (i = 0; i < each_value_30.length; i += 1) {
+            const child_ctx = get_each_context_30(ctx2, each_value_30, i);
             if (each_blocks_1[i]) {
               each_blocks_1[i].p(child_ctx, dirty);
             } else {
-              each_blocks_1[i] = create_each_block_29(child_ctx);
+              each_blocks_1[i] = create_each_block_30(child_ctx);
               each_blocks_1[i].c();
               each_blocks_1[i].m(select0, null);
             }
@@ -47038,7 +48354,7 @@
           for (; i < each_blocks_1.length; i += 1) {
             each_blocks_1[i].d(1);
           }
-          each_blocks_1.length = each_value_29.length;
+          each_blocks_1.length = each_value_30.length;
         }
         if (!current || dirty[1] & 16777216 && select0_size_value !== (select0_size_value = ctx2[55].length > 1 ? 8 : 2)) {
           attr(select0, "size", select0_size_value);
@@ -47050,7 +48366,7 @@
           if (if_block3) {
             if_block3.p(ctx2, dirty);
           } else {
-            if_block3 = create_if_block_59(ctx2);
+            if_block3 = create_if_block_672(ctx2);
             if_block3.c();
             if_block3.m(section1, t18);
           }
@@ -47065,7 +48381,7 @@
               transition_in(if_block4, 1);
             }
           } else {
-            if_block4 = create_if_block_462(ctx2);
+            if_block4 = create_if_block_542(ctx2);
             if_block4.c();
             transition_in(if_block4, 1);
             if_block4.m(section1, null);
@@ -47093,14 +48409,14 @@
           set_input_value(input3, ctx2[7]);
         }
         if (dirty & 0) {
-          each_value_25 = SIDES;
+          each_value_26 = SIDES;
           let i;
-          for (i = 0; i < each_value_25.length; i += 1) {
-            const child_ctx = get_each_context_252(ctx2, each_value_25, i);
+          for (i = 0; i < each_value_26.length; i += 1) {
+            const child_ctx = get_each_context_262(ctx2, each_value_26, i);
             if (each_blocks[i]) {
               each_blocks[i].p(child_ctx, dirty);
             } else {
-              each_blocks[i] = create_each_block_252(child_ctx);
+              each_blocks[i] = create_each_block_26(child_ctx);
               each_blocks[i].c();
               each_blocks[i].m(select1, null);
             }
@@ -47108,7 +48424,7 @@
           for (; i < each_blocks.length; i += 1) {
             each_blocks[i].d(1);
           }
-          each_blocks.length = each_value_25.length;
+          each_blocks.length = each_value_26.length;
         }
         if (dirty[0] & 16) {
           select_option(select1, ctx2[4]);
@@ -47132,7 +48448,7 @@
           if (if_block5) {
             if_block5.p(ctx2, dirty);
           } else {
-            if_block5 = create_if_block_452(ctx2);
+            if_block5 = create_if_block_532(ctx2);
             if_block5.c();
             if_block5.m(label7, null);
           }
@@ -47271,8 +48587,12 @@
     const m = row.first ? bestOf(row) || row.mode : row.mode;
     return m ? m.score : null;
   }
+  function stripTags(s) {
+    return String(s == null ? "" : s).replace(/<[^>]*>/g, "").trim();
+  }
   function instance43($$self, $$props, $$invalidate) {
     let availability;
+    let clipFilter;
     let shownArmors;
     let armorOptions;
     let roster;
@@ -47369,10 +48689,10 @@
     let allTargets = [];
     let armorChoices = [];
     onMount(() => {
-      $$invalidate(137, allWeapons = weaponList());
-      $$invalidate(138, allTargets = targetList());
+      $$invalidate(138, allWeapons = weaponList());
+      $$invalidate(139, allTargets = targetList());
       const targetable = new Set(allTargets.map((t) => t.id));
-      $$invalidate(135, allMissions = missionList((id) => targetable.has(id)));
+      $$invalidate(136, allMissions = missionList((id) => targetable.has(id)));
       $$invalidate(2, soldiers = loadSoldiers());
       if (!soldiers.length)
         $$invalidate(2, soldiers = [blankSoldier("Gal")]);
@@ -47422,9 +48742,9 @@
         try {
           const raw = JSON.parse(localStorage[CREW_ARMOR_PREF] || "{}");
           if (raw && typeof raw == "object")
-            $$invalidate(136, crewArmor = raw);
+            $$invalidate(137, crewArmor = raw);
         } catch (e) {
-          $$invalidate(136, crewArmor = {});
+          $$invalidate(137, crewArmor = {});
         }
       });
     }
@@ -47536,7 +48856,7 @@
         return;
       $$invalidate(27, armorFilter = "");
       if (current.fromSave) {
-        $$invalidate(136, crewArmor = __spreadProps(__spreadValues({}, crewArmor), { [current.id]: id }));
+        $$invalidate(137, crewArmor = __spreadProps(__spreadValues({}, crewArmor), { [current.id]: id }));
         if (id != current.fromSave.wornArmor)
           $$invalidate(58, editing = true);
         try {
@@ -47652,6 +48972,13 @@
         round: 0
       },
       {
+        id: "turns",
+        label: "Turns",
+        get: (m) => m.turnsToKill,
+        asc: true,
+        round: 1
+      },
+      {
         id: "enemy",
         label: "Enemy",
         get: (m, t) => t.title.toLowerCase(),
@@ -47716,13 +49043,6 @@
         get: (m) => m.tuToKill,
         asc: true,
         round: 0
-      },
-      {
-        id: "turns",
-        label: "Turns",
-        get: (m) => m.turnsToKill,
-        asc: true,
-        round: 1
       }
     ];
     const tcolById = (id) => TCOLUMNS.find((c) => c.id == id);
@@ -47732,7 +49052,7 @@
       const col = tcolById(id);
       const fresh = { id, desc: !(col && col.asc) };
       if (!tSortTouched) {
-        $$invalidate(139, tSortTouched = true);
+        $$invalidate(140, tSortTouched = true);
         $$invalidate(39, tSortKeys = [fresh]);
         return;
       }
@@ -47753,7 +49073,7 @@
     }
     function tResetSort() {
       $$invalidate(39, tSortKeys = [{ id: "score", desc: true }]);
-      $$invalidate(139, tSortTouched = false);
+      $$invalidate(140, tSortTouched = false);
     }
     function tCmpChain(mA, tA, mB, tB, keys) {
       for (const k of keys) {
@@ -47782,7 +49102,7 @@
       const col = colById(id);
       const fresh = { id, desc: !(col && col.asc) };
       if (!sortTouched) {
-        $$invalidate(140, sortTouched = true);
+        $$invalidate(141, sortTouched = true);
         $$invalidate(40, sortKeys = [fresh]);
         return;
       }
@@ -47804,7 +49124,7 @@
     }
     function resetSort() {
       $$invalidate(40, sortKeys = [{ id: "score", desc: true }]);
-      $$invalidate(140, sortTouched = false);
+      $$invalidate(141, sortTouched = false);
     }
     const sortIndex = (keys, id) => keys.findIndex((k) => k.id == id);
     function cmpChain(mA, wA, mB, wB, keys) {
@@ -47874,6 +49194,26 @@
         parts.push(m.wholeTurns + (m.wholeTurns == 1 ? " whole turn" : " whole turns") + " in practice, at " + m.perTurn + (m.perTurn == 1 ? " attack" : " attacks") + " a turn");
       return parts.join(" \xB7 ");
     }
+    function clipNote(r) {
+      if (!r || r.clips.length < 2)
+        return "";
+      const chosen = chosenClip(r);
+      const parts = [
+        "Ranked on " + stripTags(chosen.title) + " - every number in this row is that clip's",
+        r.clips.length + " clips weighed"
+      ];
+      const better = r.clips.find((c) => !c.chosen && !c.fieldable && killsBetter(c, chosen));
+      if (better)
+        parts.push(stripTags(better.title) + " scores higher but this campaign cannot field it");
+      else {
+        const next = r.clips.find((c) => !c.chosen);
+        if (next && next.best && chosen.best)
+          parts.push("next best " + stripTags(next.title) + " at " + (next.best.score == null ? "?" : next.best.score) + " against " + (chosen.best.score == null ? "?" : chosen.best.score));
+      }
+      parts.push("open the row for every clip side by side");
+      return parts.join(" \xB7 ");
+    }
+    const killsBetter = (a, b) => a && a.best && a.best.score != null && b && b.best && b.best.score != null && a.best.score > b.best.score;
     function armourNote(m) {
       if (!m)
         return "";
@@ -47928,7 +49268,7 @@
     }
     function input_input_handler() {
       current.name = this.value;
-      $$invalidate(50, current), $$invalidate(56, shownRoster), $$invalidate(55, roster), $$invalidate(3, currentId), $$invalidate(136, crewArmor), $$invalidate(33, crewFilter), $$invalidate(30, soldierSource), $$invalidate(32, saveCrew), $$invalidate(2, soldiers), $$invalidate(31, sourceTouched), $$invalidate(35, saveState);
+      $$invalidate(50, current), $$invalidate(56, shownRoster), $$invalidate(55, roster), $$invalidate(3, currentId), $$invalidate(137, crewArmor), $$invalidate(33, crewFilter), $$invalidate(30, soldierSource), $$invalidate(32, saveCrew), $$invalidate(2, soldiers), $$invalidate(31, sourceTouched), $$invalidate(35, saveState);
     }
     function input0_input_handler_1() {
       armorFilter = this.value;
@@ -47936,8 +49276,8 @@
     }
     function select_change_handler() {
       armorPick = select_value(this);
-      $$invalidate(68, armorPick), $$invalidate(50, current), $$invalidate(56, shownRoster), $$invalidate(55, roster), $$invalidate(3, currentId), $$invalidate(136, crewArmor), $$invalidate(33, crewFilter), $$invalidate(30, soldierSource), $$invalidate(32, saveCrew), $$invalidate(2, soldiers), $$invalidate(31, sourceTouched), $$invalidate(35, saveState);
-      $$invalidate(89, armorOptions), $$invalidate(57, shownArmors), $$invalidate(50, current), $$invalidate(54, previewing), $$invalidate(27, armorFilter), $$invalidate(38, armorChoices), $$invalidate(56, shownRoster), $$invalidate(55, roster), $$invalidate(3, currentId), $$invalidate(136, crewArmor), $$invalidate(28, availMode), $$invalidate(35, saveState), $$invalidate(33, crewFilter), $$invalidate(30, soldierSource), $$invalidate(32, saveCrew), $$invalidate(2, soldiers), $$invalidate(29, availTouched), $$invalidate(31, sourceTouched);
+      $$invalidate(68, armorPick), $$invalidate(50, current), $$invalidate(56, shownRoster), $$invalidate(55, roster), $$invalidate(3, currentId), $$invalidate(137, crewArmor), $$invalidate(33, crewFilter), $$invalidate(30, soldierSource), $$invalidate(32, saveCrew), $$invalidate(2, soldiers), $$invalidate(31, sourceTouched), $$invalidate(35, saveState);
+      $$invalidate(89, armorOptions), $$invalidate(57, shownArmors), $$invalidate(50, current), $$invalidate(54, previewing), $$invalidate(27, armorFilter), $$invalidate(38, armorChoices), $$invalidate(56, shownRoster), $$invalidate(55, roster), $$invalidate(3, currentId), $$invalidate(137, crewArmor), $$invalidate(28, availMode), $$invalidate(35, saveState), $$invalidate(33, crewFilter), $$invalidate(30, soldierSource), $$invalidate(32, saveCrew), $$invalidate(2, soldiers), $$invalidate(29, availTouched), $$invalidate(31, sourceTouched);
     }
     const change_handler_3 = (e) => setArmor(e.target.value);
     const click_handler_5 = () => setArmor(current.fromSave.wornArmor);
@@ -48002,7 +49342,7 @@
     function select0_change_handler_1() {
       missionId = select_value(this);
       $$invalidate(23, missionId);
-      $$invalidate(77, shownMissions), $$invalidate(24, missionFilter), $$invalidate(135, allMissions);
+      $$invalidate(77, shownMissions), $$invalidate(24, missionFilter), $$invalidate(136, allMissions);
     }
     function input1_input_handler_1() {
       targetFilter = this.value;
@@ -48010,8 +49350,8 @@
     }
     function select1_change_handler_1() {
       targetId = select_value(this);
-      $$invalidate(0, targetId), $$invalidate(145, missionRoster), $$invalidate(44, shownTargets), $$invalidate(23, missionId), $$invalidate(47, mission), $$invalidate(138, allTargets), $$invalidate(22, targetFilter), $$invalidate(135, allMissions);
-      $$invalidate(44, shownTargets), $$invalidate(138, allTargets), $$invalidate(145, missionRoster), $$invalidate(22, targetFilter), $$invalidate(23, missionId), $$invalidate(47, mission), $$invalidate(135, allMissions);
+      $$invalidate(0, targetId), $$invalidate(147, missionRoster), $$invalidate(44, shownTargets), $$invalidate(23, missionId), $$invalidate(47, mission), $$invalidate(139, allTargets), $$invalidate(22, targetFilter), $$invalidate(136, allMissions);
+      $$invalidate(44, shownTargets), $$invalidate(139, allTargets), $$invalidate(147, missionRoster), $$invalidate(22, targetFilter), $$invalidate(23, missionId), $$invalidate(47, mission), $$invalidate(136, allMissions);
     }
     function input_input_handler_1() {
       weaponFilter = this.value;
@@ -48020,14 +49360,15 @@
     function select_change_handler_1() {
       weaponId = select_value(this);
       $$invalidate(26, weaponId);
-      $$invalidate(46, shownWeapons), $$invalidate(137, allWeapons), $$invalidate(21, includeFixed), $$invalidate(17, kindFilter), $$invalidate(18, handsFilter), $$invalidate(19, dtFilters), $$invalidate(20, catFilters), $$invalidate(28, availMode), $$invalidate(49, availability), $$invalidate(16, weaponFilter), $$invalidate(35, saveState), $$invalidate(29, availTouched);
+      $$invalidate(46, shownWeapons), $$invalidate(138, allWeapons), $$invalidate(21, includeFixed), $$invalidate(17, kindFilter), $$invalidate(18, handsFilter), $$invalidate(19, dtFilters), $$invalidate(20, catFilters), $$invalidate(28, availMode), $$invalidate(49, availability), $$invalidate(16, weaponFilter), $$invalidate(35, saveState), $$invalidate(29, availTouched);
     }
     const click_handler_11 = () => $$invalidate(60, peekId = target.id);
     const click_handler_12 = () => $$invalidate(59, showSight = !showSight);
     const click_handler_13 = (r) => toggleDt(r.i);
     const click_handler_14 = () => $$invalidate(19, dtFilters = []);
     const click_handler_15 = () => $$invalidate(25, showDeployment = !showDeployment);
-    const func6 = (u) => rul.tr(u);
+    const func7 = (u) => rul.tr(u);
+    const func_13 = (p) => rul.tr(p);
     function input0_input_handler_3() {
       weaponFilter = this.value;
       $$invalidate(16, weaponFilter);
@@ -48038,7 +49379,7 @@
     function select0_change_handler_2() {
       catPick = select_value(this);
       $$invalidate(62, catPick);
-      $$invalidate(80, catOptions), $$invalidate(137, allWeapons), $$invalidate(146, passing), $$invalidate(21, includeFixed), $$invalidate(17, kindFilter), $$invalidate(18, handsFilter), $$invalidate(19, dtFilters), $$invalidate(20, catFilters), $$invalidate(28, availMode), $$invalidate(49, availability), $$invalidate(35, saveState), $$invalidate(29, availTouched);
+      $$invalidate(80, catOptions), $$invalidate(138, allWeapons), $$invalidate(148, passing), $$invalidate(21, includeFixed), $$invalidate(17, kindFilter), $$invalidate(18, handsFilter), $$invalidate(19, dtFilters), $$invalidate(20, catFilters), $$invalidate(28, availMode), $$invalidate(49, availability), $$invalidate(35, saveState), $$invalidate(29, availTouched);
     }
     const change_handler_5 = () => {
       if (catPick != "all")
@@ -48049,7 +49390,7 @@
     function select1_change_handler_2() {
       dtPick = select_value(this);
       $$invalidate(61, dtPick);
-      $$invalidate(48, dtOptions), $$invalidate(137, allWeapons), $$invalidate(146, passing), $$invalidate(21, includeFixed), $$invalidate(17, kindFilter), $$invalidate(18, handsFilter), $$invalidate(19, dtFilters), $$invalidate(20, catFilters), $$invalidate(28, availMode), $$invalidate(49, availability), $$invalidate(35, saveState), $$invalidate(29, availTouched);
+      $$invalidate(48, dtOptions), $$invalidate(138, allWeapons), $$invalidate(148, passing), $$invalidate(21, includeFixed), $$invalidate(17, kindFilter), $$invalidate(18, handsFilter), $$invalidate(19, dtFilters), $$invalidate(20, catFilters), $$invalidate(28, availMode), $$invalidate(49, availability), $$invalidate(35, saveState), $$invalidate(29, availTouched);
     }
     const change_handler_6 = () => {
       if (dtPick != "all")
@@ -48111,9 +49452,13 @@
           if (roster.length && !roster.some((x) => x.id == currentId))
             $$invalidate(3, currentId = roster[0].id);
       }
-      if ($$self.$$.dirty[1] & 16 | $$self.$$.dirty[4] & 8192) {
+      if ($$self.$$.dirty[1] & 16 | $$self.$$.dirty[4] & 16384) {
         $:
           $$invalidate(49, availability = saveState && allWeapons.length ? buildAvailability(allWeapons, saveState) : /* @__PURE__ */ new Map());
+      }
+      if ($$self.$$.dirty[0] & 268435456 | $$self.$$.dirty[1] & 16) {
+        $:
+          $$invalidate(143, clipFilter = clipAllowed(availMode, saveState));
       }
       if ($$self.$$.dirty[1] & 120) {
         $:
@@ -48124,7 +49469,7 @@
         $:
           $$invalidate(56, shownRoster = crewFilter ? roster.filter((s) => matchesSearch(s.name, crewFilter)) : roster);
       }
-      if ($$self.$$.dirty[0] & 8 | $$self.$$.dirty[1] & 50331648 | $$self.$$.dirty[4] & 4096) {
+      if ($$self.$$.dirty[0] & 8 | $$self.$$.dirty[1] & 50331648 | $$self.$$.dirty[4] & 8192) {
         $:
           $$invalidate(50, current = (() => {
             const list2 = shownRoster.length ? shownRoster : roster;
@@ -48152,7 +49497,7 @@
       if ($$self.$$.dirty[1] & 76021760) {
         $:
           $$invalidate(89, armorOptions = (() => {
-            const list2 = shownArmors.slice(0, 300);
+            const list2 = shownArmors;
             const on = current && current.armor;
             if (on && !list2.some((a) => a.id == on))
               return [
@@ -48187,11 +49532,11 @@
       }
       if ($$self.$$.dirty[1] & 524288) {
         $:
-          $$invalidate(148, wornStats = current && current.fromSave ? effectiveStats(__spreadProps(__spreadValues({}, current), {
+          $$invalidate(150, wornStats = current && current.fromSave ? effectiveStats(__spreadProps(__spreadValues({}, current), {
             armor: current.fromSave.wornArmor
           })) : null);
       }
-      if ($$self.$$.dirty[1] & 8390656 | $$self.$$.dirty[4] & 16777216) {
+      if ($$self.$$.dirty[1] & 8390656 | $$self.$$.dirty[4] & 67108864) {
         $:
           $$invalidate(52, swapDelta = ((eff, worn, on) => (k) => {
             if (!on || !eff || !worn)
@@ -48203,7 +49548,7 @@
         $:
           $$invalidate(86, swapSummary = !previewing ? [] : STAT_KEYS.filter((k) => swapDelta(k)).sort((a, b) => Math.abs(swapDelta(b)) - Math.abs(swapDelta(a))));
       }
-      if ($$self.$$.dirty[1] & 15206400 | $$self.$$.dirty[4] & 16777216) {
+      if ($$self.$$.dirty[1] & 15206400 | $$self.$$.dirty[4] & 67108864) {
         $:
           $$invalidate(85, statTitle = ((cur, eff, worn, on, sd, wd) => (k) => {
             if (!cur || !eff)
@@ -48224,26 +49569,26 @@
       }
       if ($$self.$$.dirty[1] & 16) {
         $:
-          $$invalidate(143, difficulty = saveState ? saveState.difficulty : null);
+          $$invalidate(145, difficulty = saveState ? saveState.difficulty : null);
       }
-      if ($$self.$$.dirty[0] & 8388608 | $$self.$$.dirty[4] & 2048) {
+      if ($$self.$$.dirty[0] & 8388608 | $$self.$$.dirty[4] & 4096) {
         $:
           $$invalidate(47, mission = missionId ? allMissions.find((m) => m.id == missionId) : null);
       }
       if ($$self.$$.dirty[0] & 8388608 | $$self.$$.dirty[1] & 65536) {
         $:
-          $$invalidate(145, missionRoster = missionId && mission && !mission.unresolved ? missionUnits(missionId) : null);
+          $$invalidate(147, missionRoster = missionId && mission && !mission.unresolved ? missionUnits(missionId) : null);
       }
-      if ($$self.$$.dirty[0] & 4194304 | $$self.$$.dirty[4] & 2113536) {
+      if ($$self.$$.dirty[0] & 4194304 | $$self.$$.dirty[4] & 8421376) {
         $:
           $$invalidate(44, shownTargets = allTargets.filter((t) => (!missionRoster || missionRoster.has(t.id)) && (!targetFilter || matchesSearch(t.title, targetFilter))));
       }
-      if ($$self.$$.dirty[0] & 1 | $$self.$$.dirty[1] & 8192 | $$self.$$.dirty[4] & 2097152) {
+      if ($$self.$$.dirty[0] & 1 | $$self.$$.dirty[1] & 8192 | $$self.$$.dirty[4] & 8388608) {
         $:
           if (missionRoster && targetId && !missionRoster.has(targetId))
             $$invalidate(0, targetId = shownTargets.length ? shownTargets[0].id : "");
       }
-      if ($$self.$$.dirty[0] & 1 | $$self.$$.dirty[4] & 524288) {
+      if ($$self.$$.dirty[0] & 1 | $$self.$$.dirty[4] & 2097152) {
         $:
           $$invalidate(41, target = targetId ? resolveTarget(targetId, difficulty) : null);
       }
@@ -48254,11 +49599,11 @@
       }
       if ($$self.$$.dirty[1] & 524288) {
         $:
-          $$invalidate(147, soldierArmor = current && current.armor ? rul.armors[current.armor] : null);
+          $$invalidate(149, soldierArmor = current && current.armor ? rul.armors[current.armor] : null);
       }
-      if ($$self.$$.dirty[0] & 15840 | $$self.$$.dirty[4] & 8388608) {
+      if ($$self.$$.dirty[0] & 15840 | $$self.$$.dirty[4] & 33554432) {
         $:
-          $$invalidate(142, opts = {
+          $$invalidate(144, opts = {
             distance: +distance || 0,
             kneeling,
             oneHanded,
@@ -48270,11 +49615,11 @@
             soldierArmor
           });
       }
-      if ($$self.$$.dirty[0] & 256 | $$self.$$.dirty[1] & 1024 | $$self.$$.dirty[4] & 8388608) {
+      if ($$self.$$.dirty[0] & 256 | $$self.$$.dirty[1] & 1024 | $$self.$$.dirty[4] & 33554432) {
         $:
           $$invalidate(84, sight = target ? sightDistance(soldierArmor, target.armor, isDay) : null);
       }
-      if ($$self.$$.dirty[0] & 272564224 | $$self.$$.dirty[1] & 262144 | $$self.$$.dirty[4] & 8192) {
+      if ($$self.$$.dirty[0] & 272564224 | $$self.$$.dirty[1] & 262144 | $$self.$$.dirty[4] & 16384) {
         $:
           $$invalidate(46, shownWeapons = allWeapons.filter((w) => {
             if (!includeFixed && w.fixed)
@@ -48296,7 +49641,7 @@
       }
       if ($$self.$$.dirty[0] & 272498688 | $$self.$$.dirty[1] & 262144) {
         $:
-          $$invalidate(146, passing = (w, skip) => {
+          $$invalidate(148, passing = (w, skip) => {
             if (!includeFixed && w.fixed)
               return false;
             if (skip != "kind" && kindFilter != "all" && !w.kinds.includes(kindFilter))
@@ -48312,7 +49657,7 @@
             return true;
           });
       }
-      if ($$self.$$.dirty[1] & 262144 | $$self.$$.dirty[4] & 4202496) {
+      if ($$self.$$.dirty[1] & 262144 | $$self.$$.dirty[4] & 16793600) {
         $:
           $$invalidate(83, availCounts = (() => {
             const out = { off: 0, stores: 0, obtainable: 0 };
@@ -48331,7 +49676,7 @@
             return out;
           })());
       }
-      if ($$self.$$.dirty[4] & 4202496) {
+      if ($$self.$$.dirty[4] & 16793600) {
         $:
           $$invalidate(82, kindCounts = allWeapons.reduce((acc, w) => {
             if (!passing(w, "kind"))
@@ -48342,7 +49687,7 @@
             return acc;
           }, {}));
       }
-      if ($$self.$$.dirty[4] & 4202496) {
+      if ($$self.$$.dirty[4] & 16793600) {
         $:
           $$invalidate(81, handsCounts = allWeapons.reduce((acc, w) => {
             if (!passing(w, "hands"))
@@ -48352,7 +49697,7 @@
             return acc;
           }, {}));
       }
-      if ($$self.$$.dirty[4] & 4202496) {
+      if ($$self.$$.dirty[4] & 16793600) {
         $:
           $$invalidate(48, dtOptions = (() => {
             const counts = {};
@@ -48369,7 +49714,7 @@
             })).sort((a, b) => a.label < b.label ? -1 : 1);
           })());
       }
-      if ($$self.$$.dirty[4] & 4202496) {
+      if ($$self.$$.dirty[4] & 16793600) {
         $:
           $$invalidate(80, catOptions = (() => {
             const counts = {};
@@ -48390,13 +49735,13 @@
         $:
           $$invalidate(78, deploymentRows = missionId && showDeployment ? missionRows(missionId) : []);
       }
-      if ($$self.$$.dirty[0] & 16777216 | $$self.$$.dirty[4] & 2048) {
+      if ($$self.$$.dirty[0] & 16777216 | $$self.$$.dirty[4] & 4096) {
         $:
           $$invalidate(77, shownMissions = missionFilter ? allMissions.filter((m) => matchesSearch(m.title, missionFilter)) : allMissions);
       }
       if ($$self.$$.dirty[0] & 655872) {
         $:
-          $$invalidate(144, modeFilter = kindFilter == "all" && !dtFilters.length && !excludeDemo ? null : (attack) => {
+          $$invalidate(146, modeFilter = kindFilter == "all" && !dtFilters.length && !excludeDemo ? null : (attack) => {
             if (excludeDemo && isUtilityMode(attack, attack.item))
               return false;
             if (kindFilter != "all" && modeKind(attack.mode) != kindFilter)
@@ -48406,25 +49751,25 @@
             return true;
           });
       }
-      if ($$self.$$.dirty[0] & 49170 | $$self.$$.dirty[1] & 35840 | $$self.$$.dirty[4] & 1310720) {
+      if ($$self.$$.dirty[0] & 49170 | $$self.$$.dirty[1] & 35840 | $$self.$$.dirty[4] & 5767168) {
         $:
-          $$invalidate(141, ranked = view == "weapons" && stats && target ? rankWeapons(shownWeapons, stats, target, side, opts, {}, pelletModel, goal, modeFilter) : []);
+          $$invalidate(142, ranked = view == "weapons" && stats && target ? rankWeapons(shownWeapons, stats, target, side, opts, {}, pelletModel, goal, modeFilter, clipFilter) : []);
       }
-      if ($$self.$$.dirty[0] & 67108864 | $$self.$$.dirty[4] & 8192) {
+      if ($$self.$$.dirty[0] & 67108864 | $$self.$$.dirty[4] & 16384) {
         $:
           $$invalidate(43, weapon = weaponId ? allWeapons.find((w) => w.id == weaponId) : null);
       }
-      if ($$self.$$.dirty[4] & 32768) {
+      if ($$self.$$.dirty[4] & 65536) {
         $:
           $$invalidate(76, tIsDefaultSort = !tSortTouched);
       }
-      if ($$self.$$.dirty[0] & 49170 | $$self.$$.dirty[1] & 14336 | $$self.$$.dirty[4] & 786432) {
+      if ($$self.$$.dirty[0] & 49170 | $$self.$$.dirty[1] & 14336 | $$self.$$.dirty[4] & 3670016) {
         $:
           $$invalidate(45, byTarget = view == "targets" && stats && weapon ? shownTargets.map((t) => {
             const tgt = resolveTarget(t.id, difficulty);
             if (!tgt)
               return null;
-            const r = scoreWeapon(weapon, null, stats, tgt, side, opts, pelletModel, goal);
+            const r = scoreWeaponBestClip(weapon, null, stats, tgt, side, opts, pelletModel, goal, null, clipFilter);
             return r.best ? { target: tgt, result: r } : null;
           }).filter(Boolean).sort((a, b) => {
             const av = a.result.best.score;
@@ -48464,6 +49809,14 @@
               title: "The verdict, 0-100. 50 means one full turn of this soldier's TU to drop this enemy, so above 50 is faster than a turn and 0 means it never gets there. Counts a miss as a wasted shot rather than as reduced damage, which is why an accurate weapon can outscore a cheaper inaccurate one.",
               get: (m) => m.score,
               round: 0
+            },
+            {
+              id: "turns",
+              label: "Turns",
+              title: "That TU as a fraction of this soldier's bar, so below 1 it is also what she has left afterwards - 0.27 means a quarter of the bar spent and she can still move. Hover a row for the whole-turn count, which is the tactical one: you cannot carry TU between turns or fire part of a shot.",
+              get: (m) => m.turnsToKill,
+              asc: true,
+              round: 2
             },
             {
               id: "weapon",
@@ -48540,22 +49893,14 @@
               get: (m) => m.tuToKill,
               asc: true,
               round: 0
-            },
-            {
-              id: "turns",
-              label: "Turns",
-              title: "That TU as a fraction of this soldier's bar, so below 1 it is also what she has left afterwards - 0.27 means a quarter of the bar spent and she can still move. Hover a row for the whole-turn count, which is the tactical one: you cannot carry TU between turns or fire part of a shot.",
-              get: (m) => m.turnsToKill,
-              asc: true,
-              round: 2
             }
           ]);
       }
-      if ($$self.$$.dirty[1] & 512 | $$self.$$.dirty[4] & 65536) {
+      if ($$self.$$.dirty[1] & 512 | $$self.$$.dirty[4] & 131072) {
         $:
           $$invalidate(73, isDefaultSort = !sortTouched && sortKeys.length == 1 && sortKeys[0].id == "score" && sortKeys[0].desc);
       }
-      if ($$self.$$.dirty[1] & 512 | $$self.$$.dirty[4] & 131072) {
+      if ($$self.$$.dirty[1] & 512 | $$self.$$.dirty[4] & 262144) {
         $:
           $$invalidate(72, rows = (() => {
             const keys = sortKeys;
@@ -48741,6 +50086,7 @@
       rangeNote,
       turnsLabel,
       turnsNote,
+      clipNote,
       armourNote,
       allMissions,
       crewArmor,
@@ -48749,6 +50095,7 @@
       tSortTouched,
       sortTouched,
       ranked,
+      clipFilter,
       opts,
       difficulty,
       modeFilter,
@@ -48800,7 +50147,8 @@
       click_handler_13,
       click_handler_14,
       click_handler_15,
-      func6,
+      func7,
+      func_13,
       input0_input_handler_3,
       click_handler_16,
       click_handler_17,
@@ -48932,7 +50280,7 @@
       return [];
     return list(t.dependencies).filter((d) => !isDone(d, save));
   }
-  function pathTo(id, save) {
+  function pathToAll(ids, save) {
     const out = [];
     const seen = /* @__PURE__ */ new Set();
     const walk = (cur) => {
@@ -48946,7 +50294,8 @@
         walk(d);
       out.push(cur);
     };
-    walk(id);
+    for (const id of ids || [])
+      walk(id);
     return out;
   }
   function remainingCost(id, save) {
@@ -49050,92 +50399,428 @@
     };
   }
 
+  // src/techGoal.ts
+  var KIND_LABEL = {
+    research: "Research",
+    item: "Items",
+    manufacture: "Manufacturing",
+    facility: "Facilities",
+    craft: "Craft",
+    craftWeapon: "Craft weapons",
+    armor: "Armour",
+    unit: "Units",
+    deployment: "Missions",
+    other: "Other"
+  };
+  var KIND_ORDER = [
+    "item",
+    "research",
+    "manufacture",
+    "craft",
+    "craftWeapon",
+    "armor",
+    "facility",
+    "unit",
+    "deployment",
+    "other"
+  ];
+  var coll = (name) => rul && rul[name] || {};
+  function kindOf(id) {
+    if (!id)
+      return "other";
+    if (coll("items")[id])
+      return "item";
+    if (coll("research")[id])
+      return "research";
+    if (coll("manufacture")[id])
+      return "manufacture";
+    if (coll("crafts")[id])
+      return "craft";
+    if (coll("craftWeapons")[id])
+      return "craftWeapon";
+    if (coll("armors")[id])
+      return "armor";
+    if (coll("facilities")[id])
+      return "facility";
+    if (coll("units")[id])
+      return "unit";
+    if (coll("alienDeployments")[id])
+      return "deployment";
+    return "other";
+  }
+  var plain = (id) => {
+    const s = rul.tr(id, { icon: "none", notip: true });
+    return typeof s == "string" ? s : id;
+  };
+  var count = (n, one, many = one + "s") => n + " " + (n == 1 ? one : many);
+  var asList3 = (v) => v == null ? [] : (Array.isArray(v) ? v : [v]).filter((x) => typeof x == "string" && x);
+  var index2 = null;
+  var indexLang = "";
+  function buildIndex() {
+    if (index2 && indexLang == rul.langName)
+      return;
+    indexLang = rul.langName;
+    index2 = Object.keys(rul.articles || {}).map((id) => {
+      const title = plain(id);
+      return { id, title, low: title.toLowerCase(), idLow: id.toLowerCase(), kind: kindOf(id) };
+    });
+  }
+  function searchGoals(query, limit = 60) {
+    const q2 = (query || "").trim().toLowerCase();
+    if (q2.length < 2)
+      return [];
+    buildIndex();
+    const words = q2.split(/\s+/).filter((w) => w);
+    const hits = [];
+    for (const e of index2) {
+      if (!words.every((w) => e.low.includes(w) || e.idLow.includes(w)))
+        continue;
+      const rank = e.low == q2 || e.idLow == q2 ? 0 : e.low.startsWith(q2) ? 1 : e.idLow.startsWith(q2) ? 2 : e.low.includes(q2) ? 3 : 4;
+      hits.push({ m: { id: e.id, title: e.title, kind: e.kind }, rank });
+    }
+    hits.sort((a, b) => a.rank - b.rank || a.m.title.length - b.m.title.length || (a.m.title < b.m.title ? -1 : a.m.title > b.m.title ? 1 : 0));
+    return hits.slice(0, limit).map((h) => h.m);
+  }
+  var GROUP_LABEL = {
+    research: "Research reward",
+    manufacture: "Build it",
+    buy: "Buy it",
+    mission: "Carried by enemies",
+    wreck: "Found on craft",
+    salvage: "Battlefield salvage",
+    terrain: "Found on terrain",
+    event: "Random events",
+    build: "Base facility",
+    other: "Other"
+  };
+  var GROUP_HINT = {
+    research: "Finishing the topic hands you one outright.",
+    manufacture: "A workshop project produces it.",
+    buy: "It is on the purchase list once the research is done.",
+    mission: "An enemy who spawns on these missions is carrying one, so you take it off them. Whether the mission can still turn up is not checked here.",
+    wreck: "A copy is placed on a floor tile inside these craft, so it is lying there to be picked up whether or not anyone aboard is carrying one.",
+    salvage: "It has its own recovery type, which means you get it by clearing the matching wreckage on the battlefield - a downed craft, a ruined structure - rather than by picking an item up. Which tiles those are lives in the map data, not in the ruleset, so they cannot be named here.",
+    terrain: "A copy is placed on a floor tile of these terrains, so any mission that uses one can have it lying about.",
+    event: "A random event can hand it to you. Events are rolled by the game, so there is nothing to research and nothing to aim for.",
+    build: "Built as a base facility.",
+    other: ""
+  };
+  var GROUP_ORDER = [
+    "research",
+    "manufacture",
+    "buy",
+    "build",
+    "mission",
+    "wreck",
+    "salvage",
+    "terrain",
+    "event",
+    "other"
+  ];
+  function makeRoute(group, label, gates, save, extra = {}) {
+    const real = gates.filter((g) => topic(g));
+    const path = pathToAll(real, save);
+    return {
+      group,
+      label,
+      via: extra.via || [],
+      gates,
+      services: extra.services || [],
+      path,
+      open: path.length == 0
+    };
+  }
+  function projectLine(m, id) {
+    const each = m.producedItems && m.producedItems[id];
+    if (each)
+      return plain(m.id) + " \u2014 makes " + each;
+    const avg = m.totalProducedItems ? +m.totalProducedItems[id] || 0 : 0;
+    if (avg >= 0.01)
+      return plain(m.id) + " \u2014 averages " + Math.round(avg * 100) / 100 + " per run";
+    if (avg > 0)
+      return plain(m.id) + " \u2014 rare random output";
+    return plain(m.id);
+  }
+  function salvageDetail(type2) {
+    const sets = setsForType(type2);
+    const craftIds = [];
+    const terrainIds = [];
+    for (const s of sets) {
+      const u = usersOfSet(s.name);
+      for (const c of u.crafts)
+        if (!craftIds.includes(c))
+          craftIds.push(c);
+      for (const t of u.terrains)
+        if (!terrainIds.includes(t))
+          terrainIds.push(t);
+    }
+    const missionIds = [];
+    for (const t of terrainIds)
+      for (const d of ((rul.terrains || {})[t] || {}).alienDeployments || [])
+        if (!missionIds.includes(d))
+          missionIds.push(d);
+    const names = (ids) => [...new Set(ids.map(plain))].sort((a, b) => a.localeCompare(b));
+    return {
+      type: type2,
+      sets,
+      crafts: names(craftIds),
+      terrains: names(terrainIds),
+      missions: names(missionIds),
+      ready: salvageReady(),
+      problem: salvageProblem()
+    };
+  }
+  function salvageLabel(d) {
+    if (!d.ready)
+      return "Reading the tile data\u2026";
+    if (!d.sets.length)
+      return "Recovery type " + d.type + " \u2014 no tileset in the installed mods defines it";
+    const names = d.sets.map((s) => s.name).join(", ");
+    return "Clear the wreckage built from " + names;
+  }
+  function routesTo(id, save) {
+    const out = [];
+    if (!id)
+      return out;
+    const item = coll("items")[id];
+    const res = coll("research")[id];
+    if (res)
+      out.push(makeRoute("research", "Research " + plain(id), [id], save, {
+        services: asList3(res.requiresBaseFunc)
+      }));
+    if (item) {
+      for (const t of asList3(item.spawnedBy)) {
+        if (t == id)
+          continue;
+        out.push(makeRoute("research", "Finish " + plain(t) + " \u2014 it gives you one", [t], save));
+      }
+      const byGate = /* @__PURE__ */ new Map();
+      for (const p of asList3(item.manufacture)) {
+        const m = coll("manufacture")[p];
+        if (!m)
+          continue;
+        const gates = asList3(m.requires);
+        const services = asList3(m.requiresBaseFunc);
+        const key = gates.join("|") + "//" + services.join("|");
+        const cur = byGate.get(key);
+        if (cur)
+          cur.list.push(m);
+        else
+          byGate.set(key, { list: [m], gates, services });
+      }
+      for (const g of byGate.values()) {
+        const lines = g.list.map((m) => projectLine(m, id));
+        out.push(makeRoute("manufacture", g.list.length == 1 ? lines[0] : g.list.length + " projects produce it", g.gates, save, { via: g.list.length == 1 ? [] : lines, services: g.services }));
+      }
+      if (+item.costBuy > 0)
+        out.push(makeRoute("buy", "Buy for $" + (+item.costBuy).toLocaleString(), asList3(item.requiresBuy), save, {
+          services: asList3(item.requiresBuyBaseFunc)
+        }));
+      const named = (field) => [...new Set(asList3(item[field]).map(plain))].sort((a, b) => a.localeCompare(b));
+      const loot = named("loot");
+      if (loot.length)
+        out.push(makeRoute("mission", "Enemies on " + count(loot.length, "mission") + " carry one", [], save, {
+          via: loot
+        }));
+      const wrecks = named("ufos");
+      if (wrecks.length)
+        out.push(makeRoute("wreck", "Lying aboard " + count(wrecks.length, "craft", "craft"), [], save, { via: wrecks }));
+      if (+item.specialType > 0 && item.recover !== false) {
+        const detail = salvageDetail(+item.specialType);
+        const r = makeRoute("salvage", salvageLabel(detail), [], save);
+        r.salvage = detail;
+        out.push(r);
+      }
+      const terrains = named("terrains");
+      if (terrains.length)
+        out.push(makeRoute("terrain", "Lying on " + count(terrains.length, "terrain"), [], save, {
+          via: terrains
+        }));
+      const events = named("events");
+      if (events.length)
+        out.push(makeRoute("event", count(events.length, "event") + " can hand it over", [], save, { via: events }));
+    }
+    for (const name of ["manufacture", "facilities", "crafts", "craftWeapons", "armors", "units"]) {
+      const e = coll(name)[id];
+      if (!e)
+        continue;
+      const gates = asList3(e.requires);
+      if (!gates.length)
+        continue;
+      if (out.some((r) => r.gates.join("|") == gates.join("|")))
+        continue;
+      out.push(makeRoute(name == "facilities" ? "build" : name == "manufacture" ? "manufacture" : "other", name == "facilities" ? "Build it at a base" : "Needs this research first", gates, save, { services: asList3(e.requiresBaseFunc) }));
+    }
+    return out.sort((a, b) => GROUP_ORDER.indexOf(a.group) - GROUP_ORDER.indexOf(b.group) || a.path.length - b.path.length);
+  }
+  function goalPlan(id, save) {
+    if (!id || !(rul.articles || {})[id])
+      return null;
+    const routes = routesTo(id, save);
+    const gated = routes.filter((r) => r.gates.length);
+    const free = routes.filter((r) => !r.gates.length);
+    let best = null;
+    for (const r of gated)
+      if (!best || r.path.length < best.path.length)
+        best = r;
+    const item = coll("items")[id];
+    const art = (rul.articles || {})[id];
+    const prereq = [
+      .../* @__PURE__ */ new Set([
+        ...asList3(item && item.requires),
+        ...asList3(art && art.requires).filter((r) => r != id)
+      ])
+    ];
+    let note = "";
+    if (!routes.length)
+      note = "Nothing in the ruleset says how this is obtained - no research, no project, no shop entry, no loot table. It is most likely built in, given at the start, or reached through something the pedia does not record.";
+    else if (!gated.length)
+      note = "No research gates this. Everything below is already open to you.";
+    else if (best && best.open)
+      note = "Nothing left to research - the " + GROUP_LABEL[best.group].toLowerCase() + " route is open.";
+    return {
+      id,
+      title: plain(id),
+      kind: kindOf(id),
+      status: topic(id) ? statusOf(id, save) : "",
+      prereq,
+      routes,
+      best,
+      free,
+      note
+    };
+  }
+
   // src/TechTree.svelte
   function get_each_context30(ctx, list2, i) {
     const child_ctx = ctx.slice();
-    child_ctx[61] = list2[i];
-    child_ctx[63] = i;
+    child_ctx[87] = list2[i];
+    child_ctx[89] = i;
     return child_ctx;
   }
   function get_each_context_113(ctx, list2, i) {
     const child_ctx = ctx.slice();
-    child_ctx[64] = list2[i];
+    child_ctx[90] = list2[i];
     return child_ctx;
   }
   function get_each_context_210(ctx, list2, i) {
     const child_ctx = ctx.slice();
-    child_ctx[67] = list2[i];
+    child_ctx[93] = list2[i];
     return child_ctx;
   }
   function get_each_context_37(ctx, list2, i) {
     const child_ctx = ctx.slice();
-    child_ctx[70] = list2[i];
+    child_ctx[96] = list2[i];
     return child_ctx;
   }
   function get_each_context_46(ctx, list2, i) {
     const child_ctx = ctx.slice();
-    child_ctx[73] = list2[i];
+    child_ctx[99] = list2[i];
     return child_ctx;
   }
   function get_each_context_55(ctx, list2, i) {
     const child_ctx = ctx.slice();
-    child_ctx[73] = list2[i];
+    child_ctx[99] = list2[i];
     return child_ctx;
   }
   function get_each_context_65(ctx, list2, i) {
     const child_ctx = ctx.slice();
-    child_ctx[78] = list2[i];
+    child_ctx[104] = list2[i];
     return child_ctx;
   }
   function get_each_context_74(ctx, list2, i) {
     const child_ctx = ctx.slice();
-    child_ctx[70] = list2[i];
+    child_ctx[96] = list2[i];
     return child_ctx;
   }
   function get_each_context_83(ctx, list2, i) {
     const child_ctx = ctx.slice();
-    child_ctx[83] = list2[i];
+    child_ctx[109] = list2[i];
     return child_ctx;
   }
   function get_each_context_93(ctx, list2, i) {
     const child_ctx = ctx.slice();
-    child_ctx[86] = list2[i];
+    child_ctx[112] = list2[i];
     return child_ctx;
   }
   function get_each_context_103(ctx, list2, i) {
     const child_ctx = ctx.slice();
-    child_ctx[86] = list2[i];
-    return child_ctx;
-  }
-  function get_each_context_114(ctx, list2, i) {
-    const child_ctx = ctx.slice();
-    child_ctx[91] = list2[i];
+    child_ctx[109] = list2[i];
+    child_ctx[116] = i;
     return child_ctx;
   }
   function get_each_context_124(ctx, list2, i) {
     const child_ctx = ctx.slice();
-    child_ctx[94] = list2[i];
+    child_ctx[121] = list2[i];
+    return child_ctx;
+  }
+  function get_each_context_114(ctx, list2, i) {
+    const child_ctx = ctx.slice();
+    child_ctx[117] = list2[i][0];
+    child_ctx[118] = list2[i][1];
     return child_ctx;
   }
   function get_each_context_134(ctx, list2, i) {
     const child_ctx = ctx.slice();
-    child_ctx[97] = list2[i];
+    child_ctx[124] = list2[i];
     return child_ctx;
   }
   function get_each_context_144(ctx, list2, i) {
     const child_ctx = ctx.slice();
-    child_ctx[100] = list2[i];
+    child_ctx[127] = list2[i];
     return child_ctx;
   }
-  function create_else_block_34(ctx) {
+  function get_each_context_153(ctx, list2, i) {
+    const child_ctx = ctx.slice();
+    child_ctx[109] = list2[i];
+    return child_ctx;
+  }
+  function get_each_context_163(ctx, list2, i) {
+    const child_ctx = ctx.slice();
+    child_ctx[124] = list2[i];
+    return child_ctx;
+  }
+  function get_each_context_173(ctx, list2, i) {
+    const child_ctx = ctx.slice();
+    child_ctx[96] = list2[i];
+    return child_ctx;
+  }
+  function get_each_context_183(ctx, list2, i) {
+    const child_ctx = ctx.slice();
+    child_ctx[136] = list2[i];
+    return child_ctx;
+  }
+  function get_each_context_193(ctx, list2, i) {
+    const child_ctx = ctx.slice();
+    child_ctx[112] = list2[i];
+    return child_ctx;
+  }
+  function get_each_context_202(ctx, list2, i) {
+    const child_ctx = ctx.slice();
+    child_ctx[141] = list2[i];
+    return child_ctx;
+  }
+  function get_each_context_212(ctx, list2, i) {
+    const child_ctx = ctx.slice();
+    child_ctx[144] = list2[i][0];
+    child_ctx[145] = list2[i][1];
+    child_ctx[146] = list2[i][2];
+    return child_ctx;
+  }
+  function get_each_context_223(ctx, list2, i) {
+    const child_ctx = ctx.slice();
+    child_ctx[149] = list2[i];
+    return child_ctx;
+  }
+  function create_else_block_73(ctx) {
     let select;
     let option;
     let mounted;
     let dispose;
-    let each_value_14 = ctx[7];
+    let each_value_22 = ctx[10];
     let each_blocks = [];
-    for (let i = 0; i < each_value_14.length; i += 1) {
-      each_blocks[i] = create_each_block_144(get_each_context_144(ctx, each_value_14, i));
+    for (let i = 0; i < each_value_22.length; i += 1) {
+      each_blocks[i] = create_each_block_223(get_each_context_223(ctx, each_value_22, i));
     }
     return {
       c() {
@@ -49156,22 +50841,22 @@
         for (let i = 0; i < each_blocks.length; i += 1) {
           each_blocks[i].m(select, null);
         }
-        select_option(select, ctx[8]);
+        select_option(select, ctx[11]);
         if (!mounted) {
-          dispose = listen(select, "change", ctx[35]);
+          dispose = listen(select, "change", ctx[50]);
           mounted = true;
         }
       },
       p(ctx2, dirty) {
-        if (dirty[0] & 128) {
-          each_value_14 = ctx2[7];
+        if (dirty[0] & 1024) {
+          each_value_22 = ctx2[10];
           let i;
-          for (i = 0; i < each_value_14.length; i += 1) {
-            const child_ctx = get_each_context_144(ctx2, each_value_14, i);
+          for (i = 0; i < each_value_22.length; i += 1) {
+            const child_ctx = get_each_context_223(ctx2, each_value_22, i);
             if (each_blocks[i]) {
               each_blocks[i].p(child_ctx, dirty);
             } else {
-              each_blocks[i] = create_each_block_144(child_ctx);
+              each_blocks[i] = create_each_block_223(child_ctx);
               each_blocks[i].c();
               each_blocks[i].m(select, null);
             }
@@ -49179,10 +50864,10 @@
           for (; i < each_blocks.length; i += 1) {
             each_blocks[i].d(1);
           }
-          each_blocks.length = each_value_14.length;
+          each_blocks.length = each_value_22.length;
         }
-        if (dirty[0] & 384) {
-          select_option(select, ctx2[8]);
+        if (dirty[0] & 3072) {
+          select_option(select, ctx2[11]);
         }
       },
       d(detaching) {
@@ -49194,7 +50879,7 @@
       }
     };
   }
-  function create_if_block_225(ctx) {
+  function create_if_block_433(ctx) {
     let p;
     return {
       c() {
@@ -49212,16 +50897,16 @@
       }
     };
   }
-  function create_each_block_144(ctx) {
+  function create_each_block_223(ctx) {
     let option;
-    let t_value = ctx[100].file.replace(/\.a?sav$/, "") + "";
+    let t_value = ctx[149].file.replace(/\.a?sav$/, "") + "";
     let t;
     let option_value_value;
     return {
       c() {
         option = element("option");
         t = text(t_value);
-        option.__value = option_value_value = ctx[100].path;
+        option.__value = option_value_value = ctx[149].path;
         option.value = option.__value;
       },
       m(target, anchor) {
@@ -49229,9 +50914,9 @@
         append(option, t);
       },
       p(ctx2, dirty) {
-        if (dirty[0] & 128 && t_value !== (t_value = ctx2[100].file.replace(/\.a?sav$/, "") + ""))
+        if (dirty[0] & 1024 && t_value !== (t_value = ctx2[149].file.replace(/\.a?sav$/, "") + ""))
           set_data(t, t_value);
-        if (dirty[0] & 128 && option_value_value !== (option_value_value = ctx2[100].path)) {
+        if (dirty[0] & 1024 && option_value_value !== (option_value_value = ctx2[149].path)) {
           option.__value = option_value_value;
           option.value = option.__value;
         }
@@ -49242,12 +50927,12 @@
       }
     };
   }
-  function create_else_block_24(ctx) {
+  function create_else_block_63(ctx) {
     let p;
     return {
       c() {
         p = element("p");
-        p.textContent = "Without a save every topic reads as blocked \u2014 pick one to see what you can\r\n            actually research.";
+        p.textContent = "Without a save every topic reads as blocked \u2014 pick one to see what you can\n            actually research.";
         attr(p, "class", "dmg-hint");
       },
       m(target, anchor) {
@@ -49260,7 +50945,7 @@
       }
     };
   }
-  function create_if_block_195(ctx) {
+  function create_if_block_403(ctx) {
     let p;
     let html_tag;
     let raw_value = (ctx[0].name || "save") + "";
@@ -49279,8 +50964,8 @@
     let t6;
     let t7;
     let if_block1_anchor;
-    let if_block0 = ctx[0].date && create_if_block_219(ctx);
-    let if_block1 = !ctx[0].scientists && create_if_block_205(ctx);
+    let if_block0 = ctx[0].date && create_if_block_423(ctx);
+    let if_block1 = !ctx[0].scientists && create_if_block_413(ctx);
     return {
       c() {
         p = element("p");
@@ -49293,7 +50978,7 @@
         t1 = text(t1_value);
         t2 = text(" researched \xB7 ");
         t3 = text(t3_value);
-        t4 = text(" underway \xB7\r\n            ");
+        t4 = text(" underway \xB7\n            ");
         b = element("b");
         t5 = text(t5_value);
         t6 = text(" brainers");
@@ -49331,7 +51016,7 @@
           if (if_block0) {
             if_block0.p(ctx2, dirty);
           } else {
-            if_block0 = create_if_block_219(ctx2);
+            if_block0 = create_if_block_423(ctx2);
             if_block0.c();
             if_block0.m(p, br);
           }
@@ -49348,7 +51033,7 @@
         if (!ctx2[0].scientists) {
           if (if_block1) {
           } else {
-            if_block1 = create_if_block_205(ctx2);
+            if_block1 = create_if_block_413(ctx2);
             if_block1.c();
             if_block1.m(if_block1_anchor.parentNode, if_block1_anchor);
           }
@@ -49371,7 +51056,7 @@
       }
     };
   }
-  function create_if_block_186(ctx) {
+  function create_if_block_394(ctx) {
     let p;
     let t0;
     let t1;
@@ -49379,7 +51064,7 @@
       c() {
         p = element("p");
         t0 = text("\u26A0 ");
-        t1 = text(ctx[10]);
+        t1 = text(ctx[13]);
         attr(p, "class", "dmg-warn");
       },
       m(target, anchor) {
@@ -49388,8 +51073,8 @@
         append(p, t1);
       },
       p(ctx2, dirty) {
-        if (dirty[0] & 1024)
-          set_data(t1, ctx2[10]);
+        if (dirty[0] & 8192)
+          set_data(t1, ctx2[13]);
       },
       d(detaching) {
         if (detaching)
@@ -49397,7 +51082,7 @@
       }
     };
   }
-  function create_if_block_176(ctx) {
+  function create_if_block_384(ctx) {
     let p;
     return {
       c() {
@@ -49415,7 +51100,7 @@
       }
     };
   }
-  function create_if_block_219(ctx) {
+  function create_if_block_423(ctx) {
     let t0;
     let t1_value = ctx[0].date + "";
     let t1;
@@ -49440,7 +51125,7 @@
       }
     };
   }
-  function create_if_block_205(ctx) {
+  function create_if_block_413(ctx) {
     let p;
     return {
       c() {
@@ -49457,21 +51142,51 @@
       }
     };
   }
-  function create_each_block_134(ctx) {
+  function create_each_block_212(ctx) {
+    let li;
+    let span;
+    let span_class_value;
+    let t0_value = ctx[145] + "";
+    let t0;
+    let t1;
+    let li_title_value;
+    return {
+      c() {
+        li = element("li");
+        span = element("span");
+        t0 = text(t0_value);
+        t1 = space();
+        attr(span, "class", span_class_value = ctx[44](ctx[144]));
+        attr(li, "title", li_title_value = ctx[146]);
+      },
+      m(target, anchor) {
+        insert(target, li, anchor);
+        append(li, span);
+        append(li, t0);
+        append(li, t1);
+      },
+      p: noop,
+      d(detaching) {
+        if (detaching)
+          detach(li);
+      }
+    };
+  }
+  function create_each_block_202(ctx) {
     var _a;
     let button;
-    let t0_value = ctx[97].label + "";
+    let t0_value = ctx[141].label + "";
     let t0;
     let t1;
     let span;
-    let t2_value = ((_a = ctx[17][ctx[97].id]) != null ? _a : 0) + "";
+    let t2_value = ((_a = ctx[23][ctx[141].id]) != null ? _a : 0) + "";
     let t2;
     let t3;
     let button_title_value;
     let mounted;
     let dispose;
     function click_handler() {
-      return ctx[39](ctx[97]);
+      return ctx[54](ctx[141]);
     }
     return {
       c() {
@@ -49483,8 +51198,8 @@
         t3 = space();
         attr(span, "class", "dmg-chip-n");
         attr(button, "class", "dmg-chip");
-        attr(button, "title", button_title_value = ctx[97].title);
-        toggle_class(button, "dmg-chip-on", ctx[3] == ctx[97].id);
+        attr(button, "title", button_title_value = ctx[141].title);
+        toggle_class(button, "dmg-chip-on", ctx[3] == ctx[141].id && !ctx[15]);
       },
       m(target, anchor) {
         insert(target, button, anchor);
@@ -49501,10 +51216,10 @@
       p(new_ctx, dirty) {
         var _a2;
         ctx = new_ctx;
-        if (dirty[0] & 131072 && t2_value !== (t2_value = ((_a2 = ctx[17][ctx[97].id]) != null ? _a2 : 0) + ""))
+        if (dirty[0] & 8388608 && t2_value !== (t2_value = ((_a2 = ctx[23][ctx[141].id]) != null ? _a2 : 0) + ""))
           set_data(t2, t2_value);
-        if (dirty[0] & 2097160) {
-          toggle_class(button, "dmg-chip-on", ctx[3] == ctx[97].id);
+        if (dirty[0] & 268468232) {
+          toggle_class(button, "dmg-chip-on", ctx[3] == ctx[141].id && !ctx[15]);
         }
       },
       d(detaching) {
@@ -49515,19 +51230,36 @@
       }
     };
   }
-  function create_else_block20(ctx) {
+  function create_if_block_374(ctx) {
+    let p;
+    return {
+      c() {
+        p = element("p");
+        p.textContent = "Standing by while you follow a goal. Press a filter to bring the list back.";
+        attr(p, "class", "dmg-hint");
+      },
+      m(target, anchor) {
+        insert(target, p, anchor);
+      },
+      d(detaching) {
+        if (detaching)
+          detach(p);
+      }
+    };
+  }
+  function create_else_block_43(ctx) {
     let div;
     let t;
     let ul;
-    let each_value_12 = ctx[20];
+    let each_value_19 = ctx[26];
     let each_blocks_1 = [];
-    for (let i = 0; i < each_value_12.length; i += 1) {
-      each_blocks_1[i] = create_each_block_124(get_each_context_124(ctx, each_value_12, i));
+    for (let i = 0; i < each_value_19.length; i += 1) {
+      each_blocks_1[i] = create_each_block_193(get_each_context_193(ctx, each_value_19, i));
     }
-    let each_value_11 = ctx[16];
+    let each_value_18 = ctx[22];
     let each_blocks = [];
-    for (let i = 0; i < each_value_11.length; i += 1) {
-      each_blocks[i] = create_each_block_113(get_each_context_114(ctx, each_value_11, i));
+    for (let i = 0; i < each_value_18.length; i += 1) {
+      each_blocks[i] = create_each_block_183(get_each_context_183(ctx, each_value_18, i));
     }
     return {
       c() {
@@ -49555,15 +51287,15 @@
         }
       },
       p(ctx2, dirty) {
-        if (dirty[0] & 1048640) {
-          each_value_12 = ctx2[20];
+        if (dirty[0] & 67108992) {
+          each_value_19 = ctx2[26];
           let i;
-          for (i = 0; i < each_value_12.length; i += 1) {
-            const child_ctx = get_each_context_124(ctx2, each_value_12, i);
+          for (i = 0; i < each_value_19.length; i += 1) {
+            const child_ctx = get_each_context_193(ctx2, each_value_19, i);
             if (each_blocks_1[i]) {
               each_blocks_1[i].p(child_ctx, dirty);
             } else {
-              each_blocks_1[i] = create_each_block_124(child_ctx);
+              each_blocks_1[i] = create_each_block_193(child_ctx);
               each_blocks_1[i].c();
               each_blocks_1[i].m(div, null);
             }
@@ -49571,17 +51303,17 @@
           for (; i < each_blocks_1.length; i += 1) {
             each_blocks_1[i].d(1);
           }
-          each_blocks_1.length = each_value_12.length;
+          each_blocks_1.length = each_value_19.length;
         }
-        if (dirty[0] & 1623261248) {
-          each_value_11 = ctx2[16];
+        if (dirty[0] & 541065344 | dirty[1] & 12289) {
+          each_value_18 = ctx2[22];
           let i;
-          for (i = 0; i < each_value_11.length; i += 1) {
-            const child_ctx = get_each_context_114(ctx2, each_value_11, i);
+          for (i = 0; i < each_value_18.length; i += 1) {
+            const child_ctx = get_each_context_183(ctx2, each_value_18, i);
             if (each_blocks[i]) {
               each_blocks[i].p(child_ctx, dirty);
             } else {
-              each_blocks[i] = create_each_block_113(child_ctx);
+              each_blocks[i] = create_each_block_183(child_ctx);
               each_blocks[i].c();
               each_blocks[i].m(ul, null);
             }
@@ -49589,7 +51321,7 @@
           for (; i < each_blocks.length; i += 1) {
             each_blocks[i].d(1);
           }
-          each_blocks.length = each_value_11.length;
+          each_blocks.length = each_value_18.length;
         }
       },
       d(detaching) {
@@ -49604,12 +51336,12 @@
       }
     };
   }
-  function create_if_block_156(ctx) {
+  function create_if_block_354(ctx) {
     let p;
     return {
       c() {
         p = element("p");
-        p.textContent = "Star a topic (\u2605 in its column header) to put it here. The list survives\r\n            reloads.";
+        p.textContent = "Star a topic (\u2605 in its column header) to put it here. The list survives\n            reloads.";
         attr(p, "class", "dmg-hint");
       },
       m(target, anchor) {
@@ -49622,23 +51354,23 @@
       }
     };
   }
-  function create_each_block_124(ctx) {
+  function create_each_block_193(ctx) {
     let button;
-    let t_value = ctx[94].label + "";
+    let t_value = ctx[112].label + "";
     let t;
     let button_title_value;
     let mounted;
     let dispose;
     function click_handler_1() {
-      return ctx[41](ctx[94]);
+      return ctx[56](ctx[112]);
     }
     return {
       c() {
         button = element("button");
         t = text(t_value);
         attr(button, "class", "dmg-chip");
-        attr(button, "title", button_title_value = ctx[94].title);
-        toggle_class(button, "dmg-chip-on", ctx[6] == ctx[94].id);
+        attr(button, "title", button_title_value = ctx[112].title);
+        toggle_class(button, "dmg-chip-on", ctx[7] == ctx[112].id);
       },
       m(target, anchor) {
         insert(target, button, anchor);
@@ -49650,8 +51382,8 @@
       },
       p(new_ctx, dirty) {
         ctx = new_ctx;
-        if (dirty[0] & 1048640) {
-          toggle_class(button, "dmg-chip-on", ctx[6] == ctx[94].id);
+        if (dirty[0] & 67108992) {
+          toggle_class(button, "dmg-chip-on", ctx[7] == ctx[112].id);
         }
       },
       d(detaching) {
@@ -49662,8 +51394,8 @@
       }
     };
   }
-  function create_else_block_19(ctx) {
-    let t_value = ctx[91].days == null ? "\u2014" : ctx[91].days + "d";
+  function create_else_block_53(ctx) {
+    let t_value = ctx[136].days == null ? "\u2014" : ctx[136].days + "d";
     let t;
     return {
       c() {
@@ -49673,7 +51405,7 @@
         insert(target, t, anchor);
       },
       p(ctx2, dirty) {
-        if (dirty[0] & 65536 && t_value !== (t_value = ctx2[91].days == null ? "\u2014" : ctx2[91].days + "d"))
+        if (dirty[0] & 4194304 && t_value !== (t_value = ctx2[136].days == null ? "\u2014" : ctx2[136].days + "d"))
           set_data(t, t_value);
       },
       d(detaching) {
@@ -49682,11 +51414,11 @@
       }
     };
   }
-  function create_if_block_166(ctx) {
-    let t0_value = ctx[91].impact.unblocks + ctx[91].impact.gear + "";
+  function create_if_block_364(ctx) {
+    let t0_value = ctx[136].impact.unblocks + ctx[136].impact.gear + "";
     let t0;
     let t1;
-    let t2_value = ctx[91].days == null ? "\u2014" : ctx[91].days + "d";
+    let t2_value = ctx[136].days == null ? "\u2014" : ctx[136].days + "d";
     let t2;
     return {
       c() {
@@ -49700,9 +51432,9 @@
         insert(target, t2, anchor);
       },
       p(ctx2, dirty) {
-        if (dirty[0] & 65536 && t0_value !== (t0_value = ctx2[91].impact.unblocks + ctx2[91].impact.gear + ""))
+        if (dirty[0] & 4194304 && t0_value !== (t0_value = ctx2[136].impact.unblocks + ctx2[136].impact.gear + ""))
           set_data(t0, t0_value);
-        if (dirty[0] & 65536 && t2_value !== (t2_value = ctx2[91].days == null ? "\u2014" : ctx2[91].days + "d"))
+        if (dirty[0] & 4194304 && t2_value !== (t2_value = ctx2[136].days == null ? "\u2014" : ctx2[136].days + "d"))
           set_data(t2, t2_value);
       },
       d(detaching) {
@@ -49715,14 +51447,14 @@
       }
     };
   }
-  function create_each_block_113(ctx) {
+  function create_each_block_183(ctx) {
     let li;
     let span0;
     let span0_class_value;
     let span0_title_value;
     let t0;
     let button0;
-    let t1_value = ctx[91].title + "";
+    let t1_value = ctx[136].title + "";
     let t1;
     let t2;
     let span1;
@@ -49733,17 +51465,17 @@
     let mounted;
     let dispose;
     function click_handler_2() {
-      return ctx[42](ctx[91]);
+      return ctx[57](ctx[136]);
     }
     function select_block_type_3(ctx2, dirty) {
-      if (ctx2[6] == "impact")
-        return create_if_block_166;
-      return create_else_block_19;
+      if (ctx2[7] == "impact")
+        return create_if_block_364;
+      return create_else_block_53;
     }
-    let current_block_type = select_block_type_3(ctx, [-1, -1, -1, -1]);
+    let current_block_type = select_block_type_3(ctx, [-1, -1, -1, -1, -1]);
     let if_block = current_block_type(ctx);
     function click_handler_3() {
-      return ctx[43](ctx[91]);
+      return ctx[58](ctx[136]);
     }
     return {
       c() {
@@ -49759,11 +51491,11 @@
         button1 = element("button");
         button1.textContent = "\u2715";
         t5 = space();
-        attr(span0, "class", span0_class_value = ctx[30](ctx[91].status));
-        attr(span0, "title", span0_title_value = ctx[22][ctx[91].status]);
+        attr(span0, "class", span0_class_value = ctx[44](ctx[136].status));
+        attr(span0, "title", span0_title_value = ctx[29][ctx[136].status]);
         attr(button0, "class", "dmg-linkish tech-todoname");
         attr(span1, "class", "dmg-cap");
-        attr(span1, "title", span1_title_value = "Unblocks " + ctx[91].impact.unblocks + " topic(s), opens " + ctx[91].impact.gear + " thing(s) to build or buy, " + (ctx[91].days == null ? "days unknown" : ctx[91].days + " day(s)"));
+        attr(span1, "title", span1_title_value = "Unblocks " + ctx[136].impact.unblocks + " topic(s), opens " + ctx[136].impact.gear + " thing(s) to build or buy, " + (ctx[136].days == null ? "days unknown" : ctx[136].days + " day(s)"));
         attr(button1, "class", "dmg-mini");
         attr(button1, "title", "Remove from the to-do list");
       },
@@ -49789,13 +51521,13 @@
       },
       p(new_ctx, dirty) {
         ctx = new_ctx;
-        if (dirty[0] & 65536 && span0_class_value !== (span0_class_value = ctx[30](ctx[91].status))) {
+        if (dirty[0] & 4194304 && span0_class_value !== (span0_class_value = ctx[44](ctx[136].status))) {
           attr(span0, "class", span0_class_value);
         }
-        if (dirty[0] & 65536 && span0_title_value !== (span0_title_value = ctx[22][ctx[91].status])) {
+        if (dirty[0] & 4194304 && span0_title_value !== (span0_title_value = ctx[29][ctx[136].status])) {
           attr(span0, "title", span0_title_value);
         }
-        if (dirty[0] & 65536 && t1_value !== (t1_value = ctx[91].title + ""))
+        if (dirty[0] & 4194304 && t1_value !== (t1_value = ctx[136].title + ""))
           set_data(t1, t1_value);
         if (current_block_type === (current_block_type = select_block_type_3(ctx, dirty)) && if_block) {
           if_block.p(ctx, dirty);
@@ -49807,7 +51539,7 @@
             if_block.m(span1, null);
           }
         }
-        if (dirty[0] & 65536 && span1_title_value !== (span1_title_value = "Unblocks " + ctx[91].impact.unblocks + " topic(s), opens " + ctx[91].impact.gear + " thing(s) to build or buy, " + (ctx[91].days == null ? "days unknown" : ctx[91].days + " day(s)"))) {
+        if (dirty[0] & 4194304 && span1_title_value !== (span1_title_value = "Unblocks " + ctx[136].impact.unblocks + " topic(s), opens " + ctx[136].impact.gear + " thing(s) to build or buy, " + (ctx[136].days == null ? "days unknown" : ctx[136].days + " day(s)"))) {
           attr(span1, "title", span1_title_value);
         }
       },
@@ -49820,76 +51552,738 @@
       }
     };
   }
-  function create_each_block_103(ctx) {
-    let option;
-    let t_value = rul.tr(ctx[86]) + "";
-    let t;
-    let option_value_value;
+  function create_else_block_34(ctx) {
+    let each_1_anchor;
+    let each_value_16 = ctx[20];
+    let each_blocks = [];
+    for (let i = 0; i < each_value_16.length; i += 1) {
+      each_blocks[i] = create_each_block_163(get_each_context_163(ctx, each_value_16, i));
+    }
     return {
       c() {
-        option = element("option");
-        t = text(t_value);
-        option.__value = option_value_value = ctx[86];
-        option.value = option.__value;
+        for (let i = 0; i < each_blocks.length; i += 1) {
+          each_blocks[i].c();
+        }
+        each_1_anchor = empty();
       },
       m(target, anchor) {
-        insert(target, option, anchor);
-        append(option, t);
+        for (let i = 0; i < each_blocks.length; i += 1) {
+          each_blocks[i].m(target, anchor);
+        }
+        insert(target, each_1_anchor, anchor);
+      },
+      p(ctx2, dirty) {
+        if (dirty[0] & 537919489 | dirty[1] & 8224) {
+          each_value_16 = ctx2[20];
+          let i;
+          for (i = 0; i < each_value_16.length; i += 1) {
+            const child_ctx = get_each_context_163(ctx2, each_value_16, i);
+            if (each_blocks[i]) {
+              each_blocks[i].p(child_ctx, dirty);
+            } else {
+              each_blocks[i] = create_each_block_163(child_ctx);
+              each_blocks[i].c();
+              each_blocks[i].m(each_1_anchor.parentNode, each_1_anchor);
+            }
+          }
+          for (; i < each_blocks.length; i += 1) {
+            each_blocks[i].d(1);
+          }
+          each_blocks.length = each_value_16.length;
+        }
+      },
+      d(detaching) {
+        destroy_each(each_blocks, detaching);
+        if (detaching)
+          detach(each_1_anchor);
+      }
+    };
+  }
+  function create_if_block_334(ctx) {
+    let p;
+    return {
+      c() {
+        p = element("p");
+        p.textContent = "Nothing in the pedia matches that.";
+        attr(p, "class", "dmg-hint");
+      },
+      m(target, anchor) {
+        insert(target, p, anchor);
       },
       p: noop,
       d(detaching) {
         if (detaching)
-          detach(option);
+          detach(p);
+      }
+    };
+  }
+  function create_if_block_324(ctx) {
+    let p;
+    return {
+      c() {
+        p = element("p");
+        p.textContent = "Try a name rather than an id \u2014 \u201Claspistol\u201D, \u201Claser weapons\u201D, \u201Cnecroplane\n            parts\u201D.";
+        attr(p, "class", "dmg-hint");
+      },
+      m(target, anchor) {
+        insert(target, p, anchor);
+      },
+      p: noop,
+      d(detaching) {
+        if (detaching)
+          detach(p);
+      }
+    };
+  }
+  function create_if_block_316(ctx) {
+    let button;
+    let mounted;
+    let dispose;
+    return {
+      c() {
+        button = element("button");
+        button.textContent = "\u2715 clear";
+        attr(button, "class", "dmg-mini");
+      },
+      m(target, anchor) {
+        insert(target, button, anchor);
+        if (!mounted) {
+          dispose = listen(button, "click", ctx[37]);
+          mounted = true;
+        }
+      },
+      p: noop,
+      d(detaching) {
+        if (detaching)
+          detach(button);
+        mounted = false;
+        dispose();
+      }
+    };
+  }
+  function create_if_block_344(ctx) {
+    let span;
+    let span_class_value;
+    let span_title_value;
+    return {
+      c() {
+        span = element("span");
+        attr(span, "class", span_class_value = ctx[44](statusOf(ctx[96].id, ctx[0])));
+        attr(span, "title", span_title_value = ctx[29][statusOf(ctx[96].id, ctx[0])]);
+      },
+      m(target, anchor) {
+        insert(target, span, anchor);
+      },
+      p(ctx2, dirty) {
+        if (dirty[0] & 1048577 && span_class_value !== (span_class_value = ctx2[44](statusOf(ctx2[96].id, ctx2[0])))) {
+          attr(span, "class", span_class_value);
+        }
+        if (dirty[0] & 1048577 && span_title_value !== (span_title_value = ctx2[29][statusOf(ctx2[96].id, ctx2[0])])) {
+          attr(span, "title", span_title_value);
+        }
+      },
+      d(detaching) {
+        if (detaching)
+          detach(span);
+      }
+    };
+  }
+  function create_each_block_173(ctx) {
+    let button;
+    let t0;
+    let span;
+    let t1_value = ctx[96].title + "";
+    let t1;
+    let t2;
+    let mounted;
+    let dispose;
+    let if_block = ctx[96].kind == "research" && create_if_block_344(ctx);
+    function click_handler_4() {
+      return ctx[61](ctx[96]);
+    }
+    return {
+      c() {
+        button = element("button");
+        if (if_block)
+          if_block.c();
+        t0 = space();
+        span = element("span");
+        t1 = text(t1_value);
+        t2 = space();
+        attr(span, "class", "tech-rowname");
+        attr(button, "class", "tech-row");
+      },
+      m(target, anchor) {
+        insert(target, button, anchor);
+        if (if_block)
+          if_block.m(button, null);
+        append(button, t0);
+        append(button, span);
+        append(span, t1);
+        append(button, t2);
+        if (!mounted) {
+          dispose = listen(button, "click", click_handler_4);
+          mounted = true;
+        }
+      },
+      p(new_ctx, dirty) {
+        ctx = new_ctx;
+        if (ctx[96].kind == "research") {
+          if (if_block) {
+            if_block.p(ctx, dirty);
+          } else {
+            if_block = create_if_block_344(ctx);
+            if_block.c();
+            if_block.m(button, t0);
+          }
+        } else if (if_block) {
+          if_block.d(1);
+          if_block = null;
+        }
+        if (dirty[0] & 1048576 && t1_value !== (t1_value = ctx[96].title + ""))
+          set_data(t1, t1_value);
+      },
+      d(detaching) {
+        if (detaching)
+          detach(button);
+        if (if_block)
+          if_block.d();
+        mounted = false;
+        dispose();
+      }
+    };
+  }
+  function create_each_block_163(ctx) {
+    let h5;
+    let t0_value = ctx[124].label + "";
+    let t0;
+    let t1;
+    let each_1_anchor;
+    let each_value_17 = ctx[124].rows;
+    let each_blocks = [];
+    for (let i = 0; i < each_value_17.length; i += 1) {
+      each_blocks[i] = create_each_block_173(get_each_context_173(ctx, each_value_17, i));
+    }
+    return {
+      c() {
+        h5 = element("h5");
+        t0 = text(t0_value);
+        t1 = space();
+        for (let i = 0; i < each_blocks.length; i += 1) {
+          each_blocks[i].c();
+        }
+        each_1_anchor = empty();
+        attr(h5, "class", "tech-goalgroup");
+      },
+      m(target, anchor) {
+        insert(target, h5, anchor);
+        append(h5, t0);
+        insert(target, t1, anchor);
+        for (let i = 0; i < each_blocks.length; i += 1) {
+          each_blocks[i].m(target, anchor);
+        }
+        insert(target, each_1_anchor, anchor);
+      },
+      p(ctx2, dirty) {
+        if (dirty[0] & 1048576 && t0_value !== (t0_value = ctx2[124].label + ""))
+          set_data(t0, t0_value);
+        if (dirty[0] & 537919489 | dirty[1] & 8224) {
+          each_value_17 = ctx2[124].rows;
+          let i;
+          for (i = 0; i < each_value_17.length; i += 1) {
+            const child_ctx = get_each_context_173(ctx2, each_value_17, i);
+            if (each_blocks[i]) {
+              each_blocks[i].p(child_ctx, dirty);
+            } else {
+              each_blocks[i] = create_each_block_173(child_ctx);
+              each_blocks[i].c();
+              each_blocks[i].m(each_1_anchor.parentNode, each_1_anchor);
+            }
+          }
+          for (; i < each_blocks.length; i += 1) {
+            each_blocks[i].d(1);
+          }
+          each_blocks.length = each_value_17.length;
+        }
+      },
+      d(detaching) {
+        if (detaching)
+          detach(h5);
+        if (detaching)
+          detach(t1);
+        destroy_each(each_blocks, detaching);
+        if (detaching)
+          detach(each_1_anchor);
       }
     };
   }
   function create_if_block_146(ctx) {
-    let p;
-    let t0_value = ctx[14].length + "";
+    let div1;
+    let header;
     let t0;
+    let span;
+    let t1_value = ctx[19].title + "";
     let t1;
     let t2;
-    let ol;
-    let each_value_9 = ctx[14];
-    let each_blocks = [];
-    for (let i = 0; i < each_value_9.length; i += 1) {
-      each_blocks[i] = create_each_block_93(get_each_context_93(ctx, each_value_9, i));
-    }
+    let button0;
+    let t4;
+    let button1;
+    let t6;
+    let div0;
+    let p;
+    let t7_value = KIND_LABEL[ctx[19].kind] + "";
+    let t7;
+    let t8;
+    let t9;
+    let t10;
+    let t11;
+    let mounted;
+    let dispose;
+    let if_block0 = ctx[19].status && create_if_block_303(ctx);
+    let if_block1 = ctx[19].note && create_if_block_294(ctx);
+    let if_block2 = ctx[19].prereq.length && create_if_block_284(ctx);
+    let if_block3 = ctx[19].best && create_if_block_264(ctx);
+    let if_block4 = ctx[19].routes.length && create_if_block_156(ctx);
+    return {
+      c() {
+        div1 = element("div");
+        header = element("header");
+        if (if_block0)
+          if_block0.c();
+        t0 = space();
+        span = element("span");
+        t1 = text(t1_value);
+        t2 = space();
+        button0 = element("button");
+        button0.textContent = "\u25A4";
+        t4 = space();
+        button1 = element("button");
+        button1.textContent = "\u2715";
+        t6 = space();
+        div0 = element("div");
+        p = element("p");
+        t7 = text(t7_value);
+        t8 = space();
+        if (if_block1)
+          if_block1.c();
+        t9 = space();
+        if (if_block2)
+          if_block2.c();
+        t10 = space();
+        if (if_block3)
+          if_block3.c();
+        t11 = space();
+        if (if_block4)
+          if_block4.c();
+        attr(span, "class", "tech-rowname");
+        attr(button0, "class", "dmg-mini");
+        attr(button0, "title", "Open the XPedia article over the top");
+        attr(button1, "class", "dmg-mini");
+        attr(button1, "title", "Clear the goal");
+        attr(header, "class", "tech-colhead");
+        attr(p, "class", "dmg-cap");
+        attr(div0, "class", "tech-collist");
+        attr(div1, "class", "tech-col tech-goalcol");
+      },
+      m(target, anchor) {
+        insert(target, div1, anchor);
+        append(div1, header);
+        if (if_block0)
+          if_block0.m(header, null);
+        append(header, t0);
+        append(header, span);
+        append(span, t1);
+        append(header, t2);
+        append(header, button0);
+        append(header, t4);
+        append(header, button1);
+        append(div1, t6);
+        append(div1, div0);
+        append(div0, p);
+        append(p, t7);
+        append(div0, t8);
+        if (if_block1)
+          if_block1.m(div0, null);
+        append(div0, t9);
+        if (if_block2)
+          if_block2.m(div0, null);
+        append(div0, t10);
+        if (if_block3)
+          if_block3.m(div0, null);
+        append(div0, t11);
+        if (if_block4)
+          if_block4.m(div0, null);
+        if (!mounted) {
+          dispose = [
+            listen(button0, "click", ctx[62]),
+            listen(button1, "click", ctx[37])
+          ];
+          mounted = true;
+        }
+      },
+      p(ctx2, dirty) {
+        if (ctx2[19].status) {
+          if (if_block0) {
+            if_block0.p(ctx2, dirty);
+          } else {
+            if_block0 = create_if_block_303(ctx2);
+            if_block0.c();
+            if_block0.m(header, t0);
+          }
+        } else if (if_block0) {
+          if_block0.d(1);
+          if_block0 = null;
+        }
+        if (dirty[0] & 524288 && t1_value !== (t1_value = ctx2[19].title + ""))
+          set_data(t1, t1_value);
+        if (dirty[0] & 524288 && t7_value !== (t7_value = KIND_LABEL[ctx2[19].kind] + ""))
+          set_data(t7, t7_value);
+        if (ctx2[19].note) {
+          if (if_block1) {
+            if_block1.p(ctx2, dirty);
+          } else {
+            if_block1 = create_if_block_294(ctx2);
+            if_block1.c();
+            if_block1.m(div0, t9);
+          }
+        } else if (if_block1) {
+          if_block1.d(1);
+          if_block1 = null;
+        }
+        if (ctx2[19].prereq.length) {
+          if (if_block2) {
+            if_block2.p(ctx2, dirty);
+          } else {
+            if_block2 = create_if_block_284(ctx2);
+            if_block2.c();
+            if_block2.m(div0, t10);
+          }
+        } else if (if_block2) {
+          if_block2.d(1);
+          if_block2 = null;
+        }
+        if (ctx2[19].best) {
+          if (if_block3) {
+            if_block3.p(ctx2, dirty);
+          } else {
+            if_block3 = create_if_block_264(ctx2);
+            if_block3.c();
+            if_block3.m(div0, t11);
+          }
+        } else if (if_block3) {
+          if_block3.d(1);
+          if_block3 = null;
+        }
+        if (ctx2[19].routes.length) {
+          if (if_block4) {
+            if_block4.p(ctx2, dirty);
+          } else {
+            if_block4 = create_if_block_156(ctx2);
+            if_block4.c();
+            if_block4.m(div0, null);
+          }
+        } else if (if_block4) {
+          if_block4.d(1);
+          if_block4 = null;
+        }
+      },
+      d(detaching) {
+        if (detaching)
+          detach(div1);
+        if (if_block0)
+          if_block0.d();
+        if (if_block1)
+          if_block1.d();
+        if (if_block2)
+          if_block2.d();
+        if (if_block3)
+          if_block3.d();
+        if (if_block4)
+          if_block4.d();
+        mounted = false;
+        run_all(dispose);
+      }
+    };
+  }
+  function create_if_block_303(ctx) {
+    let span;
+    let span_class_value;
+    let span_title_value;
+    return {
+      c() {
+        span = element("span");
+        attr(span, "class", span_class_value = ctx[44](ctx[19].status));
+        attr(span, "title", span_title_value = ctx[29][ctx[19].status]);
+      },
+      m(target, anchor) {
+        insert(target, span, anchor);
+      },
+      p(ctx2, dirty) {
+        if (dirty[0] & 524288 && span_class_value !== (span_class_value = ctx2[44](ctx2[19].status))) {
+          attr(span, "class", span_class_value);
+        }
+        if (dirty[0] & 524288 && span_title_value !== (span_title_value = ctx2[29][ctx2[19].status])) {
+          attr(span, "title", span_title_value);
+        }
+      },
+      d(detaching) {
+        if (detaching)
+          detach(span);
+      }
+    };
+  }
+  function create_if_block_294(ctx) {
+    let p;
+    let t_value = ctx[19].note + "";
+    let t;
     return {
       c() {
         p = element("p");
-        t0 = text(t0_value);
-        t1 = text(" still needed, in order:");
+        t = text(t_value);
+        attr(p, "class", "dmg-hint tech-goalnote");
+      },
+      m(target, anchor) {
+        insert(target, p, anchor);
+        append(p, t);
+      },
+      p(ctx2, dirty) {
+        if (dirty[0] & 524288 && t_value !== (t_value = ctx2[19].note + ""))
+          set_data(t, t_value);
+      },
+      d(detaching) {
+        if (detaching)
+          detach(p);
+      }
+    };
+  }
+  function create_if_block_284(ctx) {
+    let div;
+    let h5;
+    let t1;
+    let each_value_15 = ctx[19].prereq;
+    let each_blocks = [];
+    for (let i = 0; i < each_value_15.length; i += 1) {
+      each_blocks[i] = create_each_block_153(get_each_context_153(ctx, each_value_15, i));
+    }
+    return {
+      c() {
+        div = element("div");
+        h5 = element("h5");
+        h5.textContent = "Research required";
+        t1 = space();
+        for (let i = 0; i < each_blocks.length; i += 1) {
+          each_blocks[i].c();
+        }
+        attr(h5, "title", "Research the thing itself declares, whichever way you come by it.");
+        attr(div, "class", "tech-group");
+      },
+      m(target, anchor) {
+        insert(target, div, anchor);
+        append(div, h5);
+        append(div, t1);
+        for (let i = 0; i < each_blocks.length; i += 1) {
+          each_blocks[i].m(div, null);
+        }
+      },
+      p(ctx2, dirty) {
+        if (dirty[0] & 537395201 | dirty[1] & 12288) {
+          each_value_15 = ctx2[19].prereq;
+          let i;
+          for (i = 0; i < each_value_15.length; i += 1) {
+            const child_ctx = get_each_context_153(ctx2, each_value_15, i);
+            if (each_blocks[i]) {
+              each_blocks[i].p(child_ctx, dirty);
+            } else {
+              each_blocks[i] = create_each_block_153(child_ctx);
+              each_blocks[i].c();
+              each_blocks[i].m(div, null);
+            }
+          }
+          for (; i < each_blocks.length; i += 1) {
+            each_blocks[i].d(1);
+          }
+          each_blocks.length = each_value_15.length;
+        }
+      },
+      d(detaching) {
+        if (detaching)
+          detach(div);
+        destroy_each(each_blocks, detaching);
+      }
+    };
+  }
+  function create_each_block_153(ctx) {
+    let button;
+    let span0;
+    let span0_class_value;
+    let span0_title_value;
+    let t0;
+    let span1;
+    let t1_value = rul.tr(ctx[109]) + "";
+    let t1;
+    let t2;
+    let mounted;
+    let dispose;
+    function click_handler_6() {
+      return ctx[63](ctx[109]);
+    }
+    return {
+      c() {
+        button = element("button");
+        span0 = element("span");
+        t0 = space();
+        span1 = element("span");
+        t1 = text(t1_value);
         t2 = space();
+        attr(span0, "class", span0_class_value = ctx[44](statusOf(ctx[109], ctx[0])));
+        attr(span0, "title", span0_title_value = ctx[29][statusOf(ctx[109], ctx[0])]);
+        attr(span1, "class", "tech-rowname");
+        attr(button, "class", "tech-row");
+      },
+      m(target, anchor) {
+        insert(target, button, anchor);
+        append(button, span0);
+        append(button, t0);
+        append(button, span1);
+        append(span1, t1);
+        append(button, t2);
+        if (!mounted) {
+          dispose = listen(button, "click", click_handler_6);
+          mounted = true;
+        }
+      },
+      p(new_ctx, dirty) {
+        ctx = new_ctx;
+        if (dirty[0] & 524289 && span0_class_value !== (span0_class_value = ctx[44](statusOf(ctx[109], ctx[0])))) {
+          attr(span0, "class", span0_class_value);
+        }
+        if (dirty[0] & 524289 && span0_title_value !== (span0_title_value = ctx[29][statusOf(ctx[109], ctx[0])])) {
+          attr(span0, "title", span0_title_value);
+        }
+        if (dirty[0] & 524288 && t1_value !== (t1_value = rul.tr(ctx[109]) + ""))
+          set_data(t1, t1_value);
+      },
+      d(detaching) {
+        if (detaching)
+          detach(button);
+        mounted = false;
+        dispose();
+      }
+    };
+  }
+  function create_if_block_264(ctx) {
+    let div;
+    let h5;
+    let t0;
+    let t1_value = ctx[19].best.path.length + "";
+    let t1;
+    let t2;
+    let t3;
+    let p;
+    let t4;
+    let t5_value = GROUP_LABEL[ctx[19].best.group].toLowerCase() + "";
+    let t5;
+    let t6;
+    let t7_value = ctx[19].best.label + "";
+    let t7;
+    let t8;
+    function select_block_type_5(ctx2, dirty) {
+      if (!ctx2[19].best.path.length)
+        return create_if_block_274;
+      return create_else_block_24;
+    }
+    let current_block_type = select_block_type_5(ctx, [-1, -1, -1, -1, -1]);
+    let if_block = current_block_type(ctx);
+    return {
+      c() {
+        div = element("div");
+        h5 = element("h5");
+        t0 = text("Research path \u2014 ");
+        t1 = text(t1_value);
+        t2 = text(" to go");
+        t3 = space();
+        p = element("p");
+        t4 = text("via ");
+        t5 = text(t5_value);
+        t6 = text(": ");
+        t7 = text(t7_value);
+        t8 = space();
+        if_block.c();
+        attr(h5, "title", "The shortest route that has research in it, and everything still missing along it, in an order you could actually take them in.");
+        attr(p, "class", "dmg-cap");
+        attr(div, "class", "tech-group");
+      },
+      m(target, anchor) {
+        insert(target, div, anchor);
+        append(div, h5);
+        append(h5, t0);
+        append(h5, t1);
+        append(h5, t2);
+        append(div, t3);
+        append(div, p);
+        append(p, t4);
+        append(p, t5);
+        append(p, t6);
+        append(p, t7);
+        append(div, t8);
+        if_block.m(div, null);
+      },
+      p(ctx2, dirty) {
+        if (dirty[0] & 524288 && t1_value !== (t1_value = ctx2[19].best.path.length + ""))
+          set_data(t1, t1_value);
+        if (dirty[0] & 524288 && t5_value !== (t5_value = GROUP_LABEL[ctx2[19].best.group].toLowerCase() + ""))
+          set_data(t5, t5_value);
+        if (dirty[0] & 524288 && t7_value !== (t7_value = ctx2[19].best.label + ""))
+          set_data(t7, t7_value);
+        if (current_block_type === (current_block_type = select_block_type_5(ctx2, dirty)) && if_block) {
+          if_block.p(ctx2, dirty);
+        } else {
+          if_block.d(1);
+          if_block = current_block_type(ctx2);
+          if (if_block) {
+            if_block.c();
+            if_block.m(div, null);
+          }
+        }
+      },
+      d(detaching) {
+        if (detaching)
+          detach(div);
+        if_block.d();
+      }
+    };
+  }
+  function create_else_block_24(ctx) {
+    let ol;
+    let each_value_14 = ctx[19].best.path;
+    let each_blocks = [];
+    for (let i = 0; i < each_value_14.length; i += 1) {
+      each_blocks[i] = create_each_block_144(get_each_context_144(ctx, each_value_14, i));
+    }
+    return {
+      c() {
         ol = element("ol");
         for (let i = 0; i < each_blocks.length; i += 1) {
           each_blocks[i].c();
         }
-        attr(p, "class", "dmg-cap");
         attr(ol, "class", "dmg-goalpath");
       },
       m(target, anchor) {
-        insert(target, p, anchor);
-        append(p, t0);
-        append(p, t1);
-        insert(target, t2, anchor);
         insert(target, ol, anchor);
         for (let i = 0; i < each_blocks.length; i += 1) {
           each_blocks[i].m(ol, null);
         }
       },
       p(ctx2, dirty) {
-        if (dirty[0] & 16384 && t0_value !== (t0_value = ctx2[14].length + ""))
-          set_data(t0, t0_value);
-        if (dirty[0] & 1610629121) {
-          each_value_9 = ctx2[14];
+        if (dirty[0] & 537395201 | dirty[1] & 12288) {
+          each_value_14 = ctx2[19].best.path;
           let i;
-          for (i = 0; i < each_value_9.length; i += 1) {
-            const child_ctx = get_each_context_93(ctx2, each_value_9, i);
+          for (i = 0; i < each_value_14.length; i += 1) {
+            const child_ctx = get_each_context_144(ctx2, each_value_14, i);
             if (each_blocks[i]) {
               each_blocks[i].p(child_ctx, dirty);
             } else {
-              each_blocks[i] = create_each_block_93(child_ctx);
+              each_blocks[i] = create_each_block_144(child_ctx);
               each_blocks[i].c();
               each_blocks[i].m(ol, null);
             }
@@ -49897,26 +52291,22 @@
           for (; i < each_blocks.length; i += 1) {
             each_blocks[i].d(1);
           }
-          each_blocks.length = each_value_9.length;
+          each_blocks.length = each_value_14.length;
         }
       },
       d(detaching) {
-        if (detaching)
-          detach(p);
-        if (detaching)
-          detach(t2);
         if (detaching)
           detach(ol);
         destroy_each(each_blocks, detaching);
       }
     };
   }
-  function create_if_block_137(ctx) {
+  function create_if_block_274(ctx) {
     let p;
     return {
       c() {
         p = element("p");
-        p.textContent = "Already researched.";
+        p.textContent = "Nothing left \u2014 this route is open.";
         attr(p, "class", "dmg-hint");
       },
       m(target, anchor) {
@@ -49929,37 +52319,20 @@
       }
     };
   }
-  function create_if_block_1210(ctx) {
-    let p;
-    return {
-      c() {
-        p = element("p");
-        p.textContent = "No topic with that id.";
-        attr(p, "class", "dmg-hint");
-      },
-      m(target, anchor) {
-        insert(target, p, anchor);
-      },
-      p: noop,
-      d(detaching) {
-        if (detaching)
-          detach(p);
-      }
-    };
-  }
-  function create_each_block_93(ctx) {
+  function create_each_block_144(ctx) {
     let li;
     let span;
     let span_class_value;
+    let span_title_value;
     let t0;
     let button;
-    let t1_value = rul.tr(ctx[86]) + "";
+    let t1_value = rul.tr(ctx[127]) + "";
     let t1;
     let t2;
     let mounted;
     let dispose;
-    function click_handler_4() {
-      return ctx[45](ctx[86]);
+    function click_handler_7() {
+      return ctx[64](ctx[127]);
     }
     return {
       c() {
@@ -49969,7 +52342,8 @@
         button = element("button");
         t1 = text(t1_value);
         t2 = space();
-        attr(span, "class", span_class_value = ctx[30](statusOf(ctx[86], ctx[0])));
+        attr(span, "class", span_class_value = ctx[44](statusOf(ctx[127], ctx[0])));
+        attr(span, "title", span_title_value = ctx[29][statusOf(ctx[127], ctx[0])]);
         attr(button, "class", "dmg-linkish");
       },
       m(target, anchor) {
@@ -49980,21 +52354,1065 @@
         append(button, t1);
         append(li, t2);
         if (!mounted) {
-          dispose = listen(button, "click", click_handler_4);
+          dispose = listen(button, "click", click_handler_7);
           mounted = true;
         }
       },
       p(new_ctx, dirty) {
         ctx = new_ctx;
-        if (dirty[0] & 16385 && span_class_value !== (span_class_value = ctx[30](statusOf(ctx[86], ctx[0])))) {
+        if (dirty[0] & 524289 && span_class_value !== (span_class_value = ctx[44](statusOf(ctx[127], ctx[0])))) {
           attr(span, "class", span_class_value);
         }
-        if (dirty[0] & 16384 && t1_value !== (t1_value = rul.tr(ctx[86]) + ""))
+        if (dirty[0] & 524289 && span_title_value !== (span_title_value = ctx[29][statusOf(ctx[127], ctx[0])])) {
+          attr(span, "title", span_title_value);
+        }
+        if (dirty[0] & 524288 && t1_value !== (t1_value = rul.tr(ctx[127]) + ""))
           set_data(t1, t1_value);
       },
       d(detaching) {
         if (detaching)
           detach(li);
+        mounted = false;
+        dispose();
+      }
+    };
+  }
+  function create_if_block_156(ctx) {
+    let div;
+    let h5;
+    let t1;
+    let each_value_10 = ctx[19].routes;
+    let each_blocks = [];
+    for (let i = 0; i < each_value_10.length; i += 1) {
+      each_blocks[i] = create_each_block_103(get_each_context_103(ctx, each_value_10, i));
+    }
+    return {
+      c() {
+        div = element("div");
+        h5 = element("h5");
+        h5.textContent = "How to get it";
+        t1 = space();
+        for (let i = 0; i < each_blocks.length; i += 1) {
+          each_blocks[i].c();
+        }
+        attr(div, "class", "tech-group");
+      },
+      m(target, anchor) {
+        insert(target, div, anchor);
+        append(div, h5);
+        append(div, t1);
+        for (let i = 0; i < each_blocks.length; i += 1) {
+          each_blocks[i].m(div, null);
+        }
+      },
+      p(ctx2, dirty) {
+        if (dirty[0] & 537657345 | dirty[1] & 14208) {
+          each_value_10 = ctx2[19].routes;
+          let i;
+          for (i = 0; i < each_value_10.length; i += 1) {
+            const child_ctx = get_each_context_103(ctx2, each_value_10, i);
+            if (each_blocks[i]) {
+              each_blocks[i].p(child_ctx, dirty);
+            } else {
+              each_blocks[i] = create_each_block_103(child_ctx);
+              each_blocks[i].c();
+              each_blocks[i].m(div, null);
+            }
+          }
+          for (; i < each_blocks.length; i += 1) {
+            each_blocks[i].d(1);
+          }
+          each_blocks.length = each_value_10.length;
+        }
+      },
+      d(detaching) {
+        if (detaching)
+          detach(div);
+        destroy_each(each_blocks, detaching);
+      }
+    };
+  }
+  function create_if_block_254(ctx) {
+    let span;
+    let t_value = ctx[109].open ? "open" : ctx[109].path.length + " to research";
+    let t;
+    return {
+      c() {
+        span = element("span");
+        t = text(t_value);
+        attr(span, "class", "dmg-cap");
+      },
+      m(target, anchor) {
+        insert(target, span, anchor);
+        append(span, t);
+      },
+      p(ctx2, dirty) {
+        if (dirty[0] & 524288 && t_value !== (t_value = ctx2[109].open ? "open" : ctx2[109].path.length + " to research"))
+          set_data(t, t_value);
+      },
+      d(detaching) {
+        if (detaching)
+          detach(span);
+      }
+    };
+  }
+  function create_each_block_134(ctx) {
+    let button;
+    let span0;
+    let span0_class_value;
+    let span0_title_value;
+    let t0;
+    let span1;
+    let t1_value = rul.tr(ctx[124]) + "";
+    let t1;
+    let mounted;
+    let dispose;
+    function click_handler_8() {
+      return ctx[65](ctx[124]);
+    }
+    return {
+      c() {
+        button = element("button");
+        span0 = element("span");
+        t0 = space();
+        span1 = element("span");
+        t1 = text(t1_value);
+        attr(span0, "class", span0_class_value = ctx[44](statusOf(ctx[124], ctx[0])));
+        attr(span0, "title", span0_title_value = ctx[29][statusOf(ctx[124], ctx[0])]);
+        attr(span1, "class", "tech-rowname");
+        attr(button, "class", "tech-row");
+      },
+      m(target, anchor) {
+        insert(target, button, anchor);
+        append(button, span0);
+        append(button, t0);
+        append(button, span1);
+        append(span1, t1);
+        if (!mounted) {
+          dispose = listen(button, "click", click_handler_8);
+          mounted = true;
+        }
+      },
+      p(new_ctx, dirty) {
+        ctx = new_ctx;
+        if (dirty[0] & 524289 && span0_class_value !== (span0_class_value = ctx[44](statusOf(ctx[124], ctx[0])))) {
+          attr(span0, "class", span0_class_value);
+        }
+        if (dirty[0] & 524289 && span0_title_value !== (span0_title_value = ctx[29][statusOf(ctx[124], ctx[0])])) {
+          attr(span0, "title", span0_title_value);
+        }
+        if (dirty[0] & 524288 && t1_value !== (t1_value = rul.tr(ctx[124]) + ""))
+          set_data(t1, t1_value);
+      },
+      d(detaching) {
+        if (detaching)
+          detach(button);
+        mounted = false;
+        dispose();
+      }
+    };
+  }
+  function create_if_block_244(ctx) {
+    let p;
+    let t0;
+    let t1_value = ctx[109].services.join(", ") + "";
+    let t1;
+    let t2;
+    return {
+      c() {
+        p = element("p");
+        t0 = text("Needs base services: ");
+        t1 = text(t1_value);
+        t2 = text(" \u2014 not checked here.");
+        attr(p, "class", "dmg-hint");
+      },
+      m(target, anchor) {
+        insert(target, p, anchor);
+        append(p, t0);
+        append(p, t1);
+        append(p, t2);
+      },
+      p(ctx2, dirty) {
+        if (dirty[0] & 524288 && t1_value !== (t1_value = ctx2[109].services.join(", ") + ""))
+          set_data(t1, t1_value);
+      },
+      d(detaching) {
+        if (detaching)
+          detach(p);
+      }
+    };
+  }
+  function create_else_block_19(ctx) {
+    let t;
+    let if_block_anchor;
+    let each_value_12 = ctx[40](ctx[109].via, ctx[38](ctx[19].id, ctx[116]), ctx[18]);
+    let each_blocks = [];
+    for (let i = 0; i < each_value_12.length; i += 1) {
+      each_blocks[i] = create_each_block_124(get_each_context_124(ctx, each_value_12, i));
+    }
+    let if_block = ctx[109].via.length > VIA_LIMIT && create_if_block_234(ctx);
+    return {
+      c() {
+        for (let i = 0; i < each_blocks.length; i += 1) {
+          each_blocks[i].c();
+        }
+        t = space();
+        if (if_block)
+          if_block.c();
+        if_block_anchor = empty();
+      },
+      m(target, anchor) {
+        for (let i = 0; i < each_blocks.length; i += 1) {
+          each_blocks[i].m(target, anchor);
+        }
+        insert(target, t, anchor);
+        if (if_block)
+          if_block.m(target, anchor);
+        insert(target, if_block_anchor, anchor);
+      },
+      p(ctx2, dirty) {
+        if (dirty[0] & 786432 | dirty[1] & 640) {
+          each_value_12 = ctx2[40](ctx2[109].via, ctx2[38](ctx2[19].id, ctx2[116]), ctx2[18]);
+          let i;
+          for (i = 0; i < each_value_12.length; i += 1) {
+            const child_ctx = get_each_context_124(ctx2, each_value_12, i);
+            if (each_blocks[i]) {
+              each_blocks[i].p(child_ctx, dirty);
+            } else {
+              each_blocks[i] = create_each_block_124(child_ctx);
+              each_blocks[i].c();
+              each_blocks[i].m(t.parentNode, t);
+            }
+          }
+          for (; i < each_blocks.length; i += 1) {
+            each_blocks[i].d(1);
+          }
+          each_blocks.length = each_value_12.length;
+        }
+        if (ctx2[109].via.length > VIA_LIMIT) {
+          if (if_block) {
+            if_block.p(ctx2, dirty);
+          } else {
+            if_block = create_if_block_234(ctx2);
+            if_block.c();
+            if_block.m(if_block_anchor.parentNode, if_block_anchor);
+          }
+        } else if (if_block) {
+          if_block.d(1);
+          if_block = null;
+        }
+      },
+      d(detaching) {
+        destroy_each(each_blocks, detaching);
+        if (detaching)
+          detach(t);
+        if (if_block)
+          if_block.d(detaching);
+        if (detaching)
+          detach(if_block_anchor);
+      }
+    };
+  }
+  function create_if_block_166(ctx) {
+    let if_block_anchor;
+    function select_block_type_7(ctx2, dirty) {
+      if (!ctx2[109].salvage.ready)
+        return create_if_block_176;
+      if (!ctx2[109].salvage.sets.length)
+        return create_if_block_186;
+      return create_else_block20;
+    }
+    let current_block_type = select_block_type_7(ctx, [-1, -1, -1, -1, -1]);
+    let if_block = current_block_type(ctx);
+    return {
+      c() {
+        if_block.c();
+        if_block_anchor = empty();
+      },
+      m(target, anchor) {
+        if_block.m(target, anchor);
+        insert(target, if_block_anchor, anchor);
+      },
+      p(ctx2, dirty) {
+        if (current_block_type === (current_block_type = select_block_type_7(ctx2, dirty)) && if_block) {
+          if_block.p(ctx2, dirty);
+        } else {
+          if_block.d(1);
+          if_block = current_block_type(ctx2);
+          if (if_block) {
+            if_block.c();
+            if_block.m(if_block_anchor.parentNode, if_block_anchor);
+          }
+        }
+      },
+      d(detaching) {
+        if_block.d(detaching);
+        if (detaching)
+          detach(if_block_anchor);
+      }
+    };
+  }
+  function create_each_block_124(ctx) {
+    let p;
+    let t_value = ctx[121] + "";
+    let t;
+    return {
+      c() {
+        p = element("p");
+        t = text(t_value);
+        attr(p, "class", "dmg-cap tech-via");
+      },
+      m(target, anchor) {
+        insert(target, p, anchor);
+        append(p, t);
+      },
+      p(ctx2, dirty) {
+        if (dirty[0] & 786432 && t_value !== (t_value = ctx2[121] + ""))
+          set_data(t, t_value);
+      },
+      d(detaching) {
+        if (detaching)
+          detach(p);
+      }
+    };
+  }
+  function create_if_block_234(ctx) {
+    let button;
+    let t_value = ctx[18].has(ctx[38](ctx[19].id, ctx[116])) ? "show fewer" : "\u2026and " + (ctx[109].via.length - VIA_LIMIT) + " more";
+    let t;
+    let mounted;
+    let dispose;
+    function click_handler_10() {
+      return ctx[67](ctx[116]);
+    }
+    return {
+      c() {
+        button = element("button");
+        t = text(t_value);
+        attr(button, "class", "dmg-linkish tech-viamore");
+      },
+      m(target, anchor) {
+        insert(target, button, anchor);
+        append(button, t);
+        if (!mounted) {
+          dispose = listen(button, "click", click_handler_10);
+          mounted = true;
+        }
+      },
+      p(new_ctx, dirty) {
+        ctx = new_ctx;
+        if (dirty[0] & 786432 && t_value !== (t_value = ctx[18].has(ctx[38](ctx[19].id, ctx[116])) ? "show fewer" : "\u2026and " + (ctx[109].via.length - VIA_LIMIT) + " more"))
+          set_data(t, t_value);
+      },
+      d(detaching) {
+        if (detaching)
+          detach(button);
+        mounted = false;
+        dispose();
+      }
+    };
+  }
+  function create_else_block20(ctx) {
+    let p;
+    let t0;
+    let t1_value = ctx[109].salvage.sets.length == 1 ? "" : "s";
+    let t1;
+    let t2;
+    let t3_value = ctx[109].salvage.sets.map(func6).join(", ") + "";
+    let t3;
+    let t4;
+    let t5;
+    let if_block_anchor;
+    let each_value_11 = ctx[41];
+    let each_blocks = [];
+    for (let i = 0; i < each_value_11.length; i += 1) {
+      each_blocks[i] = create_each_block_113(get_each_context_114(ctx, each_value_11, i));
+    }
+    let if_block = !ctx[109].salvage.crafts.length && !ctx[109].salvage.terrains.length && create_if_block_205(ctx);
+    return {
+      c() {
+        p = element("p");
+        t0 = text("Tileset");
+        t1 = text(t1_value);
+        t2 = text(":\n                          ");
+        t3 = text(t3_value);
+        t4 = space();
+        for (let i = 0; i < each_blocks.length; i += 1) {
+          each_blocks[i].c();
+        }
+        t5 = space();
+        if (if_block)
+          if_block.c();
+        if_block_anchor = empty();
+        attr(p, "class", "dmg-cap tech-via tech-salvage");
+      },
+      m(target, anchor) {
+        insert(target, p, anchor);
+        append(p, t0);
+        append(p, t1);
+        append(p, t2);
+        append(p, t3);
+        insert(target, t4, anchor);
+        for (let i = 0; i < each_blocks.length; i += 1) {
+          each_blocks[i].m(target, anchor);
+        }
+        insert(target, t5, anchor);
+        if (if_block)
+          if_block.m(target, anchor);
+        insert(target, if_block_anchor, anchor);
+      },
+      p(ctx2, dirty) {
+        if (dirty[0] & 524288 && t1_value !== (t1_value = ctx2[109].salvage.sets.length == 1 ? "" : "s"))
+          set_data(t1, t1_value);
+        if (dirty[0] & 524288 && t3_value !== (t3_value = ctx2[109].salvage.sets.map(func6).join(", ") + ""))
+          set_data(t3, t3_value);
+        if (dirty[0] & 786432 | dirty[1] & 1920) {
+          each_value_11 = ctx2[41];
+          let i;
+          for (i = 0; i < each_value_11.length; i += 1) {
+            const child_ctx = get_each_context_114(ctx2, each_value_11, i);
+            if (each_blocks[i]) {
+              each_blocks[i].p(child_ctx, dirty);
+            } else {
+              each_blocks[i] = create_each_block_113(child_ctx);
+              each_blocks[i].c();
+              each_blocks[i].m(t5.parentNode, t5);
+            }
+          }
+          for (; i < each_blocks.length; i += 1) {
+            each_blocks[i].d(1);
+          }
+          each_blocks.length = each_value_11.length;
+        }
+        if (!ctx2[109].salvage.crafts.length && !ctx2[109].salvage.terrains.length) {
+          if (if_block) {
+          } else {
+            if_block = create_if_block_205(ctx2);
+            if_block.c();
+            if_block.m(if_block_anchor.parentNode, if_block_anchor);
+          }
+        } else if (if_block) {
+          if_block.d(1);
+          if_block = null;
+        }
+      },
+      d(detaching) {
+        if (detaching)
+          detach(p);
+        if (detaching)
+          detach(t4);
+        destroy_each(each_blocks, detaching);
+        if (detaching)
+          detach(t5);
+        if (if_block)
+          if_block.d(detaching);
+        if (detaching)
+          detach(if_block_anchor);
+      }
+    };
+  }
+  function create_if_block_186(ctx) {
+    let if_block_anchor;
+    let if_block = ctx[109].salvage.problem && create_if_block_195(ctx);
+    return {
+      c() {
+        if (if_block)
+          if_block.c();
+        if_block_anchor = empty();
+      },
+      m(target, anchor) {
+        if (if_block)
+          if_block.m(target, anchor);
+        insert(target, if_block_anchor, anchor);
+      },
+      p(ctx2, dirty) {
+        if (ctx2[109].salvage.problem) {
+          if (if_block) {
+            if_block.p(ctx2, dirty);
+          } else {
+            if_block = create_if_block_195(ctx2);
+            if_block.c();
+            if_block.m(if_block_anchor.parentNode, if_block_anchor);
+          }
+        } else if (if_block) {
+          if_block.d(1);
+          if_block = null;
+        }
+      },
+      d(detaching) {
+        if (if_block)
+          if_block.d(detaching);
+        if (detaching)
+          detach(if_block_anchor);
+      }
+    };
+  }
+  function create_if_block_176(ctx) {
+    let p;
+    return {
+      c() {
+        p = element("p");
+        p.textContent = "Reading the tileset files\u2026";
+        attr(p, "class", "dmg-hint");
+      },
+      m(target, anchor) {
+        insert(target, p, anchor);
+      },
+      p: noop,
+      d(detaching) {
+        if (detaching)
+          detach(p);
+      }
+    };
+  }
+  function create_if_block_219(ctx) {
+    let p;
+    let b;
+    let t0_value = ctx[118] + "";
+    let t0;
+    let t1;
+    let t2_value = ctx[40](ctx[109].salvage[ctx[117]], ctx[38](ctx[19].id, ctx[116], ctx[117]), ctx[18]).join(" \xB7 ") + "";
+    let t2;
+    let t3;
+    let if_block = ctx[109].salvage[ctx[117]].length > VIA_LIMIT && create_if_block_225(ctx);
+    return {
+      c() {
+        p = element("p");
+        b = element("b");
+        t0 = text(t0_value);
+        t1 = space();
+        t2 = text(t2_value);
+        t3 = space();
+        if (if_block)
+          if_block.c();
+        attr(p, "class", "dmg-cap tech-via tech-salvage");
+      },
+      m(target, anchor) {
+        insert(target, p, anchor);
+        append(p, b);
+        append(b, t0);
+        append(p, t1);
+        append(p, t2);
+        append(p, t3);
+        if (if_block)
+          if_block.m(p, null);
+      },
+      p(ctx2, dirty) {
+        if (dirty[0] & 786432 && t2_value !== (t2_value = ctx2[40](ctx2[109].salvage[ctx2[117]], ctx2[38](ctx2[19].id, ctx2[116], ctx2[117]), ctx2[18]).join(" \xB7 ") + ""))
+          set_data(t2, t2_value);
+        if (ctx2[109].salvage[ctx2[117]].length > VIA_LIMIT) {
+          if (if_block) {
+            if_block.p(ctx2, dirty);
+          } else {
+            if_block = create_if_block_225(ctx2);
+            if_block.c();
+            if_block.m(p, null);
+          }
+        } else if (if_block) {
+          if_block.d(1);
+          if_block = null;
+        }
+      },
+      d(detaching) {
+        if (detaching)
+          detach(p);
+        if (if_block)
+          if_block.d();
+      }
+    };
+  }
+  function create_if_block_225(ctx) {
+    let button;
+    let t_value = ctx[18].has(ctx[38](ctx[19].id, ctx[116], ctx[117])) ? "show fewer" : "\u2026and " + (ctx[109].salvage[ctx[117]].length - VIA_LIMIT) + " more";
+    let t;
+    let mounted;
+    let dispose;
+    function click_handler_9() {
+      return ctx[66](ctx[116], ctx[117]);
+    }
+    return {
+      c() {
+        button = element("button");
+        t = text(t_value);
+        attr(button, "class", "dmg-linkish tech-viamore");
+      },
+      m(target, anchor) {
+        insert(target, button, anchor);
+        append(button, t);
+        if (!mounted) {
+          dispose = listen(button, "click", click_handler_9);
+          mounted = true;
+        }
+      },
+      p(new_ctx, dirty) {
+        ctx = new_ctx;
+        if (dirty[0] & 786432 && t_value !== (t_value = ctx[18].has(ctx[38](ctx[19].id, ctx[116], ctx[117])) ? "show fewer" : "\u2026and " + (ctx[109].salvage[ctx[117]].length - VIA_LIMIT) + " more"))
+          set_data(t, t_value);
+      },
+      d(detaching) {
+        if (detaching)
+          detach(button);
+        mounted = false;
+        dispose();
+      }
+    };
+  }
+  function create_each_block_113(ctx) {
+    let if_block_anchor;
+    let if_block = ctx[109].salvage[ctx[117]].length && create_if_block_219(ctx);
+    return {
+      c() {
+        if (if_block)
+          if_block.c();
+        if_block_anchor = empty();
+      },
+      m(target, anchor) {
+        if (if_block)
+          if_block.m(target, anchor);
+        insert(target, if_block_anchor, anchor);
+      },
+      p(ctx2, dirty) {
+        if (ctx2[109].salvage[ctx2[117]].length) {
+          if (if_block) {
+            if_block.p(ctx2, dirty);
+          } else {
+            if_block = create_if_block_219(ctx2);
+            if_block.c();
+            if_block.m(if_block_anchor.parentNode, if_block_anchor);
+          }
+        } else if (if_block) {
+          if_block.d(1);
+          if_block = null;
+        }
+      },
+      d(detaching) {
+        if (if_block)
+          if_block.d(detaching);
+        if (detaching)
+          detach(if_block_anchor);
+      }
+    };
+  }
+  function create_if_block_205(ctx) {
+    let p;
+    return {
+      c() {
+        p = element("p");
+        p.textContent = "Nothing in the ruleset builds a map out of that tileset, so it is\n                            reachable only through map blocks the pedia does not read.";
+        attr(p, "class", "dmg-hint");
+      },
+      m(target, anchor) {
+        insert(target, p, anchor);
+      },
+      d(detaching) {
+        if (detaching)
+          detach(p);
+      }
+    };
+  }
+  function create_if_block_195(ctx) {
+    let p;
+    let t_value = ctx[109].salvage.problem + "";
+    let t;
+    return {
+      c() {
+        p = element("p");
+        t = text(t_value);
+        attr(p, "class", "dmg-hint");
+      },
+      m(target, anchor) {
+        insert(target, p, anchor);
+        append(p, t);
+      },
+      p(ctx2, dirty) {
+        if (dirty[0] & 524288 && t_value !== (t_value = ctx2[109].salvage.problem + ""))
+          set_data(t, t_value);
+      },
+      d(detaching) {
+        if (detaching)
+          detach(p);
+      }
+    };
+  }
+  function create_each_block_103(ctx) {
+    let div1;
+    let div0;
+    let t0_value = GROUP_LABEL[ctx[109].group] + "";
+    let t0;
+    let t1;
+    let div0_title_value;
+    let t2;
+    let p;
+    let t3_value = ctx[109].label + "";
+    let t3;
+    let t4;
+    let t5;
+    let t6;
+    let t7;
+    let if_block0 = ctx[109].gates.length && create_if_block_254(ctx);
+    let each_value_13 = ctx[109].gates;
+    let each_blocks = [];
+    for (let i = 0; i < each_value_13.length; i += 1) {
+      each_blocks[i] = create_each_block_134(get_each_context_134(ctx, each_value_13, i));
+    }
+    let if_block1 = ctx[109].services.length && create_if_block_244(ctx);
+    function select_block_type_6(ctx2, dirty) {
+      if (ctx2[109].salvage)
+        return create_if_block_166;
+      return create_else_block_19;
+    }
+    let current_block_type = select_block_type_6(ctx, [-1, -1, -1, -1, -1]);
+    let if_block2 = current_block_type(ctx);
+    return {
+      c() {
+        div1 = element("div");
+        div0 = element("div");
+        t0 = text(t0_value);
+        t1 = space();
+        if (if_block0)
+          if_block0.c();
+        t2 = space();
+        p = element("p");
+        t3 = text(t3_value);
+        t4 = space();
+        for (let i = 0; i < each_blocks.length; i += 1) {
+          each_blocks[i].c();
+        }
+        t5 = space();
+        if (if_block1)
+          if_block1.c();
+        t6 = space();
+        if_block2.c();
+        t7 = space();
+        attr(div0, "class", "tech-routehead");
+        attr(div0, "title", div0_title_value = GROUP_HINT[ctx[109].group]);
+        attr(p, "class", "dmg-cap");
+        attr(div1, "class", "tech-route");
+        toggle_class(div1, "tech-route-open", ctx[109].open);
+      },
+      m(target, anchor) {
+        insert(target, div1, anchor);
+        append(div1, div0);
+        append(div0, t0);
+        append(div0, t1);
+        if (if_block0)
+          if_block0.m(div0, null);
+        append(div1, t2);
+        append(div1, p);
+        append(p, t3);
+        append(div1, t4);
+        for (let i = 0; i < each_blocks.length; i += 1) {
+          each_blocks[i].m(div1, null);
+        }
+        append(div1, t5);
+        if (if_block1)
+          if_block1.m(div1, null);
+        append(div1, t6);
+        if_block2.m(div1, null);
+        append(div1, t7);
+      },
+      p(ctx2, dirty) {
+        if (dirty[0] & 524288 && t0_value !== (t0_value = GROUP_LABEL[ctx2[109].group] + ""))
+          set_data(t0, t0_value);
+        if (ctx2[109].gates.length) {
+          if (if_block0) {
+            if_block0.p(ctx2, dirty);
+          } else {
+            if_block0 = create_if_block_254(ctx2);
+            if_block0.c();
+            if_block0.m(div0, null);
+          }
+        } else if (if_block0) {
+          if_block0.d(1);
+          if_block0 = null;
+        }
+        if (dirty[0] & 524288 && div0_title_value !== (div0_title_value = GROUP_HINT[ctx2[109].group])) {
+          attr(div0, "title", div0_title_value);
+        }
+        if (dirty[0] & 524288 && t3_value !== (t3_value = ctx2[109].label + ""))
+          set_data(t3, t3_value);
+        if (dirty[0] & 537395201 | dirty[1] & 12288) {
+          each_value_13 = ctx2[109].gates;
+          let i;
+          for (i = 0; i < each_value_13.length; i += 1) {
+            const child_ctx = get_each_context_134(ctx2, each_value_13, i);
+            if (each_blocks[i]) {
+              each_blocks[i].p(child_ctx, dirty);
+            } else {
+              each_blocks[i] = create_each_block_134(child_ctx);
+              each_blocks[i].c();
+              each_blocks[i].m(div1, t5);
+            }
+          }
+          for (; i < each_blocks.length; i += 1) {
+            each_blocks[i].d(1);
+          }
+          each_blocks.length = each_value_13.length;
+        }
+        if (ctx2[109].services.length) {
+          if (if_block1) {
+            if_block1.p(ctx2, dirty);
+          } else {
+            if_block1 = create_if_block_244(ctx2);
+            if_block1.c();
+            if_block1.m(div1, t6);
+          }
+        } else if (if_block1) {
+          if_block1.d(1);
+          if_block1 = null;
+        }
+        if (current_block_type === (current_block_type = select_block_type_6(ctx2, dirty)) && if_block2) {
+          if_block2.p(ctx2, dirty);
+        } else {
+          if_block2.d(1);
+          if_block2 = current_block_type(ctx2);
+          if (if_block2) {
+            if_block2.c();
+            if_block2.m(div1, t7);
+          }
+        }
+        if (dirty[0] & 524288) {
+          toggle_class(div1, "tech-route-open", ctx2[109].open);
+        }
+      },
+      d(detaching) {
+        if (detaching)
+          detach(div1);
+        if (if_block0)
+          if_block0.d();
+        destroy_each(each_blocks, detaching);
+        if (if_block1)
+          if_block1.d();
+        if_block2.d();
+      }
+    };
+  }
+  function create_if_block_107(ctx) {
+    let div1;
+    let header;
+    let t0_value = ctx[28].find(ctx[68]).label + "";
+    let t0;
+    let t1;
+    let span;
+    let t2_value = ctx[24].length + "";
+    let t2;
+    let t3;
+    let t4;
+    let div0;
+    let t5;
+    let t6;
+    let if_block0 = ctx[3] != "progress" && create_if_block_137(ctx);
+    let each_value_8 = ctx[24].slice(0, 600);
+    let each_blocks = [];
+    for (let i = 0; i < each_value_8.length; i += 1) {
+      each_blocks[i] = create_each_block_83(get_each_context_83(ctx, each_value_8, i));
+    }
+    let if_block1 = ctx[24].length > 600 && create_if_block_1210(ctx);
+    let if_block2 = !ctx[24].length && create_if_block_1112(ctx);
+    return {
+      c() {
+        div1 = element("div");
+        header = element("header");
+        t0 = text(t0_value);
+        t1 = space();
+        span = element("span");
+        t2 = text(t2_value);
+        t3 = space();
+        if (if_block0)
+          if_block0.c();
+        t4 = space();
+        div0 = element("div");
+        for (let i = 0; i < each_blocks.length; i += 1) {
+          each_blocks[i].c();
+        }
+        t5 = space();
+        if (if_block1)
+          if_block1.c();
+        t6 = space();
+        if (if_block2)
+          if_block2.c();
+        attr(span, "class", "dmg-cap");
+        attr(header, "class", "tech-colhead");
+        attr(div0, "class", "tech-collist");
+        attr(div1, "class", "tech-col");
+      },
+      m(target, anchor) {
+        insert(target, div1, anchor);
+        append(div1, header);
+        append(header, t0);
+        append(header, t1);
+        append(header, span);
+        append(span, t2);
+        append(div1, t3);
+        if (if_block0)
+          if_block0.m(div1, null);
+        append(div1, t4);
+        append(div1, div0);
+        for (let i = 0; i < each_blocks.length; i += 1) {
+          each_blocks[i].m(div0, null);
+        }
+        append(div0, t5);
+        if (if_block1)
+          if_block1.m(div0, null);
+        append(div0, t6);
+        if (if_block2)
+          if_block2.m(div0, null);
+      },
+      p(ctx2, dirty) {
+        if (dirty[0] & 8 && t0_value !== (t0_value = ctx2[28].find(ctx2[68]).label + ""))
+          set_data(t0, t0_value);
+        if (dirty[0] & 16777216 && t2_value !== (t2_value = ctx2[24].length + ""))
+          set_data(t2, t2_value);
+        if (ctx2[3] != "progress") {
+          if (if_block0) {
+            if_block0.p(ctx2, dirty);
+          } else {
+            if_block0 = create_if_block_137(ctx2);
+            if_block0.c();
+            if_block0.m(div1, t4);
+          }
+        } else if (if_block0) {
+          if_block0.d(1);
+          if_block0 = null;
+        }
+        if (dirty[0] & 553648134 | dirty[1] & 12289) {
+          each_value_8 = ctx2[24].slice(0, 600);
+          let i;
+          for (i = 0; i < each_value_8.length; i += 1) {
+            const child_ctx = get_each_context_83(ctx2, each_value_8, i);
+            if (each_blocks[i]) {
+              each_blocks[i].p(child_ctx, dirty);
+            } else {
+              each_blocks[i] = create_each_block_83(child_ctx);
+              each_blocks[i].c();
+              each_blocks[i].m(div0, t5);
+            }
+          }
+          for (; i < each_blocks.length; i += 1) {
+            each_blocks[i].d(1);
+          }
+          each_blocks.length = each_value_8.length;
+        }
+        if (ctx2[24].length > 600) {
+          if (if_block1) {
+            if_block1.p(ctx2, dirty);
+          } else {
+            if_block1 = create_if_block_1210(ctx2);
+            if_block1.c();
+            if_block1.m(div0, t6);
+          }
+        } else if (if_block1) {
+          if_block1.d(1);
+          if_block1 = null;
+        }
+        if (!ctx2[24].length) {
+          if (if_block2) {
+          } else {
+            if_block2 = create_if_block_1112(ctx2);
+            if_block2.c();
+            if_block2.m(div0, null);
+          }
+        } else if (if_block2) {
+          if_block2.d(1);
+          if_block2 = null;
+        }
+      },
+      d(detaching) {
+        if (detaching)
+          detach(div1);
+        if (if_block0)
+          if_block0.d();
+        destroy_each(each_blocks, detaching);
+        if (if_block1)
+          if_block1.d();
+        if (if_block2)
+          if_block2.d();
+      }
+    };
+  }
+  function create_if_block_137(ctx) {
+    let div;
+    let each_value_9 = ctx[27];
+    let each_blocks = [];
+    for (let i = 0; i < each_value_9.length; i += 1) {
+      each_blocks[i] = create_each_block_93(get_each_context_93(ctx, each_value_9, i));
+    }
+    return {
+      c() {
+        div = element("div");
+        for (let i = 0; i < each_blocks.length; i += 1) {
+          each_blocks[i].c();
+        }
+        attr(div, "class", "dmg-chips tech-colsort");
+      },
+      m(target, anchor) {
+        insert(target, div, anchor);
+        for (let i = 0; i < each_blocks.length; i += 1) {
+          each_blocks[i].m(div, null);
+        }
+      },
+      p(ctx2, dirty) {
+        if (dirty[0] & 134217984) {
+          each_value_9 = ctx2[27];
+          let i;
+          for (i = 0; i < each_value_9.length; i += 1) {
+            const child_ctx = get_each_context_93(ctx2, each_value_9, i);
+            if (each_blocks[i]) {
+              each_blocks[i].p(child_ctx, dirty);
+            } else {
+              each_blocks[i] = create_each_block_93(child_ctx);
+              each_blocks[i].c();
+              each_blocks[i].m(div, null);
+            }
+          }
+          for (; i < each_blocks.length; i += 1) {
+            each_blocks[i].d(1);
+          }
+          each_blocks.length = each_value_9.length;
+        }
+      },
+      d(detaching) {
+        if (detaching)
+          detach(div);
+        destroy_each(each_blocks, detaching);
+      }
+    };
+  }
+  function create_each_block_93(ctx) {
+    let button;
+    let t_value = ctx[112].label + "";
+    let t;
+    let button_title_value;
+    let mounted;
+    let dispose;
+    function click_handler_11() {
+      return ctx[69](ctx[112]);
+    }
+    return {
+      c() {
+        button = element("button");
+        t = text(t_value);
+        attr(button, "class", "dmg-chip");
+        attr(button, "title", button_title_value = ctx[112].title);
+        toggle_class(button, "dmg-chip-on", ctx[8] == ctx[112].id);
+      },
+      m(target, anchor) {
+        insert(target, button, anchor);
+        append(button, t);
+        if (!mounted) {
+          dispose = listen(button, "click", click_handler_11);
+          mounted = true;
+        }
+      },
+      p(new_ctx, dirty) {
+        ctx = new_ctx;
+        if (dirty[0] & 134217984) {
+          toggle_class(button, "dmg-chip-on", ctx[8] == ctx[112].id);
+        }
+      },
+      d(detaching) {
+        if (detaching)
+          detach(button);
         mounted = false;
         dispose();
       }
@@ -50007,7 +53425,7 @@
     let span0_title_value;
     let t0;
     let span1;
-    let t1_value = ctx[83].title + "";
+    let t1_value = ctx[109].title + "";
     let t1;
     let t2;
     let span2;
@@ -50015,11 +53433,11 @@
     let span2_title_value;
     let mounted;
     let dispose;
-    function click_handler_5() {
-      return ctx[47](ctx[83]);
+    function click_handler_12() {
+      return ctx[70](ctx[109]);
     }
-    function click_handler_6() {
-      return ctx[48](ctx[83]);
+    function click_handler_13() {
+      return ctx[71](ctx[109]);
     }
     return {
       c() {
@@ -50031,15 +53449,15 @@
         t2 = space();
         span2 = element("span");
         t3 = text("\u2605");
-        attr(span0, "class", span0_class_value = ctx[30](ctx[83].status));
-        attr(span0, "title", span0_title_value = ctx[22][ctx[83].status]);
+        attr(span0, "class", span0_class_value = ctx[44](ctx[109].status));
+        attr(span0, "title", span0_title_value = ctx[29][ctx[109].status]);
         attr(span1, "class", "tech-rowname");
-        toggle_class(span1, "tech-locked", ctx[83].status == "lockedOut");
+        toggle_class(span1, "tech-locked", ctx[109].status == "lockedOut");
         attr(span2, "class", "tech-star");
-        attr(span2, "title", span2_title_value = ctx[1].includes(ctx[83].id) ? "Remove from to-do" : "Add to to-do");
-        toggle_class(span2, "tech-starred", ctx[1].includes(ctx[83].id));
+        attr(span2, "title", span2_title_value = ctx[1].includes(ctx[109].id) ? "Remove from to-do" : "Add to to-do");
+        toggle_class(span2, "tech-starred", ctx[1].includes(ctx[109].id));
         attr(button, "class", "tech-row");
-        toggle_class(button, "tech-row-on", ctx[2][0] == ctx[83].id);
+        toggle_class(button, "tech-row-on", ctx[2][0] == ctx[109].id);
       },
       m(target, anchor) {
         insert(target, button, anchor);
@@ -50052,33 +53470,33 @@
         append(span2, t3);
         if (!mounted) {
           dispose = [
-            listen(span2, "click", stop_propagation(click_handler_5)),
-            listen(button, "click", click_handler_6)
+            listen(span2, "click", stop_propagation(click_handler_12)),
+            listen(button, "click", click_handler_13)
           ];
           mounted = true;
         }
       },
       p(new_ctx, dirty) {
         ctx = new_ctx;
-        if (dirty[0] & 262144 && span0_class_value !== (span0_class_value = ctx[30](ctx[83].status))) {
+        if (dirty[0] & 16777216 && span0_class_value !== (span0_class_value = ctx[44](ctx[109].status))) {
           attr(span0, "class", span0_class_value);
         }
-        if (dirty[0] & 262144 && span0_title_value !== (span0_title_value = ctx[22][ctx[83].status])) {
+        if (dirty[0] & 16777216 && span0_title_value !== (span0_title_value = ctx[29][ctx[109].status])) {
           attr(span0, "title", span0_title_value);
         }
-        if (dirty[0] & 262144 && t1_value !== (t1_value = ctx[83].title + ""))
+        if (dirty[0] & 16777216 && t1_value !== (t1_value = ctx[109].title + ""))
           set_data(t1, t1_value);
-        if (dirty[0] & 262144) {
-          toggle_class(span1, "tech-locked", ctx[83].status == "lockedOut");
+        if (dirty[0] & 16777216) {
+          toggle_class(span1, "tech-locked", ctx[109].status == "lockedOut");
         }
-        if (dirty[0] & 262146 && span2_title_value !== (span2_title_value = ctx[1].includes(ctx[83].id) ? "Remove from to-do" : "Add to to-do")) {
+        if (dirty[0] & 16777218 && span2_title_value !== (span2_title_value = ctx[1].includes(ctx[109].id) ? "Remove from to-do" : "Add to to-do")) {
           attr(span2, "title", span2_title_value);
         }
-        if (dirty[0] & 262146) {
-          toggle_class(span2, "tech-starred", ctx[1].includes(ctx[83].id));
+        if (dirty[0] & 16777218) {
+          toggle_class(span2, "tech-starred", ctx[1].includes(ctx[109].id));
         }
-        if (dirty[0] & 262148) {
-          toggle_class(button, "tech-row-on", ctx[2][0] == ctx[83].id);
+        if (dirty[0] & 16777220) {
+          toggle_class(button, "tech-row-on", ctx[2][0] == ctx[109].id);
         }
       },
       d(detaching) {
@@ -50089,10 +53507,10 @@
       }
     };
   }
-  function create_if_block_1112(ctx) {
+  function create_if_block_1210(ctx) {
     let p;
     let t0;
-    let t1_value = ctx[18].length - 600 + "";
+    let t1_value = ctx[24].length - 600 + "";
     let t1;
     let t2;
     return {
@@ -50110,7 +53528,7 @@
         append(p, t2);
       },
       p(ctx2, dirty) {
-        if (dirty[0] & 262144 && t1_value !== (t1_value = ctx2[18].length - 600 + ""))
+        if (dirty[0] & 16777216 && t1_value !== (t1_value = ctx2[24].length - 600 + ""))
           set_data(t1, t1_value);
       },
       d(detaching) {
@@ -50119,7 +53537,7 @@
       }
     };
   }
-  function create_if_block_107(ctx) {
+  function create_if_block_1112(ctx) {
     let p;
     return {
       c() {
@@ -50141,8 +53559,9 @@
     let header;
     let span;
     let span_class_value;
+    let span_title_value;
     let t0;
-    let t1_value = ctx[61].info.title + "";
+    let t1_value = ctx[87].info.title + "";
     let t1;
     let t2;
     let button0;
@@ -50151,7 +53570,7 @@
     let t6;
     let div0;
     let p;
-    let t7_value = ctx[22][ctx[61].info.status] + "";
+    let t7_value = ctx[29][ctx[87].info.status] + "";
     let t7;
     let t8;
     let t9;
@@ -50166,22 +53585,22 @@
     let t18;
     let mounted;
     let dispose;
-    function click_handler_7() {
-      return ctx[49](ctx[61]);
+    function click_handler_14() {
+      return ctx[72](ctx[87]);
     }
-    function click_handler_8() {
-      return ctx[50](ctx[61]);
+    function click_handler_15() {
+      return ctx[73](ctx[87]);
     }
-    let if_block0 = ctx[61].info.remaining > 0 && create_if_block_97(ctx);
-    let if_block1 = ctx[61].info.missing.length && create_if_block_88(ctx);
-    let if_block2 = ctx[61].info.lockedBy.length && create_if_block_79(ctx);
-    let if_block3 = ctx[61].info.status == "needsItem" && create_if_block_611(ctx);
-    let if_block4 = ctx[61].opens.research.length && create_if_block_511(ctx);
-    let if_block5 = ctx[61].info.getOneFree.length && create_if_block_411(ctx);
-    let if_block6 = (ctx[61].opens.manufacture.length || ctx[61].opens.buy.length || ctx[61].opens.item) && create_if_block_220(ctx);
-    let if_block7 = ctx[61].info.caveats.length && create_if_block_130(ctx);
-    function click_handler_13() {
-      return ctx[55](ctx[61]);
+    let if_block0 = ctx[87].info.remaining > 0 && create_if_block_97(ctx);
+    let if_block1 = ctx[87].info.missing.length && create_if_block_88(ctx);
+    let if_block2 = ctx[87].info.lockedBy.length && create_if_block_711(ctx);
+    let if_block3 = ctx[87].info.status == "needsItem" && create_if_block_611(ctx);
+    let if_block4 = ctx[87].opens.research.length && create_if_block_511(ctx);
+    let if_block5 = ctx[87].info.getOneFree.length && create_if_block_411(ctx);
+    let if_block6 = (ctx[87].opens.manufacture.length || ctx[87].opens.buy.length || ctx[87].opens.item) && create_if_block_220(ctx);
+    let if_block7 = ctx[87].info.caveats.length && create_if_block_130(ctx);
+    function click_handler_20() {
+      return ctx[78](ctx[87]);
     }
     return {
       c() {
@@ -50228,10 +53647,11 @@
         button2 = element("button");
         button2.textContent = "Path to this";
         t18 = space();
-        attr(span, "class", span_class_value = ctx[30](ctx[61].info.status));
+        attr(span, "class", span_class_value = ctx[44](ctx[87].info.status));
+        attr(span, "title", span_title_value = ctx[29][ctx[87].info.status]);
         attr(button0, "class", "dmg-mini tech-starbtn");
         attr(button0, "title", "Add to the to-do list");
-        toggle_class(button0, "tech-starred", ctx[1].includes(ctx[61].id));
+        toggle_class(button0, "tech-starred", ctx[1].includes(ctx[87].id));
         attr(button1, "class", "dmg-mini");
         attr(button1, "title", "Open the XPedia article over the top - your columns stay exactly as they are");
         attr(header, "class", "tech-colhead");
@@ -50283,26 +53703,29 @@
         append(div1, t18);
         if (!mounted) {
           dispose = [
-            listen(button0, "click", click_handler_7),
-            listen(button1, "click", click_handler_8),
-            listen(button2, "click", click_handler_13)
+            listen(button0, "click", click_handler_14),
+            listen(button1, "click", click_handler_15),
+            listen(button2, "click", click_handler_20)
           ];
           mounted = true;
         }
       },
       p(new_ctx, dirty) {
         ctx = new_ctx;
-        if (dirty[0] & 32768 && span_class_value !== (span_class_value = ctx[30](ctx[61].info.status))) {
+        if (dirty[0] & 2097152 && span_class_value !== (span_class_value = ctx[44](ctx[87].info.status))) {
           attr(span, "class", span_class_value);
         }
-        if (dirty[0] & 32768 && t1_value !== (t1_value = ctx[61].info.title + ""))
-          set_data(t1, t1_value);
-        if (dirty[0] & 32770) {
-          toggle_class(button0, "tech-starred", ctx[1].includes(ctx[61].id));
+        if (dirty[0] & 2097152 && span_title_value !== (span_title_value = ctx[29][ctx[87].info.status])) {
+          attr(span, "title", span_title_value);
         }
-        if (dirty[0] & 32768 && t7_value !== (t7_value = ctx[22][ctx[61].info.status] + ""))
+        if (dirty[0] & 2097152 && t1_value !== (t1_value = ctx[87].info.title + ""))
+          set_data(t1, t1_value);
+        if (dirty[0] & 2097154) {
+          toggle_class(button0, "tech-starred", ctx[1].includes(ctx[87].id));
+        }
+        if (dirty[0] & 2097152 && t7_value !== (t7_value = ctx[29][ctx[87].info.status] + ""))
           set_data(t7, t7_value);
-        if (ctx[61].info.remaining > 0) {
+        if (ctx[87].info.remaining > 0) {
           if (if_block0) {
             if_block0.p(ctx, dirty);
           } else {
@@ -50314,7 +53737,7 @@
           if_block0.d(1);
           if_block0 = null;
         }
-        if (ctx[61].info.missing.length) {
+        if (ctx[87].info.missing.length) {
           if (if_block1) {
             if_block1.p(ctx, dirty);
           } else {
@@ -50326,11 +53749,11 @@
           if_block1.d(1);
           if_block1 = null;
         }
-        if (ctx[61].info.lockedBy.length) {
+        if (ctx[87].info.lockedBy.length) {
           if (if_block2) {
             if_block2.p(ctx, dirty);
           } else {
-            if_block2 = create_if_block_79(ctx);
+            if_block2 = create_if_block_711(ctx);
             if_block2.c();
             if_block2.m(div0, t11);
           }
@@ -50338,7 +53761,7 @@
           if_block2.d(1);
           if_block2 = null;
         }
-        if (ctx[61].info.status == "needsItem") {
+        if (ctx[87].info.status == "needsItem") {
           if (if_block3) {
             if_block3.p(ctx, dirty);
           } else {
@@ -50350,7 +53773,7 @@
           if_block3.d(1);
           if_block3 = null;
         }
-        if (ctx[61].opens.research.length) {
+        if (ctx[87].opens.research.length) {
           if (if_block4) {
             if_block4.p(ctx, dirty);
           } else {
@@ -50362,7 +53785,7 @@
           if_block4.d(1);
           if_block4 = null;
         }
-        if (ctx[61].info.getOneFree.length) {
+        if (ctx[87].info.getOneFree.length) {
           if (if_block5) {
             if_block5.p(ctx, dirty);
           } else {
@@ -50374,7 +53797,7 @@
           if_block5.d(1);
           if_block5 = null;
         }
-        if (ctx[61].opens.manufacture.length || ctx[61].opens.buy.length || ctx[61].opens.item) {
+        if (ctx[87].opens.manufacture.length || ctx[87].opens.buy.length || ctx[87].opens.item) {
           if (if_block6) {
             if_block6.p(ctx, dirty);
           } else {
@@ -50386,7 +53809,7 @@
           if_block6.d(1);
           if_block6 = null;
         }
-        if (ctx[61].info.caveats.length) {
+        if (ctx[87].info.caveats.length) {
           if (if_block7) {
             if_block7.p(ctx, dirty);
           } else {
@@ -50425,13 +53848,13 @@
   }
   function create_if_block_97(ctx) {
     let t0;
-    let t1_value = ctx[61].info.remaining + "";
+    let t1_value = ctx[87].info.remaining + "";
     let t1;
     let t2;
-    let t3_value = ctx[61].info.cost + "";
+    let t3_value = ctx[87].info.cost + "";
     let t3;
     let t4;
-    let t5_value = ctx[61].info.days == null ? "\u2014" : ctx[61].info.days + " day" + (ctx[61].info.days == 1 ? "" : "s");
+    let t5_value = ctx[87].info.days == null ? "\u2014" : ctx[87].info.days + " day" + (ctx[87].info.days == 1 ? "" : "s");
     let t5;
     return {
       c() {
@@ -50439,7 +53862,7 @@
         t1 = text(t1_value);
         t2 = text(" left of ");
         t3 = text(t3_value);
-        t4 = text("\r\n                  \xB7 ");
+        t4 = text("\n                  \xB7 ");
         t5 = text(t5_value);
       },
       m(target, anchor) {
@@ -50451,11 +53874,11 @@
         insert(target, t5, anchor);
       },
       p(ctx2, dirty) {
-        if (dirty[0] & 32768 && t1_value !== (t1_value = ctx2[61].info.remaining + ""))
+        if (dirty[0] & 2097152 && t1_value !== (t1_value = ctx2[87].info.remaining + ""))
           set_data(t1, t1_value);
-        if (dirty[0] & 32768 && t3_value !== (t3_value = ctx2[61].info.cost + ""))
+        if (dirty[0] & 2097152 && t3_value !== (t3_value = ctx2[87].info.cost + ""))
           set_data(t3, t3_value);
-        if (dirty[0] & 32768 && t5_value !== (t5_value = ctx2[61].info.days == null ? "\u2014" : ctx2[61].info.days + " day" + (ctx2[61].info.days == 1 ? "" : "s")))
+        if (dirty[0] & 2097152 && t5_value !== (t5_value = ctx2[87].info.days == null ? "\u2014" : ctx2[87].info.days + " day" + (ctx2[87].info.days == 1 ? "" : "s")))
           set_data(t5, t5_value);
       },
       d(detaching) {
@@ -50478,7 +53901,7 @@
     let div;
     let h5;
     let t1;
-    let each_value_7 = ctx[61].info.missing;
+    let each_value_7 = ctx[87].info.missing;
     let each_blocks = [];
     for (let i = 0; i < each_value_7.length; i += 1) {
       each_blocks[i] = create_each_block_74(get_each_context_74(ctx, each_value_7, i));
@@ -50503,8 +53926,8 @@
         }
       },
       p(ctx2, dirty) {
-        if (dirty[0] & 1610645505) {
-          each_value_7 = ctx2[61].info.missing;
+        if (dirty[0] & 538968065 | dirty[1] & 12288) {
+          each_value_7 = ctx2[87].info.missing;
           let i;
           for (i = 0; i < each_value_7.length; i += 1) {
             const child_ctx = get_each_context_74(ctx2, each_value_7, i);
@@ -50533,15 +53956,16 @@
     let button;
     let span0;
     let span0_class_value;
+    let span0_title_value;
     let t0;
     let span1;
-    let t1_value = rul.tr(ctx[70]) + "";
+    let t1_value = rul.tr(ctx[96]) + "";
     let t1;
     let t2;
     let mounted;
     let dispose;
-    function click_handler_9() {
-      return ctx[51](ctx[70], ctx[63]);
+    function click_handler_16() {
+      return ctx[74](ctx[96], ctx[89]);
     }
     return {
       c() {
@@ -50551,7 +53975,8 @@
         span1 = element("span");
         t1 = text(t1_value);
         t2 = space();
-        attr(span0, "class", span0_class_value = ctx[30](statusOf(ctx[70], ctx[0])));
+        attr(span0, "class", span0_class_value = ctx[44](statusOf(ctx[96], ctx[0])));
+        attr(span0, "title", span0_title_value = ctx[29][statusOf(ctx[96], ctx[0])]);
         attr(span1, "class", "tech-rowname");
         attr(button, "class", "tech-row");
       },
@@ -50563,16 +53988,19 @@
         append(span1, t1);
         append(button, t2);
         if (!mounted) {
-          dispose = listen(button, "click", click_handler_9);
+          dispose = listen(button, "click", click_handler_16);
           mounted = true;
         }
       },
       p(new_ctx, dirty) {
         ctx = new_ctx;
-        if (dirty[0] & 32769 && span0_class_value !== (span0_class_value = ctx[30](statusOf(ctx[70], ctx[0])))) {
+        if (dirty[0] & 2097153 && span0_class_value !== (span0_class_value = ctx[44](statusOf(ctx[96], ctx[0])))) {
           attr(span0, "class", span0_class_value);
         }
-        if (dirty[0] & 32768 && t1_value !== (t1_value = rul.tr(ctx[70]) + ""))
+        if (dirty[0] & 2097153 && span0_title_value !== (span0_title_value = ctx[29][statusOf(ctx[96], ctx[0])])) {
+          attr(span0, "title", span0_title_value);
+        }
+        if (dirty[0] & 2097152 && t1_value !== (t1_value = rul.tr(ctx[96]) + ""))
           set_data(t1, t1_value);
       },
       d(detaching) {
@@ -50583,13 +54011,13 @@
       }
     };
   }
-  function create_if_block_79(ctx) {
+  function create_if_block_711(ctx) {
     let div;
     let h5;
     let t1;
     let p;
     let t3;
-    let each_value_6 = ctx[61].info.lockedBy;
+    let each_value_6 = ctx[87].info.lockedBy;
     let each_blocks = [];
     for (let i = 0; i < each_value_6.length; i += 1) {
       each_blocks[i] = create_each_block_65(get_each_context_65(ctx, each_value_6, i));
@@ -50620,8 +54048,8 @@
         }
       },
       p(ctx2, dirty) {
-        if (dirty[0] & 1610645505) {
-          each_value_6 = ctx2[61].info.lockedBy;
+        if (dirty[0] & 538968065 | dirty[1] & 12288) {
+          each_value_6 = ctx2[87].info.lockedBy;
           let i;
           for (i = 0; i < each_value_6.length; i += 1) {
             const child_ctx = get_each_context_65(ctx2, each_value_6, i);
@@ -50650,15 +54078,16 @@
     let button;
     let span0;
     let span0_class_value;
+    let span0_title_value;
     let t0;
     let span1;
-    let t1_value = rul.tr(ctx[78]) + "";
+    let t1_value = rul.tr(ctx[104]) + "";
     let t1;
     let t2;
     let mounted;
     let dispose;
-    function click_handler_10() {
-      return ctx[52](ctx[78], ctx[63]);
+    function click_handler_17() {
+      return ctx[75](ctx[104], ctx[89]);
     }
     return {
       c() {
@@ -50668,7 +54097,8 @@
         span1 = element("span");
         t1 = text(t1_value);
         t2 = space();
-        attr(span0, "class", span0_class_value = ctx[30](statusOf(ctx[78], ctx[0])));
+        attr(span0, "class", span0_class_value = ctx[44](statusOf(ctx[104], ctx[0])));
+        attr(span0, "title", span0_title_value = ctx[29][statusOf(ctx[104], ctx[0])]);
         attr(span1, "class", "tech-rowname");
         attr(button, "class", "tech-row");
       },
@@ -50680,16 +54110,19 @@
         append(span1, t1);
         append(button, t2);
         if (!mounted) {
-          dispose = listen(button, "click", click_handler_10);
+          dispose = listen(button, "click", click_handler_17);
           mounted = true;
         }
       },
       p(new_ctx, dirty) {
         ctx = new_ctx;
-        if (dirty[0] & 32769 && span0_class_value !== (span0_class_value = ctx[30](statusOf(ctx[78], ctx[0])))) {
+        if (dirty[0] & 2097153 && span0_class_value !== (span0_class_value = ctx[44](statusOf(ctx[104], ctx[0])))) {
           attr(span0, "class", span0_class_value);
         }
-        if (dirty[0] & 32768 && t1_value !== (t1_value = rul.tr(ctx[78]) + ""))
+        if (dirty[0] & 2097153 && span0_title_value !== (span0_title_value = ctx[29][statusOf(ctx[104], ctx[0])])) {
+          attr(span0, "title", span0_title_value);
+        }
+        if (dirty[0] & 2097152 && t1_value !== (t1_value = rul.tr(ctx[104]) + ""))
           set_data(t1, t1_value);
       },
       d(detaching) {
@@ -50704,7 +54137,7 @@
     let p;
     let t0;
     let b;
-    let t1_value = ctx[61].info.title + "";
+    let t1_value = ctx[87].info.title + "";
     let t1;
     let t2;
     return {
@@ -50724,7 +54157,7 @@
         append(p, t2);
       },
       p(ctx2, dirty) {
-        if (dirty[0] & 32768 && t1_value !== (t1_value = ctx2[61].info.title + ""))
+        if (dirty[0] & 2097152 && t1_value !== (t1_value = ctx2[87].info.title + ""))
           set_data(t1, t1_value);
       },
       d(detaching) {
@@ -50737,7 +54170,7 @@
     let div;
     let h5;
     let t1;
-    let each_value_5 = ctx[61].opens.research;
+    let each_value_5 = ctx[87].opens.research;
     let each_blocks = [];
     for (let i = 0; i < each_value_5.length; i += 1) {
       each_blocks[i] = create_each_block_55(get_each_context_55(ctx, each_value_5, i));
@@ -50762,8 +54195,8 @@
         }
       },
       p(ctx2, dirty) {
-        if (dirty[0] & 1610645505) {
-          each_value_5 = ctx2[61].opens.research;
+        if (dirty[0] & 538968065 | dirty[1] & 12288) {
+          each_value_5 = ctx2[87].opens.research;
           let i;
           for (i = 0; i < each_value_5.length; i += 1) {
             const child_ctx = get_each_context_55(ctx2, each_value_5, i);
@@ -50792,15 +54225,16 @@
     let button;
     let span0;
     let span0_class_value;
+    let span0_title_value;
     let t0;
     let span1;
-    let t1_value = rul.tr(ctx[73]) + "";
+    let t1_value = rul.tr(ctx[99]) + "";
     let t1;
     let t2;
     let mounted;
     let dispose;
-    function click_handler_11() {
-      return ctx[53](ctx[73], ctx[63]);
+    function click_handler_18() {
+      return ctx[76](ctx[99], ctx[89]);
     }
     return {
       c() {
@@ -50810,7 +54244,8 @@
         span1 = element("span");
         t1 = text(t1_value);
         t2 = space();
-        attr(span0, "class", span0_class_value = ctx[30](statusOf(ctx[73], ctx[0])));
+        attr(span0, "class", span0_class_value = ctx[44](statusOf(ctx[99], ctx[0])));
+        attr(span0, "title", span0_title_value = ctx[29][statusOf(ctx[99], ctx[0])]);
         attr(span1, "class", "tech-rowname");
         attr(button, "class", "tech-row");
       },
@@ -50822,16 +54257,19 @@
         append(span1, t1);
         append(button, t2);
         if (!mounted) {
-          dispose = listen(button, "click", click_handler_11);
+          dispose = listen(button, "click", click_handler_18);
           mounted = true;
         }
       },
       p(new_ctx, dirty) {
         ctx = new_ctx;
-        if (dirty[0] & 32769 && span0_class_value !== (span0_class_value = ctx[30](statusOf(ctx[73], ctx[0])))) {
+        if (dirty[0] & 2097153 && span0_class_value !== (span0_class_value = ctx[44](statusOf(ctx[99], ctx[0])))) {
           attr(span0, "class", span0_class_value);
         }
-        if (dirty[0] & 32768 && t1_value !== (t1_value = rul.tr(ctx[73]) + ""))
+        if (dirty[0] & 2097153 && span0_title_value !== (span0_title_value = ctx[29][statusOf(ctx[99], ctx[0])])) {
+          attr(span0, "title", span0_title_value);
+        }
+        if (dirty[0] & 2097152 && t1_value !== (t1_value = rul.tr(ctx[99]) + ""))
           set_data(t1, t1_value);
       },
       d(detaching) {
@@ -50846,7 +54284,7 @@
     let div;
     let h5;
     let t1;
-    let each_value_4 = ctx[61].info.getOneFree;
+    let each_value_4 = ctx[87].info.getOneFree;
     let each_blocks = [];
     for (let i = 0; i < each_value_4.length; i += 1) {
       each_blocks[i] = create_each_block_46(get_each_context_46(ctx, each_value_4, i));
@@ -50872,8 +54310,8 @@
         }
       },
       p(ctx2, dirty) {
-        if (dirty[0] & 1610645505) {
-          each_value_4 = ctx2[61].info.getOneFree;
+        if (dirty[0] & 538968065 | dirty[1] & 12288) {
+          each_value_4 = ctx2[87].info.getOneFree;
           let i;
           for (i = 0; i < each_value_4.length; i += 1) {
             const child_ctx = get_each_context_46(ctx2, each_value_4, i);
@@ -50902,15 +54340,16 @@
     let button;
     let span0;
     let span0_class_value;
+    let span0_title_value;
     let t0;
     let span1;
-    let t1_value = rul.tr(ctx[73]) + "";
+    let t1_value = rul.tr(ctx[99]) + "";
     let t1;
     let t2;
     let mounted;
     let dispose;
-    function click_handler_12() {
-      return ctx[54](ctx[73], ctx[63]);
+    function click_handler_19() {
+      return ctx[77](ctx[99], ctx[89]);
     }
     return {
       c() {
@@ -50920,7 +54359,8 @@
         span1 = element("span");
         t1 = text(t1_value);
         t2 = space();
-        attr(span0, "class", span0_class_value = ctx[30](statusOf(ctx[73], ctx[0])));
+        attr(span0, "class", span0_class_value = ctx[44](statusOf(ctx[99], ctx[0])));
+        attr(span0, "title", span0_title_value = ctx[29][statusOf(ctx[99], ctx[0])]);
         attr(span1, "class", "tech-rowname");
         attr(button, "class", "tech-row");
       },
@@ -50932,16 +54372,19 @@
         append(span1, t1);
         append(button, t2);
         if (!mounted) {
-          dispose = listen(button, "click", click_handler_12);
+          dispose = listen(button, "click", click_handler_19);
           mounted = true;
         }
       },
       p(new_ctx, dirty) {
         ctx = new_ctx;
-        if (dirty[0] & 32769 && span0_class_value !== (span0_class_value = ctx[30](statusOf(ctx[73], ctx[0])))) {
+        if (dirty[0] & 2097153 && span0_class_value !== (span0_class_value = ctx[44](statusOf(ctx[99], ctx[0])))) {
           attr(span0, "class", span0_class_value);
         }
-        if (dirty[0] & 32768 && t1_value !== (t1_value = rul.tr(ctx[73]) + ""))
+        if (dirty[0] & 2097153 && span0_title_value !== (span0_title_value = ctx[29][statusOf(ctx[99], ctx[0])])) {
+          attr(span0, "title", span0_title_value);
+        }
+        if (dirty[0] & 2097152 && t1_value !== (t1_value = rul.tr(ctx[99]) + ""))
           set_data(t1, t1_value);
       },
       d(detaching) {
@@ -50958,13 +54401,13 @@
     let t1;
     let t2;
     let t3;
-    let if_block = ctx[61].opens.item && create_if_block_316(ctx);
-    let each_value_3 = ctx[61].opens.manufacture;
+    let if_block = ctx[87].opens.item && create_if_block_317(ctx);
+    let each_value_3 = ctx[87].opens.manufacture;
     let each_blocks_1 = [];
     for (let i = 0; i < each_value_3.length; i += 1) {
       each_blocks_1[i] = create_each_block_37(get_each_context_37(ctx, each_value_3, i));
     }
-    let each_value_2 = ctx[61].opens.buy.slice(0, 12);
+    let each_value_2 = ctx[87].opens.buy.slice(0, 12);
     let each_blocks = [];
     for (let i = 0; i < each_value_2.length; i += 1) {
       each_blocks[i] = create_each_block_211(get_each_context_210(ctx, each_value_2, i));
@@ -51003,11 +54446,11 @@
         }
       },
       p(ctx2, dirty) {
-        if (ctx2[61].opens.item) {
+        if (ctx2[87].opens.item) {
           if (if_block) {
             if_block.p(ctx2, dirty);
           } else {
-            if_block = create_if_block_316(ctx2);
+            if_block = create_if_block_317(ctx2);
             if_block.c();
             if_block.m(div, t2);
           }
@@ -51015,8 +54458,8 @@
           if_block.d(1);
           if_block = null;
         }
-        if (dirty[0] & 32768) {
-          each_value_3 = ctx2[61].opens.manufacture;
+        if (dirty[0] & 2097152) {
+          each_value_3 = ctx2[87].opens.manufacture;
           let i;
           for (i = 0; i < each_value_3.length; i += 1) {
             const child_ctx = get_each_context_37(ctx2, each_value_3, i);
@@ -51033,8 +54476,8 @@
           }
           each_blocks_1.length = each_value_3.length;
         }
-        if (dirty[0] & 32768) {
-          each_value_2 = ctx2[61].opens.buy.slice(0, 12);
+        if (dirty[0] & 2097152) {
+          each_value_2 = ctx2[87].opens.buy.slice(0, 12);
           let i;
           for (i = 0; i < each_value_2.length; i += 1) {
             const child_ctx = get_each_context_210(ctx2, each_value_2, i);
@@ -51062,10 +54505,10 @@
       }
     };
   }
-  function create_if_block_316(ctx) {
+  function create_if_block_317(ctx) {
     let p;
     let t0;
-    let t1_value = rul.tr(ctx[61].opens.item) + "";
+    let t1_value = rul.tr(ctx[87].opens.item) + "";
     let t1;
     return {
       c() {
@@ -51080,7 +54523,7 @@
         append(p, t1);
       },
       p(ctx2, dirty) {
-        if (dirty[0] & 32768 && t1_value !== (t1_value = rul.tr(ctx2[61].opens.item) + ""))
+        if (dirty[0] & 2097152 && t1_value !== (t1_value = rul.tr(ctx2[87].opens.item) + ""))
           set_data(t1, t1_value);
       },
       d(detaching) {
@@ -51092,7 +54535,7 @@
   function create_each_block_37(ctx) {
     let p;
     let t0;
-    let t1_value = rul.tr(ctx[70]) + "";
+    let t1_value = rul.tr(ctx[96]) + "";
     let t1;
     return {
       c() {
@@ -51107,7 +54550,7 @@
         append(p, t1);
       },
       p(ctx2, dirty) {
-        if (dirty[0] & 32768 && t1_value !== (t1_value = rul.tr(ctx2[70]) + ""))
+        if (dirty[0] & 2097152 && t1_value !== (t1_value = rul.tr(ctx2[96]) + ""))
           set_data(t1, t1_value);
       },
       d(detaching) {
@@ -51119,7 +54562,7 @@
   function create_each_block_211(ctx) {
     let p;
     let t0;
-    let t1_value = rul.tr(ctx[67]) + "";
+    let t1_value = rul.tr(ctx[93]) + "";
     let t1;
     return {
       c() {
@@ -51134,7 +54577,7 @@
         append(p, t1);
       },
       p(ctx2, dirty) {
-        if (dirty[0] & 32768 && t1_value !== (t1_value = rul.tr(ctx2[67]) + ""))
+        if (dirty[0] & 2097152 && t1_value !== (t1_value = rul.tr(ctx2[93]) + ""))
           set_data(t1, t1_value);
       },
       d(detaching) {
@@ -51147,7 +54590,7 @@
     let div;
     let h5;
     let t1;
-    let each_value_1 = ctx[61].info.caveats;
+    let each_value_1 = ctx[87].info.caveats;
     let each_blocks = [];
     for (let i = 0; i < each_value_1.length; i += 1) {
       each_blocks[i] = create_each_block_114(get_each_context_113(ctx, each_value_1, i));
@@ -51172,8 +54615,8 @@
         }
       },
       p(ctx2, dirty) {
-        if (dirty[0] & 32768) {
-          each_value_1 = ctx2[61].info.caveats;
+        if (dirty[0] & 2097152) {
+          each_value_1 = ctx2[87].info.caveats;
           let i;
           for (i = 0; i < each_value_1.length; i += 1) {
             const child_ctx = get_each_context_113(ctx2, each_value_1, i);
@@ -51200,7 +54643,7 @@
   }
   function create_each_block_114(ctx) {
     let p;
-    let t_value = ctx[64] + "";
+    let t_value = ctx[90] + "";
     let t;
     return {
       c() {
@@ -51213,7 +54656,7 @@
         append(p, t);
       },
       p(ctx2, dirty) {
-        if (dirty[0] & 32768 && t_value !== (t_value = ctx2[64] + ""))
+        if (dirty[0] & 2097152 && t_value !== (t_value = ctx2[90] + ""))
           set_data(t, t_value);
       },
       d(detaching) {
@@ -51224,7 +54667,7 @@
   }
   function create_each_block30(ctx) {
     let if_block_anchor;
-    let if_block = ctx[61].info && create_if_block30(ctx);
+    let if_block = ctx[87].info && create_if_block30(ctx);
     return {
       c() {
         if (if_block)
@@ -51237,7 +54680,7 @@
         insert(target, if_block_anchor, anchor);
       },
       p(ctx2, dirty) {
-        if (ctx2[61].info) {
+        if (ctx2[87].info) {
           if (if_block) {
             if_block.p(ctx2, dirty);
           } else {
@@ -51259,10 +54702,10 @@
     };
   }
   function create_fragment44(ctx) {
-    let div6;
+    let div4;
     let div0;
     let t1;
-    let div5;
+    let div3;
     let aside;
     let section0;
     let header0;
@@ -51277,236 +54720,212 @@
     let t7;
     let t8;
     let section1;
-    let header1;
-    let t10;
-    let div1;
-    let t11;
-    let input1;
-    let t12;
+    let ul;
+    let t9;
     let section2;
-    let header2;
+    let header1;
+    let t11;
+    let div1;
+    let t12;
+    let input1;
     let t13;
-    let span1;
-    let t14_value = ctx[16].length + "";
     let t14;
-    let t15;
-    let t16;
     let section3;
-    let header3;
+    let header2;
+    let t15;
+    let span1;
+    let t16_value = ctx[22].length + "";
+    let t16;
+    let t17;
     let t18;
-    let input2;
-    let t19;
-    let datalist;
+    let section4;
+    let header3;
     let t20;
-    let show_if;
+    let input2;
     let t21;
-    let div4;
-    let div3;
-    let header4;
-    let t22_value = ctx[21].find(ctx[46]).label + "";
+    let show_if;
     let t22;
+    let div2;
     let t23;
-    let span2;
-    let t24_value = ctx[18].length + "";
     let t24;
     let t25;
-    let div2;
-    let t26;
-    let t27;
-    let t28;
-    let t29;
     let articlepeek;
     let updating_id;
     let current;
     let mounted;
     let dispose;
     function select_block_type(ctx2, dirty) {
-      if (!ctx2[7].length)
-        return create_if_block_225;
-      return create_else_block_34;
+      if (!ctx2[10].length)
+        return create_if_block_433;
+      return create_else_block_73;
     }
-    let current_block_type = select_block_type(ctx, [-1, -1, -1, -1]);
+    let current_block_type = select_block_type(ctx, [-1, -1, -1, -1, -1]);
     let if_block0 = current_block_type(ctx);
     function select_block_type_1(ctx2, dirty) {
-      if (ctx2[9])
-        return create_if_block_176;
-      if (ctx2[10])
-        return create_if_block_186;
+      if (ctx2[12])
+        return create_if_block_384;
+      if (ctx2[13])
+        return create_if_block_394;
       if (ctx2[0])
-        return create_if_block_195;
-      return create_else_block_24;
+        return create_if_block_403;
+      return create_else_block_63;
     }
-    let current_block_type_1 = select_block_type_1(ctx, [-1, -1, -1, -1]);
+    let current_block_type_1 = select_block_type_1(ctx, [-1, -1, -1, -1, -1]);
     let if_block1 = current_block_type_1(ctx);
-    let each_value_13 = ctx[21];
-    let each_blocks_3 = [];
-    for (let i = 0; i < each_value_13.length; i += 1) {
-      each_blocks_3[i] = create_each_block_134(get_each_context_134(ctx, each_value_13, i));
-    }
-    function select_block_type_2(ctx2, dirty) {
-      if (!ctx2[16].length)
-        return create_if_block_156;
-      return create_else_block20;
-    }
-    let current_block_type_2 = select_block_type_2(ctx, [-1, -1, -1, -1]);
-    let if_block2 = current_block_type_2(ctx);
-    let each_value_10 = ctx[28].slice(0, 4e3);
+    let each_value_21 = ctx[30];
     let each_blocks_2 = [];
-    for (let i = 0; i < each_value_10.length; i += 1) {
-      each_blocks_2[i] = create_each_block_103(get_each_context_103(ctx, each_value_10, i));
+    for (let i = 0; i < each_value_21.length; i += 1) {
+      each_blocks_2[i] = create_each_block_212(get_each_context_212(ctx, each_value_21, i));
     }
+    let each_value_20 = ctx[28];
+    let each_blocks_1 = [];
+    for (let i = 0; i < each_value_20.length; i += 1) {
+      each_blocks_1[i] = create_each_block_202(get_each_context_202(ctx, each_value_20, i));
+    }
+    let if_block2 = ctx[15] && create_if_block_374(ctx);
+    function select_block_type_2(ctx2, dirty) {
+      if (!ctx2[22].length)
+        return create_if_block_354;
+      return create_else_block_43;
+    }
+    let current_block_type_2 = select_block_type_2(ctx, [-1, -1, -1, -1, -1]);
+    let if_block3 = current_block_type_2(ctx);
     function select_block_type_4(ctx2, dirty) {
       if (dirty[0] & 32)
         show_if = null;
+      if (ctx2[6])
+        return create_if_block_316;
       if (show_if == null)
-        show_if = !!(ctx2[5] && !topic(ctx2[5]));
+        show_if = !!(ctx2[5].trim().length < 2);
       if (show_if)
-        return create_if_block_1210;
-      if (ctx2[5] && !ctx2[14].length)
-        return create_if_block_137;
-      if (ctx2[14].length)
-        return create_if_block_146;
+        return create_if_block_324;
+      if (!ctx2[9].length)
+        return create_if_block_334;
+      return create_else_block_34;
     }
-    let current_block_type_3 = select_block_type_4(ctx, [-1, -1, -1, -1]);
-    let if_block3 = current_block_type_3 && current_block_type_3(ctx);
-    let each_value_8 = ctx[18].slice(0, 600);
-    let each_blocks_1 = [];
-    for (let i = 0; i < each_value_8.length; i += 1) {
-      each_blocks_1[i] = create_each_block_83(get_each_context_83(ctx, each_value_8, i));
-    }
-    let if_block4 = ctx[18].length > 600 && create_if_block_1112(ctx);
-    let if_block5 = !ctx[18].length && create_if_block_107(ctx);
-    let each_value = ctx[15];
+    let current_block_type_3 = select_block_type_4(ctx, [-1, -1, -1, -1, -1]);
+    let if_block4 = current_block_type_3(ctx);
+    let if_block5 = ctx[19] && create_if_block_146(ctx);
+    let if_block6 = !ctx[15] && create_if_block_107(ctx);
+    let each_value = ctx[21];
     let each_blocks = [];
     for (let i = 0; i < each_value.length; i += 1) {
       each_blocks[i] = create_each_block30(get_each_context30(ctx, each_value, i));
     }
     function articlepeek_id_binding(value) {
-      ctx[56](value);
+      ctx[79](value);
     }
     let articlepeek_props = {};
-    if (ctx[12] !== void 0) {
-      articlepeek_props.id = ctx[12];
+    if (ctx[16] !== void 0) {
+      articlepeek_props.id = ctx[16];
     }
     articlepeek = new ArticlePeek_default({ props: articlepeek_props });
     binding_callbacks.push(() => bind(articlepeek, "id", articlepeek_id_binding));
     return {
       c() {
-        div6 = element("div");
+        div4 = element("div");
         div0 = element("div");
         div0.innerHTML = `<span class="dmg-note">Click through prerequisites and unlocks \u2014 every step stays on screen. Click any
       earlier column to back up and branch.</span>`;
         t1 = space();
-        div5 = element("div");
+        div3 = element("div");
         aside = element("aside");
         section0 = element("section");
         header0 = element("header");
-        t2 = text("Campaign\r\n          ");
+        t2 = text("Campaign\n          ");
         button = element("button");
         t3 = text("\u2B6F");
         t4 = space();
         if_block0.c();
         t5 = space();
         label = element("label");
-        t6 = text("Open a .sav\u2026\r\n          ");
+        t6 = text("Open a .sav\u2026\n          ");
         input0 = element("input");
         t7 = space();
         if_block1.c();
         t8 = space();
         section1 = element("section");
-        header1 = element("header");
-        header1.textContent = "Show";
-        t10 = space();
-        div1 = element("div");
-        for (let i = 0; i < each_blocks_3.length; i += 1) {
-          each_blocks_3[i].c();
-        }
-        t11 = space();
-        input1 = element("input");
-        t12 = space();
-        section2 = element("section");
-        header2 = element("header");
-        t13 = text("To-do\r\n          ");
-        span1 = element("span");
-        t14 = text(t14_value);
-        t15 = space();
-        if_block2.c();
-        t16 = space();
-        section3 = element("section");
-        header3 = element("header");
-        header3.textContent = "Path to a goal";
-        t18 = space();
-        input2 = element("input");
-        t19 = space();
-        datalist = element("datalist");
+        ul = element("ul");
         for (let i = 0; i < each_blocks_2.length; i += 1) {
           each_blocks_2[i].c();
         }
-        t20 = space();
-        if (if_block3)
-          if_block3.c();
-        t21 = space();
-        div4 = element("div");
-        div3 = element("div");
-        header4 = element("header");
-        t22 = text(t22_value);
-        t23 = space();
-        span2 = element("span");
-        t24 = text(t24_value);
-        t25 = space();
-        div2 = element("div");
+        t9 = space();
+        section2 = element("section");
+        header1 = element("header");
+        header1.textContent = "Show";
+        t11 = space();
+        div1 = element("div");
         for (let i = 0; i < each_blocks_1.length; i += 1) {
           each_blocks_1[i].c();
         }
-        t26 = space();
-        if (if_block4)
-          if_block4.c();
-        t27 = space();
+        t12 = space();
+        input1 = element("input");
+        t13 = space();
+        if (if_block2)
+          if_block2.c();
+        t14 = space();
+        section3 = element("section");
+        header2 = element("header");
+        t15 = text("To-do\n          ");
+        span1 = element("span");
+        t16 = text(t16_value);
+        t17 = space();
+        if_block3.c();
+        t18 = space();
+        section4 = element("section");
+        header3 = element("header");
+        header3.textContent = "Path to a goal";
+        t20 = space();
+        input2 = element("input");
+        t21 = space();
+        if_block4.c();
+        t22 = space();
+        div2 = element("div");
         if (if_block5)
           if_block5.c();
-        t28 = space();
+        t23 = space();
+        if (if_block6)
+          if_block6.c();
+        t24 = space();
         for (let i = 0; i < each_blocks.length; i += 1) {
           each_blocks[i].c();
         }
-        t29 = space();
+        t25 = space();
         create_component(articlepeek.$$.fragment);
         attr(div0, "class", "dmg-toolbar");
         attr(button, "class", "dmg-mini dmg-refresh");
         attr(button, "title", "Rescan for saved games and re-read the selected one. Saves are never cached, so this picks up a game you just saved - no page reload needed.");
-        button.disabled = ctx[11];
+        button.disabled = ctx[14];
         attr(input0, "type", "file");
         attr(input0, "accept", ".sav,.asav");
         attr(label, "class", "dmg-mini dmg-file");
         attr(label, "title", "Read a .sav from anywhere on disk. You can also drop one on this panel.");
         attr(section0, "class", "dmg-block");
-        toggle_class(section0, "dmg-dropping", ctx[13]);
+        toggle_class(section0, "dmg-dropping", ctx[17]);
+        attr(ul, "class", "tech-legend");
+        attr(section1, "class", "dmg-block tech-legendblock");
         attr(div1, "class", "dmg-chips");
         attr(input1, "class", "dmg-input");
         attr(input1, "placeholder", "Search topics\u2026");
-        attr(section1, "class", "dmg-block");
-        attr(span1, "class", "dmg-cap");
         attr(section2, "class", "dmg-block");
-        attr(header3, "title", "Pick a target and get everything still missing, in an order you could actually research them in.");
-        attr(input2, "class", "dmg-input");
-        attr(input2, "list", "tech-goals");
-        attr(input2, "placeholder", "Type a topic\u2026");
-        attr(datalist, "id", "tech-goals");
+        toggle_class(section2, "tech-standby", ctx[15]);
+        attr(span1, "class", "dmg-cap");
         attr(section3, "class", "dmg-block");
+        attr(header3, "title", "Name anything in the pedia - a gun, a part, a facility, a research topic - and get the route to it. Not just research: if the only way to a thing is a shop, a mission or a random event, that is what it says.");
+        attr(input2, "class", "dmg-input");
+        attr(input2, "placeholder", "What do you want to unlock?");
+        attr(section4, "class", "dmg-block");
         attr(aside, "class", "dmg-side");
-        attr(span2, "class", "dmg-cap");
-        attr(header4, "class", "tech-colhead");
-        attr(div2, "class", "tech-collist");
-        attr(div3, "class", "tech-col");
-        attr(div4, "class", "tech-cols");
-        attr(div5, "class", "dmg-body tech-body");
-        attr(div6, "class", "dmg-root");
+        attr(div2, "class", "tech-cols");
+        attr(div3, "class", "dmg-body tech-body");
+        attr(div4, "class", "dmg-root");
       },
       m(target, anchor) {
-        insert(target, div6, anchor);
-        append(div6, div0);
-        append(div6, t1);
-        append(div6, div5);
-        append(div5, aside);
+        insert(target, div4, anchor);
+        append(div4, div0);
+        append(div4, t1);
+        append(div4, div3);
+        append(div3, aside);
         append(aside, section0);
         append(section0, header0);
         append(header0, t2);
@@ -51522,79 +54941,72 @@
         if_block1.m(section0, null);
         append(aside, t8);
         append(aside, section1);
-        append(section1, header1);
-        append(section1, t10);
-        append(section1, div1);
-        for (let i = 0; i < each_blocks_3.length; i += 1) {
-          each_blocks_3[i].m(div1, null);
-        }
-        append(section1, t11);
-        append(section1, input1);
-        set_input_value(input1, ctx[4]);
-        append(aside, t12);
-        append(aside, section2);
-        append(section2, header2);
-        append(header2, t13);
-        append(header2, span1);
-        append(span1, t14);
-        append(section2, t15);
-        if_block2.m(section2, null);
-        append(aside, t16);
-        append(aside, section3);
-        append(section3, header3);
-        append(section3, t18);
-        append(section3, input2);
-        set_input_value(input2, ctx[5]);
-        append(section3, t19);
-        append(section3, datalist);
+        append(section1, ul);
         for (let i = 0; i < each_blocks_2.length; i += 1) {
-          each_blocks_2[i].m(datalist, null);
+          each_blocks_2[i].m(ul, null);
         }
-        append(section3, t20);
-        if (if_block3)
-          if_block3.m(section3, null);
-        append(div5, t21);
-        append(div5, div4);
-        append(div4, div3);
-        append(div3, header4);
-        append(header4, t22);
-        append(header4, t23);
-        append(header4, span2);
-        append(span2, t24);
-        append(div3, t25);
-        append(div3, div2);
+        append(aside, t9);
+        append(aside, section2);
+        append(section2, header1);
+        append(section2, t11);
+        append(section2, div1);
         for (let i = 0; i < each_blocks_1.length; i += 1) {
-          each_blocks_1[i].m(div2, null);
+          each_blocks_1[i].m(div1, null);
         }
-        append(div2, t26);
-        if (if_block4)
-          if_block4.m(div2, null);
-        append(div2, t27);
+        append(section2, t12);
+        append(section2, input1);
+        set_input_value(input1, ctx[4]);
+        append(section2, t13);
+        if (if_block2)
+          if_block2.m(section2, null);
+        append(aside, t14);
+        append(aside, section3);
+        append(section3, header2);
+        append(header2, t15);
+        append(header2, span1);
+        append(span1, t16);
+        append(section3, t17);
+        if_block3.m(section3, null);
+        append(aside, t18);
+        append(aside, section4);
+        append(section4, header3);
+        append(section4, t20);
+        append(section4, input2);
+        set_input_value(input2, ctx[5]);
+        append(section4, t21);
+        if_block4.m(section4, null);
+        append(div3, t22);
+        append(div3, div2);
         if (if_block5)
           if_block5.m(div2, null);
-        append(div4, t28);
+        append(div2, t23);
+        if (if_block6)
+          if_block6.m(div2, null);
+        append(div2, t24);
         for (let i = 0; i < each_blocks.length; i += 1) {
-          each_blocks[i].m(div4, null);
+          each_blocks[i].m(div2, null);
         }
-        insert(target, t29, anchor);
+        insert(target, t25, anchor);
         mount_component(articlepeek, target, anchor);
         current = true;
         if (!mounted) {
           dispose = [
-            listen(button, "click", ctx[24]),
-            listen(input0, "change", ctx[36]),
-            listen(section0, "dragover", prevent_default(ctx[37])),
-            listen(section0, "dragleave", ctx[38]),
-            listen(section0, "drop", ctx[27]),
-            listen(input1, "input", ctx[40]),
-            listen(input2, "input", ctx[44])
+            listen(button, "click", ctx[32]),
+            listen(input0, "change", ctx[51]),
+            listen(section0, "dragover", prevent_default(ctx[52])),
+            listen(section0, "dragleave", ctx[53]),
+            listen(section0, "drop", ctx[35]),
+            listen(input1, "input", ctx[55]),
+            listen(input1, "input", ctx[42]),
+            listen(input2, "input", ctx[59]),
+            listen(input2, "input", ctx[60])
           ];
           mounted = true;
         }
       },
       p(ctx2, dirty) {
-        if (!current || dirty[0] & 2048) {
-          button.disabled = ctx2[11];
+        if (!current || dirty[0] & 16384) {
+          button.disabled = ctx2[14];
         }
         if (current_block_type === (current_block_type = select_block_type(ctx2, dirty)) && if_block0) {
           if_block0.p(ctx2, dirty);
@@ -51616,121 +55028,113 @@
             if_block1.m(section0, null);
           }
         }
-        if (dirty[0] & 8192) {
-          toggle_class(section0, "dmg-dropping", ctx2[13]);
+        if (dirty[0] & 131072) {
+          toggle_class(section0, "dmg-dropping", ctx2[17]);
         }
-        if (dirty[0] & 2228232) {
-          each_value_13 = ctx2[21];
+        if (dirty[0] & 1073741824 | dirty[1] & 8192) {
+          each_value_21 = ctx2[30];
           let i;
-          for (i = 0; i < each_value_13.length; i += 1) {
-            const child_ctx = get_each_context_134(ctx2, each_value_13, i);
-            if (each_blocks_3[i]) {
-              each_blocks_3[i].p(child_ctx, dirty);
-            } else {
-              each_blocks_3[i] = create_each_block_134(child_ctx);
-              each_blocks_3[i].c();
-              each_blocks_3[i].m(div1, null);
-            }
-          }
-          for (; i < each_blocks_3.length; i += 1) {
-            each_blocks_3[i].d(1);
-          }
-          each_blocks_3.length = each_value_13.length;
-        }
-        if (dirty[0] & 16 && input1.value !== ctx2[4]) {
-          set_input_value(input1, ctx2[4]);
-        }
-        if ((!current || dirty[0] & 65536) && t14_value !== (t14_value = ctx2[16].length + ""))
-          set_data(t14, t14_value);
-        if (current_block_type_2 === (current_block_type_2 = select_block_type_2(ctx2, dirty)) && if_block2) {
-          if_block2.p(ctx2, dirty);
-        } else {
-          if_block2.d(1);
-          if_block2 = current_block_type_2(ctx2);
-          if (if_block2) {
-            if_block2.c();
-            if_block2.m(section2, null);
-          }
-        }
-        if (dirty[0] & 32 && input2.value !== ctx2[5]) {
-          set_input_value(input2, ctx2[5]);
-        }
-        if (dirty[0] & 268435456) {
-          each_value_10 = ctx2[28].slice(0, 4e3);
-          let i;
-          for (i = 0; i < each_value_10.length; i += 1) {
-            const child_ctx = get_each_context_103(ctx2, each_value_10, i);
+          for (i = 0; i < each_value_21.length; i += 1) {
+            const child_ctx = get_each_context_212(ctx2, each_value_21, i);
             if (each_blocks_2[i]) {
               each_blocks_2[i].p(child_ctx, dirty);
             } else {
-              each_blocks_2[i] = create_each_block_103(child_ctx);
+              each_blocks_2[i] = create_each_block_212(child_ctx);
               each_blocks_2[i].c();
-              each_blocks_2[i].m(datalist, null);
+              each_blocks_2[i].m(ul, null);
             }
           }
           for (; i < each_blocks_2.length; i += 1) {
             each_blocks_2[i].d(1);
           }
-          each_blocks_2.length = each_value_10.length;
+          each_blocks_2.length = each_value_21.length;
         }
-        if (current_block_type_3 === (current_block_type_3 = select_block_type_4(ctx2, dirty)) && if_block3) {
-          if_block3.p(ctx2, dirty);
-        } else {
-          if (if_block3)
-            if_block3.d(1);
-          if_block3 = current_block_type_3 && current_block_type_3(ctx2);
-          if (if_block3) {
-            if_block3.c();
-            if_block3.m(section3, null);
-          }
-        }
-        if ((!current || dirty[0] & 8) && t22_value !== (t22_value = ctx2[21].find(ctx2[46]).label + ""))
-          set_data(t22, t22_value);
-        if ((!current || dirty[0] & 262144) && t24_value !== (t24_value = ctx2[18].length + ""))
-          set_data(t24, t24_value);
-        if (dirty[0] & 1623457798) {
-          each_value_8 = ctx2[18].slice(0, 600);
+        if (dirty[0] & 276856840 | dirty[1] & 2048) {
+          each_value_20 = ctx2[28];
           let i;
-          for (i = 0; i < each_value_8.length; i += 1) {
-            const child_ctx = get_each_context_83(ctx2, each_value_8, i);
+          for (i = 0; i < each_value_20.length; i += 1) {
+            const child_ctx = get_each_context_202(ctx2, each_value_20, i);
             if (each_blocks_1[i]) {
               each_blocks_1[i].p(child_ctx, dirty);
             } else {
-              each_blocks_1[i] = create_each_block_83(child_ctx);
+              each_blocks_1[i] = create_each_block_202(child_ctx);
               each_blocks_1[i].c();
-              each_blocks_1[i].m(div2, t26);
+              each_blocks_1[i].m(div1, null);
             }
           }
           for (; i < each_blocks_1.length; i += 1) {
             each_blocks_1[i].d(1);
           }
-          each_blocks_1.length = each_value_8.length;
+          each_blocks_1.length = each_value_20.length;
         }
-        if (ctx2[18].length > 600) {
-          if (if_block4) {
-            if_block4.p(ctx2, dirty);
+        if (dirty[0] & 16 && input1.value !== ctx2[4]) {
+          set_input_value(input1, ctx2[4]);
+        }
+        if (ctx2[15]) {
+          if (if_block2) {
           } else {
-            if_block4 = create_if_block_1112(ctx2);
-            if_block4.c();
-            if_block4.m(div2, t27);
+            if_block2 = create_if_block_374(ctx2);
+            if_block2.c();
+            if_block2.m(section2, null);
           }
-        } else if (if_block4) {
-          if_block4.d(1);
-          if_block4 = null;
+        } else if (if_block2) {
+          if_block2.d(1);
+          if_block2 = null;
         }
-        if (!ctx2[18].length) {
+        if (dirty[0] & 32768) {
+          toggle_class(section2, "tech-standby", ctx2[15]);
+        }
+        if ((!current || dirty[0] & 4194304) && t16_value !== (t16_value = ctx2[22].length + ""))
+          set_data(t16, t16_value);
+        if (current_block_type_2 === (current_block_type_2 = select_block_type_2(ctx2, dirty)) && if_block3) {
+          if_block3.p(ctx2, dirty);
+        } else {
+          if_block3.d(1);
+          if_block3 = current_block_type_2(ctx2);
+          if (if_block3) {
+            if_block3.c();
+            if_block3.m(section3, null);
+          }
+        }
+        if (dirty[0] & 32 && input2.value !== ctx2[5]) {
+          set_input_value(input2, ctx2[5]);
+        }
+        if (current_block_type_3 === (current_block_type_3 = select_block_type_4(ctx2, dirty)) && if_block4) {
+          if_block4.p(ctx2, dirty);
+        } else {
+          if_block4.d(1);
+          if_block4 = current_block_type_3(ctx2);
+          if (if_block4) {
+            if_block4.c();
+            if_block4.m(section4, null);
+          }
+        }
+        if (ctx2[19]) {
           if (if_block5) {
+            if_block5.p(ctx2, dirty);
           } else {
-            if_block5 = create_if_block_107(ctx2);
+            if_block5 = create_if_block_146(ctx2);
             if_block5.c();
-            if_block5.m(div2, null);
+            if_block5.m(div2, t23);
           }
         } else if (if_block5) {
           if_block5.d(1);
           if_block5 = null;
         }
-        if (dirty[0] & 1623752739) {
-          each_value = ctx2[15];
+        if (!ctx2[15]) {
+          if (if_block6) {
+            if_block6.p(ctx2, dirty);
+          } else {
+            if_block6 = create_if_block_107(ctx2);
+            if_block6.c();
+            if_block6.m(div2, t24);
+          }
+        } else if (if_block6) {
+          if_block6.d(1);
+          if_block6 = null;
+        }
+        if (dirty[0] & 572522499 | dirty[1] & 12321) {
+          each_value = ctx2[21];
           let i;
           for (i = 0; i < each_value.length; i += 1) {
             const child_ctx = get_each_context30(ctx2, each_value, i);
@@ -51739,7 +55143,7 @@
             } else {
               each_blocks[i] = create_each_block30(child_ctx);
               each_blocks[i].c();
-              each_blocks[i].m(div4, null);
+              each_blocks[i].m(div2, null);
             }
           }
           for (; i < each_blocks.length; i += 1) {
@@ -51748,9 +55152,9 @@
           each_blocks.length = each_value.length;
         }
         const articlepeek_changes = {};
-        if (!updating_id && dirty[0] & 4096) {
+        if (!updating_id && dirty[0] & 65536) {
           updating_id = true;
-          articlepeek_changes.id = ctx2[12];
+          articlepeek_changes.id = ctx2[16];
           add_flush_callback(() => updating_id = false);
         }
         articlepeek.$set(articlepeek_changes);
@@ -51767,23 +55171,22 @@
       },
       d(detaching) {
         if (detaching)
-          detach(div6);
+          detach(div4);
         if_block0.d();
         if_block1.d();
-        destroy_each(each_blocks_3, detaching);
-        if_block2.d();
         destroy_each(each_blocks_2, detaching);
-        if (if_block3) {
-          if_block3.d();
-        }
         destroy_each(each_blocks_1, detaching);
-        if (if_block4)
-          if_block4.d();
+        if (if_block2)
+          if_block2.d();
+        if_block3.d();
+        if_block4.d();
         if (if_block5)
           if_block5.d();
+        if (if_block6)
+          if_block6.d();
         destroy_each(each_blocks, detaching);
         if (detaching)
-          detach(t29);
+          detach(t25);
         destroy_component(articlepeek, detaching);
         mounted = false;
         run_all(dispose);
@@ -51792,6 +55195,8 @@
   }
   var SAVE_PREF2 = "xpediaSave";
   var MARK_PREF = "xpediaTechMarks";
+  var VIA_LIMIT = 15;
+  var func6 = (s) => s.name + " (" + s.tiles + " tile" + (s.tiles == 1 ? "" : "s") + ")";
   function instance44($$self, $$props, $$invalidate) {
     let pool;
     let needle;
@@ -51800,7 +55205,9 @@
     let unblocks;
     let todo;
     let cards;
-    let goalPath;
+    let goalMatches;
+    let goalGroups;
+    let plan;
     let { topicId = "" } = $$props;
     let saveList = [];
     let savePath = "";
@@ -51812,11 +55219,15 @@
     let trail = [];
     let filter2 = "available";
     let search = "";
+    let goalQuery = "";
     let goal = "";
+    let listHidden = false;
     let todoSort = "impact";
+    let salvageVersion = 0;
+    let listSort = "name";
     let peekId = "";
     function peek(id) {
-      $$invalidate(12, peekId = id);
+      $$invalidate(16, peekId = id);
     }
     const TODO_SORTS = [
       {
@@ -51835,6 +55246,11 @@
         title: "What you can act on now first: available, then needs an item, then in progress, then blocked."
       },
       {
+        id: "inProgress",
+        label: "In progress",
+        title: 'What the save already has underway, first. Everything else keeps the Status order behind it, so this is the quick "what am I waiting on" view.'
+      },
+      {
         id: "name",
         label: "Name",
         title: "Alphabetical."
@@ -51843,6 +55259,19 @@
         id: "added",
         label: "Added",
         title: "The order you starred them."
+      }
+    ];
+    const started = (status) => status == "inProgress" ? 0 : 1;
+    const LIST_SORTS = [
+      {
+        id: "name",
+        label: "A\u2013Z",
+        title: "Alphabetical."
+      },
+      {
+        id: "inProgress",
+        label: "In progress",
+        title: "Topics the save already has underway first, the rest alphabetically behind them - so you can see what is running without leaving the filter you are on."
       }
     ];
     const FILTERS = [
@@ -51885,6 +55314,26 @@
       needsItem: "needs an item",
       blocked: "blocked"
     };
+    const LEGEND = [
+      [
+        "available",
+        "Available",
+        "Research satisfied and, if it wants one, the item is in stores. Start it today."
+      ],
+      [
+        "needsItem",
+        "Needs item",
+        "Research is clear. You just do not hold the thing it wants to examine."
+      ],
+      ["inProgress", "In progress", "Already underway in this save's project list."],
+      ["blocked", "Blocked", "Something it depends on is not researched yet."],
+      ["done", "Done", "Already researched in this save."],
+      [
+        "lockedOut",
+        "Ruled out",
+        "A branching choice you already made closed this off for the rest of the campaign."
+      ]
+    ];
     onMount(() => {
       try {
         const raw = JSON.parse(localStorage[MARK_PREF] || "[]");
@@ -51895,6 +55344,7 @@
       }
       adoptSharedSave();
       discoverSaves();
+      loadSalvageIndex().then(() => $$invalidate(46, salvageVersion++, salvageVersion), () => $$invalidate(46, salvageVersion++, salvageVersion));
       if (topicId && topic(topicId))
         $$invalidate(2, trail = [topicId]);
     });
@@ -51913,10 +55363,10 @@
       const state = get_store_value(currentSave);
       if (!path || !state)
         return false;
-      $$invalidate(8, savePath = path);
+      $$invalidate(11, savePath = path);
       $$invalidate(0, saveState = state);
       if (droppedSaves.has(path) && !saveList.some((x) => x.path == path))
-        $$invalidate(7, saveList = [{ path, file: path, dir: "", modified: 0 }, ...saveList]);
+        $$invalidate(10, saveList = [{ path, file: path, dir: "", modified: 0 }, ...saveList]);
       return true;
     }
     function discoverSaves() {
@@ -51933,7 +55383,7 @@
           yield stampSaves(found);
         } catch (e) {
         }
-        $$invalidate(7, saveList = [
+        $$invalidate(10, saveList = [
           ...saveList.filter((x) => droppedSaves.has(x.path)),
           ...sortSaves(found).filter((x) => !droppedSaves.has(x.path))
         ]);
@@ -51951,19 +55401,19 @@
     }
     function refreshSaves() {
       return __async(this, null, function* () {
-        $$invalidate(11, savesRefreshing = true);
+        $$invalidate(14, savesRefreshing = true);
         const keep = savePath;
         yield discoverSaves();
         if (keep && saveList.some((x) => x.path == keep))
           yield pickSave(keep);
-        $$invalidate(11, savesRefreshing = false);
+        $$invalidate(14, savesRefreshing = false);
       });
     }
     function pickSave(path) {
       return __async(this, null, function* () {
-        $$invalidate(8, savePath = path);
+        $$invalidate(11, savePath = path);
         $$invalidate(0, saveState = null);
-        $$invalidate(10, saveError = "");
+        $$invalidate(13, saveError = "");
         try {
           localStorage[SAVE_PREF2] = path;
         } catch (e) {
@@ -51977,11 +55427,11 @@
           setCurrentSave(path, saveState);
           return;
         }
-        $$invalidate(9, saveLoading = true);
+        $$invalidate(12, saveLoading = true);
         const loaded2 = yield loadSave(path);
-        $$invalidate(9, saveLoading = false);
+        $$invalidate(12, saveLoading = false);
         if (!loaded2) {
-          $$invalidate(10, saveError = "Could not read that save");
+          $$invalidate(13, saveError = "Could not read that save");
           return;
         }
         $$invalidate(0, saveState = loaded2);
@@ -51991,26 +55441,26 @@
     function readSavFile(file) {
       if (!file)
         return;
-      $$invalidate(10, saveError = "");
-      $$invalidate(9, saveLoading = true);
+      $$invalidate(13, saveError = "");
+      $$invalidate(12, saveLoading = true);
       const reader = new FileReader();
       reader.onerror = () => {
-        $$invalidate(9, saveLoading = false);
-        $$invalidate(10, saveError = "Could not read that file");
+        $$invalidate(12, saveLoading = false);
+        $$invalidate(13, saveError = "Could not read that file");
       };
       reader.onload = () => {
-        $$invalidate(9, saveLoading = false);
+        $$invalidate(12, saveLoading = false);
         const parsed = parseSave(String(reader.result), file.name);
         if (!parsed) {
-          $$invalidate(10, saveError = "Could not read that save");
+          $$invalidate(13, saveError = "Could not read that save");
           return;
         }
         $$invalidate(0, saveState = parsed);
-        $$invalidate(8, savePath = file.name);
+        $$invalidate(11, savePath = file.name);
         droppedSaves.set(file.name, parsed);
         setCurrentSave(file.name, parsed);
         if (!saveList.some((x) => x.path == file.name))
-          $$invalidate(7, saveList = [
+          $$invalidate(10, saveList = [
             {
               path: file.name,
               file: file.name,
@@ -52025,7 +55475,7 @@
     let savDragOver = false;
     function onSavDrop(e) {
       e.preventDefault();
-      $$invalidate(13, savDragOver = false);
+      $$invalidate(17, savDragOver = false);
       const dt2 = e.dataTransfer;
       readSavFile(dt2 && dt2.files && dt2.files[0]);
     }
@@ -52037,6 +55487,36 @@
       blocked: 3,
       done: 4
     };
+    const makePlan = (id, save, _salvageVersion) => id ? goalPlan(id, save) : null;
+    function pickGoal(id) {
+      $$invalidate(6, goal = id);
+      $$invalidate(5, goalQuery = rul.tr(id, { icon: "none", notip: true }));
+      $$invalidate(15, listHidden = true);
+    }
+    function clearGoal() {
+      $$invalidate(6, goal = "");
+      $$invalidate(5, goalQuery = "");
+      $$invalidate(15, listHidden = false);
+      $$invalidate(18, expandedVia = /* @__PURE__ */ new Set());
+    }
+    let expandedVia = /* @__PURE__ */ new Set();
+    const viaKey = (id, i, part = "") => id + ":" + i + ":" + part;
+    function toggleVia(key) {
+      if (expandedVia.has(key))
+        expandedVia.delete(key);
+      else
+        expandedVia.add(key);
+      $$invalidate(18, expandedVia);
+    }
+    const capped = (list2, key, expanded) => expanded.has(key) ? list2 : list2.slice(0, VIA_LIMIT);
+    const SALVAGE_PARTS = [
+      ["crafts", "Shoot down:"],
+      ["missions", "Missions:"],
+      ["terrains", "Terrains:"]
+    ];
+    function useList() {
+      $$invalidate(15, listHidden = false);
+    }
     function open(id, depth) {
       if (!topic(id))
         return;
@@ -52057,55 +55537,71 @@
       readSavFile(e.target.files && e.target.files[0]);
       e.target.value = "";
     };
-    const dragover_handler2 = () => $$invalidate(13, savDragOver = true);
-    const dragleave_handler = () => $$invalidate(13, savDragOver = false);
-    const click_handler = (f) => $$invalidate(3, filter2 = f.id);
+    const dragover_handler2 = () => $$invalidate(17, savDragOver = true);
+    const dragleave_handler = () => $$invalidate(17, savDragOver = false);
+    const click_handler = (f) => {
+      $$invalidate(3, filter2 = f.id);
+      useList();
+    };
     function input1_input_handler() {
       search = this.value;
       $$invalidate(4, search);
     }
-    const click_handler_1 = (srt) => $$invalidate(6, todoSort = srt.id);
+    const click_handler_1 = (srt) => $$invalidate(7, todoSort = srt.id);
     const click_handler_2 = (t) => open(t.id, 0);
     const click_handler_3 = (t) => toggleMark(t.id);
     function input2_input_handler() {
-      goal = this.value;
-      $$invalidate(5, goal);
+      goalQuery = this.value;
+      $$invalidate(5, goalQuery);
     }
-    const click_handler_4 = (id) => open(id, 0);
-    const func6 = (f) => f.id == filter2;
-    const click_handler_5 = (r) => toggleMark(r.id);
-    const click_handler_6 = (r) => open(r.id, 0);
-    const click_handler_7 = (card) => toggleMark(card.id);
-    const click_handler_8 = (card) => peek(card.id);
-    const click_handler_9 = (m, i) => open(m, i + 1);
-    const click_handler_10 = (d, i) => open(d, i + 1);
-    const click_handler_11 = (u, i) => open(u, i + 1);
-    const click_handler_12 = (u, i) => open(u, i + 1);
-    const click_handler_13 = (card) => $$invalidate(5, goal = card.id);
+    const input_handler = () => $$invalidate(6, goal = "");
+    const click_handler_4 = (m) => pickGoal(m.id);
+    const click_handler_5 = () => peek(plan.id);
+    const click_handler_6 = (r) => open(r, 0);
+    const click_handler_7 = (id) => open(id, 0);
+    const click_handler_8 = (g) => open(g, 0);
+    const click_handler_9 = (ri, part) => toggleVia(viaKey(plan.id, ri, part));
+    const click_handler_10 = (ri) => toggleVia(viaKey(plan.id, ri));
+    const func_13 = (f) => f.id == filter2;
+    const click_handler_11 = (srt) => $$invalidate(8, listSort = srt.id);
+    const click_handler_12 = (r) => toggleMark(r.id);
+    const click_handler_13 = (r) => open(r.id, 0);
+    const click_handler_14 = (card) => toggleMark(card.id);
+    const click_handler_15 = (card) => peek(card.id);
+    const click_handler_16 = (m, i) => open(m, i + 1);
+    const click_handler_17 = (d, i) => open(d, i + 1);
+    const click_handler_18 = (u, i) => open(u, i + 1);
+    const click_handler_19 = (u, i) => open(u, i + 1);
+    const click_handler_20 = (card) => pickGoal(card.id);
     function articlepeek_id_binding(value) {
       peekId = value;
-      $$invalidate(12, peekId);
+      $$invalidate(16, peekId);
     }
     $$self.$$set = ($$props2) => {
       if ("topicId" in $$props2)
-        $$invalidate(31, topicId = $$props2.topicId);
+        $$invalidate(45, topicId = $$props2.topicId);
     };
     $$self.$$.update = () => {
       if ($$self.$$.dirty[0] & 11) {
         $:
-          $$invalidate(33, pool = filter2 == "available" ? availableNow(saveState) : filter2 == "progress" ? inProgress(saveState) : filter2 == "marked" ? marks.filter((id) => topic(id)) : filter2 == "needsItem" ? allIds.filter((id) => statusOf(id, saveState) == "needsItem") : filter2 == "routes" ? routeTopics() : allIds);
+          $$invalidate(48, pool = filter2 == "available" ? availableNow(saveState) : filter2 == "progress" ? inProgress(saveState) : filter2 == "marked" ? marks.filter((id) => topic(id)) : filter2 == "needsItem" ? allIds.filter((id) => statusOf(id, saveState) == "needsItem") : filter2 == "routes" ? routeTopics() : allIds);
       }
       if ($$self.$$.dirty[0] & 16) {
         $:
-          $$invalidate(34, needle = search.trim().toLowerCase());
+          $$invalidate(49, needle = search.trim().toLowerCase());
       }
-      if ($$self.$$.dirty[0] & 9 | $$self.$$.dirty[1] & 12) {
+      if ($$self.$$.dirty[0] & 265 | $$self.$$.dirty[1] & 393216) {
         $:
-          $$invalidate(18, rows = (needle ? pool.filter((id) => rul.tr(id).toLowerCase().includes(needle) || id.toLowerCase().includes(needle)) : pool).map((id) => ({
+          $$invalidate(24, rows = (needle ? pool.filter((id) => rul.tr(id).toLowerCase().includes(needle) || id.toLowerCase().includes(needle)) : pool).map((id) => ({
             id,
             title: rul.tr(id),
             status: statusOf(id, saveState)
           })).sort((a, b) => {
+            if (listSort == "inProgress") {
+              const d = started(a.status) - started(b.status);
+              if (d)
+                return d;
+            }
             if (filter2 == "routes") {
               const rank = (x) => x.status == "lockedOut" ? 2 : x.status == "done" ? 1 : 0;
               const d = rank(a) - rank(b);
@@ -52117,7 +55613,7 @@
       }
       if ($$self.$$.dirty[0] & 3) {
         $:
-          $$invalidate(17, counts = (() => {
+          $$invalidate(23, counts = (() => {
             const c = {
               available: 0,
               progress: 0,
@@ -52138,11 +55634,11 @@
       }
       if ($$self.$$.dirty[0] & 1) {
         $:
-          $$invalidate(32, unblocks = saveState ? unblockCounts(saveState) : /* @__PURE__ */ new Map());
+          $$invalidate(47, unblocks = saveState ? unblockCounts(saveState) : /* @__PURE__ */ new Map());
       }
-      if ($$self.$$.dirty[0] & 67 | $$self.$$.dirty[1] & 2) {
+      if ($$self.$$.dirty[0] & 131 | $$self.$$.dirty[1] & 65536) {
         $:
-          $$invalidate(16, todo = (() => {
+          $$invalidate(22, todo = (() => {
             const items = marks.filter((id) => topic(id)).map((id, i) => ({
               id,
               title: rul.tr(id),
@@ -52163,20 +55659,34 @@
               });
             if (todoSort == "status")
               return items.sort((a, b) => STATUS_RANK[a.status] - STATUS_RANK[b.status] || byName(a, b));
+            if (todoSort == "inProgress")
+              return items.sort((a, b) => started(a.status) - started(b.status) || STATUS_RANK[a.status] - STATUS_RANK[b.status] || byName(a, b));
             return items.sort((a, b) => b.impact.score - a.impact.score || byName(a, b));
           })());
       }
       if ($$self.$$.dirty[0] & 5) {
         $:
-          $$invalidate(15, cards = trail.map((id) => ({
+          $$invalidate(21, cards = trail.map((id) => ({
             id,
             info: topicInfo(id, saveState),
             opens: opensUp(id)
           })));
       }
-      if ($$self.$$.dirty[0] & 33) {
+      if ($$self.$$.dirty[0] & 96) {
         $:
-          $$invalidate(14, goalPath = goal && topic(goal) ? pathTo(goal, saveState) : []);
+          $$invalidate(9, goalMatches = goal ? [] : searchGoals(goalQuery));
+      }
+      if ($$self.$$.dirty[0] & 512) {
+        $:
+          $$invalidate(20, goalGroups = KIND_ORDER.map((k) => ({
+            kind: k,
+            label: KIND_LABEL[k],
+            rows: goalMatches.filter((m) => m.kind == k)
+          })).filter((g) => g.rows.length));
+      }
+      if ($$self.$$.dirty[0] & 65 | $$self.$$.dirty[1] & 32768) {
+        $:
+          $$invalidate(19, plan = makePlan(goal, saveState, salvageVersion));
       }
     };
     return [
@@ -52185,33 +55695,48 @@
       trail,
       filter2,
       search,
+      goalQuery,
       goal,
       todoSort,
+      listSort,
+      goalMatches,
       saveList,
       savePath,
       saveLoading,
       saveError,
       savesRefreshing,
+      listHidden,
       peekId,
       savDragOver,
-      goalPath,
+      expandedVia,
+      plan,
+      goalGroups,
       cards,
       todo,
       counts,
       rows,
       peek,
       TODO_SORTS,
+      LIST_SORTS,
       FILTERS,
       STATUS_LABEL,
+      LEGEND,
       toggleMark,
       refreshSaves,
       pickSave,
       readSavFile,
       onSavDrop,
-      allIds,
+      pickGoal,
+      clearGoal,
+      viaKey,
+      toggleVia,
+      capped,
+      SALVAGE_PARTS,
+      useList,
       open,
       dot,
       topicId,
+      salvageVersion,
       unblocks,
       pool,
       needle,
@@ -52225,24 +55750,32 @@
       click_handler_2,
       click_handler_3,
       input2_input_handler,
+      input_handler,
       click_handler_4,
-      func6,
       click_handler_5,
       click_handler_6,
       click_handler_7,
       click_handler_8,
       click_handler_9,
       click_handler_10,
+      func_13,
       click_handler_11,
       click_handler_12,
       click_handler_13,
+      click_handler_14,
+      click_handler_15,
+      click_handler_16,
+      click_handler_17,
+      click_handler_18,
+      click_handler_19,
+      click_handler_20,
       articlepeek_id_binding
     ];
   }
   var TechTree = class extends SvelteComponent {
     constructor(options) {
       super();
-      init(this, options, instance44, create_fragment44, safe_not_equal, { topicId: 31 }, null, [-1, -1, -1, -1]);
+      init(this, options, instance44, create_fragment44, safe_not_equal, { topicId: 45 }, null, [-1, -1, -1, -1, -1]);
     }
   };
   var TechTree_default = TechTree;
@@ -52969,7 +56502,7 @@
     let if_block;
     let if_block_anchor;
     let current;
-    const if_block_creators = [create_if_block_147, create_else_block_43];
+    const if_block_creators = [create_if_block_147, create_else_block_44];
     const if_blocks = [];
     function select_block_type_1(ctx2, dirty) {
       var _a;
@@ -53009,7 +56542,7 @@
       }
     };
   }
-  function create_else_block_43(ctx) {
+  function create_else_block_44(ctx) {
     let div1;
     let button;
     let big;
@@ -53633,7 +57166,7 @@
     let each_value_2 = rul.sectionsOrder;
     let each_blocks_2 = [];
     for (let i = 0; i < each_value_2.length; i += 1) {
-      each_blocks_2[i] = create_each_block_212(get_each_context_211(ctx, each_value_2, i));
+      each_blocks_2[i] = create_each_block_213(get_each_context_211(ctx, each_value_2, i));
     }
     tr1 = new Tr_default({ props: { s: "Extra sections" } });
     let each_value_1 = rul.typeSectionsOrder;
@@ -53727,7 +57260,7 @@
             if (each_blocks_2[i]) {
               each_blocks_2[i].p(child_ctx, dirty);
             } else {
-              each_blocks_2[i] = create_each_block_212(child_ctx);
+              each_blocks_2[i] = create_each_block_213(child_ctx);
               each_blocks_2[i].c();
               each_blocks_2[i].m(p0, null);
             }
@@ -53882,7 +57415,7 @@
       }
     };
   }
-  function create_if_block_413(ctx) {
+  function create_if_block_414(ctx) {
     let t0;
     let em;
     let t1;
@@ -53957,7 +57490,7 @@
       }
     };
   }
-  function create_if_block_317(ctx) {
+  function create_if_block_318(ctx) {
     let compare;
     let current;
     compare = new Compare_default({
@@ -54072,7 +57605,7 @@
       }
     };
   }
-  function create_each_block_212(ctx) {
+  function create_each_block_213(ctx) {
     let html_tag;
     let raw_value = divider(ctx[87]) + "";
     let t0;
@@ -54314,7 +57847,7 @@
       }
     };
   }
-  function create_if_block_710(ctx) {
+  function create_if_block_712(ctx) {
     let tr_1;
     let br;
     let t;
@@ -54448,7 +57981,7 @@
     let if_block;
     let if_block_anchor;
     let current;
-    const if_block_creators = [create_if_block_512, create_if_block_612, create_if_block_710, create_else_block_110];
+    const if_block_creators = [create_if_block_512, create_if_block_612, create_if_block_712, create_else_block_110];
     const if_blocks = [];
     function select_block_type_4(ctx2, dirty) {
       if (ctx2[3] && ctx2[3].length > 0)
@@ -54604,13 +58137,13 @@
     let if_block0 = !packedData && create_if_block_167(ctx);
     let if_block1 = allowHugeFont && create_if_block_157(ctx);
     let if_block2 = ((_a = rul.langNames) == null ? void 0 : _a.length) > 1 && create_if_block_138(ctx);
-    let if_block3 = ctx[9] && !ctx[14] && !ctx[17] && create_if_block_1113(ctx);
+    let if_block3 = ctx[9] && !ctx[14] && !ctx[17] && !ctx[18] && create_if_block_1113(ctx);
     let if_block4 = !ctx[14] && !ctx[17] && !ctx[18] && create_if_block_108(ctx);
     const if_block_creators = [
       create_if_block_139,
       create_if_block_226,
-      create_if_block_317,
-      create_if_block_413,
+      create_if_block_318,
+      create_if_block_414,
       create_if_block_89,
       create_else_block_25
     ];
@@ -54924,10 +58457,10 @@
         if (dirty[0] & 16 && input.value !== ctx2[4]) {
           set_input_value(input, ctx2[4]);
         }
-        if (ctx2[9] && !ctx2[14] && !ctx2[17]) {
+        if (ctx2[9] && !ctx2[14] && !ctx2[17] && !ctx2[18]) {
           if (if_block3) {
             if_block3.p(ctx2, dirty);
-            if (dirty[0] & 147968) {
+            if (dirty[0] & 410112) {
               transition_in(if_block3, 1);
             }
           } else {
@@ -55566,7 +59099,7 @@
       saveState();
     };
     const open_handler = (e) => goTo(e.detail);
-    const func6 = (a) => contains2(rul.tr(a).toLowerCase(), query);
+    const func7 = (a) => contains2(rul.tr(a).toLowerCase(), query);
     const func_13 = (a) => !contains2(rul.tr(a).toLowerCase(), query);
     const prev_handler = (e) => nextArticle(-1);
     const next_handler = (e) => nextArticle(1);
@@ -55655,7 +59188,7 @@
       click_handler_8,
       click_handler_9,
       open_handler,
-      func6,
+      func7,
       func_13,
       prev_handler,
       next_handler,

@@ -1,8 +1,16 @@
 import { defaultLanguage, rul } from "./Ruleset";
 import { readStyle, packZip } from "./load";
+import { loadSalvageIndex, salvageIndex } from "./salvage";
 
 export async function exportPedia(onlyCurrentLanguage = false) {
   document.body.style.cursor = "wait";
+  /**
+   * The tileset table has to be computed HERE, while the mod directory is still
+   * reachable. The exported file has no mods to read, so it can only ever carry
+   * a table someone else built for it - without this, every export loses the
+   * "battlefield salvage" breakdown and says the tilesets cannot be found.
+   */
+  await loadSalvageIndex();
   let jsPath = (document.getElementById("xpedia-js") as HTMLScriptElement)?.src;
   let js = await (await fetch(jsPath)).text();
   let style = await readStyle("main-css");
@@ -46,6 +54,7 @@ export async function exportPedia(onlyCurrentLanguage = false) {
   window.gameDir = ".";
   window.xpediaDir = "xpedia2/";
   window.xpedia = "${packed}";
+  window.xpediaSalvage = ${JSON.stringify(salvageIndex()).replace(/</g, "\\u003c")};
   window.GlobeMarkers = "${window["GlobeMarkers"]}"
   clog = (...args)=>{}
   </script>

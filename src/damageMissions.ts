@@ -19,10 +19,26 @@
  * the UNION over every race in every bucket. A freighter raid really can be
  * crewed by Trans-Stellar or by smart zombies, and both belong in the list.
  *
- * WHAT IT CANNOT SEE, and says so in the UI rather than pretending:
- *   - units spawned by script
+ * THE OTHER HALF: THINGS THE TROOP TABLE NEVER MENTIONS. A deployment's data
+ * rows are not the only things that shoot at you. Bandit Airfield fields four
+ * 14mm turrets and not one of them appears in `data:` - they arrive down a
+ * completely separate chain:
+ *
+ *   alienDeployments.STR_LOC_BANDIT_AIRFIELD .script = BANDIT_AIRFIELD
+ *   mapScripts.BANDIT_AIRFIELD   -> addUFO: STR_UFO_TURRET_14MM   (x4)
+ *   ufos.STR_UFO_TURRET_14MM     -> mapBlocks[].items
+ *                                     STR_SPAWN_14MM_LIGHT_TURRET
+ *   items.STR_SPAWN_14MM_LIGHT_TURRET .spawnUnit = STR_14MM_LIGHT_TURRET
+ *
+ * So the unit is placed by the MAP, through an item with a fuse on it, and the
+ * deployment never names it. That is not an edge case - it is how every turret
+ * emplacement, gun nest and pre-placed tank in the mod works. See mapSpawns.
+ *
+ * WHAT IT STILL CANNOT SEE, and says so in the UI rather than pretending:
+ *   - units spawned by Yankes script (`spawnUnit` from a y-script hook)
  *   - `huntMissionWeights` / `genMission`, which fire off separate missions
- *   - items in the loot pool carrying `spawnUnit` (a parrot, a turret)
+ *   - which map blocks a random roll will actually pick, so a spawn that lives
+ *     in a terrain's block pool is reported as "may appear" with no count
  * Reinforcement waves and `nextStage` follow-ons ARE included - they are the
  * same battle, and leaving them out would under-report what shoots at you.
  */
@@ -42,6 +58,16 @@ export type MissionOption = {
    * "look up any mission" means any, but they filter nothing and say so.
    */
   unresolved: boolean;
+  /**
+   * How many deployment ids this one row stands for.
+   *
+   * XPiratez splits one fight across several ids to vary the SCENERY - terrain,
+   * map script, briefing - while the garrison stays identical. Bandit Airfield
+   * is two ids with the same seven enemies and a different map; "Guns of the
+   * Patriots" is fifteen, one per country. Those are merged into a single row,
+   * and this says how many were behind it.
+   */
+  variants: number;
 };
 
 /** One troop row of a deployment, for the breakdown panel. */
@@ -56,6 +82,15 @@ export type MissionRow = {
   reinforcement: boolean;
   /** Which stage of a multi-part battle this row belongs to. */
   stage: string;
+  /**
+   * Set when the row is a map-placed spawn rather than a troop row: the ids of
+   * the pieces that carry it. Raw ids, translated by the caller - see
+   * MapSpawn.from. Such rows have no `% outside`, and their quantity is a
+   * placement count rather than a random range.
+   */
+  placedBy?: string[];
+  /** For a placed row, whether the count is guaranteed or a maybe. */
+  certain?: boolean;
 };
 
 /** The races named in one mission's weighted table, across every time bucket. */
@@ -116,12 +151,7 @@ function buildIndexes() {
   }
 }
 
-/** Rebuild the indexes; only needed if the ruleset is reloaded. */
-export function resetMissionIndexes() {
-  byWaveUfo = null;
-  byNextStage = null;
-  bySiteType = null;
-}
+/* No reset hook - see the note in techTree.ts. */
 
 /**
  * The longest mission id that this deployment's id extends.
@@ -217,6 +247,168 @@ function readRows(rows: any[], races: string[], into: Set<string>) {
   }
 }
 
+/* ---- Units the map places, rather than the troop table ------------------ */
+
+/**
+ * Items that turn into a hostile unit, mapped to the unit they become.
+ *
+ * `spawnUnitFaction` is 0 player, 1 hostile, 2 neutral. Only hostile ones, and
+ * ones that do not say, belong in an ENEMY list - a spawn item that produces a
+ * civilian or one of your own would be a lie in this table. The ones that do
+ * not say inherit the faction of whatever triggered them, which for a
+ * map-placed item with a fuse is the hostile side.
+ */
+let spawnItems: { [item: string]: string } = null;
+
+function buildSpawnItems() {
+  if (spawnItems) return;
+  spawnItems = {};
+  for (const item of Object.values<any>(rul.items || {})) {
+    const unit = item && item.spawnUnit;
+    if (typeof unit != "string" || !unit) continue;
+    const faction = item.spawnUnitFaction;
+    if (faction === 0 || faction === 2) continue;
+    spawnItems[item.id] = unit;
+  }
+}
+
+/** Every spawn item placed in a set of map blocks, with how many of each. */
+function blockSpawnItems(blocks: any): { [item: string]: number } {
+  buildSpawnItems();
+  const out: { [item: string]: number } = {};
+  if (!blocks) return out;
+  for (const block of Object.values<any>(blocks)) {
+    if (!block || typeof block != "object") continue;
+    // `items` is itemId -> list of positions, so the count is the list length.
+    for (const [item, spots] of Object.entries<any>(block.items || {})) {
+      if (!spawnItems[item]) continue;
+      out[item] = (out[item] || 0) + (Array.isArray(spots) ? spots.length : 1);
+    }
+    // A randomised pile rolls ONE of its list, so nothing is guaranteed - it is
+    // recorded at zero, which the UI reads as "may appear".
+    for (const pick of Array.isArray(block.randomizedItems) ? block.randomizedItems : [])
+      for (const item of (pick && pick.itemList) || [])
+        if (spawnItems[item] && !out[item]) out[item] = 0;
+  }
+  return out;
+}
+
+/** The map blocks behind a terrain, a craft or a UFO named in a script. */
+function blocksOf(name: string): any {
+  if (typeof name != "string" || !name) return null;
+  const terrain = (rul.terrains || {})[name];
+  if (terrain && terrain.mapBlocks) return terrain.mapBlocks;
+  for (const coll of ["ufos", "crafts"]) {
+    const e = (rul[coll] || {})[name];
+    const data = e && e.battlescapeTerrainData;
+    if (data && data.mapBlocks) return data.mapBlocks;
+  }
+  return null;
+}
+
+export type MapSpawn = {
+  unit: string;
+  /** The item on the map that becomes it. */
+  item: string;
+  /** How many are placed for certain; 0 when it depends on a map roll. */
+  qty: number;
+  /**
+   * The pieces that put it there, as RAW IDS.
+   *
+   * Not translated here on purpose: this result is memoised for the life of the
+   * page, and the language can be switched at any time. Caching display strings
+   * would leave the deployment table in whichever language it was first opened
+   * in. The caller translates.
+   */
+  from: string[];
+  /**
+   * `emplacement` - the script always adds this piece, so the count is real.
+   * `map` - it sits in a block pool the generator may or may not roll.
+   */
+  kind: "emplacement" | "map";
+};
+
+const mapSpawnCache = new Map<string, MapSpawn[]>();
+
+/**
+ * Units placed by the map for one deployment stage.
+ *
+ * Two routes, and they differ in how much they can promise. A script command
+ * that names a piece outright - `addUFO: STR_UFO_TURRET_14MM` - always adds it,
+ * so four such commands are four turrets and the number is worth printing. A
+ * command that just draws from a terrain's block pool may or may not land on
+ * the block holding the spawn, so those are reported without a count.
+ */
+export function mapSpawns(depId: string): MapSpawn[] {
+  const cached = mapSpawnCache.get(depId);
+  if (cached) return cached;
+
+  const dep = (rul.alienDeployments || {})[depId];
+  const out: MapSpawn[] = [];
+  if (!dep) {
+    mapSpawnCache.set(depId, out);
+    return out;
+  }
+
+  buildSpawnItems();
+  // item -> { qty, from, kind }. Merged by item so four addUFO commands read as
+  // one row of four rather than four rows of one.
+  const found = new Map<string, { qty: number; from: Set<string>; kind: "emplacement" | "map" }>();
+
+  const take = (name: string, kind: "emplacement" | "map", placements: number) => {
+    const blocks = blocksOf(name);
+    if (!blocks) return;
+    for (const [item, per] of Object.entries(blockSpawnItems(blocks))) {
+      const qty = kind == "emplacement" ? per * placements : 0;
+      const cur = found.get(item);
+      if (cur) {
+        cur.qty += qty;
+        cur.from.add(name);
+        // Anything guaranteed outranks a maybe.
+        if (kind == "emplacement") cur.kind = "emplacement";
+      } else {
+        found.set(item, { qty, from: new Set([name]), kind });
+      }
+    }
+  };
+
+  // The deployment's own terrains: a block pool, so no counts.
+  for (const t of Array.isArray(dep.terrains) ? dep.terrains : []) take(t, "map", 0);
+
+  const script = (rul.mapScripts || {})[dep.script];
+  const commands = script && Array.isArray(script.commands) ? script.commands : [];
+  for (const cmd of commands) {
+    if (!cmd || typeof cmd != "object") continue;
+    const runs = Math.max(1, +cmd.executions || 1);
+    // A named piece is always added, so its count is real.
+    for (const key of ["UFOName", "craftName"])
+      if (typeof cmd[key] == "string" && cmd[key]) take(cmd[key], "emplacement", runs);
+    // A terrain override only changes which pool the blocks come from.
+    if (typeof cmd.terrain == "string" && cmd.terrain) take(cmd.terrain, "map", 0);
+    for (const lvl of Array.isArray(cmd.verticalLevels) ? cmd.verticalLevels : []) {
+      if (!lvl || typeof lvl != "object") continue;
+      if (typeof lvl.UFOName == "string" && lvl.UFOName) take(lvl.UFOName, "emplacement", runs);
+      if (typeof lvl.terrain == "string" && lvl.terrain) take(lvl.terrain, "map", 0);
+    }
+  }
+
+  for (const [item, info] of found)
+    out.push({
+      unit: spawnItems[item],
+      item,
+      qty: info.qty,
+      from: [...info.from],
+      kind: info.kind,
+    });
+
+  out.sort((a, b) => b.qty - a.qty || (a.unit < b.unit ? -1 : 1));
+  mapSpawnCache.set(depId, out);
+  return out;
+}
+
+/* No reset hook. mapSpawnCache holds raw ids only, so a language change does
+   not stale it; see MapSpawn.from and the note in techTree.ts. */
+
 /**
  * Every unit that can appear in a deployment, following `nextStage` chains.
  *
@@ -224,23 +416,50 @@ function readRows(rows: any[], races: string[], into: Set<string>) {
  * (STR_LOC_MOON_NAZIS_2 -> STR_LOC_THULEBASE) and a malformed loop would
  * otherwise hang the page.
  */
-export function missionUnits(id: string): Set<string> {
-  const out = new Set<string>();
+function walkStages(id: string, visit: (stage: string, dep: any) => void) {
   const seen = new Set<string>();
   let stage = id;
-
   while (stage && !seen.has(stage)) {
     seen.add(stage);
     const dep = rul.alienDeployments ? rul.alienDeployments[stage] : null;
     if (!dep) break;
+    visit(stage, dep);
+    stage = typeof dep.nextStage == "string" ? dep.nextStage : "";
+  }
+}
 
+/**
+ * Units from the deployment's own troop rows.
+ *
+ * Kept separate from the map-placed ones because "did the TROOP TABLE resolve"
+ * is a different question from "does anything appear", and missionList needs
+ * the first one: a deployment whose race cannot be pinned down is still worth
+ * listing as "faction varies", and a turret bolted to its map must not be
+ * allowed to answer that question for it.
+ */
+export function troopUnits(id: string): Set<string> {
+  const out = new Set<string>();
+  walkStages(id, (stage, dep) => {
     const races = racesFor(stage, dep);
     readRows(dep.data, races, out);
     for (const wave of Array.isArray(dep.reinforcements) ? dep.reinforcements : [])
       readRows(wave && wave.data, races, out);
+  });
+  return out;
+}
 
-    stage = typeof dep.nextStage == "string" ? dep.nextStage : "";
-  }
+/** Units the map places across every stage. Turrets, gun nests, pre-set tanks. */
+export function placedUnits(id: string): Set<string> {
+  const out = new Set<string>();
+  walkStages(id, (stage) => {
+    for (const s of mapSpawns(stage)) out.add(s.unit);
+  });
+  return out;
+}
+
+export function missionUnits(id: string): Set<string> {
+  const out = troopUnits(id);
+  for (const u of placedUnits(id)) out.add(u);
   return out;
 }
 
@@ -254,14 +473,22 @@ export function missionUnits(id: string): Set<string> {
  * deployments), so keying on missions would lose most of the content.
  */
 export function missionList(isTarget: (id: string) => boolean): MissionOption[] {
-  const out: MissionOption[] = [];
+  /** One deployment before same-named ones are merged. `sig` is its content. */
+  type Raw = MissionOption & { sig: string };
+  const out: Raw[] = [];
   for (const id of Object.keys(rul.alienDeployments || {})) {
     let units: Set<string>;
+    let troops: Set<string>;
     let rows: MissionRow[];
     try {
+      troops = troopUnits(id);
       units = missionUnits(id);
       rows = missionRows(id);
     } catch (e) {
+      // Dropping a deployment silently is how a resolver bug hides for months:
+      // the mission simply is not in the list and nobody can tell whether the
+      // ruleset or the code is at fault. Say which one it was.
+      console.warn("[missions] skipped " + id + ":", e);
       continue;
     }
     // Only count units the calculator can actually target, so a mission does
@@ -269,8 +496,19 @@ export function missionList(isTarget: (id: string) => boolean): MissionOption[] 
     let n = 0;
     for (const u of units) if (isTarget(u)) n++;
 
+    /**
+     * Everything the picker and the breakdown panel will show for this id.
+     *
+     * Two deployments are only merged when this matches exactly - units,
+     * quantities, % outside, reinforcement flag, emplacements, the lot. Merging
+     * on the enemy NAMES alone would have collapsed rows that field the same
+     * units in different numbers, which is a real difference and not a
+     * duplicate.
+     */
+    const sig = JSON.stringify(rows);
+
     if (n) {
-      out.push({ id, title: rul.tr(id), count: n, unresolved: false });
+      out.push({ id, title: rul.tr(id), count: n, unresolved: false, variants: 1, sig });
       continue;
     }
     /**
@@ -285,11 +523,99 @@ export function missionList(isTarget: (id: string) => boolean): MissionOption[] 
      * excluded race): selecting it would show an empty enemy list, so it is
      * dropped. Calling that "faction varies" would be a plain lie - the faction
      * is known, its members just are not things you can shoot at here.
+     *
+     * The test is on the TROOP units, not on everything: the Zombie Pyramid has
+     * four troop rows whose race cannot be pinned down and a map that places 39
+     * sterile zombies, and judging it on the union would let those zombies
+     * answer "is the faction known" - which they do not - and drop a mission
+     * that belongs in the list.
      */
-    if (!units.size && rows.length)
-      out.push({ id, title: rul.tr(id), count: 0, unresolved: true });
+    if (!troops.size && rows.length)
+      out.push({ id, title: rul.tr(id), count: 0, unresolved: true, variants: 1, sig });
   }
-  return out.sort((a, b) => (a.title < b.title ? -1 : 1));
+  return mergeVariants(out);
+}
+
+/**
+ * The tokens every id in a group shares, as a prefix.
+ *
+ * Split on "_" rather than comparing characters: STR_X_ALPHA and STR_X_ALPINE
+ * share the literal prefix "STR_X_ALP", and cutting there would label them "HA"
+ * and "INE". Whole tokens give "ALPHA" and "ALPINE".
+ */
+function sharedPrefix(ids: string[]): string {
+  const parts = ids.map((id) => id.split("_"));
+  let n = 0;
+  // `n < p.length`, not `p.length - 1`: when one id is a whole-token prefix of
+  // the others - STR_VESSEL_FREIGHTER against ..._G and ..._L - reserving a
+  // token for it backs the prefix off to STR_VESSEL and tags every row with
+  // "Freighter" again. Letting it consume the short id entirely leaves that one
+  // with an empty tag, which is exactly right: it is the base variant and keeps
+  // the plain name.
+  while (parts.every((p) => n < p.length && p[n] == parts[0][n])) n++;
+  return parts[0].slice(0, n).join("_");
+}
+
+/** The part of `id` past the shared prefix, as readable words. */
+function variantTag(id: string, prefix: string): string {
+  const rest = id.slice(prefix.length).replace(/^_+/, "");
+  if (!rest) return "";
+  return rest
+    .split("_")
+    .filter((w) => w)
+    // Initialisms stay shouting - "HQ", "L", "G" - while words get cased.
+    .map((w) => (w.length <= 2 ? w : w[0] + w.slice(1).toLowerCase()))
+    .join(" ");
+}
+
+/**
+ * Collapse deployments that share a name AND resolve to exactly the same fight,
+ * and tell the rest apart.
+ *
+ * 33 names in XPiratez cover 100 of the 488 deployments. 13 of those groups are
+ * pure scenery variants - identical garrison, different map - and listing them
+ * separately is 25 rows of noise you cannot choose between; "Guns of the
+ * Patriots" alone is 15 identical entries. The other 20 are genuinely different
+ * missions wearing one name: three "Freighter" rows crewed by Guild, Govt and
+ * Guild again, two of them even showing the same enemy count. Those must stay
+ * separate, so they get the distinguishing part of their id appended - the one
+ * piece of text that actually differs.
+ */
+function mergeVariants(raw: (MissionOption & { sig: string })[]): MissionOption[] {
+  const byTitle = new Map<string, (MissionOption & { sig: string })[]>();
+  for (const r of raw) {
+    const cur = byTitle.get(r.title);
+    if (cur) cur.push(r);
+    else byTitle.set(r.title, [r]);
+  }
+
+  const out: MissionOption[] = [];
+  for (const [title, group] of byTitle) {
+    const bySig = new Map<string, (MissionOption & { sig: string })[]>();
+    for (const r of group) {
+      const cur = bySig.get(r.sig);
+      if (cur) cur.push(r);
+      else bySig.set(r.sig, [r]);
+    }
+
+    // One distinct fight behind the name: one row, however many ids there were.
+    if (bySig.size == 1) {
+      out.push({ ...group[0], title, variants: group.length });
+      continue;
+    }
+
+    const prefix = sharedPrefix(group.map((r) => r.id));
+    for (const rs of bySig.values()) {
+      // The bare id - the one with nothing past the prefix - keeps the plain
+      // name; it is the base variant and inventing a label for it would be
+      // noise. An em dash rather than brackets, so the picker's own "(12)"
+      // enemy count stays the only thing in parentheses.
+      const tag = rs.map((r) => variantTag(r.id, prefix)).find((t) => t) || "";
+      out.push({ ...rs[0], title: tag ? title + " — " + tag : title, variants: rs.length });
+    }
+  }
+
+  return out.sort((a, b) => a.title.localeCompare(b.title));
 }
 
 /**
@@ -337,6 +663,20 @@ export function missionRows(id: string): MissionRow[] {
     push(dep.data, false);
     for (const wave of Array.isArray(dep.reinforcements) ? dep.reinforcements : [])
       push(wave && wave.data, true);
+
+    // Emplacements. They belong in the same table as the troops - from the
+    // player's side of the screen a turret is simply another thing shooting.
+    for (const s of mapSpawns(stage))
+      out.push({
+        units: [s.unit],
+        low: s.qty,
+        high: s.qty,
+        outside: 0,
+        reinforcement: false,
+        stage: label,
+        placedBy: s.from,
+        certain: s.kind == "emplacement" && s.qty > 0,
+      });
 
     stage = typeof dep.nextStage == "string" ? dep.nextStage : "";
   }

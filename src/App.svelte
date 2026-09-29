@@ -704,7 +704,11 @@
       </div>
     </nav>
 
-    {#if seeSide && !compareMode && !damageMode}
+    <!-- techMode belongs in this list as much as compare and damage do: the
+         article sidebar is position:fixed, so leaving it rendered draws the
+         section's article list, its scrollbar and its A-Z button straight over
+         the tech screen's own left panel. -->
+    {#if seeSide && !compareMode && !damageMode && !techMode}
       <nav class="sidebar">
         <button
           class="side-sort-button"

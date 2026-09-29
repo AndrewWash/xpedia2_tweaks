@@ -678,6 +678,36 @@ The item name. A weapon with several usable firing modes shows the best one on
 the main row and the rest as sub-rows when you expand it. A count like `×3`
 after the name is how many you own in the selected save.
 
+**The clip.** An ammo-fed weapon also shows the clip its numbers came from, under
+the name. This matters more than it looks: 206 weapons in the mod take more than
+one clip and 178 of those have clips of different power, so "Quad Launcher" alone
+is not a statement about anything — that launcher spans 90 to 600 power across its
+four warheads.
+
+The row is **ranked on the best clip this campaign can actually field**, which
+follows the Campaign chip: with *In stores* it will only pick a clip you hold,
+with *Owned or can get* one you could buy or build, with the filter off any clip
+at all. Expand the row and every clip is listed against each other with the *same*
+columns as the modes table — the chosen one marked, and ones you cannot get greyed
+but still shown, because "the round that would work is one you cannot get" is the
+answer to the question rather than a reason to hide it.
+
+**Best means best, not first.** The Score saturates — once a clip drops the target
+in one attack a heavier one cannot score better — so clips tie at the top
+constantly. Ties are broken on margin: fewer attacks, then less TU, then more
+expected damage per attack, then the bigger top-end roll. Without that the tie
+fell to the mod's own `compatibleAmmo` order, which is how a Super Sawed-Off kept
+ranking on `.8g Buckshot` (listed first) instead of the round that actually hits
+hardest.
+
+One deliberate exception: filter by a damage type that only one clip delivers and
+the weapon is ranked on that clip even if you cannot field it. The alternative is
+a filter that counts a weapon and then shows an empty table, which is what this
+used to do.
+
+Until 2026-09-14 no clip was chosen at all — every weapon was scored on whatever
+clip the mod happened to list first.
+
 ### Size
 > Inventory footprint, width x height - what it costs you in pack space
 
@@ -897,6 +927,22 @@ dropdown, hands filter, and clickable resistance chips on the enemy:
 
 > Click a resistance to show only weapons of that type
 
+Two more that are easy to miss, because both are on by default and both *remove*
+rows rather than adding them:
+
+- **Exclude demo** — hides the seven wall-breaking `STR_CRUSH` modes and a handful
+  of flavour actions. They are ranged-with-range-1 and ranked far above their
+  worth.
+- **Vehicle & built-in** — unticked, so vehicle turrets and armour-welded gear are
+  hidden. They are not things a gal chooses and their power swamps the ranking.
+
+  "Built-in" means `recover: false` — gear the engine says can never reach your
+  stores. It deliberately does **not** mean "some armour spawns holding one":
+  `Ruleset.ts:1498` tags an item the moment any armour lists it in
+  `builtInWeapons`, and reading that alone hid the Barbed Dagger (ARMOR_SURVIVOR
+  carries one) and the Bandit Knife (ARMOR_HALF_UBER_GIRL) — two knives you can
+  loot, hold and sell. See `isFixedWeapon` in `damageWeapons.ts`.
+
 ---
 
 ## 10. Where the enemy's numbers come from
@@ -963,7 +1009,8 @@ them.
 - **Energy and stamina.** Movement costs energy too; running out is real and
   invisible here.
 - **Ammo capacity and reload cost.** A weapon that drops the target in two shots
-  but holds one is not distinguished from one that holds twelve.
+  but holds one is not distinguished from one that holds twelve. The *choice* of
+  clip is modelled (§7, Weapon); how many rounds it holds is not.
 - **Weight and encumbrance.**
 - **Energy shields** (reported, §10.4).
 - **Base facilities** in the "Owned or can get" filter — a manufacture you have
@@ -1109,6 +1156,31 @@ None of the above asks you to take anything on faith.
 ---
 
 ## Change history
+
+- **2026-09-14** — Ammo-fed weapons are ranked on the best clip they can field
+  (§7, Weapon), with the clip named on the row and every clip compared in the
+  expanded row. Both callers previously passed no clip, so `scoreWeapon` fell
+  through to `ammoOptions[0]` — whatever the mod listed first. 206 weapons take
+  more than one clip and 178 differ in power, so the Quad Launcher was scored on
+  90 power when it fires up to 600, and the Ballista on 66 of 66–300. It also
+  explains the filters that counted a weapon and then rendered nothing: the
+  damage-type list unions every clip while only the first was ever scored, so
+  "EMP (1)" pointed at a Mini Cannon whose EMP round was never looked at. Costs
+  about 1.38x the scoring work mod-wide — 996 of 1172 weapons take a single clip,
+  so the search is a no-op for most — measured at a few hundred ms on the full
+  638-weapon list and far less with a save loaded. Ties on Score are broken on
+  margin rather than on the mod's clip order, without which the first clip still
+  won every saturated comparison and the whole thing looked unchanged.
+
+- **2026-09-13 (later still)** — "Vehicle & built-in" no longer hides a weapon
+  merely because some armour spawns holding one. `weaponList` read the `builtIn`
+  back-link, which `Ruleset.ts:1498` writes onto every item any armour names in
+  `builtInWeapons`; one NPC with a knife was enough to hide that knife. It now
+  also requires `recover: false`, the engine's own "this never reaches your
+  stores". Six items mod-wide were affected; the Barbed Dagger and the Bandit
+  Knife are back in the list, the four armour-only weapons stay out. §9 also
+  documents this filter and "Exclude demo" for the first time — the omission was
+  half of why it took a bug hunt to find.
 
 - **2026-09-13 (later)** — Approach reworked onto a single Range cutoff (§4.1):
   a mode reaching it pays nothing, a shorter one pays to close, melee walks the

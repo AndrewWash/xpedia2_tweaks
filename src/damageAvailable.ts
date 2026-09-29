@@ -85,15 +85,28 @@ function canBuy(item: any, discovered: Set<string>): boolean {
 /**
  * Can this be built?
  *
- * `item.manufacture` is already a map of project-id to count - Ruleset back-links
- * every project's totalProducedItems onto the items it makes - so there is no
- * index to build here. A project with no `requires` is unconditionally available,
- * which is correct: STR_BAMBOO has a manufacture entry with no research gate and
- * is craftable from the first day.
+ * Ruleset back-links every project's totalProducedItems onto the items it makes,
+ * so there is no index to build here. A project with no `requires` is
+ * unconditionally available, which is correct: STR_BAMBOO has a manufacture
+ * entry with no research gate and is craftable from the first day.
+ *
+ * `item.manufacture` HAS TWO SHAPES, and reading only one of them made this
+ * function return false for every item in the mod. backLink() builds it as an
+ * ARRAY of project ids; the facilities pass then hangs named properties on that
+ * same value (`item.manufacture[facilityType] = refund`) for anything you get
+ * back when a facility is dismantled. The old code called Object.keys() on it,
+ * which on an array yields "0", "1", "2" - indices, not project ids - so every
+ * lookup in rul.manufacture missed and nothing was ever makeable. The Flintlock
+ * Rifle is the visible symptom: researched, buildable, and absent from "owned or
+ * can get" until you actually built one.
  */
 function canMake(item: any, discovered: Set<string>): boolean {
   if (!item || !item.manufacture) return false;
-  for (const projectId of Object.keys(item.manufacture)) {
+  const projects = Array.isArray(item.manufacture)
+    ? item.manufacture
+    : Object.keys(item.manufacture);
+  for (const projectId of projects) {
+    if (typeof projectId != "string") continue;
     const project = rul.manufacture && rul.manufacture[projectId];
     if (!project) continue;
     if (allDone(asList(project.requires), discovered)) return true;
@@ -168,6 +181,35 @@ export function armorAvailable(
 
   const item = rul.items ? rul.items[store] : null;
   return canBuy(item, save.discovered) || canMake(item, save.discovered);
+}
+
+/**
+ * Which clips this campaign could actually put in the gun.
+ *
+ * Returns a predicate, or null when every clip is allowed - the caller treats
+ * null as "no restriction" so the common case does no work per clip.
+ *
+ * Gated exactly like the weapons themselves: `stores` means a clip you hold,
+ * `obtainable` adds the ones your research lets you buy or build. That matters
+ * because ranking a launcher on a warhead you cannot get is the same lie as
+ * listing a weapon you cannot get - the Bombard reads 350 power on an Atomic
+ * round you have never seen, and nothing on screen says so.
+ *
+ * It is a preference, not a filter: scoreWeaponBestClip falls back to the whole
+ * clip list when none are fieldable, because a gun you own with nothing to load
+ * is still worth a row. The ⚠ NO AMMO marker already tells you it is dry.
+ */
+export function clipAllowed(
+  mode: AvailabilityMode,
+  save: SaveState
+): ((id: string) => boolean) | null {
+  if (mode == "off" || !save) return null;
+  if (mode == "stores") return (id) => (save.owned.get(id) || 0) > 0;
+  return (id) => {
+    if ((save.owned.get(id) || 0) > 0) return true;
+    const item = rul.items ? rul.items[id] : null;
+    return canBuy(item, save.discovered) || canMake(item, save.discovered);
+  };
 }
 
 /** Does this weapon pass the chosen mode? */

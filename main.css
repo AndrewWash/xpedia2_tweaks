@@ -2425,6 +2425,42 @@ tr.diff-row > td:first-child {
   white-space: nowrap;
 }
 
+/* Which clip the row's numbers belong to. Only shown when the weapon takes more
+   than one, because otherwise there was no choice to report. Dimmer than the
+   weapon name and brighter than the mode count: it qualifies the number, so it
+   has to be readable, but it is not the thing you are scanning for. */
+.dmg-clip {
+  opacity: 0.62;
+  font-size: 85%;
+  margin-left: 0.4em;
+  white-space: nowrap;
+  border-bottom: 1px dotted currentColor;
+  cursor: help;
+}
+
+/* The per-clip comparison inside the expanded row. Same columns as the modes
+   table above it plus Clip, Type and Can field - the point of opening a row is
+   to get MORE than the summary, not a reduced version of it. */
+.dmg-clips {
+  margin-top: 0.5rem;
+}
+
+/* Clip names are long and the "ranked on this" tag made them wrap to two lines.
+   Let the table scroll instead, as the main table already does. */
+.dmg-clips td:nth-child(2) {
+  white-space: nowrap;
+}
+
+.dmg-clips .dmg-clip-on > td {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+/* A clip this campaign cannot field. Still listed - "the round that would work
+   is one you cannot get" is an answer - but visibly set apart. */
+.dmg-clips .dmg-clip-off > td {
+  opacity: 0.45;
+}
+
 .dmg-armors,
 .dmg-ustats {
   display: inline-flex;
@@ -2744,6 +2780,15 @@ tr.diff-row > td:first-child {
   border-bottom: 1px solid var(--border);
 }
 
+/* The first column's sort chips: a strip under the header, not part of the
+   scrolling list, so the sort stays put while you scroll 600 topics. */
+.tech-colsort {
+  padding: 0.2rem 0.3rem;
+  margin-bottom: 0;
+  border-bottom: 1px solid var(--border);
+  flex: 0 0 auto;
+}
+
 .tech-collist {
   overflow-y: auto;
   padding: 0.2rem;
@@ -2829,11 +2874,26 @@ tr.diff-row > td:first-child {
   display: inline-block;
   background: #777;
 }
-.dmg-dot-done { background: #4a4a4a; }
-.dmg-dot-inProgress { background: #ffc67c; }
-.dmg-dot-available { background: #7bd67b; }
-.dmg-dot-needsItem { background: #6fa8dc; }
-.dmg-dot-blocked { background: #b05555; }
+/* Five real states plus a grey, picked as SEPARATE HUES rather than as shades.
+   Ruled out carries no hue at all - it is struck through as well, so it does
+   not need to compete - which leaves five to spread around the wheel at roughly
+   72 degrees apart, the widest spacing five categories can have:
+
+     blocked     0deg    red
+     done      122deg    green
+     available 180deg    teal      - not yellow: the UI's link colour is orange,
+                                     and an amber dot next to it read as a shade
+     inProgress 239deg   indigo    - pushed off plain blue so teal cannot read
+                                     as "the same blue, lighter"
+     needsItem 306deg    magenta   - was purple, which sat 60deg off the blue
+     lockedOut   --      grey
+
+   Nothing here is two shades of one colour, and there is exactly one red. */
+.dmg-dot-done { background: #4caf50; }
+.dmg-dot-inProgress { background: #6366f1; }
+.dmg-dot-available { background: #17c9c9; }
+.dmg-dot-needsItem { background: #d957c8; }
+.dmg-dot-blocked { background: #e05252; }
 
 /* ---- Floating notepad ------------------------------------------------ */
 
@@ -2931,6 +2991,9 @@ tr.diff-row > td:first-child {
 
 .tech-body > .dmg-side {
   overflow-y: auto;
+  /* Never sideways: a long topic name in the goal picker would otherwise put a
+     horizontal scrollbar under the whole panel. */
+  overflow-x: hidden;
   max-height: 100%;
 }
 
@@ -3006,10 +3069,122 @@ tr.diff-row > td:first-child {
 }
 
 /* A road not taken. Struck through rather than hidden, because knowing which
-   fork you closed is as useful as knowing which you took. */
-.dmg-dot-lockedOut { background: #6a3b3b; }
+   fork you closed is as useful as knowing which you took. Grey rather than the
+   old dark red: it is not a failure state, it is simply over, and a second red
+   next to "blocked" was the main thing making the dots unreadable. */
+.dmg-dot-lockedOut { background: #6b6b6b; }
 
 .tech-locked {
   text-decoration: line-through;
   opacity: 0.6;
+}
+
+/* ---- Dot legend ------------------------------------------------------ */
+
+/* A colour key, not a tutorial: six swatches and six words, wrapping onto two
+   short lines with no header and no prose. The full sentence for each one is in
+   its title attribute, where it costs no vertical space at all. */
+.tech-legendblock {
+  margin-bottom: 0.6rem;
+}
+
+.tech-legend {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.1rem 0.55rem;
+  font-size: 85%;
+  opacity: 0.8;
+}
+
+.tech-legend li {
+  display: flex;
+  align-items: center;
+  gap: 0.28rem;
+  white-space: nowrap;
+  cursor: help;
+}
+
+/* .dmg-cap is nowrap by default - right for a "12 days" caption, wrong for the
+   sentences the goal column puts in it. */
+.tech-goalcol .dmg-cap {
+  white-space: normal;
+}
+
+/* ---- Goal column ----------------------------------------------------- */
+
+/* Wider than a browse column: it holds a route list, a research order and a
+   pile of mission names, and it is the answer you came for. */
+.tech-goalcol {
+  min-width: 19rem;
+  max-width: 24rem;
+  border-color: var(--link);
+}
+
+.tech-goalnote {
+  border-left: 2px solid var(--border);
+  padding-left: 0.4rem;
+}
+
+/* A sidebar block whose column is stood down: still usable - pressing anything
+   in it is how you bring the column back - just not claiming to be in charge. */
+.tech-standby .dmg-chips,
+.tech-standby .dmg-input {
+  opacity: 0.55;
+}
+
+/* The picker's group headings, so items never read as research. */
+.tech-goalgroup {
+  margin: 0.4rem 0 0.1rem;
+  opacity: 0.7;
+  font-weight: normal;
+  text-transform: uppercase;
+  font-size: 85%;
+}
+
+/* One way of getting the thing. Boxed because routes are ALTERNATIVES - the
+   box is what stops them reading as consecutive steps. */
+.tech-route {
+  border: 1px solid var(--border);
+  padding: 0.2rem 0.3rem;
+  margin-bottom: 0.3rem;
+}
+
+/* Matches the "available now" dot, since an open route is the same claim: this
+   is the one you can act on today. */
+.tech-route-open {
+  border-color: #17c9c9;
+}
+
+.tech-routehead {
+  display: flex;
+  align-items: baseline;
+  gap: 0.3rem;
+  font-weight: bold;
+}
+
+.tech-routehead .dmg-cap {
+  margin-left: auto;
+}
+
+.tech-via {
+  padding-left: 0.6rem;
+  opacity: 0.85;
+}
+
+/* "…and 62 more" as a control rather than as a dead sentence. */
+.tech-viamore {
+  font-size: inherit;
+  text-decoration: underline dotted;
+  text-underline-offset: 0.2em;
+}
+
+/* The salvage breakdown is the payload of that box, not a footnote - it is the
+   only thing standing between the player and "recovery type 104". */
+.tech-salvage {
+  opacity: 1;
+  margin: 0.15rem 0;
+  text-indent: -0.6rem;
 }

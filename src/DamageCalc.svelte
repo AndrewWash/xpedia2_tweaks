@@ -26,6 +26,8 @@
     targetList,
     rankWeapons,
     scoreWeapon,
+    scoreWeaponBestClip,
+    chosenClip,
     attacksOf,
     modeKind,
     isUtilityMode,
@@ -48,6 +50,7 @@
   import {
     buildAvailability,
     passesAvailability,
+    clipAllowed,
     availabilityNote,
     armorAvailable,
   } from "./damageAvailable";
@@ -139,8 +142,11 @@
    */
   let catFilters = [];
   let catPick = "all";
-  /** Vehicle turrets and armour built-ins are off by default - they are not
-   *  things a gal chooses, and their power values swamp the ranking. */
+  /** Vehicle turrets, and armour built-ins you can never recover, are off by
+   *  default - they are not things a gal chooses, and their power values swamp
+   *  the ranking. An ordinary weapon that some NPC armour happens to spawn
+   *  holding is NOT hidden; see isFixedWeapon in damageWeapons.ts for why that
+   *  distinction needs making. */
   let includeFixed = false;
   let targetFilter = "";
   /**
@@ -420,6 +426,14 @@
     saveState && allWeapons.length ? buildAvailability(allWeapons, saveState) : new Map();
 
   /**
+   * Which clips the ranking is allowed to pick from, or null for all of them.
+   *
+   * Tracks the availability chip, so a launcher is ranked on the best warhead
+   * this campaign can actually field rather than on the heaviest one in the mod.
+   */
+  $: clipFilter = clipAllowed(availMode, saveState);
+
+  /**
    * Load the chosen save eagerly. It used to wait until the availability filter
    * was switched on, but the crew is worth having on its own - and at ~17ms a
    * parse there is nothing to defer.
@@ -469,14 +483,18 @@
   /**
    * The armours actually offered, always including the one being worn.
    *
-   * The list is capped at 300 of ~540, and the cap silently ate the selection:
-   * a hybrid in STR_HYBRID_ARMOR_THINMAN_UC sorts past the cut, so the picker
-   * had no matching option and displayed "(none)" for a fully armoured gal.
-   * Worse, a select with no matching option can fire a change carrying "",
-   * which wrote an override that really did strip her armour.
+   * This list used to be capped at 300 of ~540, and the cap silently ate the
+   * selection: a hybrid in STR_HYBRID_ARMOR_THINMAN_UC sorts past the cut, so
+   * the picker had no matching option and displayed "(none)" for a fully
+   * armoured gal. Worse, a select with no matching option can fire a change
+   * carrying "", which wrote an override that really did strip her armour.
+   *
+   * The cap is gone - a native select does not need one - and the worn-armour
+   * fallback below stays as belt and braces for the filtered case, where the
+   * current armour genuinely can be absent from the list.
    */
   $: armorOptions = (() => {
-    const list = shownArmors.slice(0, 300);
+    const list = shownArmors;
     const on = current && current.armor;
     if (on && !list.some((a) => a.id == on))
       // "(worn)" only when it really is what the save has her in. While a
@@ -945,7 +963,9 @@
   // Ranking every weapon is the expensive call; keep it to one reactive block.
   $: ranked =
     view == "weapons" && stats && target
-      ? rankWeapons(shownWeapons, stats, target, side, opts, {}, pelletModel, goal, modeFilter)
+      ? rankWeapons(
+          shownWeapons, stats, target, side, opts, {}, pelletModel, goal, modeFilter, clipFilter
+        )
       : [];
 
   $: weapon = weaponId ? allWeapons.find((w) => w.id == weaponId) : null;
@@ -1036,6 +1056,7 @@
       get: (m) => m.score,
       round: 0,
     },
+    { id: "turns", label: "Turns", get: (m) => m.turnsToKill, asc: true, round: 1 },
     { id: "enemy", label: "Enemy", get: (m, t) => t.title.toLowerCase(), asc: true },
     { id: "armour", label: "Armour", get: (m, t) => armorValue(t, side), asc: true, round: 0 },
     { id: "hp", label: "HP", get: (m, t) => t.health, asc: true, round: 0 },
@@ -1052,7 +1073,6 @@
     { id: "perAttack", label: "Per attack", get: (m) => m.perAttack, round: 1 },
     { id: "appr", label: "APPR", title: APPR_TITLE, get: (m) => m.approachTu || null, round: 0 },
     { id: "tu", label: "TU to kill", get: (m) => m.tuToKill, asc: true, round: 0 },
-    { id: "turns", label: "Turns", get: (m) => m.turnsToKill, asc: true, round: 1 },
   ];
 
   const tcolById = (id) => TCOLUMNS.find((c) => c.id == id);
@@ -1157,7 +1177,9 @@
           .map((t) => {
             const tgt = resolveTarget(t.id, difficulty);
             if (!tgt) return null;
-            const r = scoreWeapon(weapon, null, stats, tgt, side, opts, pelletModel, goal);
+            const r = scoreWeaponBestClip(
+              weapon, null, stats, tgt, side, opts, pelletModel, goal, null, clipFilter
+            );
             return r.best ? { target: tgt, result: r } : null;
           })
           .filter(Boolean)
@@ -1190,6 +1212,18 @@
         "accurate weapon can outscore a cheaper inaccurate one.",
       get: (m) => m.score,
       round: 0,
+    },
+    {
+      id: "turns",
+      label: "Turns",
+      title:
+        "That TU as a fraction of this soldier's bar, so below 1 it is also what she " +
+        "has left afterwards - 0.27 means a quarter of the bar spent and she can still " +
+        "move. Hover a row for the whole-turn count, which is the tactical one: you " +
+        "cannot carry TU between turns or fire part of a shot.",
+      get: (m) => m.turnsToKill,
+      asc: true,
+      round: 2,
     },
     { id: "weapon", label: "Weapon", get: (m, w) => w.title.toLowerCase(), asc: true },
     {
@@ -1251,18 +1285,6 @@
       get: (m) => m.tuToKill,
       asc: true,
       round: 0,
-    },
-    {
-      id: "turns",
-      label: "Turns",
-      title:
-        "That TU as a fraction of this soldier's bar, so below 1 it is also what she " +
-        "has left afterwards - 0.27 means a quarter of the bar spent and she can still " +
-        "move. Hover a row for the whole-turn count, which is the tactical one: you " +
-        "cannot carry TU between turns or fire part of a shot.",
-      get: (m) => m.turnsToKill,
-      asc: true,
-      round: 2,
     },
   ];
 
@@ -1568,6 +1590,46 @@
    * beat but can grind down, armour it strips on the way through, and armour
    * that is still standing when the target drops.
    */
+  /**
+   * What the clip label means, spelled out - that the row is ONE clip's numbers,
+   * which one, what it beat, and whether the filter narrowed the choice.
+   */
+  function clipNote(r) {
+    if (!r || r.clips.length < 2) return "";
+    const chosen = chosenClip(r);
+    const parts = [
+      "Ranked on " + stripTags(chosen.title) + " - every number in this row is that clip's",
+      r.clips.length + " clips weighed",
+    ];
+    // The interesting case: a better round exists and you cannot get it. Saying
+    // so is the whole reason the unreachable clips are scored at all.
+    const better = r.clips.find((c) => !c.chosen && !c.fieldable && killsBetter(c, chosen));
+    if (better)
+      parts.push(
+        stripTags(better.title) + " scores higher but this campaign cannot field it"
+      );
+    else {
+      const next = r.clips.find((c) => !c.chosen);
+      if (next && next.best && chosen.best)
+        parts.push(
+          "next best " + stripTags(next.title) +
+            " at " + (next.best.score == null ? "?" : next.best.score) +
+            " against " + (chosen.best.score == null ? "?" : chosen.best.score)
+        );
+    }
+    parts.push("open the row for every clip side by side");
+    return parts.join(" · ");
+  }
+
+  const killsBetter = (a, b) =>
+    a && a.best && a.best.score != null && b && b.best && b.best.score != null &&
+    a.best.score > b.best.score;
+
+  /** rul.tr returns markup; tooltips are plain text. */
+  function stripTags(s) {
+    return String(s == null ? "" : s).replace(/<[^>]*>/g, "").trim();
+  }
+
   function armourNote(m) {
     if (!m) return "";
     const start = m.damage.armorAtStart;
@@ -1765,7 +1827,7 @@
           bind:value={crewFilter}
         />
         <select class="dmg-input dmg-list" size={roster.length > 1 ? 8 : 2} bind:value={currentId}>
-          {#each shownRoster.slice(0, 200) as s}
+          {#each shownRoster as s}
             <option value={s.id}>{s.name}{s.fromSave && s.fromSave.note ? " · " + s.fromSave.note : ""}</option>
           {/each}
         </select>
@@ -2065,9 +2127,13 @@
             placeholder="Search missions…"
             bind:value={missionFilter}
           />
+        <!-- Every match, not the first 400. The cap silently swallowed
+             everything alphabetically past "The Sniper" - Zombie Panic among
+             them - and a mission you cannot find reads as a mission the tool
+             does not know about. A native select does not care about the size. -->
           <select class="dmg-input dmg-list" size="6" bind:value={missionId}>
             <option value="">(any mission — all enemies)</option>
-            {#each shownMissions.slice(0, 400) as m}
+            {#each shownMissions as m}
               <option value={m.id}>{@html m.title} ({m.count})</option>
             {/each}
           </select>
@@ -2088,8 +2154,11 @@
             title="Separate several with commas to line them up together"
             bind:value={targetFilter}
           />
+          <!-- No cap. At 400 this list stopped dead at "Tomb Guardian" and
+               every enemy after it was unreachable unless you happened to guess
+               a filter that matched. A native select does not care. -->
           <select class="dmg-input dmg-list" size="12" bind:value={targetId}>
-            {#each shownTargets.slice(0, 400) as t}
+            {#each shownTargets as t}
               <option value={t.id}>{@html t.title}</option>
             {/each}
           </select>
@@ -2099,7 +2168,7 @@
           <header>Weapon</header>
           <input class="dmg-input" placeholder="Search weapons…" bind:value={weaponFilter} />
           <select class="dmg-input dmg-list" size="12" bind:value={weaponId}>
-            {#each shownWeapons.slice(0, 400) as w}
+            {#each shownWeapons as w}
               <option value={w.id}>{@html w.title}</option>
             {/each}
           </select>
@@ -2229,7 +2298,11 @@
                     enemy list is not filtered</span
                   >
                 {:else}
-                  <span class="dmg-cap">{mission.count} possible enemies</span>
+                  <span class="dmg-cap">
+                    {mission.count} possible enemies{#if mission.variants > 1}{" · one of " +
+                        mission.variants +
+                        " map variants with this same garrison"}{/if}
+                  </span>
                 {/if}
                 <button
                   class="dmg-mini"
@@ -2265,15 +2338,35 @@
                           {/if}
                         </td>
                         <td class="num">
-                          {r.low == r.high ? r.low : r.low + "–" + r.high}
+                          {#if r.placedBy && !r.certain}
+                            <span class="dmg-cap" title="It sits in a block the map generator may or may not roll, so there is no count to give">?</span>
+                          {:else}
+                            {r.low == r.high ? r.low : r.low + "–" + r.high}
+                          {/if}
                         </td>
-                        <td class="num" class:dmg-outofrange={r.outside >= 50}>
-                          {r.outside}%
+                        <td class="num" class:dmg-outofrange={!r.placedBy && r.outside >= 50}>
+                          <!-- A turret is bolted to the map; "inside the craft"
+                               is not a question that applies to it. -->
+                          {r.placedBy ? "—" : r.outside + "%"}
                         </td>
                         <td class="dmg-cap">
-                          {r.reinforcement ? "reinforcement" : "start"}{r.stage
-                            ? " · " + r.stage
-                            : ""}
+                          {#if r.placedBy}
+                            <!-- "emplacement" only when the script always adds
+                                 the piece. A spawn sitting in a block pool may
+                                 simply not be rolled, and promising it would be
+                                 the same overclaim as leaving it out was. -->
+                            <span
+                              title={r.certain
+                                ? "Placed by the map script every time, not by the deployment's troop table"
+                                : "Sits in a map block the generator may or may not roll, so it is not guaranteed"}
+                            >
+                              {r.certain ? "emplacement" : "on the map"} · {r.placedBy
+                                .map((p) => rul.tr(p))
+                                .join(", ")}
+                            </span>
+                          {:else}
+                            {r.reinforcement ? "reinforcement" : "start"}
+                          {/if}{r.stage ? " · " + r.stage : ""}
                         </td>
                       </tr>
                     {/each}
@@ -2481,6 +2574,7 @@
                   >
                     {scoreOf(row) == null ? "?" : scoreOf(row)}
                   </td>
+                  <td class="num" title={turnsNote(row.mode)}>{turnsLabel(row.mode)}</td>
                   <td class="dmg-name">
                     {#if row.first}
                       {@html row.weapon.title}
@@ -2494,6 +2588,16 @@
                           {#if av.owned}×{av.count}{:else if av.buyable}buy{:else}build{/if}{#if !av.ammoOwned}
                             ⚠{/if}
                         </span>
+                      {/if}
+                      {#if row.weapon.clips.length > 1}
+                        <!-- Every number in this row belongs to one clip. Say
+                             which, because the weapon can load others and they
+                             are not interchangeable - the Quad Launcher spans
+                             90 to 600 power across its four. -->
+                        <span
+                          class="dmg-clip"
+                          title={clipNote(row.weapon)}
+                        >{@html chosenClip(row.weapon).title}</span>
                       {/if}
                       {#if row.modeCount > 1}
                         <span class="dmg-modecount">{row.modeCount} modes</span>
@@ -2544,7 +2648,6 @@
                   <td class="num dmg-key">
                     {row.mode.tuToKill == null ? "–" : n(row.mode.tuToKill, 0)}
                   </td>
-                  <td class="num" title={turnsNote(row.mode)}>{turnsLabel(row.mode)}</td>
                 </tr>
 
                 {#if expandedId == row.weapon.id && row.last}
@@ -2599,6 +2702,85 @@
                           {/each}
                         </tbody>
                       </table>
+                      {#if row.weapon.clips.length > 1}
+                        <!-- The modes table above is ONE clip. This is the choice
+                             behind it: each clip's best mode, best first, so a
+                             launcher's warheads can be compared without swapping
+                             anything. Greyed rows are clips this campaign cannot
+                             field; they are still shown, because "the round that
+                             would work is one you cannot get" is the answer to
+                             the question, not a reason to hide it. -->
+                        <table class="dmg-modes dmg-clips">
+                          <thead>
+                            <tr>
+                              <td title="0-100; 50 is one full turn of this soldier's TU">Score</td>
+                              <td>Clip</td><td>Type</td><td>Mode</td><td>Power</td><td>Roll</td>
+                              <td>After armour</td>
+                              <td title="Shots that HIT and still did nothing - the roll came in at or below the armour, so no damage got through.">Bounces</td>
+                              <td>Shots</td><td title="Projectiles assumed to land on the target">Land</td>
+                              <td>Acc</td><td title={HIT_TITLE}>Hit%</td><td>TU</td>
+                              <td>Per attack</td>
+                              <td title="Armour stripped per attack: ToArmorPre off the roll plus ToArmor off what got through">Armour↓</td>
+                              <td>Attacks</td><td>Turns</td>
+                              <td title="Whether this campaign can put this clip in the gun, under the Campaign filter">Can field</td>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {#each row.weapon.clips as c}
+                              {@const m = c.best}
+                              <tr class:dmg-clip-off={!c.fieldable} class:dmg-clip-on={c.chosen}>
+                                <td
+                                  class="num dmg-score"
+                                  class:dmg-score-good={scoreBand(m && m.score) == "good"}
+                                  class:dmg-score-fair={scoreBand(m && m.score) == "fair"}
+                                  class:dmg-score-poor={scoreBand(m && m.score) == "poor"}
+                                  class:dmg-score-none={scoreBand(m && m.score) == "none"}
+                                  title={m ? scoreNote({ mode: m, first: false }) : ""}
+                                  >{m && m.score != null ? m.score : "?"}</td
+                                >
+                                <td>{@html c.title}{#if c.chosen}<span class="dmg-modecount"
+                                    >ranked on this</span
+                                  >{/if}</td>
+                                <td
+                                  >{@html m && m.damage.damageTypeName
+                                    ? rul.tr(m.damage.damageTypeName)
+                                    : "–"}</td
+                                >
+                                <td>{m ? m.label : "–"}</td>
+                                <td class="num">{m ? n(m.damage.power, 0) : "–"}</td>
+                                <td class="num"
+                                  >{m ? n(m.damage.rollMin, 0) + "–" + n(m.damage.rollMax, 0) : "–"}</td
+                                >
+                                <td class="num"
+                                  >{m ? n(m.damage.min, 0) + "–" + n(m.damage.max, 0) : "–"}</td
+                                >
+                                <td class="num" class:dmg-immune={m && m.damage.pZero > 0.5}
+                                  >{m ? pct(m.damage.pZero) : "–"}</td
+                                >
+                                <td class="num">{m ? m.damage.hitsPerAttack : "–"}</td>
+                                <td class="num"
+                                  >{m ? n(m.damage.expectedHitsPerAttack, 1) : "–"}</td
+                                >
+                                <td class="num">{m ? Math.round(m.accuracy) + "%" : "–"}</td>
+                                <td class="num">{m ? Math.round(m.hitRate * 100) + "%" : "–"}</td>
+                                <td class="num">{m ? n(m.tuCost, 0) : "–"}</td>
+                                <td class="num">{m ? n(m.perAttack) : "–"}</td>
+                                <td class="num" title={m ? armourNote(m) : ""}
+                                  >{m && m.armorPerAttack > 0.05 ? n(m.armorPerAttack) : "–"}</td
+                                >
+                                <td class="num"
+                                  >{m && m.attacksToKill != null ? n(m.attacksToKill) : "–"}</td
+                                >
+                                <td class="num dmg-key" title={m ? turnsNote(m) : ""}
+                                  >{m ? turnsLabel(m) : "–"}</td
+                                >
+                                <td class="num">{c.fieldable ? "yes" : "no"}</td>
+                              </tr>
+                            {/each}
+                          </tbody>
+                        </table>
+                      {/if}
+
                       <p class="dmg-hint">
                         {@html row.weapon.best.damage.damageTypeName
                           ? rul.tr(row.weapon.best.damage.damageTypeName)
@@ -2612,6 +2794,14 @@
               {/each}
             </tbody>
           </table>
+          <!-- This cap stays - these rows are expensive to render - but it says
+               so. A silent cut is how the mission and enemy pickers hid content
+               nobody could find. -->
+          {#if rows.length > 400}
+            <p class="dmg-cap">
+              Showing the first 400 of {rows.length}. Narrow it with the weapon search.
+            </p>
+          {/if}
         {/if}
       {:else if !weapon}
         <p class="dmg-empty">Pick a weapon on the left to see how it fares against each enemy.</p>
@@ -2688,6 +2878,7 @@
                 >
                   {scoreOf(row) == null ? "?" : scoreOf(row)}
                 </td>
+                <td class="num" title={turnsNote(row.mode)}>{turnsLabel(row.mode)}</td>
                 <td class="dmg-name">
                   {#if row.first}
                     {@html row.target.title}
@@ -2724,7 +2915,6 @@
                 <td class="num dmg-key">
                   {row.mode.tuToKill == null ? "–" : n(row.mode.tuToKill, 0)}
                 </td>
-                <td class="num" title={turnsNote(row.mode)}>{turnsLabel(row.mode)}</td>
               </tr>
 
               {#if expandedTargetId == row.target.id && row.last}
@@ -2818,6 +3008,11 @@
             {/each}
           </tbody>
         </table>
+        {#if targetRows.length > 400}
+          <p class="dmg-cap">
+            Showing the first 400 of {targetRows.length}. Narrow it with the enemy filter.
+          </p>
+        {/if}
       {/if}
     </main>
   </div>

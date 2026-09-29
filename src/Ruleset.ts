@@ -1359,7 +1359,11 @@ export default class Ruleset {
               merged[id].files = files;
             } else {
               if (Array.isArray(data)) {
-                debugger;
+                // A mod wrote a list where every other mod writes a mapping.
+                // This used to trip a bare `debugger` and halt the parse for
+                // anyone with devtools open; it is a data oddity, not a crash,
+                // so name it and carry on merging.
+                console.warn("mergeRuls: array entry for", categoryName, id);
                 merged[id] = merged[id].concat(data);
               } else
                 Object.assign(merged[id], data);
@@ -1495,6 +1499,27 @@ export default class Ruleset {
     crosslink(this.items, "supportedInventorySections", "inventorySections", "items");
     crosslink(this.commendations, "damageTypes", this.damageTypes, "commendations");
     crosslink(this.events, "researchList", this.research, "events");
+    /**
+     * Which random events can hand you an item.
+     *
+     * The only route to a good few items that nothing else reaches - the
+     * Parrot arrives by event, not by shop or workshop - and without this
+     * backlink "how do I get one" has no honest answer to give. `everyItemList`
+     * is always granted, `weightedItemList` rolls one, `randomItemList` is the
+     * older spelling; all three are just "this event can give it to you".
+     */
+    crosslink(
+      this.events,
+      (e) => [
+        ...new Set<string>([
+          ...(Array.isArray(e.everyItemList) ? e.everyItemList : []),
+          ...(Array.isArray(e.randomItemList) ? e.randomItemList : []),
+          ...Object.keys(e.weightedItemList || {}),
+        ]),
+      ],
+      this.items,
+      "events"
+    );
     crosslink(this.armors, "builtInWeapons", this.items, "builtIn");
     crosslink(this.armors, "specialWeapon", this.items, "builtIn");
     crosslink(this.eventScripts, "_relatedEvents", this.events, "relatedScripts");
@@ -1838,9 +1863,19 @@ export default class Ruleset {
     return a;
   }
 
+  /**
+   * Ids sorted by the name they display as.
+   *
+   * localeCompare rather than `>`, for two reasons. It is case-insensitive, so
+   * an untranslated id that renders as SHOUTY CAPS lands where a reader expects
+   * it instead of ahead of everything lowercase - "RIMRIDERS ASSAULT TRANSPORT"
+   * used to sort before "Raider Gunship". And `a > b ? 1 : -1` never returns 0,
+   * which is not a valid comparator: two equal names made the result depend on
+   * the engine's sort internals.
+   */
   sortStrings(s: string[]) {
     let tl: [string, string][] = s.map(s => [s, this.tr(s)])
-    tl = tl.sort((a, b) => a[1] > b[1] ? 1 : -1)
+    tl = tl.sort((a, b) => String(a[1]).localeCompare(String(b[1])))
     return tl.map(a => a[0]);
   }
 

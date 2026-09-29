@@ -29,7 +29,6 @@
   }
 
   $: {
-    clog(entry);
     attacks = entry.attacks().slice();
     let ohpen = entry.oneHandedPenalty || entry.battleType == 3 ? 67 : 50;
 
@@ -79,6 +78,10 @@
         "loot",
         "ufos",
         "terrains",
+        // Which random events can hand this over. Sits with loot and terrains
+        // because it answers the same question - where does one come from - and
+        // for a few items it is the only answer there is.
+        "events",
         "spawnUnit",
         "manufacture",
         "componentOf",
@@ -287,7 +290,9 @@
           {:else if key == "costBuy"}
             <Value val={prop} /> <Value val={entry.requiresBuy || ""} />
           {:else}
-            <Value val={prop} />
+            <!-- key so Value can tell a set from a positional list, the same
+                 way MainTable already does. -->
+            <Value val={prop} {key} />
           {/if}
         </td>
       </tr>

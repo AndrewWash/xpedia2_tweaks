@@ -25,7 +25,6 @@
     topicInfo,
     statusOf,
     missingFor,
-    pathTo,
     daysFor,
     availableNow,
     inProgress,
@@ -36,6 +35,15 @@
     routeTopics,
     isRouteTopic,
   } from "./techTree";
+  import {
+    searchGoals,
+    goalPlan,
+    KIND_LABEL,
+    KIND_ORDER,
+    GROUP_LABEL,
+    GROUP_HINT,
+  } from "./techGoal";
+  import { loadSalvageIndex } from "./salvage";
 
   export let topicId = "";
 
@@ -60,8 +68,29 @@
 
   let filter = "available";
   let search = "";
+  /** What was typed into "What do you want to unlock?". */
+  let goalQuery = "";
+  /** The id actually picked from the matches, or "" while still choosing. */
   let goal = "";
+  /**
+   * Whether the browse list column is stood down for a goal.
+   *
+   * Picking a goal hides it: the goal column and the trail it opens are the
+   * thing you are reading, and leaving the filter list wedged between them puts
+   * every topic you click on the far side of a column you were not looking at.
+   * Clearing the goal or touching the Show block brings it straight back.
+   */
+  let listHidden = false;
   let todoSort = "impact";
+  /**
+   * Bumped when the MCD scan lands, so the goal panel recomputes.
+   *
+   * The scan is the only thing on this screen that finishes AFTER the render
+   * that asked for it - it reads a directory of tileset files - so it needs an
+   * explicit nudge rather than falling out of the save or the goal changing.
+   */
+  let salvageVersion = 0;
+  let listSort = "name";
   /**
    * The XPedia article shown over the top, or "".
    *
@@ -80,8 +109,26 @@
     { id: "impact", label: "Impact", title: "Value per day: how many topics it unblocks plus what it lets you build or buy, divided by the days it takes. A ratio, so there is nothing to tune - a cheap topic that frees six others beats an expensive one that frees two." },
     { id: "days", label: "Days", title: "Quickest first. Uses the save's own rolled cost for anything already started." },
     { id: "status", label: "Status", title: "What you can act on now first: available, then needs an item, then in progress, then blocked." },
+    { id: "inProgress", label: "In progress", title: "What the save already has underway, first. Everything else keeps the Status order behind it, so this is the quick \"what am I waiting on\" view." },
     { id: "name", label: "Name", title: "Alphabetical." },
     { id: "added", label: "Added", title: "The order you starred them." },
+  ];
+
+  /** 0 for a topic the save already has underway, 1 for everything else. */
+  const started = (status) => (status == "inProgress" ? 0 : 1);
+
+  /**
+   * Sorts for the first column. Deliberately only two: the column is a place
+   * finder, and anything more than "alphabetical" or "what is already running"
+   * makes a list you cannot scan for a name.
+   */
+  const LIST_SORTS = [
+    { id: "name", label: "A–Z", title: "Alphabetical." },
+    {
+      id: "inProgress",
+      label: "In progress",
+      title: "Topics the save already has underway first, the rest alphabetically behind them - so you can see what is running without leaving the filter you are on.",
+    },
   ];
 
   const FILTERS = [
@@ -102,6 +149,23 @@
     blocked: "blocked",
   };
 
+  /**
+   * The colour key: one swatch and one word each.
+   *
+   * A quick reference, not a tutorial. The long explanation lives in the title
+   * attribute, where it costs no space and is there if anyone wants it - the
+   * legend itself has to earn its place in a sidebar that already holds the
+   * save, the filters, the to-do list and the goal search.
+   */
+  const LEGEND = [
+    ["available", "Available", "Research satisfied and, if it wants one, the item is in stores. Start it today."],
+    ["needsItem", "Needs item", "Research is clear. You just do not hold the thing it wants to examine."],
+    ["inProgress", "In progress", "Already underway in this save's project list."],
+    ["blocked", "Blocked", "Something it depends on is not researched yet."],
+    ["done", "Done", "Already researched in this save."],
+    ["lockedOut", "Ruled out", "A branching choice you already made closed this off for the rest of the campaign."],
+  ];
+
   onMount(() => {
     try {
       const raw = JSON.parse(localStorage[MARK_PREF] || "[]");
@@ -113,6 +177,17 @@
     // fills in the picker list and the remembered fallback.
     adoptSharedSave();
     discoverSaves();
+    // Kicked off here rather than when a salvage route first appears: it is a
+    // directory listing plus a batch of small reads, it is cached after the
+    // first run, and starting it now means the answer is already there by the
+    // time anyone types a goal.
+    // Bumping the version on failure too: the panel then renders the "no
+    // tileset" branch, which is the honest thing to show, instead of sitting on
+    // "Reading the tile data…" for the rest of the session.
+    loadSalvageIndex().then(
+      () => salvageVersion++,
+      () => salvageVersion++
+    );
     if (topicId && topic(topicId)) trail = [topicId];
   });
 
@@ -273,6 +348,11 @@
   )
     .map((id) => ({ id, title: rul.tr(id), status: statusOf(id, saveState) }))
     .sort((a, b) => {
+      // Asked for, so it outranks the per-filter orders below.
+      if (listSort == "inProgress") {
+        const d = started(a.status) - started(b.status);
+        if (d) return d;
+      }
       // On the Routes tab the useful order is "what can I still choose",
       // then what I already took, then the doors that closed behind me.
       if (filter == "routes") {
@@ -321,6 +401,15 @@
       return items.sort((a, b) => (a.days ?? 1e9) - (b.days ?? 1e9) || byName(a, b));
     if (todoSort == "status")
       return items.sort((a, b) => STATUS_RANK[a.status] - STATUS_RANK[b.status] || byName(a, b));
+    if (todoSort == "inProgress")
+      // Started topics first; the rest fall back to the Status order rather
+      // than to one undifferentiated blob.
+      return items.sort(
+        (a, b) =>
+          started(a.status) - started(b.status) ||
+          STATUS_RANK[a.status] - STATUS_RANK[b.status] ||
+          byName(a, b)
+      );
     return items.sort((a, b) => b.impact.score - a.impact.score || byName(a, b));
   })();
 
@@ -331,7 +420,97 @@
     opens: opensUp(id),
   }));
 
-  $: goalPath = goal && topic(goal) ? pathTo(goal, saveState) : [];
+  /**
+   * Matches for the goal box, grouped by what kind of thing they are.
+   *
+   * Grouped rather than one flat list because a query like "laser" hits the
+   * research topic, nine guns and four manufacture projects, and which of those
+   * you meant is exactly the thing the flat list hides. Asked for explicitly:
+   * items are not to be jumbled in with the research.
+   */
+  $: goalMatches = goal ? [] : searchGoals(goalQuery);
+  $: goalGroups = KIND_ORDER.map((k) => ({
+    kind: k,
+    label: KIND_LABEL[k],
+    rows: goalMatches.filter((m) => m.kind == k),
+  })).filter((g) => g.rows.length);
+
+  /**
+   * The picked target, everything worked out. Null until something is picked.
+   *
+   * salvageVersion is a real dependency, not decoration: a salvage route reads
+   * the tileset table, which arrives asynchronously.
+   */
+  const makePlan = (id, save, _salvageVersion) => (id ? goalPlan(id, save) : null);
+  $: plan = makePlan(goal, saveState, salvageVersion);
+
+  /**
+   * Pick `id` as the goal and stop showing matches.
+   *
+   * The query is set to the title rather than cleared so the box still reads as
+   * what you asked for.
+   */
+  function pickGoal(id) {
+    goal = id;
+    goalQuery = rul.tr(id, { icon: "none", notip: true });
+    listHidden = true;
+  }
+
+  function clearGoal() {
+    goal = "";
+    goalQuery = "";
+    listHidden = false;
+    expandedVia = new Set();
+  }
+
+  /**
+   * How many entries a route lists before it offers to show the rest.
+   *
+   * Long enough to answer "roughly where" at a glance, short enough that a gun
+   * dropping on 77 deployments does not push the shop and the loot table off
+   * the bottom of the column.
+   */
+  const VIA_LIMIT = 15;
+
+  /** Routes whose full list the reader has asked for, by goal and position. */
+  let expandedVia = new Set();
+
+  const viaKey = (id, i, part = "") => id + ":" + i + ":" + part;
+
+  function toggleVia(key) {
+    if (expandedVia.has(key)) expandedVia.delete(key);
+    else expandedVia.add(key);
+    expandedVia = expandedVia; // Svelte tracks assignment, not mutation.
+  }
+
+  /**
+   * `list` cut to the limit unless `key` has been expanded.
+   *
+   * The expanded set is passed in rather than closed over: Svelte invalidates a
+   * template expression from the variables it can SEE in it, so a helper that
+   * read `expandedVia` internally left the list frozen at 15 while the button
+   * next to it happily toggled its own label.
+   */
+  const capped = (list, key, expanded) =>
+    expanded.has(key) ? list : list.slice(0, VIA_LIMIT);
+
+  /** The three things a salvage route names, in the order they are useful. */
+  const SALVAGE_PARTS = [
+    ["crafts", "Shoot down:"],
+    ["missions", "Missions:"],
+    ["terrains", "Terrains:"],
+  ];
+
+  /**
+   * Bring the browse list back.
+   *
+   * Touching anything in the Show block says you want the list again, so the
+   * filter chips and the topic search both call this rather than leaving you
+   * pressing buttons that change a column you cannot see.
+   */
+  function useList() {
+    listHidden = false;
+  }
 
   /**
    * Open `id` as the column after `depth`.
@@ -434,22 +613,47 @@
         {/if}
       </section>
 
-      <section class="dmg-block">
+      <!-- Two wrapped lines, no header, no toggle, no prose. Hover any entry
+           for the full description. -->
+      <section class="dmg-block tech-legendblock">
+        <ul class="tech-legend">
+          {#each LEGEND as [status, name, what]}
+            <li title={what}>
+              <span class={dot(status)} />{name}
+            </li>
+          {/each}
+        </ul>
+      </section>
+
+      <section class="dmg-block" class:tech-standby={listHidden}>
         <header>Show</header>
         <div class="dmg-chips">
           {#each FILTERS as f}
             <button
               class="dmg-chip"
-              class:dmg-chip-on={filter == f.id}
+              class:dmg-chip-on={filter == f.id && !listHidden}
               title={f.title}
-              on:click={() => (filter = f.id)}
+              on:click={() => {
+                filter = f.id;
+                useList();
+              }}
             >
               {f.label}
               <span class="dmg-chip-n">{counts[f.id] ?? 0}</span>
             </button>
           {/each}
         </div>
-        <input class="dmg-input" placeholder="Search topics…" bind:value={search} />
+        <input
+          class="dmg-input"
+          placeholder="Search topics…"
+          bind:value={search}
+          on:input={useList}
+        />
+        {#if listHidden}
+          <p class="dmg-hint">
+            Standing by while you follow a goal. Press a filter to bring the list back.
+          </p>
+        {/if}
       </section>
 
       <section class="dmg-block">
@@ -499,43 +703,227 @@
       </section>
 
       <section class="dmg-block">
-        <header title="Pick a target and get everything still missing, in an order you could actually research them in.">
+        <header
+          title="Name anything in the pedia - a gun, a part, a facility, a research topic - and get the route to it. Not just research: if the only way to a thing is a shop, a mission or a random event, that is what it says."
+        >
           Path to a goal
         </header>
         <input
           class="dmg-input"
-          list="tech-goals"
-          placeholder="Type a topic…"
-          bind:value={goal}
+          placeholder="What do you want to unlock?"
+          bind:value={goalQuery}
+          on:input={() => (goal = "")}
         />
-        <datalist id="tech-goals">
-          {#each allIds.slice(0, 4000) as id}<option value={id}>{rul.tr(id)}</option>{/each}
-        </datalist>
-        {#if goal && !topic(goal)}
-          <p class="dmg-hint">No topic with that id.</p>
-        {:else if goal && !goalPath.length}
-          <p class="dmg-hint">Already researched.</p>
-        {:else if goalPath.length}
-          <p class="dmg-cap">{goalPath.length} still needed, in order:</p>
-          <ol class="dmg-goalpath">
-            {#each goalPath as id}
-              <li>
-                <span class={dot(statusOf(id, saveState))} />
-                <button class="dmg-linkish" on:click={() => open(id, 0)}>{rul.tr(id)}</button>
-              </li>
+        {#if goal}
+          <button class="dmg-mini" on:click={clearGoal}>✕ clear</button>
+        {:else if goalQuery.trim().length < 2}
+          <p class="dmg-hint">
+            Try a name rather than an id — “laspistol”, “laser weapons”, “necroplane
+            parts”.
+          </p>
+        {:else if !goalMatches.length}
+          <p class="dmg-hint">Nothing in the pedia matches that.</p>
+        {:else}
+          <!-- Grouped, because "which of these nine lasers did you mean" is the
+               whole question and a flat list is exactly what hides it. -->
+          {#each goalGroups as g}
+            <h5 class="tech-goalgroup">{g.label}</h5>
+            {#each g.rows as m}
+              <button class="tech-row" on:click={() => pickGoal(m.id)}>
+                {#if m.kind == "research"}
+                  <span class={dot(statusOf(m.id, saveState))} title={STATUS_LABEL[statusOf(m.id, saveState)]} />
+                {/if}
+                <span class="tech-rowname">{m.title}</span>
+              </button>
             {/each}
-          </ol>
+          {/each}
         {/if}
       </section>
     </aside>
 
     <div class="tech-cols">
-      <!-- Column 0: the list everything starts from. -->
+      <!-- The goal, when one is picked. Its own column rather than a cramped
+           block in the side panel: it carries a route list, a research order
+           and a pile of mission names, and it is the answer you came for. -->
+      {#if plan}
+        <div class="tech-col tech-goalcol">
+          <header class="tech-colhead">
+            {#if plan.status}
+              <span class={dot(plan.status)} title={STATUS_LABEL[plan.status]} />
+            {/if}
+            <span class="tech-rowname">{plan.title}</span>
+            <button
+              class="dmg-mini"
+              title="Open the XPedia article over the top"
+              on:click={() => peek(plan.id)}>▤</button
+            >
+            <button class="dmg-mini" title="Clear the goal" on:click={clearGoal}>✕</button>
+          </header>
+          <div class="tech-collist">
+            <p class="dmg-cap">{KIND_LABEL[plan.kind]}</p>
+
+            {#if plan.note}
+              <p class="dmg-hint tech-goalnote">{plan.note}</p>
+            {/if}
+
+            {#if plan.prereq.length}
+              <div class="tech-group">
+                <h5 title="Research the thing itself declares, whichever way you come by it.">
+                  Research required
+                </h5>
+                {#each plan.prereq as r}
+                  <button class="tech-row" on:click={() => open(r, 0)}>
+                    <span class={dot(statusOf(r, saveState))} title={STATUS_LABEL[statusOf(r, saveState)]} />
+                    <span class="tech-rowname">{rul.tr(r)}</span>
+                  </button>
+                {/each}
+              </div>
+            {/if}
+
+            {#if plan.best}
+              <div class="tech-group">
+                <h5
+                  title="The shortest route that has research in it, and everything still missing along it, in an order you could actually take them in."
+                >
+                  Research path — {plan.best.path.length} to go
+                </h5>
+                <p class="dmg-cap">via {GROUP_LABEL[plan.best.group].toLowerCase()}: {plan.best.label}</p>
+                {#if !plan.best.path.length}
+                  <p class="dmg-hint">Nothing left — this route is open.</p>
+                {:else}
+                  <ol class="dmg-goalpath">
+                    {#each plan.best.path as id}
+                      <li>
+                        <span class={dot(statusOf(id, saveState))} title={STATUS_LABEL[statusOf(id, saveState)]} />
+                        <button class="dmg-linkish" on:click={() => open(id, 0)}>{rul.tr(id)}</button>
+                      </li>
+                    {/each}
+                  </ol>
+                {/if}
+              </div>
+            {/if}
+
+            <!-- Every route, kept apart from the research path above on
+                 purpose: they are alternatives, not steps, and merging them
+                 would invent a path nobody has to walk. -->
+            {#if plan.routes.length}
+              <div class="tech-group">
+                <h5>How to get it</h5>
+                {#each plan.routes as r, ri}
+                  <div class="tech-route" class:tech-route-open={r.open}>
+                    <div class="tech-routehead" title={GROUP_HINT[r.group]}>
+                      {GROUP_LABEL[r.group]}
+                      {#if r.gates.length}
+                        <span class="dmg-cap">{r.open ? "open" : r.path.length + " to research"}</span>
+                      {/if}
+                    </div>
+                    <p class="dmg-cap">{r.label}</p>
+                    {#each r.gates as g}
+                      <button class="tech-row" on:click={() => open(g, 0)}>
+                        <span class={dot(statusOf(g, saveState))} title={STATUS_LABEL[statusOf(g, saveState)]} />
+                        <span class="tech-rowname">{rul.tr(g)}</span>
+                      </button>
+                    {/each}
+                    {#if r.services.length}
+                      <p class="dmg-hint">
+                        Needs base services: {r.services.join(", ")} — not checked here.
+                      </p>
+                    {/if}
+                    <!-- Salvage gets the full breakdown: the tileset the game
+                         actually recovers it from, and everything built out of
+                         that tileset. A bare "recovery type 104" is not an
+                         answer to anything. -->
+                    {#if r.salvage}
+                      {#if !r.salvage.ready}
+                        <p class="dmg-hint">Reading the tileset files…</p>
+                      {:else if !r.salvage.sets.length}
+                        <!-- The label already says there is no tileset; only a
+                             real failure (no MCD files at all) needs a line. -->
+                        {#if r.salvage.problem}
+                          <p class="dmg-hint">{r.salvage.problem}</p>
+                        {/if}
+                      {:else}
+                        <p class="dmg-cap tech-via tech-salvage">
+                          Tileset{r.salvage.sets.length == 1 ? "" : "s"}:
+                          {r.salvage.sets.map((s) => s.name + " (" + s.tiles + " tile" + (s.tiles == 1 ? "" : "s") + ")").join(", ")}
+                        </p>
+                        <!-- Same expander as the route lists below: the "+N"
+                             used to be dead text, so the rest of a long list
+                             was simply unreadable. -->
+                        {#each SALVAGE_PARTS as [part, label]}
+                          {#if r.salvage[part].length}
+                            <p class="dmg-cap tech-via tech-salvage">
+                              <b>{label}</b>
+                              {capped(r.salvage[part], viaKey(plan.id, ri, part), expandedVia).join(" · ")}
+                              {#if r.salvage[part].length > VIA_LIMIT}
+                                <button
+                                  class="dmg-linkish tech-viamore"
+                                  on:click={() => toggleVia(viaKey(plan.id, ri, part))}
+                                >
+                                  {expandedVia.has(viaKey(plan.id, ri, part))
+                                    ? "show fewer"
+                                    : "…and " + (r.salvage[part].length - VIA_LIMIT) + " more"}
+                                </button>
+                              {/if}
+                            </p>
+                          {/if}
+                        {/each}
+                        {#if !r.salvage.crafts.length && !r.salvage.terrains.length}
+                          <p class="dmg-hint">
+                            Nothing in the ruleset builds a map out of that tileset, so it is
+                            reachable only through map blocks the pedia does not read.
+                          </p>
+                        {/if}
+                      {/if}
+                    {:else}
+                      {#each capped(r.via, viaKey(plan.id, ri), expandedVia) as v}
+                        <p class="dmg-cap tech-via">{v}</p>
+                      {/each}
+                      {#if r.via.length > VIA_LIMIT}
+                        <button
+                          class="dmg-linkish tech-viamore"
+                          on:click={() => toggleVia(viaKey(plan.id, ri))}
+                        >
+                          {expandedVia.has(viaKey(plan.id, ri))
+                            ? "show fewer"
+                            : "…and " + (r.via.length - VIA_LIMIT) + " more"}
+                        </button>
+                      {/if}
+                    {/if}
+                  </div>
+                {/each}
+              </div>
+            {/if}
+          </div>
+        </div>
+      {/if}
+
+      <!-- Column 0: the list everything starts from.
+
+           Stood down while a goal is open. It is a place finder, and once you
+           have a goal you are reading the goal column and the trail it opens;
+           leaving the filter list wedged between the two puts every topic you
+           click on the far side of a column you were not looking at. -->
+      {#if !listHidden}
       <div class="tech-col">
         <header class="tech-colhead">
           {FILTERS.find((f) => f.id == filter).label}
           <span class="dmg-cap">{rows.length}</span>
         </header>
+        <!-- Hidden on the In progress filter, where every row qualifies and the
+             chips would only be a way to press a button that does nothing. -->
+        {#if filter != "progress"}
+          <div class="dmg-chips tech-colsort">
+            {#each LIST_SORTS as srt}
+              <button
+                class="dmg-chip"
+                class:dmg-chip-on={listSort == srt.id}
+                title={srt.title}
+                on:click={() => (listSort = srt.id)}>{srt.label}</button
+              >
+            {/each}
+          </div>
+        {/if}
         <div class="tech-collist">
           {#each rows.slice(0, 600) as r}
             <button
@@ -563,13 +951,14 @@
           {/if}
         </div>
       </div>
+      {/if}
 
       <!-- One column per step of the trail. -->
       {#each cards as card, i}
         {#if card.info}
           <div class="tech-col tech-detail">
             <header class="tech-colhead">
-              <span class={dot(card.info.status)} />
+              <span class={dot(card.info.status)} title={STATUS_LABEL[card.info.status]} />
               {card.info.title}
               <button
                 class="dmg-mini tech-starbtn"
@@ -600,7 +989,7 @@
                   <h5>Depends on</h5>
                   {#each card.info.missing as m}
                     <button class="tech-row" on:click={() => open(m, i + 1)}>
-                      <span class={dot(statusOf(m, saveState))} />
+                      <span class={dot(statusOf(m, saveState))} title={STATUS_LABEL[statusOf(m, saveState)]} />
                       <span class="tech-rowname">{rul.tr(m)}</span>
                     </button>
                   {/each}
@@ -615,7 +1004,7 @@
                   </p>
                   {#each card.info.lockedBy as d}
                     <button class="tech-row" on:click={() => open(d, i + 1)}>
-                      <span class={dot(statusOf(d, saveState))} />
+                      <span class={dot(statusOf(d, saveState))} title={STATUS_LABEL[statusOf(d, saveState)]} />
                       <span class="tech-rowname">{rul.tr(d)}</span>
                     </button>
                   {/each}
@@ -633,7 +1022,7 @@
                   <h5>Leads to</h5>
                   {#each card.opens.research as u}
                     <button class="tech-row" on:click={() => open(u, i + 1)}>
-                      <span class={dot(statusOf(u, saveState))} />
+                      <span class={dot(statusOf(u, saveState))} title={STATUS_LABEL[statusOf(u, saveState)]} />
                       <span class="tech-rowname">{rul.tr(u)}</span>
                     </button>
                   {/each}
@@ -645,7 +1034,7 @@
                   <h5 title="Researching this grants ONE of these at random.">Gives one of</h5>
                   {#each card.info.getOneFree as u}
                     <button class="tech-row" on:click={() => open(u, i + 1)}>
-                      <span class={dot(statusOf(u, saveState))} />
+                      <span class={dot(statusOf(u, saveState))} title={STATUS_LABEL[statusOf(u, saveState)]} />
                       <span class="tech-rowname">{rul.tr(u)}</span>
                     </button>
                   {/each}
@@ -674,7 +1063,7 @@
                 </div>
               {/if}
 
-              <button class="dmg-mini" on:click={() => (goal = card.id)}>Path to this</button>
+              <button class="dmg-mini" on:click={() => pickGoal(card.id)}>Path to this</button>
             </div>
           </div>
         {/if}

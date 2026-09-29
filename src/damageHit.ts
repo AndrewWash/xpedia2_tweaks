@@ -221,10 +221,8 @@ export function spreadHitChance(
   return out;
 }
 
-/** Drop the memo when the ruleset or the options behind it change. */
-export function resetHitCache(): void {
-  cache.clear();
-}
+/* No reset hook: the key carries every input, and the values are pure geometry
+   with nothing language- or ruleset-dependent in them. See techTree.ts. */
 
 /**
  * Hit chance for one firing mode.

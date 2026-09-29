@@ -2,5 +2,9 @@
   <script id="xpedia-js" src="xpedia.js"></script>
   <link id="main-css" href="main.css"/ rel="stylesheet">
   <link id="light-css" media="none" href="light.css"/ rel="stylesheet">
-  <script>clog = (...args)=>console.trace(args)</script>
+  <!-- console.trace, so every clog() printed a full stack. Item.svelte called
+       one per reactive update, which buried the console under traces whenever
+       an item article was open. console.debug keeps the helper usable and is
+       hidden by default in the devtools filter. -->
+  <script>clog = (...args)=>console.debug(...args)</script>
 </head>

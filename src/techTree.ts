@@ -156,11 +156,15 @@ export function routeTopics(): string[] {
   return Object.keys(research()).filter(isRouteTopic);
 }
 
-/** Drop the memos when the ruleset is reloaded. */
-export function resetTechIndex(): void {
-  unlockIndex = null;
-  disableIndex = null;
-}
+/**
+ * No invalidation, deliberately: the ruleset is parsed exactly once per page
+ * load, and the one control that discards it (the ⭯ button) calls
+ * location.reload() straight after, which takes these memos with it. A reset
+ * hook used to live here with nothing calling it, which promised a guarantee
+ * the app did not actually honour. If an in-session reload is ever added, every
+ * memo in techTree.ts, techGoal.ts, salvage.ts and damageMissions.ts has to be
+ * cleared with it.
+ */
 
 const isDone = (id: string, save: SaveState) =>
   !!(save && save.discovered && save.discovered.has(id));
@@ -233,6 +237,20 @@ export function missingFor(id: string, save: SaveState): string[] {
  * guard - the mod does contain loops, and without it this would not terminate.
  */
 export function pathTo(id: string, save: SaveState): string[] {
+  return pathToAll([id], save);
+}
+
+/**
+ * The same walk for several targets at once, sharing one visited set.
+ *
+ * A route can be gated on more than one topic - a manufacture project with two
+ * entries in `requires` is the normal case - and those ancestries overlap
+ * heavily. Walking them separately and concatenating would list the shared
+ * ancestors once per target and, worse, could print a prerequisite after
+ * something that needs it. One `seen` across the whole walk keeps the result a
+ * single researchable order.
+ */
+export function pathToAll(ids: string[], save: SaveState): string[] {
   const out: string[] = [];
   const seen = new Set<string>();
 
@@ -245,7 +263,7 @@ export function pathTo(id: string, save: SaveState): string[] {
     out.push(cur);
   };
 
-  walk(id);
+  for (const id of ids || []) walk(id);
   return out;
 }
 

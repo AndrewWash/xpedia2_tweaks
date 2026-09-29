@@ -10,8 +10,19 @@
   export let sorted;
   let sorter;
 
+  /**
+   * Whether to alphabetise, when the caller has not said.
+   *
+   * This used to be `items.length > 9`, which is exactly backwards. Length says
+   * nothing about whether a list's ORDER carries meaning, so the rule sorted the
+   * long lists - where order is most likely to be load-bearing, and where it did
+   * real damage to alienRaces.members - while leaving short ones in raw ruleset
+   * order, which is no order at all. Callers that know the field now say so; see
+   * POSITIONAL_FIELDS in Value.svelte. Anything reaching here unlabelled is a
+   * set, so alphabetical is the useful answer.
+   */
   if(sorted == null){
-    sorted=items.length>9;
+    sorted = true;
   }
 
   $: {

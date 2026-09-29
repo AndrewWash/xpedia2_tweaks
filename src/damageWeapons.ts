@@ -236,6 +236,38 @@ export function modeKind(mode: string): WeaponKind {
 }
 
 /**
+ * Is this a weapon a gal cannot choose - a vehicle turret, or gear welded into
+ * an armour - rather than something she picks up and carries?
+ *
+ * `fixedWeapon` is the engine's own "cannot be moved out of its slot" flag and
+ * needs no interpretation. It accounts for 192 of the mod's 1579 attack-capable
+ * items, all of them turrets and craft weapons, and it is the whole point of the
+ * filter.
+ *
+ * `builtIn` is the trap. It is NOT a field on the item: Ruleset.ts:1498 writes it
+ * onto every item that ANY armour names in `builtInWeapons` or `specialWeapon`,
+ * so one NPC spawning with a knife tags that knife for every gal in the game.
+ * Reading it alone hid the Barbed Dagger (ARMOR_SURVIVOR carries one) and the
+ * Bandit Knife (ARMOR_HALF_UBER_GIRL), both ordinary loot you can hold and sell.
+ *
+ * `recover: false` is what actually separates the two cases - the engine saying
+ * this can never enter your stores. Across every active mod exactly six items are
+ * tagged `builtIn` without being `fixedWeapon`, and it splits them cleanly:
+ *
+ *   recover false, stays hidden   HERO_SWORD, DREAMSHOOTER, DREAMCHASER,
+ *                                 THE_FINAL_COUNTDOWN  (armour-only, unsellable)
+ *   recoverable, now shown        KNOIF_BARB, KNOIF_BANDIT
+ *
+ * Tested against `=== false` and not for falsiness: the field is absent on almost
+ * every item and the engine default is true, so `!item.recover` would re-hide the
+ * lot.
+ */
+export function isFixedWeapon(item: any): boolean {
+  if (!item) return false;
+  return !!(item.fixedWeapon || (item.builtIn && item.recover === false));
+}
+
+/**
  * Classes taken from the firing modes the weapon actually has, which is what a
  * player means by "melee" or "ranged" - battleType alone puts the Hellblade,
  * whose best attack is a swing, in Ranged because it also has a Warp Blast.
@@ -300,7 +332,7 @@ export function weaponList(): WeaponOption[] {
       kinds: weaponKinds(attacks),
       hands: weaponHands(item),
       damageTypes: weaponDamageTypes(item, attacks, ammoOptions),
-      fixed: !!(item.fixedWeapon || item.builtIn),
+      fixed: isFixedWeapon(item),
       categories: Array.isArray(item.categories) ? item.categories : [],
     });
   }
@@ -424,6 +456,18 @@ export type ModeResult = {
   limits: RangeLimits;
 };
 
+/** One clip's verdict, for the ammo comparison in the detail row. */
+export type ClipOption = {
+  ammoId: string;
+  title: string;
+  /** This clip's best mode. */
+  best: ModeResult;
+  /** True for the clip the weapon was actually ranked on. */
+  chosen: boolean;
+  /** False when the availability filter says you cannot field it. */
+  fieldable: boolean;
+};
+
 export type WeaponResult = {
   id: string;
   title: string;
@@ -432,6 +476,12 @@ export type WeaponResult = {
   modes: ModeResult[];
   /** The highest-scoring mode - the weapon's verdict, and what the list sorts on. */
   best: ModeResult;
+  /**
+   * Every clip that was weighed, best first. Empty when the weapon takes none or
+   * only one, so the UI can say "this number belongs to a clip you chose between"
+   * only when that is actually true.
+   */
+  clips: ClipOption[];
 };
 
 /**
@@ -711,7 +761,135 @@ export function scoreWeapon(
     ammoId: clip,
     modes,
     best: modes[0] || null,
+    clips: [],
   };
+}
+
+const finite = (v: any, fallback: number): number =>
+  v == null || isNaN(+v) || !isFinite(+v) ? fallback : +v;
+
+/**
+ * Which of two clips is better.
+ *
+ * Score first, and then FOUR tiebreaks, because the Score saturates and ties are
+ * the normal case rather than an edge one. Score is 100/(1 + tuToKill/TU): once a
+ * clip drops the target in one attack nothing heavier can score better, so a
+ * Chinese Dragon at 600 power and a Quad Rocket Pack at 90 both land on 42
+ * against an unarmoured target.
+ *
+ * Sorting on score alone leaves those ties to Array.sort's stability, which means
+ * the mod's own `compatibleAmmo` order - and that is exactly the "it just picks
+ * the first clip" behaviour clip searching was written to end. The Super
+ * Sawed-Off lists .8g Buckshot at index 0 and .6g at index 1, so it kept ranking
+ * on .8g no matter which one was better.
+ *
+ * So once the score cannot separate them, prefer the clip with more margin:
+ * fewer attacks, then less TU, then more expected damage per attack, then the
+ * bigger top-end roll. All four are "how much room does this leave me", which is
+ * what a player means by the best round when both already kill.
+ */
+function clipRank(a: ModeResult, b: ModeResult): number {
+  // A clip with no usable mode always loses.
+  if (!a && !b) return 0;
+  if (!a) return 1;
+  if (!b) return -1;
+
+  const byScore = killRank(a) - killRank(b);
+  if (byScore) return byScore;
+
+  const byAttacks = finite(a.attacksToKill, Infinity) - finite(b.attacksToKill, Infinity);
+  if (byAttacks) return byAttacks;
+
+  const byTu = finite(a.tuToKill, Infinity) - finite(b.tuToKill, Infinity);
+  if (byTu) return byTu;
+
+  // Expected damage per attack ATTEMPT, misses folded in - what "hits harder"
+  // means once both clips already kill.
+  const byDamage = finite(b.perAttack, -Infinity) - finite(a.perAttack, -Infinity);
+  if (byDamage) return byDamage;
+
+  return finite(b.damage && b.damage.max, -Infinity) -
+    finite(a.damage && a.damage.max, -Infinity);
+}
+
+/**
+ * Score a weapon on every clip it could actually load, and keep the best.
+ *
+ * scoreWeapon deliberately does one clip - that is the unit of work, and the
+ * detail row needs each clip's numbers separately. This picks between them.
+ *
+ * WHY THIS EXISTS. Until now both callers passed no clip at all, so `clip`
+ * resolved to `ammoOptions[0]` - whatever the mod happens to list FIRST. Not the
+ * best one, not one you own, not one matching your filter. 206 weapons take more
+ * than one clip and 178 of those have clips of differing power, so the ranking
+ * was reading off an arbitrary round: the Quad Launcher scored on 90 power when
+ * it fires up to 600, the Ballista on 66 of 66-300. It also produced filters
+ * that counted a weapon and then showed nothing, because the damage-type list is
+ * built from EVERY clip while only the first was ever scored.
+ *
+ * `allowClip` is a preference and not a filter. A gun you own with no shells for
+ * it still deserves a row - so when nothing is fieldable we fall back to the
+ * whole list and mark every option `fieldable: false`, leaving the ⚠ NO AMMO
+ * marker to say you are dry. Ranking it on nothing would just hide it.
+ */
+export function scoreWeaponBestClip(
+  weapon: WeaponOption,
+  ammoId: string,
+  stats: Stats,
+  target: Target,
+  side: string,
+  opts: AccuracyOpts,
+  pelletModel: PelletModel = "derived",
+  goal: Goal = "kill",
+  modeFilter: ModeFilter = null,
+  allowClip: ((id: string) => boolean) | null = null
+): WeaponResult {
+  const run = (clip: string) =>
+    scoreWeapon(weapon, clip, stats, target, side, opts, pelletModel, goal, modeFilter);
+
+  const options = weapon.ammoOptions || [];
+  // A forced clip, or nothing to choose between: the old path exactly.
+  if (ammoId || options.length < 2) return run(ammoId || options[0] || null);
+
+  const canField = (id: string) => (allowClip ? allowClip(id) : true);
+
+  // EVERY clip is scored, not just the fieldable ones, because the detail row
+  // shows the whole choice - "the round that would work is one you cannot get"
+  // is the answer to the question, not a reason to hide it. Only the WINNER is
+  // restricted. Costs 1.38x scoring work across the mod (most weapons take one
+  // clip, so the loop is a no-op for 996 of 1172).
+  const scored = options.map((clip) => ({ clip, result: run(clip) }));
+  scored.sort((a, b) => clipRank(a.result.best, b.result.best));
+
+  /**
+   * Best clip you can field; best outright when you can field none.
+   *
+   * Only clips that actually produced a mode are candidates. Under a mode filter
+   * most clips produce nothing - filter on EMP and a Mini Cannon's plain Minibomb
+   * scores null while its EMP Minibomb scores - and picking the fieldable one
+   * blindly would hand back that null and drop the weapon from the table. Which
+   * is the exact bug this function exists to fix: the damage-type list would
+   * count the weapon and then render nothing.
+   *
+   * So a filter can rank a weapon on a round you cannot get. That is the honest
+   * answer - the row names the clip and the tooltip says it is out of reach.
+   */
+  const usable = scored.filter((s) => s.result.best);
+  const winner = (usable.find((s) => canField(s.clip)) || usable[0] || scored[0]).result;
+  winner.clips = scored.map((s) => ({
+    ammoId: s.clip,
+    title: rul.tr(s.clip),
+    best: s.result.best,
+    chosen: s.result === winner,
+    fieldable: canField(s.clip),
+  }));
+  return winner;
+}
+
+/** The clip a result was actually ranked on. */
+export function chosenClip(r: WeaponResult): ClipOption | null {
+  if (!r || !r.clips.length) return null;
+  return r.clips.find((c) => c.chosen) || r.clips[0];
 }
 
 /** Rank a whole weapon list against one target. */
@@ -724,14 +902,19 @@ export function rankWeapons(
   ammoBy: { [id: string]: string } = {},
   pelletModel: PelletModel = "derived",
   goal: Goal = "kill",
-  modeFilter: ModeFilter = null
+  modeFilter: ModeFilter = null,
+  allowClip: ((id: string) => boolean) | null = null
 ): WeaponResult[] {
   return weapons
     .map((w) =>
-      scoreWeapon(w, ammoBy[w.id], stats, target, side, opts, pelletModel, goal, modeFilter)
+      scoreWeaponBestClip(
+        w, ammoBy[w.id], stats, target, side, opts, pelletModel, goal, modeFilter, allowClip
+      )
     )
-    // A weapon can pass the weapon-level test on a clip you are not carrying
-    // and then have no matching mode at all. Nothing to show for it.
+    // Still possible: every clip and every mode was filtered out. Nothing to
+    // show for it. Before clips were searched this also caught weapons whose
+    // only match lived on a clip that was never scored - that was a bug, and
+    // scoreWeaponBestClip is what fixed it.
     .filter((r) => r.best)
     .sort((a, b) => killRank(a.best) - killRank(b.best));
 }

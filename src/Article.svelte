@@ -30,10 +30,13 @@
   let aId;
 
   $: {
-    if (article == null) debugger;
+    // Was a bare `debugger`, which froze the whole page for anyone with
+    // devtools open - and devtools open is exactly when you are working on
+    // this. It is still worth knowing about, so it says so and moves on.
+    if (article == null) console.warn("Article rendered with a null article");
 
-    other = article.section == "OTHER" ? { BaseServices }[article.id] : false;
-    aId = article.id;
+    other = article?.section == "OTHER" ? { BaseServices }[article.id] : false;
+    aId = article?.id;
   }
 </script>
 

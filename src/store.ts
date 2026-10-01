@@ -55,3 +55,10 @@ export function setCurrentSave(path: string, state: any) {
   currentSavePath.set(path || "");
   currentSave.set(state || null);
 }
+
+/**
+ * A save soldier PAX asked CENTCOM to open, by Soldier.id. CENTCOM selects them
+ * and clears this, so it fires once - a stale value must not hijack the picker
+ * the next time CENTCOM is visited.
+ */
+export const centcomSoldier = writable("");

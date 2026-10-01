@@ -30,3 +30,13 @@ body {
     -apple-system, BlinkMacSystemFont, "Segoe UI", Oxygen-Sans, Cantarell,
     "Helvetica Neue", sans-serif;
 }
+/* PAX shading: same hue, stepped for a light surface and black ink. */
+:root {
+  --pax-heat: 40, 110, 210;
+  --pax-h1: 0.1;
+  --pax-h2: 0.2;
+  --pax-h3: 0.32;
+  --pax-h4: 0.45;
+  --pax-h5: 0.6;
+  --pax-hurt: #b3261e;
+}

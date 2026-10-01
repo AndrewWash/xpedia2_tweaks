@@ -17,6 +17,7 @@
   import Compare from "./Compare.svelte";
   import DamageCalc from "./DamageCalc.svelte";
   import TechTree from "./TechTree.svelte";
+  import Pax from "./Pax.svelte";
   import Notepad from "./Notepad.svelte";
   import CogAnimation from "./CogAnimation.svelte";
   import { afterUpdate, onMount, setContext } from "svelte";
@@ -63,6 +64,13 @@
   let techMode = false;
   let techTopic = "";
   let damageTarget = "";
+  /** PAX, the personnel manager. */
+  let paxMode = false;
+  /**
+   * Any of the full-width tool screens. They all hide the article sidebar - it
+   * is position:fixed, and left rendered it draws over the tool's own left panel.
+   */
+  $: toolMode = compareMode || damageMode || techMode || paxMode;
 
   let isTouch = "ontouchstart" in window;
   let lang;
@@ -190,6 +198,10 @@
     setHash("##TECH" + (article && rul.research && rul.research[article.id] ? "::" + article.id : ""));
   }
 
+  function goPax() {
+    setHash(paxMode ? "##HOME" : "##PAX");
+  }
+
   function goDamage() {
     if (damageMode) {
       goTo("HOME");
@@ -245,6 +257,19 @@
     // Compare mode: ##COMPARE::A::B[::C[::D]] (ids optional, two or more panes).
     // Handled before the generic "::" query split below.
     // Damage calculator: ##DAMAGE[::TARGET_ID]
+    // Personnel manager: ##PAX
+    if (id == "PAX") {
+      paxMode = true;
+      damageMode = false;
+      compareMode = false;
+      techMode = false;
+      if (article) article = null;
+      found = null;
+      searching = false;
+      return;
+    }
+    paxMode = false;
+
     if (id.substring(0, 6) == "DAMAGE") {
       damageMode = true;
       compareMode = false;
@@ -385,7 +410,7 @@
     // Compare owns its own arrow handling - it routes them to the focused pane.
     if (compareMode) return;
     // The calculator is a form; arrow keys belong to its number inputs.
-    if (damageMode) return;
+    if (damageMode || paxMode) return;
     const keyName = event.key;
     if (keyName == "ArrowRight") nextArticle(1);
     if (keyName == "ArrowLeft") nextArticle(-1);
@@ -624,6 +649,15 @@
         <nobr>TECH</nobr>
       </div>
 
+      <div
+        class="navbar-button {paxMode ? 'reveal-lock' : ''}"
+        id="pax-button"
+        title={paxMode ? "Leave the personnel manager" : "Your whole crew on one screen: stats, roles, careers, squads"}
+        on:click={goPax}
+      >
+        <nobr>PAX</nobr>
+      </div>
+
       <div class="stretcher on-wide" />
 
       {#if !packedData}
@@ -708,7 +742,7 @@
          article sidebar is position:fixed, so leaving it rendered draws the
          section's article list, its scrollbar and its A-Z button straight over
          the tech screen's own left panel. -->
-    {#if seeSide && !compareMode && !damageMode && !techMode}
+    {#if seeSide && !toolMode}
       <nav class="sidebar">
         <button
           class="side-sort-button"
@@ -749,7 +783,7 @@
       </nav>
     {/if}
 
-    {#if !compareMode && !damageMode && !techMode}
+    {#if !toolMode}
       <button
         class="side-hide-button"
         on:click={(e) => {
@@ -765,10 +799,12 @@
     <div
       class="main"
       id="main"
-      class:main-compare={compareMode || damageMode || techMode}
-      style={seeSide && !compareMode && !damageMode && !techMode ? "" : "padding-left:1rem;"}
+      class:main-compare={toolMode}
+      style={seeSide && !toolMode ? "" : "padding-left:1rem;"}
     >
-      {#if techMode}
+      {#if paxMode}
+        <Pax />
+      {:else if techMode}
         <TechTree topicId={techTopic} />
       {:else if damageMode}
         <DamageCalc targetId={damageTarget} />

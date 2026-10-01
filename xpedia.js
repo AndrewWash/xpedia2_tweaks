@@ -46,20 +46,20 @@
     return new Promise((resolve2, reject) => {
       var fulfilled = (value) => {
         try {
-          step(generator.next(value));
+          step2(generator.next(value));
         } catch (e) {
           reject(e);
         }
       };
       var rejected = (value) => {
         try {
-          step(generator.throw(value));
+          step2(generator.throw(value));
         } catch (e) {
           reject(e);
         }
       };
-      var step = (x) => x.done ? resolve2(x.value) : Promise.resolve(x.value).then(fulfilled, rejected);
-      step((generator = generator.apply(__this, __arguments)).next());
+      var step2 = (x) => x.done ? resolve2(x.value) : Promise.resolve(x.value).then(fulfilled, rejected);
+      step2((generator = generator.apply(__this, __arguments)).next());
     });
   };
 
@@ -111,8 +111,8 @@
           function _interopRequireDefault(obj) {
             return obj && obj.__esModule ? obj : { default: obj };
           }
-          function _classCallCheck(instance48, Constructor) {
-            if (!(instance48 instanceof Constructor)) {
+          function _classCallCheck(instance49, Constructor) {
+            if (!(instance49 instanceof Constructor)) {
               throw new TypeError("Cannot call a class as a function");
             }
           }
@@ -194,8 +194,8 @@
           function _interopRequireDefault(obj) {
             return obj && obj.__esModule ? obj : { default: obj };
           }
-          function _classCallCheck(instance48, Constructor) {
-            if (!(instance48 instanceof Constructor)) {
+          function _classCallCheck(instance49, Constructor) {
+            if (!(instance49 instanceof Constructor)) {
               throw new TypeError("Cannot call a class as a function");
             }
           }
@@ -370,8 +370,8 @@
               return Constructor;
             };
           }();
-          function _classCallCheck(instance48, Constructor) {
-            if (!(instance48 instanceof Constructor)) {
+          function _classCallCheck(instance49, Constructor) {
+            if (!(instance49 instanceof Constructor)) {
               throw new TypeError("Cannot call a class as a function");
             }
           }
@@ -475,8 +475,8 @@
           function _interopRequireDefault(obj) {
             return obj && obj.__esModule ? obj : { default: obj };
           }
-          function _classCallCheck(instance48, Constructor) {
-            if (!(instance48 instanceof Constructor)) {
+          function _classCallCheck(instance49, Constructor) {
+            if (!(instance49 instanceof Constructor)) {
               throw new TypeError("Cannot call a class as a function");
             }
           }
@@ -4472,7 +4472,7 @@
       lookup.delete(block.key);
     });
   }
-  function update_keyed_each(old_blocks, dirty, get_key, dynamic, ctx, list2, lookup, node, destroy, create_each_block32, next, get_context) {
+  function update_keyed_each(old_blocks, dirty, get_key, dynamic, ctx, list2, lookup, node, destroy, create_each_block33, next, get_context) {
     let o = old_blocks.length;
     let n = list2.length;
     let i = o;
@@ -4488,7 +4488,7 @@
       const key = get_key(child_ctx);
       let block = lookup.get(key);
       if (!block) {
-        block = create_each_block32(key, child_ctx);
+        block = create_each_block33(key, child_ctx);
         block.c();
       } else if (dynamic) {
         block.p(child_ctx, dirty);
@@ -4582,7 +4582,7 @@
     }
     component.$$.dirty[i / 31 | 0] |= 1 << i % 31;
   }
-  function init(component, options, instance48, create_fragment48, not_equal, props, append_styles2, dirty = [-1]) {
+  function init(component, options, instance49, create_fragment49, not_equal, props, append_styles2, dirty = [-1]) {
     const parent_component = current_component;
     set_current_component(component);
     const $$ = component.$$ = {
@@ -4605,7 +4605,7 @@
     };
     append_styles2 && append_styles2($$.root);
     let ready = false;
-    $$.ctx = instance48 ? instance48(component, options.props || {}, (i, ret, ...rest) => {
+    $$.ctx = instance49 ? instance49(component, options.props || {}, (i, ret, ...rest) => {
       const value = rest.length ? rest[0] : ret;
       if ($$.ctx && not_equal($$.ctx[i], $$.ctx[i] = value)) {
         if (!$$.skip_bound && $$.bound[i])
@@ -4618,7 +4618,7 @@
     $$.update();
     ready = true;
     run_all($$.before_update);
-    $$.fragment = create_fragment48 ? create_fragment48($$.ctx) : false;
+    $$.fragment = create_fragment49 ? create_fragment49($$.ctx) : false;
     if (options.target) {
       if (options.hydrate) {
         start_hydrating();
@@ -5233,6 +5233,7 @@
     currentSavePath.set(path || "");
     currentSave.set(state || null);
   }
+  var centcomSoldier = writable("");
 
   // src/Tr.svelte
   function create_fragment4(ctx) {
@@ -30667,7 +30668,7 @@
       else
         pick(target);
     }
-    function step(delta2) {
+    function step2(delta2) {
       if (!article)
         return;
       let next = rul.findNextArticle(article, delta2, section, sortArticles);
@@ -30704,8 +30705,8 @@
     const click_handler_4 = () => dispatch("open", id);
     const click_handler_5 = () => pick("");
     const click_handler_6 = (rid) => pick(rid);
-    const prev_handler = () => step(-1);
-    const next_handler = () => step(1);
+    const prev_handler = () => step2(-1);
+    const next_handler = () => step2(1);
     function div2_binding($$value) {
       binding_callbacks[$$value ? "unshift" : "push"](() => {
         contentEl = $$value;
@@ -30756,7 +30757,7 @@
       id,
       index3,
       focused,
-      step,
+      step2,
       hist,
       histPos,
       article,
@@ -35955,12 +35956,12 @@
       e.preventDefault();
     }
     function onSplitKey(e) {
-      const step = e.shiftKey ? 48 : 12;
+      const step2 = e.shiftKey ? 48 : 12;
       let d = 0;
       if (sideActive)
-        d = e.key == "ArrowLeft" ? step : e.key == "ArrowRight" ? -step : 0;
+        d = e.key == "ArrowLeft" ? step2 : e.key == "ArrowRight" ? -step2 : 0;
       else
-        d = e.key == "ArrowUp" ? step : e.key == "ArrowDown" ? -step : 0;
+        d = e.key == "ArrowUp" ? step2 : e.key == "ArrowDown" ? -step2 : 0;
       if (!d)
         return;
       e.preventDefault();
@@ -36584,10 +36585,10 @@
     }
     return out;
   }
-  function bucketise(outcomes, step) {
+  function bucketise(outcomes, step2) {
     const v = new Float64Array(KILL_GRID + 1);
     for (const o of outcomes) {
-      let k = step > 0 ? Math.round(o.v / step) : o.v > 0 ? KILL_GRID : 0;
+      let k = step2 > 0 ? Math.round(o.v / step2) : o.v > 0 ? KILL_GRID : 0;
       if (k > KILL_GRID)
         k = KILL_GRID;
       if (k < 0)
@@ -36633,8 +36634,8 @@
     }
     return result;
   }
-  function attackDistribution(p, armor, goal, step) {
-    const one = bucketise(projectileOutcomes(p, armor, goal), step);
+  function attackDistribution(p, armor, goal, step2) {
+    const one = bucketise(projectileOutcomes(p, armor, goal), step2);
     const n = Math.max(0, p.landed);
     const whole = Math.floor(n);
     const frac = n - whole;
@@ -36663,9 +36664,9 @@
     };
     if (!(pool > 0) || !(hitRate > 0))
       return out;
-    const step = pool / KILL_GRID;
+    const step2 = pool / KILL_GRID;
     const distCache = {};
-    const attackAt = (a) => distCache[a] || (distCache[a] = attackDistribution(p, a, goal, step));
+    const attackAt = (a) => distCache[a] || (distCache[a] = attackDistribution(p, a, goal, step2));
     let cur = new Float64Array(KILL_GRID + 1);
     cur[0] = 1;
     const want = Math.min(0.999999, Math.max(0, confidence));
@@ -36940,10 +36941,10 @@
     if (reliableTu == null || !isFinite(reliableTu) || reliableTu <= 0) {
       return reliableTu === 0 ? null : 0;
     }
-    const bar = +soldierTu;
-    if (!(bar > 0))
+    const bar2 = +soldierTu;
+    if (!(bar2 > 0))
       return null;
-    return Math.round(100 / (1 + reliableTu / bar));
+    return Math.round(100 / (1 + reliableTu / bar2));
   }
   function scoreBand(score) {
     if (score == null || !(score > 0))
@@ -38041,11 +38042,22 @@
         crafts++;
         add(c && c.items);
       }
+      const baseName = typeof b.name == "string" ? b.name : "Base " + (bi + 1);
       for (const sol of Array.isArray(b.soldiers) ? b.soldiers : []) {
-        const parsed = readSoldier(sol, bi);
+        const parsed = readSoldier(sol, bi, baseName);
         if (parsed)
           crew.push(parsed);
       }
+    }
+    const fallen = [];
+    for (const sol of Array.isArray(state.deadSoldiers) ? state.deadSoldiers : []) {
+      const parsed = readSoldier(sol, "kia", "");
+      if (!parsed)
+        continue;
+      parsed.fallen = true;
+      parsed.craft = "";
+      parsed.recovery = 0;
+      fallen.push(parsed);
     }
     return {
       path,
@@ -38057,20 +38069,40 @@
       bases: bases.length,
       crafts,
       crew,
+      fallen,
       projects,
       scientists
     };
   }
-  function readSoldier(sol, baseIndex) {
+  function readSoldier(sol, baseIndex, baseName) {
     if (!sol || typeof sol != "object")
       return null;
     const name = typeof sol.name == "string" && sol.name ? sol.name : "Unnamed";
-    const stats = {};
-    const cur = sol.currentStats && typeof sol.currentStats == "object" ? sol.currentStats : {};
-    for (const k of Object.keys(cur)) {
-      const n = +cur[k];
-      if (!isNaN(n))
-        stats[k] = n;
+    const numbers2 = (src) => {
+      const out = {};
+      if (!src || typeof src != "object")
+        return out;
+      for (const k of Object.keys(src)) {
+        const n = +src[k];
+        if (!isNaN(n))
+          out[k] = n;
+      }
+      return out;
+    };
+    const stats = numbers2(sol.currentStats);
+    const initial = numbers2(sol.initialStats);
+    const diaryRaw = sol.diary && typeof sol.diary == "object" ? sol.diary : {};
+    const diary = {};
+    for (const k of Object.keys(diaryRaw)) {
+      const v = diaryRaw[k];
+      if (typeof v == "number" && !isNaN(v))
+        diary[k] = v;
+    }
+    const killsByWeapon = {};
+    for (const kill of Array.isArray(diaryRaw.killList) ? diaryRaw.killList : []) {
+      if (!kill || typeof kill.weapon != "string")
+        continue;
+      killsByWeapon[kill.weapon] = (killsByWeapon[kill.weapon] || 0) + 1;
     }
     const bonuses = [];
     const tb = sol.transformationBonuses;
@@ -38097,7 +38129,16 @@
       craft: sol.craft && typeof sol.craft.type == "string" ? sol.craft.type : "",
       recovery: +sol.recovery || 0,
       bonuses,
-      commendations
+      commendations,
+      initial,
+      base: baseName,
+      missions: +sol.missions || 0,
+      kills: +sol.kills || 0,
+      stuns: +sol.stuns || 0,
+      gender: +sol.gender || 0,
+      manaMissing: +sol.manaMissing || 0,
+      diary,
+      killsByWeapon
     };
   }
   function loadSave(path) {
@@ -38758,178 +38799,178 @@
   var { Boolean: Boolean_1, Map: Map_1 } = globals;
   function get_each_context_172(ctx, list2, i) {
     const child_ctx = ctx.slice();
-    child_ctx[222] = list2[i];
+    child_ctx[223] = list2[i];
     return child_ctx;
   }
   function get_each_context_182(ctx, list2, i) {
     const child_ctx = ctx.slice();
-    child_ctx[226] = list2[i];
+    child_ctx[227] = list2[i];
     return child_ctx;
   }
   function get_each_context_192(ctx, list2, i) {
     const child_ctx = ctx.slice();
-    child_ctx[252] = list2[i];
+    child_ctx[253] = list2[i];
     return child_ctx;
   }
   function get_each_context_20(ctx, list2, i) {
     const child_ctx = ctx.slice();
-    child_ctx[265] = list2[i];
+    child_ctx[266] = list2[i];
     return child_ctx;
   }
   function get_each_context_21(ctx, list2, i) {
     const child_ctx = ctx.slice();
-    child_ctx[225] = list2[i];
+    child_ctx[226] = list2[i];
     return child_ctx;
   }
   function get_each_context_222(ctx, list2, i) {
     const child_ctx = ctx.slice();
-    child_ctx[234] = list2[i];
-    child_ctx[236] = i;
+    child_ctx[235] = list2[i];
+    child_ctx[237] = i;
     return child_ctx;
   }
   function get_each_context29(ctx, list2, i) {
     const child_ctx = ctx.slice();
-    child_ctx[222] = list2[i];
+    child_ctx[223] = list2[i];
     return child_ctx;
   }
   function get_each_context_111(ctx, list2, i) {
     const child_ctx = ctx.slice();
-    child_ctx[225] = list2[i];
-    const constants_0 = child_ctx[225].best;
-    child_ctx[226] = constants_0;
+    child_ctx[226] = list2[i];
+    const constants_0 = child_ctx[226].best;
+    child_ctx[227] = constants_0;
     return child_ctx;
   }
   function get_each_context_26(ctx, list2, i) {
     const child_ctx = ctx.slice();
-    child_ctx[226] = list2[i];
+    child_ctx[227] = list2[i];
     return child_ctx;
   }
   function get_if_ctx(ctx) {
     const child_ctx = ctx.slice();
-    const constants_0 = child_ctx[49].get(child_ctx[222].weapon.id);
-    child_ctx[231] = constants_0;
+    const constants_0 = child_ctx[49].get(child_ctx[223].weapon.id);
+    child_ctx[232] = constants_0;
     return child_ctx;
   }
   function get_each_context_36(ctx, list2, i) {
     const child_ctx = ctx.slice();
-    child_ctx[225] = list2[i];
+    child_ctx[226] = list2[i];
     return child_ctx;
   }
   function get_each_context_45(ctx, list2, i) {
     const child_ctx = ctx.slice();
-    child_ctx[234] = list2[i];
-    child_ctx[236] = i;
+    child_ctx[235] = list2[i];
+    child_ctx[237] = i;
     return child_ctx;
   }
   function get_each_context_54(ctx, list2, i) {
     const child_ctx = ctx.slice();
-    child_ctx[237] = list2[i];
+    child_ctx[238] = list2[i];
     return child_ctx;
   }
   function get_each_context_64(ctx, list2, i) {
     const child_ctx = ctx.slice();
-    child_ctx[240] = list2[i];
+    child_ctx[241] = list2[i];
     return child_ctx;
   }
   function get_each_context_73(ctx, list2, i) {
     const child_ctx = ctx.slice();
-    child_ctx[225] = list2[i];
+    child_ctx[226] = list2[i];
     return child_ctx;
   }
   function get_each_context_82(ctx, list2, i) {
     const child_ctx = ctx.slice();
-    child_ctx[225] = list2[i];
+    child_ctx[226] = list2[i];
     return child_ctx;
   }
   function get_each_context_92(ctx, list2, i) {
     const child_ctx = ctx.slice();
-    child_ctx[247] = list2[i];
+    child_ctx[248] = list2[i];
     return child_ctx;
   }
   function get_each_context_102(ctx, list2, i) {
     const child_ctx = ctx.slice();
-    child_ctx[234] = list2[i];
+    child_ctx[235] = list2[i];
     return child_ctx;
   }
   function get_each_context_112(ctx, list2, i) {
     const child_ctx = ctx.slice();
-    child_ctx[252] = list2[i];
+    child_ctx[253] = list2[i];
     return child_ctx;
   }
   function get_each_context_123(ctx, list2, i) {
     const child_ctx = ctx.slice();
-    child_ctx[252] = list2[i];
+    child_ctx[253] = list2[i];
     return child_ctx;
   }
   function get_each_context_133(ctx, list2, i) {
     const child_ctx = ctx.slice();
-    child_ctx[257] = list2[i];
+    child_ctx[258] = list2[i];
     return child_ctx;
   }
   function get_each_context_143(ctx, list2, i) {
     const child_ctx = ctx.slice();
-    child_ctx[260] = list2[i];
+    child_ctx[261] = list2[i];
     return child_ctx;
   }
   function get_each_context_152(ctx, list2, i) {
     const child_ctx = ctx.slice();
-    child_ctx[260] = list2[i];
+    child_ctx[261] = list2[i];
     return child_ctx;
   }
   function get_each_context_162(ctx, list2, i) {
     const child_ctx = ctx.slice();
-    child_ctx[265] = list2[i];
+    child_ctx[266] = list2[i];
     return child_ctx;
   }
   function get_each_context_252(ctx, list2, i) {
     const child_ctx = ctx.slice();
-    child_ctx[283] = list2[i];
+    child_ctx[284] = list2[i];
     return child_ctx;
   }
   function get_each_context_232(ctx, list2, i) {
     const child_ctx = ctx.slice();
-    child_ctx[237] = list2[i];
+    child_ctx[238] = list2[i];
     return child_ctx;
   }
   function get_each_context_242(ctx, list2, i) {
     const child_ctx = ctx.slice();
-    child_ctx[226] = list2[i];
+    child_ctx[227] = list2[i];
     return child_ctx;
   }
   function get_each_context_262(ctx, list2, i) {
     const child_ctx = ctx.slice();
-    child_ctx[286] = list2[i];
+    child_ctx[287] = list2[i];
     return child_ctx;
   }
   function get_each_context_27(ctx, list2, i) {
     const child_ctx = ctx.slice();
-    child_ctx[234] = list2[i];
-    child_ctx[236] = i;
+    child_ctx[235] = list2[i];
+    child_ctx[237] = i;
     return child_ctx;
   }
   function get_each_context_28(ctx, list2, i) {
     const child_ctx = ctx.slice();
-    child_ctx[234] = list2[i];
+    child_ctx[235] = list2[i];
     return child_ctx;
   }
   function get_each_context_29(ctx, list2, i) {
     const child_ctx = ctx.slice();
-    child_ctx[292] = list2[i];
+    child_ctx[293] = list2[i];
     return child_ctx;
   }
   function get_each_context_30(ctx, list2, i) {
     const child_ctx = ctx.slice();
-    child_ctx[286] = list2[i];
+    child_ctx[287] = list2[i];
     return child_ctx;
   }
   function get_each_context_31(ctx, list2, i) {
     const child_ctx = ctx.slice();
-    child_ctx[226] = list2[i];
+    child_ctx[227] = list2[i];
     return child_ctx;
   }
   function get_each_context_322(ctx, list2, i) {
     const child_ctx = ctx.slice();
-    child_ctx[299] = list2[i];
+    child_ctx[300] = list2[i];
     return child_ctx;
   }
   function create_if_block_80(ctx) {
@@ -39054,8 +39095,8 @@
         insert(target, if_block_anchor, anchor);
         if (!mounted) {
           dispose = [
-            listen(select, "change", ctx[154]),
-            listen(input, "change", ctx[155])
+            listen(select, "change", ctx[155]),
+            listen(input, "change", ctx[156])
           ];
           mounted = true;
         }
@@ -39187,7 +39228,7 @@
           if_block1.m(target, anchor);
         insert(target, if_block1_anchor, anchor);
         if (!mounted) {
-          dispose = listen(input, "change", ctx[153]);
+          dispose = listen(input, "change", ctx[154]);
           mounted = true;
         }
       },
@@ -39224,14 +39265,14 @@
   }
   function create_each_block_322(ctx) {
     let option;
-    let t_value = ctx[299].file.replace(/\.a?sav$/, "") + "";
+    let t_value = ctx[300].file.replace(/\.a?sav$/, "") + "";
     let t;
     let option_value_value;
     return {
       c() {
         option = element("option");
         t = text(t_value);
-        option.__value = option_value_value = ctx[299].path;
+        option.__value = option_value_value = ctx[300].path;
         option.value = option.__value;
       },
       m(target, anchor) {
@@ -39239,9 +39280,9 @@
         append(option, t);
       },
       p(ctx2, dirty) {
-        if (dirty[2] & 8 && t_value !== (t_value = ctx2[299].file.replace(/\.a?sav$/, "") + ""))
+        if (dirty[2] & 8 && t_value !== (t_value = ctx2[300].file.replace(/\.a?sav$/, "") + ""))
           set_data(t, t_value);
-        if (dirty[2] & 8 && option_value_value !== (option_value_value = ctx2[299].path)) {
+        if (dirty[2] & 8 && option_value_value !== (option_value_value = ctx2[300].path)) {
           option.__value = option_value_value;
           option.value = option.__value;
         }
@@ -39254,7 +39295,7 @@
   }
   function create_if_block_79(ctx) {
     let span;
-    let t_value = ctx[83][ctx[226].id] + "";
+    let t_value = ctx[83][ctx[227].id] + "";
     let t;
     return {
       c() {
@@ -39267,7 +39308,7 @@
         append(span, t);
       },
       p(ctx2, dirty) {
-        if (dirty[2] & 2097152 && t_value !== (t_value = ctx2[83][ctx2[226].id] + ""))
+        if (dirty[2] & 2097152 && t_value !== (t_value = ctx2[83][ctx2[227].id] + ""))
           set_data(t, t_value);
       },
       d(detaching) {
@@ -39278,7 +39319,7 @@
   }
   function create_each_block_31(ctx) {
     let button;
-    let t0_value = ctx[226].label + "";
+    let t0_value = ctx[227].label + "";
     let t0;
     let t1;
     let t2;
@@ -39286,9 +39327,9 @@
     let button_disabled_value;
     let mounted;
     let dispose;
-    let if_block = ctx[226].id != "off" && ctx[35] && create_if_block_79(ctx);
+    let if_block = ctx[227].id != "off" && ctx[35] && create_if_block_79(ctx);
     function click_handler_2() {
-      return ctx[156](ctx[226]);
+      return ctx[157](ctx[227]);
     }
     return {
       c() {
@@ -39299,9 +39340,9 @@
           if_block.c();
         t2 = space();
         attr(button, "class", "dmg-chip");
-        attr(button, "title", button_title_value = ctx[226].title);
-        button.disabled = button_disabled_value = ctx[226].id != "off" && !ctx[34];
-        toggle_class(button, "dmg-chip-on", ctx[28] == ctx[226].id);
+        attr(button, "title", button_title_value = ctx[227].title);
+        button.disabled = button_disabled_value = ctx[227].id != "off" && !ctx[34];
+        toggle_class(button, "dmg-chip-on", ctx[28] == ctx[227].id);
       },
       m(target, anchor) {
         insert(target, button, anchor);
@@ -39317,7 +39358,7 @@
       },
       p(new_ctx, dirty) {
         ctx = new_ctx;
-        if (ctx[226].id != "off" && ctx[35]) {
+        if (ctx[227].id != "off" && ctx[35]) {
           if (if_block) {
             if_block.p(ctx, dirty);
           } else {
@@ -39329,11 +39370,11 @@
           if_block.d(1);
           if_block = null;
         }
-        if (dirty[1] & 8 | dirty[2] & 8 && button_disabled_value !== (button_disabled_value = ctx[226].id != "off" && !ctx[34])) {
+        if (dirty[1] & 8 | dirty[2] & 8 && button_disabled_value !== (button_disabled_value = ctx[227].id != "off" && !ctx[34])) {
           button.disabled = button_disabled_value;
         }
         if (dirty[0] & 268435456 | dirty[3] & 4) {
-          toggle_class(button, "dmg-chip-on", ctx[28] == ctx[226].id);
+          toggle_class(button, "dmg-chip-on", ctx[28] == ctx[227].id);
         }
       },
       d(detaching) {
@@ -39711,8 +39752,8 @@
         append(span1, t4);
         if (!mounted) {
           dispose = [
-            listen(button0, "click", ctx[159]),
-            listen(button1, "click", ctx[160])
+            listen(button0, "click", ctx[160]),
+            listen(button1, "click", ctx[161])
           ];
           mounted = true;
         }
@@ -39739,9 +39780,9 @@
   }
   function create_each_block_30(ctx) {
     let option;
-    let t0_value = ctx[286].name + "";
+    let t0_value = ctx[287].name + "";
     let t0;
-    let t1_value = ctx[286].fromSave && ctx[286].fromSave.note ? " \xB7 " + ctx[286].fromSave.note : "";
+    let t1_value = ctx[287].fromSave && ctx[287].fromSave.note ? " \xB7 " + ctx[287].fromSave.note : "";
     let t1;
     let option_value_value;
     return {
@@ -39749,7 +39790,7 @@
         option = element("option");
         t0 = text(t0_value);
         t1 = text(t1_value);
-        option.__value = option_value_value = ctx[286].id;
+        option.__value = option_value_value = ctx[287].id;
         option.value = option.__value;
       },
       m(target, anchor) {
@@ -39758,11 +39799,11 @@
         append(option, t1);
       },
       p(ctx2, dirty) {
-        if (dirty[1] & 33554432 && t0_value !== (t0_value = ctx2[286].name + ""))
+        if (dirty[1] & 33554432 && t0_value !== (t0_value = ctx2[287].name + ""))
           set_data(t0, t0_value);
-        if (dirty[1] & 33554432 && t1_value !== (t1_value = ctx2[286].fromSave && ctx2[286].fromSave.note ? " \xB7 " + ctx2[286].fromSave.note : ""))
+        if (dirty[1] & 33554432 && t1_value !== (t1_value = ctx2[287].fromSave && ctx2[287].fromSave.note ? " \xB7 " + ctx2[287].fromSave.note : ""))
           set_data(t1, t1_value);
-        if (dirty[1] & 33554432 && option_value_value !== (option_value_value = ctx2[286].id)) {
+        if (dirty[1] & 33554432 && option_value_value !== (option_value_value = ctx2[287].id)) {
           option.__value = option_value_value;
           option.value = option.__value;
         }
@@ -39914,7 +39955,7 @@
         attr(select, "class", "dmg-input");
         attr(select, "size", select_size_value = ctx[27] ? 8 : 1);
         if (ctx[68] === void 0)
-          add_render_callback(() => ctx[165].call(select));
+          add_render_callback(() => ctx[166].call(select));
         attr(div0, "class", "dmg-armorrow");
         attr(div1, "class", "dmg-armorpick");
         attr(button0, "class", "dmg-mini dmg-wide");
@@ -39971,11 +40012,11 @@
         current = true;
         if (!mounted) {
           dispose = [
-            listen(input0, "input", ctx[164]),
-            listen(select, "change", ctx[165]),
-            listen(select, "change", ctx[166], true),
-            listen(button0, "click", ctx[168]),
-            listen(button1, "click", ctx[170]),
+            listen(input0, "input", ctx[165]),
+            listen(select, "change", ctx[166]),
+            listen(select, "change", ctx[167], true),
+            listen(button0, "click", ctx[169]),
+            listen(button1, "click", ctx[171]),
             listen(input1, "change", ctx[102])
           ];
           mounted = true;
@@ -40173,7 +40214,7 @@
         set_input_value(input, ctx[50].name);
         if (!mounted) {
           dispose = [
-            listen(input, "input", ctx[163]),
+            listen(input, "input", ctx[164]),
             listen(input, "change", ctx[99])
           ];
           mounted = true;
@@ -40194,12 +40235,12 @@
   }
   function create_each_block_29(ctx) {
     let option;
-    let raw_value = ctx[292].title + "";
+    let raw_value = ctx[293].title + "";
     let option_value_value;
     return {
       c() {
         option = element("option");
-        option.__value = option_value_value = ctx[292].id;
+        option.__value = option_value_value = ctx[293].id;
         option.value = option.__value;
       },
       m(target, anchor) {
@@ -40207,10 +40248,10 @@
         option.innerHTML = raw_value;
       },
       p(ctx2, dirty) {
-        if (dirty[2] & 134217728 && raw_value !== (raw_value = ctx2[292].title + ""))
+        if (dirty[2] & 134217728 && raw_value !== (raw_value = ctx2[293].title + ""))
           option.innerHTML = raw_value;
         ;
-        if (dirty[2] & 134217728 && option_value_value !== (option_value_value = ctx2[292].id)) {
+        if (dirty[2] & 134217728 && option_value_value !== (option_value_value = ctx2[293].id)) {
           option.__value = option_value_value;
           option.value = option.__value;
         }
@@ -40238,7 +40279,7 @@
         insert(target, button, anchor);
         append(button, t);
         if (!mounted) {
-          dispose = listen(button, "click", ctx[167]);
+          dispose = listen(button, "click", ctx[168]);
           mounted = true;
         }
       },
@@ -40397,8 +40438,8 @@
         span = element("span");
         if_block.c();
         attr(span, "class", "dmg-statdelta");
-        toggle_class(span, "dmg-statdown", (ctx[54] ? ctx[52](ctx[234]) : ctx[53](ctx[234])) < 0);
-        toggle_class(span, "dmg-statsame", ctx[54] && !ctx[52](ctx[234]));
+        toggle_class(span, "dmg-statdown", (ctx[54] ? ctx[52](ctx[235]) : ctx[53](ctx[235])) < 0);
+        toggle_class(span, "dmg-statsame", ctx[54] && !ctx[52](ctx[235]));
       },
       m(target, anchor) {
         insert(target, span, anchor);
@@ -40416,10 +40457,10 @@
           }
         }
         if (dirty[1] & 14680064) {
-          toggle_class(span, "dmg-statdown", (ctx2[54] ? ctx2[52](ctx2[234]) : ctx2[53](ctx2[234])) < 0);
+          toggle_class(span, "dmg-statdown", (ctx2[54] ? ctx2[52](ctx2[235]) : ctx2[53](ctx2[235])) < 0);
         }
         if (dirty[1] & 10485760) {
-          toggle_class(span, "dmg-statsame", ctx2[54] && !ctx2[52](ctx2[234]));
+          toggle_class(span, "dmg-statsame", ctx2[54] && !ctx2[52](ctx2[235]));
         }
       },
       d(detaching) {
@@ -40430,7 +40471,7 @@
     };
   }
   function create_else_block_132(ctx) {
-    let t_value = ctx[53](ctx[234]) ? (ctx[53](ctx[234]) > 0 ? "+" : "") + ctx[53](ctx[234]) : "";
+    let t_value = ctx[53](ctx[235]) ? (ctx[53](ctx[235]) > 0 ? "+" : "") + ctx[53](ctx[235]) : "";
     let t;
     return {
       c() {
@@ -40440,7 +40481,7 @@
         insert(target, t, anchor);
       },
       p(ctx2, dirty) {
-        if (dirty[1] & 4194304 && t_value !== (t_value = ctx2[53](ctx2[234]) ? (ctx2[53](ctx2[234]) > 0 ? "+" : "") + ctx2[53](ctx2[234]) : ""))
+        if (dirty[1] & 4194304 && t_value !== (t_value = ctx2[53](ctx2[235]) ? (ctx2[53](ctx2[235]) > 0 ? "+" : "") + ctx2[53](ctx2[235]) : ""))
           set_data(t, t_value);
       },
       d(detaching) {
@@ -40450,7 +40491,7 @@
     };
   }
   function create_if_block_632(ctx) {
-    let t_value = ctx[52](ctx[234]) ? (ctx[52](ctx[234]) > 0 ? "\u25B2+" : "\u25BC") + ctx[52](ctx[234]) : "=";
+    let t_value = ctx[52](ctx[235]) ? (ctx[52](ctx[235]) > 0 ? "\u25B2+" : "\u25BC") + ctx[52](ctx[235]) : "=";
     let t;
     return {
       c() {
@@ -40460,7 +40501,7 @@
         insert(target, t, anchor);
       },
       p(ctx2, dirty) {
-        if (dirty[1] & 2097152 && t_value !== (t_value = ctx2[52](ctx2[234]) ? (ctx2[52](ctx2[234]) > 0 ? "\u25B2+" : "\u25BC") + ctx2[52](ctx2[234]) : "="))
+        if (dirty[1] & 2097152 && t_value !== (t_value = ctx2[52](ctx2[235]) ? (ctx2[52](ctx2[235]) > 0 ? "\u25B2+" : "\u25BC") + ctx2[52](ctx2[235]) : "="))
           set_data(t, t_value);
       },
       d(detaching) {
@@ -40481,15 +40522,15 @@
     let input_value_value;
     let t2;
     let span1;
-    let t3_value = ctx[88][ctx[234]] ? "/ " + ctx[88][ctx[234]] : "";
+    let t3_value = ctx[88][ctx[235]] ? "/ " + ctx[88][ctx[235]] : "";
     let t3;
     let current;
     let mounted;
     let dispose;
-    tr2 = new Tr_default({ props: { s: ctx[234] } });
+    tr2 = new Tr_default({ props: { s: ctx[235] } });
     let if_block = ctx[87] && create_if_block_622(ctx);
     function change_handler_4(...args) {
-      return ctx[169](ctx[234], ...args);
+      return ctx[170](ctx[235], ...args);
     }
     return {
       c() {
@@ -40509,8 +40550,8 @@
         attr(input, "min", "0");
         input.readOnly = ctx[87];
         attr(input, "tabindex", input_tabindex_value = ctx[87] ? -1 : 0);
-        attr(input, "title", input_title_value = ctx[87] ? ctx[85](ctx[234]) : "");
-        input.value = input_value_value = ctx[87] ? ctx[42] ? ctx[42][ctx[234]] : 0 : ctx[50].stats[ctx[234]];
+        attr(input, "title", input_title_value = ctx[87] ? ctx[85](ctx[235]) : "");
+        input.value = input_value_value = ctx[87] ? ctx[42] ? ctx[42][ctx[235]] : 0 : ctx[50].stats[ctx[235]];
         toggle_class(input, "dmg-readonly", ctx[87]);
         attr(span1, "class", "dmg-cap dmg-statcap");
         attr(label, "class", "dmg-row dmg-stat");
@@ -40553,16 +40594,16 @@
         if (!current || dirty[2] & 33554432 && input_tabindex_value !== (input_tabindex_value = ctx[87] ? -1 : 0)) {
           attr(input, "tabindex", input_tabindex_value);
         }
-        if (!current || dirty[2] & 41943040 && input_title_value !== (input_title_value = ctx[87] ? ctx[85](ctx[234]) : "")) {
+        if (!current || dirty[2] & 41943040 && input_title_value !== (input_title_value = ctx[87] ? ctx[85](ctx[235]) : "")) {
           attr(input, "title", input_title_value);
         }
-        if (!current || dirty[1] & 526336 | dirty[2] & 33554432 && input_value_value !== (input_value_value = ctx[87] ? ctx[42] ? ctx[42][ctx[234]] : 0 : ctx[50].stats[ctx[234]]) && input.value !== input_value_value) {
+        if (!current || dirty[1] & 526336 | dirty[2] & 33554432 && input_value_value !== (input_value_value = ctx[87] ? ctx[42] ? ctx[42][ctx[235]] : 0 : ctx[50].stats[ctx[235]]) && input.value !== input_value_value) {
           input.value = input_value_value;
         }
         if (dirty[2] & 33554432) {
           toggle_class(input, "dmg-readonly", ctx[87]);
         }
-        if ((!current || dirty[2] & 67108864) && t3_value !== (t3_value = ctx[88][ctx[234]] ? "/ " + ctx[88][ctx[234]] : ""))
+        if ((!current || dirty[2] & 67108864) && t3_value !== (t3_value = ctx[88][ctx[235]] ? "/ " + ctx[88][ctx[235]] : ""))
           set_data(t3, t3_value);
       },
       i(local) {
@@ -40927,14 +40968,14 @@
   }
   function create_each_block_27(ctx) {
     let span;
-    let t0_value = (ctx[52](ctx[234]) > 0 ? "+" : "") + ctx[52](ctx[234]);
+    let t0_value = (ctx[52](ctx[235]) > 0 ? "+" : "") + ctx[52](ctx[235]);
     let t0;
     let t1;
     let tr2;
-    let t2_value = ctx[236] < ctx[86].length - 1 ? ", " : "";
+    let t2_value = ctx[237] < ctx[86].length - 1 ? ", " : "";
     let t2;
     let current;
-    tr2 = new Tr_default({ props: { s: ctx[234] } });
+    tr2 = new Tr_default({ props: { s: ctx[235] } });
     return {
       c() {
         span = element("span");
@@ -40942,7 +40983,7 @@
         t1 = space();
         create_component(tr2.$$.fragment);
         t2 = text(t2_value);
-        toggle_class(span, "dmg-statdown", ctx[52](ctx[234]) < 0);
+        toggle_class(span, "dmg-statdown", ctx[52](ctx[235]) < 0);
       },
       m(target, anchor) {
         insert(target, span, anchor);
@@ -40953,16 +40994,16 @@
         current = true;
       },
       p(ctx2, dirty) {
-        if ((!current || dirty[1] & 2097152 | dirty[2] & 16777216) && t0_value !== (t0_value = (ctx2[52](ctx2[234]) > 0 ? "+" : "") + ctx2[52](ctx2[234])))
+        if ((!current || dirty[1] & 2097152 | dirty[2] & 16777216) && t0_value !== (t0_value = (ctx2[52](ctx2[235]) > 0 ? "+" : "") + ctx2[52](ctx2[235])))
           set_data(t0, t0_value);
         const tr_changes = {};
         if (dirty[2] & 16777216)
-          tr_changes.s = ctx2[234];
+          tr_changes.s = ctx2[235];
         tr2.$set(tr_changes);
         if (dirty[1] & 2097152 | dirty[2] & 16777216) {
-          toggle_class(span, "dmg-statdown", ctx2[52](ctx2[234]) < 0);
+          toggle_class(span, "dmg-statdown", ctx2[52](ctx2[235]) < 0);
         }
-        if ((!current || dirty[2] & 16777216) && t2_value !== (t2_value = ctx2[236] < ctx2[86].length - 1 ? ", " : ""))
+        if ((!current || dirty[2] & 16777216) && t2_value !== (t2_value = ctx2[237] < ctx2[86].length - 1 ? ", " : ""))
           set_data(t2, t2_value);
       },
       i(local) {
@@ -41009,14 +41050,14 @@
   }
   function create_each_block_26(ctx) {
     let option;
-    let t_value = ctx[286] + "";
+    let t_value = ctx[287] + "";
     let t;
     let option_value_value;
     return {
       c() {
         option = element("option");
         t = text(t_value);
-        option.__value = option_value_value = ctx[286];
+        option.__value = option_value_value = ctx[287];
         option.value = option.__value;
       },
       m(target, anchor) {
@@ -41091,7 +41132,7 @@
         attr(select, "class", "dmg-input dmg-list");
         attr(select, "size", "12");
         if (ctx[26] === void 0)
-          add_render_callback(() => ctx[189].call(select));
+          add_render_callback(() => ctx[190].call(select));
         attr(section, "class", "dmg-block");
       },
       m(target, anchor) {
@@ -41108,8 +41149,8 @@
         select_option(select, ctx[26]);
         if (!mounted) {
           dispose = [
-            listen(input, "input", ctx[188]),
-            listen(select, "change", ctx[189])
+            listen(input, "input", ctx[189]),
+            listen(select, "change", ctx[190])
           ];
           mounted = true;
         }
@@ -41217,7 +41258,7 @@
         attr(select0, "class", "dmg-input dmg-list");
         attr(select0, "size", "6");
         if (ctx[23] === void 0)
-          add_render_callback(() => ctx[185].call(select0));
+          add_render_callback(() => ctx[186].call(select0));
         attr(section0, "class", "dmg-block");
         attr(input1, "class", "dmg-input");
         attr(input1, "placeholder", "Filter enemies\u2026 (comma-separate)");
@@ -41225,7 +41266,7 @@
         attr(select1, "class", "dmg-input dmg-list");
         attr(select1, "size", "12");
         if (ctx[0] === void 0)
-          add_render_callback(() => ctx[187].call(select1));
+          add_render_callback(() => ctx[188].call(select1));
         attr(section1, "class", "dmg-block");
       },
       m(target, anchor) {
@@ -41261,10 +41302,10 @@
         select_option(select1, ctx[0]);
         if (!mounted) {
           dispose = [
-            listen(input0, "input", ctx[184]),
-            listen(select0, "change", ctx[185]),
-            listen(input1, "input", ctx[186]),
-            listen(select1, "change", ctx[187])
+            listen(input0, "input", ctx[185]),
+            listen(select0, "change", ctx[186]),
+            listen(input1, "input", ctx[187]),
+            listen(select1, "change", ctx[188])
           ];
           mounted = true;
         }
@@ -41362,12 +41403,12 @@
   }
   function create_each_block_252(ctx) {
     let option;
-    let raw_value = ctx[283].title + "";
+    let raw_value = ctx[284].title + "";
     let option_value_value;
     return {
       c() {
         option = element("option");
-        option.__value = option_value_value = ctx[283].id;
+        option.__value = option_value_value = ctx[284].id;
         option.value = option.__value;
       },
       m(target, anchor) {
@@ -41375,10 +41416,10 @@
         option.innerHTML = raw_value;
       },
       p(ctx2, dirty) {
-        if (dirty[1] & 32768 && raw_value !== (raw_value = ctx2[283].title + ""))
+        if (dirty[1] & 32768 && raw_value !== (raw_value = ctx2[284].title + ""))
           option.innerHTML = raw_value;
         ;
-        if (dirty[1] & 32768 && option_value_value !== (option_value_value = ctx2[283].id)) {
+        if (dirty[1] & 32768 && option_value_value !== (option_value_value = ctx2[284].id)) {
           option.__value = option_value_value;
           option.value = option.__value;
         }
@@ -41403,7 +41444,7 @@
       m(target, anchor) {
         insert(target, button, anchor);
         if (!mounted) {
-          dispose = listen(button, "click", ctx[183]);
+          dispose = listen(button, "click", ctx[184]);
           mounted = true;
         }
       },
@@ -41419,9 +41460,9 @@
   function create_each_block_242(ctx) {
     let option;
     let html_tag;
-    let raw_value = ctx[226].title + "";
+    let raw_value = ctx[227].title + "";
     let t0;
-    let t1_value = ctx[226].count + "";
+    let t1_value = ctx[227].count + "";
     let t1;
     let t2;
     let option_value_value;
@@ -41433,7 +41474,7 @@
         t1 = text(t1_value);
         t2 = text(")");
         html_tag.a = t0;
-        option.__value = option_value_value = ctx[226].id;
+        option.__value = option_value_value = ctx[227].id;
         option.value = option.__value;
       },
       m(target, anchor) {
@@ -41444,11 +41485,11 @@
         append(option, t2);
       },
       p(ctx2, dirty) {
-        if (dirty[2] & 32768 && raw_value !== (raw_value = ctx2[226].title + ""))
+        if (dirty[2] & 32768 && raw_value !== (raw_value = ctx2[227].title + ""))
           html_tag.p(raw_value);
-        if (dirty[2] & 32768 && t1_value !== (t1_value = ctx2[226].count + ""))
+        if (dirty[2] & 32768 && t1_value !== (t1_value = ctx2[227].count + ""))
           set_data(t1, t1_value);
-        if (dirty[2] & 32768 && option_value_value !== (option_value_value = ctx2[226].id)) {
+        if (dirty[2] & 32768 && option_value_value !== (option_value_value = ctx2[227].id)) {
           option.__value = option_value_value;
           option.value = option.__value;
         }
@@ -41478,12 +41519,12 @@
   }
   function create_each_block_232(ctx) {
     let option;
-    let raw_value = ctx[237].title + "";
+    let raw_value = ctx[238].title + "";
     let option_value_value;
     return {
       c() {
         option = element("option");
-        option.__value = option_value_value = ctx[237].id;
+        option.__value = option_value_value = ctx[238].id;
         option.value = option.__value;
       },
       m(target, anchor) {
@@ -41491,10 +41532,10 @@
         option.innerHTML = raw_value;
       },
       p(ctx2, dirty) {
-        if (dirty[1] & 8192 && raw_value !== (raw_value = ctx2[237].title + ""))
+        if (dirty[1] & 8192 && raw_value !== (raw_value = ctx2[238].title + ""))
           option.innerHTML = raw_value;
         ;
-        if (dirty[1] & 8192 && option_value_value !== (option_value_value = ctx2[237].id)) {
+        if (dirty[1] & 8192 && option_value_value !== (option_value_value = ctx2[238].id)) {
           option.__value = option_value_value;
           option.value = option.__value;
         }
@@ -41548,7 +41589,7 @@
       each_blocks_1[i] = create_each_block_21(get_each_context_21(ctx, each_value_21, i));
     }
     let each_value_17 = ctx[75].slice(0, 400);
-    const get_key = (ctx2) => ctx2[222].id;
+    const get_key = (ctx2) => ctx2[223].id;
     for (let i = 0; i < each_value_17.length; i += 1) {
       let child_ctx = get_each_context_172(ctx, each_value_17, i);
       let key = get_key(child_ctx);
@@ -41630,7 +41671,7 @@
           if_block1.m(target, anchor);
         insert(target, if_block1_anchor, anchor);
         if (!mounted) {
-          dispose = listen(button, "click", ctx[212]);
+          dispose = listen(button, "click", ctx[213]);
           mounted = true;
         }
       },
@@ -41879,20 +41920,20 @@
   }
   function create_each_block_222(ctx) {
     let button;
-    let t0_value = ctx[236] + 1 + "";
+    let t0_value = ctx[237] + 1 + "";
     let t0;
     let t1;
-    let t2_value = ctx[118](ctx[234].id).label + "";
+    let t2_value = ctx[118](ctx[235].id).label + "";
     let t2;
     let t3;
-    let t4_value = ctx[234].desc ? "\u25BC" : "\u25B2";
+    let t4_value = ctx[235].desc ? "\u25BC" : "\u25B2";
     let t4;
     let t5;
     let span;
     let mounted;
     let dispose;
     function click_handler_26() {
-      return ctx[213](ctx[234]);
+      return ctx[214](ctx[235]);
     }
     return {
       c() {
@@ -41925,9 +41966,9 @@
       },
       p(new_ctx, dirty) {
         ctx = new_ctx;
-        if (dirty[1] & 256 && t2_value !== (t2_value = ctx[118](ctx[234].id).label + ""))
+        if (dirty[1] & 256 && t2_value !== (t2_value = ctx[118](ctx[235].id).label + ""))
           set_data(t2, t2_value);
-        if (dirty[1] & 256 && t4_value !== (t4_value = ctx[234].desc ? "\u25BC" : "\u25B2"))
+        if (dirty[1] & 256 && t4_value !== (t4_value = ctx[235].desc ? "\u25BC" : "\u25B2"))
           set_data(t4, t4_value);
       },
       d(detaching) {
@@ -41940,7 +41981,7 @@
   }
   function create_if_block_472(ctx) {
     let span;
-    let t_value = ctx[39][ctx[127](ctx[39], ctx[225].id)].desc ? "\u25BC" : "\u25B2";
+    let t_value = ctx[39][ctx[127](ctx[39], ctx[226].id)].desc ? "\u25BC" : "\u25B2";
     let t;
     let if_block = ctx[39].length > 1 && create_if_block_482(ctx);
     return {
@@ -41958,7 +41999,7 @@
           if_block.m(span, null);
       },
       p(ctx2, dirty) {
-        if (dirty[1] & 256 && t_value !== (t_value = ctx2[39][ctx2[127](ctx2[39], ctx2[225].id)].desc ? "\u25BC" : "\u25B2"))
+        if (dirty[1] & 256 && t_value !== (t_value = ctx2[39][ctx2[127](ctx2[39], ctx2[226].id)].desc ? "\u25BC" : "\u25B2"))
           set_data(t, t_value);
         if (ctx2[39].length > 1) {
           if (if_block) {
@@ -41983,7 +42024,7 @@
   }
   function create_if_block_482(ctx) {
     let sup;
-    let t_value = ctx[127](ctx[39], ctx[225].id) + 1 + "";
+    let t_value = ctx[127](ctx[39], ctx[226].id) + 1 + "";
     let t;
     return {
       c() {
@@ -41995,7 +42036,7 @@
         append(sup, t);
       },
       p(ctx2, dirty) {
-        if (dirty[1] & 256 && t_value !== (t_value = ctx2[127](ctx2[39], ctx2[225].id) + 1 + ""))
+        if (dirty[1] & 256 && t_value !== (t_value = ctx2[127](ctx2[39], ctx2[226].id) + 1 + ""))
           set_data(t, t_value);
       },
       d(detaching) {
@@ -42006,16 +42047,16 @@
   }
   function create_each_block_21(ctx) {
     let td;
-    let t0_value = ctx[225].label + "";
+    let t0_value = ctx[226].label + "";
     let t0;
-    let show_if = ctx[127](ctx[39], ctx[225].id) != -1;
+    let show_if = ctx[127](ctx[39], ctx[226].id) != -1;
     let t1;
     let td_title_value;
     let mounted;
     let dispose;
     let if_block = show_if && create_if_block_472(ctx);
     function click_handler_27() {
-      return ctx[214](ctx[225]);
+      return ctx[215](ctx[226]);
     }
     return {
       c() {
@@ -42025,8 +42066,8 @@
           if_block.c();
         t1 = space();
         attr(td, "class", "dmg-sortable");
-        attr(td, "title", td_title_value = (ctx[225].title || "Sort by " + ctx[225].label) + " \u2014 click again to reverse, click another column to add it as a tiebreak");
-        toggle_class(td, "dmg-sorted", ctx[127](ctx[39], ctx[225].id) != -1);
+        attr(td, "title", td_title_value = (ctx[226].title || "Sort by " + ctx[226].label) + " \u2014 click again to reverse, click another column to add it as a tiebreak");
+        toggle_class(td, "dmg-sorted", ctx[127](ctx[39], ctx[226].id) != -1);
       },
       m(target, anchor) {
         insert(target, td, anchor);
@@ -42042,7 +42083,7 @@
       p(new_ctx, dirty) {
         ctx = new_ctx;
         if (dirty[1] & 256)
-          show_if = ctx[127](ctx[39], ctx[225].id) != -1;
+          show_if = ctx[127](ctx[39], ctx[226].id) != -1;
         if (show_if) {
           if (if_block) {
             if_block.p(ctx, dirty);
@@ -42056,7 +42097,7 @@
           if_block = null;
         }
         if (dirty[1] & 256 | dirty[3] & 16777216 | dirty[4] & 8) {
-          toggle_class(td, "dmg-sorted", ctx[127](ctx[39], ctx[225].id) != -1);
+          toggle_class(td, "dmg-sorted", ctx[127](ctx[39], ctx[226].id) != -1);
         }
       },
       d(detaching) {
@@ -42071,10 +42112,10 @@
   }
   function create_if_block_452(ctx) {
     let html_tag;
-    let raw_value = ctx[222].target.title + "";
+    let raw_value = ctx[223].target.title + "";
     let t;
     let if_block_anchor;
-    let if_block = ctx[222].modeCount > 1 && create_if_block_462(ctx);
+    let if_block = ctx[223].modeCount > 1 && create_if_block_462(ctx);
     return {
       c() {
         html_tag = new HtmlTag(false);
@@ -42092,9 +42133,9 @@
         insert(target, if_block_anchor, anchor);
       },
       p(ctx2, dirty) {
-        if (dirty[2] & 8192 && raw_value !== (raw_value = ctx2[222].target.title + ""))
+        if (dirty[2] & 8192 && raw_value !== (raw_value = ctx2[223].target.title + ""))
           html_tag.p(raw_value);
-        if (ctx2[222].modeCount > 1) {
+        if (ctx2[223].modeCount > 1) {
           if (if_block) {
             if_block.p(ctx2, dirty);
           } else {
@@ -42121,7 +42162,7 @@
   }
   function create_if_block_462(ctx) {
     let span;
-    let t0_value = ctx[222].modeCount + "";
+    let t0_value = ctx[223].modeCount + "";
     let t0;
     let t1;
     return {
@@ -42137,7 +42178,7 @@
         append(span, t1);
       },
       p(ctx2, dirty) {
-        if (dirty[2] & 8192 && t0_value !== (t0_value = ctx2[222].modeCount + ""))
+        if (dirty[2] & 8192 && t0_value !== (t0_value = ctx2[223].modeCount + ""))
           set_data(t0, t0_value);
       },
       d(detaching) {
@@ -42149,7 +42190,7 @@
   function create_if_block_442(ctx) {
     let span;
     let t0;
-    let t1_value = ctx[222].mode.damage.hitsPerAttack + "";
+    let t1_value = ctx[223].mode.damage.hitsPerAttack + "";
     let t1;
     let span_title_value;
     return {
@@ -42158,7 +42199,7 @@
         t0 = text("\xD7");
         t1 = text(t1_value);
         attr(span, "class", "dmg-hits");
-        attr(span, "title", span_title_value = ctx[222].mode.damage.hitsPerAttack + " projectiles per attack, each rolled and armour-checked separately");
+        attr(span, "title", span_title_value = ctx[223].mode.damage.hitsPerAttack + " projectiles per attack, each rolled and armour-checked separately");
       },
       m(target, anchor) {
         insert(target, span, anchor);
@@ -42166,9 +42207,9 @@
         append(span, t1);
       },
       p(ctx2, dirty) {
-        if (dirty[2] & 8192 && t1_value !== (t1_value = ctx2[222].mode.damage.hitsPerAttack + ""))
+        if (dirty[2] & 8192 && t1_value !== (t1_value = ctx2[223].mode.damage.hitsPerAttack + ""))
           set_data(t1, t1_value);
-        if (dirty[2] & 8192 && span_title_value !== (span_title_value = ctx2[222].mode.damage.hitsPerAttack + " projectiles per attack, each rolled and armour-checked separately")) {
+        if (dirty[2] & 8192 && span_title_value !== (span_title_value = ctx2[223].mode.damage.hitsPerAttack + " projectiles per attack, each rolled and armour-checked separately")) {
           attr(span, "title", span_title_value);
         }
       },
@@ -42185,7 +42226,7 @@
     let span;
     let t0;
     let t1;
-    let show_if = ctx[122](ctx[222].target).length;
+    let show_if = ctx[122](ctx[223].target).length;
     let t2;
     let table;
     let thead;
@@ -42212,9 +42253,9 @@
     let t20;
     let p;
     let html_tag;
-    let raw_value = (ctx[222].result.best.damage.damageTypeName ? rul.tr(ctx[222].result.best.damage.damageTypeName) : "") + "";
+    let raw_value = (ctx[223].result.best.damage.damageTypeName ? rul.tr(ctx[223].result.best.damage.damageTypeName) : "") + "";
     let t21;
-    let t22_value = ctx[128](ctx[222].result.best.damage.effectiveArmor, 0) + "";
+    let t22_value = ctx[128](ctx[223].result.best.damage.effectiveArmor, 0) + "";
     let t22;
     let t23;
     let td14_colspan_value;
@@ -42224,9 +42265,9 @@
     for (let i = 0; i < each_value_20.length; i += 1) {
       each_blocks_1[i] = create_each_block_20(get_each_context_20(ctx, each_value_20, i));
     }
-    let if_block0 = ctx[222].target.shield && create_if_block_432(ctx);
+    let if_block0 = ctx[223].target.shield && create_if_block_432(ctx);
     let if_block1 = show_if && create_if_block_422(ctx);
-    let each_value_18 = ctx[222].result.modes;
+    let each_value_18 = ctx[223].result.modes;
     let each_blocks = [];
     for (let i = 0; i < each_value_18.length; i += 1) {
       each_blocks[i] = create_each_block_182(get_each_context_182(ctx, each_value_18, i));
@@ -42370,7 +42411,7 @@
           }
           each_blocks_1.length = each_value_20.length;
         }
-        if (ctx2[222].target.shield) {
+        if (ctx2[223].target.shield) {
           if (if_block0) {
             if_block0.p(ctx2, dirty);
           } else {
@@ -42383,7 +42424,7 @@
           if_block0 = null;
         }
         if (dirty[2] & 8192)
-          show_if = ctx2[122](ctx2[222].target).length;
+          show_if = ctx2[122](ctx2[223].target).length;
         if (show_if) {
           if (if_block1) {
             if_block1.p(ctx2, dirty);
@@ -42397,7 +42438,7 @@
           if_block1 = null;
         }
         if (dirty[2] & 8192 | dirty[4] & 944) {
-          each_value_18 = ctx2[222].result.modes;
+          each_value_18 = ctx2[223].result.modes;
           let i;
           for (i = 0; i < each_value_18.length; i += 1) {
             const child_ctx = get_each_context_182(ctx2, each_value_18, i);
@@ -42414,9 +42455,9 @@
           }
           each_blocks.length = each_value_18.length;
         }
-        if (dirty[2] & 8192 && raw_value !== (raw_value = (ctx2[222].result.best.damage.damageTypeName ? rul.tr(ctx2[222].result.best.damage.damageTypeName) : "") + ""))
+        if (dirty[2] & 8192 && raw_value !== (raw_value = (ctx2[223].result.best.damage.damageTypeName ? rul.tr(ctx2[223].result.best.damage.damageTypeName) : "") + ""))
           html_tag.p(raw_value);
-        if (dirty[2] & 8192 && t22_value !== (t22_value = ctx2[128](ctx2[222].result.best.damage.effectiveArmor, 0) + ""))
+        if (dirty[2] & 8192 && t22_value !== (t22_value = ctx2[128](ctx2[223].result.best.damage.effectiveArmor, 0) + ""))
           set_data(t22, t22_value);
       },
       d(detaching) {
@@ -42433,11 +42474,11 @@
   }
   function create_each_block_20(ctx) {
     let span;
-    let t0_value = ctx[265] + "";
+    let t0_value = ctx[266] + "";
     let t0;
     let t1;
     let b;
-    let t2_value = armorValue(ctx[222].target, ctx[265]) + "";
+    let t2_value = armorValue(ctx[223].target, ctx[266]) + "";
     let t2;
     let t3;
     return {
@@ -42449,7 +42490,7 @@
         t2 = text(t2_value);
         t3 = space();
         attr(span, "class", "dmg-armor");
-        toggle_class(span, "dmg-armor-on", ctx[265] == ctx[4]);
+        toggle_class(span, "dmg-armor-on", ctx[266] == ctx[4]);
       },
       m(target, anchor) {
         insert(target, span, anchor);
@@ -42460,10 +42501,10 @@
         append(span, t3);
       },
       p(ctx2, dirty) {
-        if (dirty[2] & 8192 && t2_value !== (t2_value = armorValue(ctx2[222].target, ctx2[265]) + ""))
+        if (dirty[2] & 8192 && t2_value !== (t2_value = armorValue(ctx2[223].target, ctx2[266]) + ""))
           set_data(t2, t2_value);
         if (dirty[0] & 16) {
-          toggle_class(span, "dmg-armor-on", ctx2[265] == ctx2[4]);
+          toggle_class(span, "dmg-armor-on", ctx2[266] == ctx2[4]);
         }
       },
       d(detaching) {
@@ -42475,7 +42516,7 @@
   function create_if_block_432(ctx) {
     let span;
     let t0;
-    let t1_value = ctx[222].target.shield.capacity + "";
+    let t1_value = ctx[223].target.shield.capacity + "";
     let t1;
     let t2;
     return {
@@ -42493,7 +42534,7 @@
         append(span, t2);
       },
       p(ctx2, dirty) {
-        if (dirty[2] & 8192 && t1_value !== (t1_value = ctx2[222].target.shield.capacity + ""))
+        if (dirty[2] & 8192 && t1_value !== (t1_value = ctx2[223].target.shield.capacity + ""))
           set_data(t1, t1_value);
       },
       d(detaching) {
@@ -42506,7 +42547,7 @@
     let div;
     let span;
     let t1;
-    let each_value_19 = ctx[122](ctx[222].target);
+    let each_value_19 = ctx[122](ctx[223].target);
     let each_blocks = [];
     for (let i = 0; i < each_value_19.length; i += 1) {
       each_blocks[i] = create_each_block_192(get_each_context_192(ctx, each_value_19, i));
@@ -42533,7 +42574,7 @@
       },
       p(ctx2, dirty) {
         if (dirty[2] & 8192 | dirty[3] & 536870912) {
-          each_value_19 = ctx2[122](ctx2[222].target);
+          each_value_19 = ctx2[122](ctx2[223].target);
           let i;
           for (i = 0; i < each_value_19.length; i += 1) {
             const child_ctx = get_each_context_192(ctx2, each_value_19, i);
@@ -42561,10 +42602,10 @@
   function create_each_block_192(ctx) {
     let span;
     let html_tag;
-    let raw_value = ctx[252].name + "";
+    let raw_value = ctx[253].name + "";
     let t0;
     let b;
-    let t1_value = ctx[252].pct + "";
+    let t1_value = ctx[253].pct + "";
     let t1;
     let t2;
     let t3;
@@ -42579,9 +42620,9 @@
         t3 = space();
         html_tag.a = t0;
         attr(span, "class", "dmg-resist");
-        toggle_class(span, "dmg-resist-weak", ctx[252].pct > 100);
-        toggle_class(span, "dmg-resist-strong", ctx[252].pct < 100);
-        toggle_class(span, "dmg-immune", ctx[252].pct == 0);
+        toggle_class(span, "dmg-resist-weak", ctx[253].pct > 100);
+        toggle_class(span, "dmg-resist-strong", ctx[253].pct < 100);
+        toggle_class(span, "dmg-immune", ctx[253].pct == 0);
       },
       m(target, anchor) {
         insert(target, span, anchor);
@@ -42593,18 +42634,18 @@
         append(span, t3);
       },
       p(ctx2, dirty) {
-        if (dirty[2] & 8192 && raw_value !== (raw_value = ctx2[252].name + ""))
+        if (dirty[2] & 8192 && raw_value !== (raw_value = ctx2[253].name + ""))
           html_tag.p(raw_value);
-        if (dirty[2] & 8192 && t1_value !== (t1_value = ctx2[252].pct + ""))
+        if (dirty[2] & 8192 && t1_value !== (t1_value = ctx2[253].pct + ""))
           set_data(t1, t1_value);
         if (dirty[2] & 8192 | dirty[3] & 536870912) {
-          toggle_class(span, "dmg-resist-weak", ctx2[252].pct > 100);
+          toggle_class(span, "dmg-resist-weak", ctx2[253].pct > 100);
         }
         if (dirty[2] & 8192 | dirty[3] & 536870912) {
-          toggle_class(span, "dmg-resist-strong", ctx2[252].pct < 100);
+          toggle_class(span, "dmg-resist-strong", ctx2[253].pct < 100);
         }
         if (dirty[2] & 8192 | dirty[3] & 536870912) {
-          toggle_class(span, "dmg-immune", ctx2[252].pct == 0);
+          toggle_class(span, "dmg-immune", ctx2[253].pct == 0);
         }
       },
       d(detaching) {
@@ -42616,68 +42657,68 @@
   function create_each_block_182(ctx) {
     let tr2;
     let td0;
-    let t0_value = ctx[226].label + "";
+    let t0_value = ctx[227].label + "";
     let t0;
     let t1;
     let td1;
-    let t2_value = ctx[128](ctx[226].damage.power, 0) + "";
+    let t2_value = ctx[128](ctx[227].damage.power, 0) + "";
     let t2;
     let t3;
     let td2;
-    let t4_value = ctx[128](ctx[226].damage.rollMin, 0) + "";
+    let t4_value = ctx[128](ctx[227].damage.rollMin, 0) + "";
     let t4;
     let t5;
-    let t6_value = ctx[128](ctx[226].damage.rollMax, 0) + "";
+    let t6_value = ctx[128](ctx[227].damage.rollMax, 0) + "";
     let t6;
     let t7;
     let td3;
-    let t8_value = ctx[128](ctx[226].damage.min, 0) + "";
+    let t8_value = ctx[128](ctx[227].damage.min, 0) + "";
     let t8;
     let t9;
-    let t10_value = ctx[128](ctx[226].damage.max, 0) + "";
+    let t10_value = ctx[128](ctx[227].damage.max, 0) + "";
     let t10;
     let t11;
     let td4;
-    let t12_value = ctx[129](ctx[226].damage.pZero) + "";
+    let t12_value = ctx[129](ctx[227].damage.pZero) + "";
     let t12;
     let t13;
     let td5;
-    let t14_value = ctx[226].damage.hitsPerAttack + "";
+    let t14_value = ctx[227].damage.hitsPerAttack + "";
     let t14;
     let t15;
     let td6;
-    let t16_value = ctx[128](ctx[226].damage.expectedHitsPerAttack, 1) + "";
+    let t16_value = ctx[128](ctx[227].damage.expectedHitsPerAttack, 1) + "";
     let t16;
     let t17;
     let td7;
-    let t18_value = (ctx[226].attack.range == null ? "\u2013" : ctx[128](ctx[226].attack.range, 0)) + "";
+    let t18_value = (ctx[227].attack.range == null ? "\u2013" : ctx[128](ctx[227].attack.range, 0)) + "";
     let t18;
     let td7_title_value;
     let t19;
     let td8;
-    let t20_value = Math.round(ctx[226].accuracy) + "";
+    let t20_value = Math.round(ctx[227].accuracy) + "";
     let t20;
     let t21;
     let t22;
     let td9;
-    let t23_value = Math.round(ctx[226].hitRate * 100) + "";
+    let t23_value = Math.round(ctx[227].hitRate * 100) + "";
     let t23;
     let t24;
     let t25;
     let td10;
-    let t26_value = ctx[128](ctx[226].tuCost, 0) + "";
+    let t26_value = ctx[128](ctx[227].tuCost, 0) + "";
     let t26;
     let t27;
     let td11;
-    let t28_value = ctx[128](ctx[226].perAttack) + "";
+    let t28_value = ctx[128](ctx[227].perAttack) + "";
     let t28;
     let t29;
     let td12;
-    let t30_value = (ctx[226].attacksToKill == null ? "\u2013" : ctx[128](ctx[226].attacksToKill)) + "";
+    let t30_value = (ctx[227].attacksToKill == null ? "\u2013" : ctx[128](ctx[227].attacksToKill)) + "";
     let t30;
     let t31;
     let td13;
-    let t32_value = ctx[132](ctx[226]) + "";
+    let t32_value = ctx[132](ctx[227]) + "";
     let t32;
     let td13_title_value;
     let t33;
@@ -42736,20 +42777,20 @@
         attr(td2, "class", "num");
         attr(td3, "class", "num");
         attr(td4, "class", "num");
-        toggle_class(td4, "dmg-immune", ctx[226].damage.pZero > 0.5);
+        toggle_class(td4, "dmg-immune", ctx[227].damage.pZero > 0.5);
         attr(td5, "class", "num");
         attr(td6, "class", "num");
         attr(td7, "class", "num");
-        attr(td7, "title", td7_title_value = ctx[131](ctx[226]));
-        toggle_class(td7, "dmg-outofrange", outOfRange(ctx[226]));
-        toggle_class(td7, "dmg-offrange", !rangeGoverns(ctx[226]));
+        attr(td7, "title", td7_title_value = ctx[131](ctx[227]));
+        toggle_class(td7, "dmg-outofrange", outOfRange(ctx[227]));
+        toggle_class(td7, "dmg-offrange", !rangeGoverns(ctx[227]));
         attr(td8, "class", "num");
         attr(td9, "class", "num");
         attr(td10, "class", "num");
         attr(td11, "class", "num");
         attr(td12, "class", "num");
         attr(td13, "class", "num dmg-key");
-        attr(td13, "title", td13_title_value = ctx[133](ctx[226]));
+        attr(td13, "title", td13_title_value = ctx[133](ctx[227]));
       },
       m(target, anchor) {
         insert(target, tr2, anchor);
@@ -42803,51 +42844,51 @@
         append(tr2, t33);
       },
       p(ctx2, dirty) {
-        if (dirty[2] & 8192 && t0_value !== (t0_value = ctx2[226].label + ""))
+        if (dirty[2] & 8192 && t0_value !== (t0_value = ctx2[227].label + ""))
           set_data(t0, t0_value);
-        if (dirty[2] & 8192 && t2_value !== (t2_value = ctx2[128](ctx2[226].damage.power, 0) + ""))
+        if (dirty[2] & 8192 && t2_value !== (t2_value = ctx2[128](ctx2[227].damage.power, 0) + ""))
           set_data(t2, t2_value);
-        if (dirty[2] & 8192 && t4_value !== (t4_value = ctx2[128](ctx2[226].damage.rollMin, 0) + ""))
+        if (dirty[2] & 8192 && t4_value !== (t4_value = ctx2[128](ctx2[227].damage.rollMin, 0) + ""))
           set_data(t4, t4_value);
-        if (dirty[2] & 8192 && t6_value !== (t6_value = ctx2[128](ctx2[226].damage.rollMax, 0) + ""))
+        if (dirty[2] & 8192 && t6_value !== (t6_value = ctx2[128](ctx2[227].damage.rollMax, 0) + ""))
           set_data(t6, t6_value);
-        if (dirty[2] & 8192 && t8_value !== (t8_value = ctx2[128](ctx2[226].damage.min, 0) + ""))
+        if (dirty[2] & 8192 && t8_value !== (t8_value = ctx2[128](ctx2[227].damage.min, 0) + ""))
           set_data(t8, t8_value);
-        if (dirty[2] & 8192 && t10_value !== (t10_value = ctx2[128](ctx2[226].damage.max, 0) + ""))
+        if (dirty[2] & 8192 && t10_value !== (t10_value = ctx2[128](ctx2[227].damage.max, 0) + ""))
           set_data(t10, t10_value);
-        if (dirty[2] & 8192 && t12_value !== (t12_value = ctx2[129](ctx2[226].damage.pZero) + ""))
+        if (dirty[2] & 8192 && t12_value !== (t12_value = ctx2[129](ctx2[227].damage.pZero) + ""))
           set_data(t12, t12_value);
         if (dirty[2] & 8192) {
-          toggle_class(td4, "dmg-immune", ctx2[226].damage.pZero > 0.5);
+          toggle_class(td4, "dmg-immune", ctx2[227].damage.pZero > 0.5);
         }
-        if (dirty[2] & 8192 && t14_value !== (t14_value = ctx2[226].damage.hitsPerAttack + ""))
+        if (dirty[2] & 8192 && t14_value !== (t14_value = ctx2[227].damage.hitsPerAttack + ""))
           set_data(t14, t14_value);
-        if (dirty[2] & 8192 && t16_value !== (t16_value = ctx2[128](ctx2[226].damage.expectedHitsPerAttack, 1) + ""))
+        if (dirty[2] & 8192 && t16_value !== (t16_value = ctx2[128](ctx2[227].damage.expectedHitsPerAttack, 1) + ""))
           set_data(t16, t16_value);
-        if (dirty[2] & 8192 && t18_value !== (t18_value = (ctx2[226].attack.range == null ? "\u2013" : ctx2[128](ctx2[226].attack.range, 0)) + ""))
+        if (dirty[2] & 8192 && t18_value !== (t18_value = (ctx2[227].attack.range == null ? "\u2013" : ctx2[128](ctx2[227].attack.range, 0)) + ""))
           set_data(t18, t18_value);
-        if (dirty[2] & 8192 && td7_title_value !== (td7_title_value = ctx2[131](ctx2[226]))) {
+        if (dirty[2] & 8192 && td7_title_value !== (td7_title_value = ctx2[131](ctx2[227]))) {
           attr(td7, "title", td7_title_value);
         }
         if (dirty[2] & 8192) {
-          toggle_class(td7, "dmg-outofrange", outOfRange(ctx2[226]));
+          toggle_class(td7, "dmg-outofrange", outOfRange(ctx2[227]));
         }
         if (dirty[2] & 8192) {
-          toggle_class(td7, "dmg-offrange", !rangeGoverns(ctx2[226]));
+          toggle_class(td7, "dmg-offrange", !rangeGoverns(ctx2[227]));
         }
-        if (dirty[2] & 8192 && t20_value !== (t20_value = Math.round(ctx2[226].accuracy) + ""))
+        if (dirty[2] & 8192 && t20_value !== (t20_value = Math.round(ctx2[227].accuracy) + ""))
           set_data(t20, t20_value);
-        if (dirty[2] & 8192 && t23_value !== (t23_value = Math.round(ctx2[226].hitRate * 100) + ""))
+        if (dirty[2] & 8192 && t23_value !== (t23_value = Math.round(ctx2[227].hitRate * 100) + ""))
           set_data(t23, t23_value);
-        if (dirty[2] & 8192 && t26_value !== (t26_value = ctx2[128](ctx2[226].tuCost, 0) + ""))
+        if (dirty[2] & 8192 && t26_value !== (t26_value = ctx2[128](ctx2[227].tuCost, 0) + ""))
           set_data(t26, t26_value);
-        if (dirty[2] & 8192 && t28_value !== (t28_value = ctx2[128](ctx2[226].perAttack) + ""))
+        if (dirty[2] & 8192 && t28_value !== (t28_value = ctx2[128](ctx2[227].perAttack) + ""))
           set_data(t28, t28_value);
-        if (dirty[2] & 8192 && t30_value !== (t30_value = (ctx2[226].attacksToKill == null ? "\u2013" : ctx2[128](ctx2[226].attacksToKill)) + ""))
+        if (dirty[2] & 8192 && t30_value !== (t30_value = (ctx2[227].attacksToKill == null ? "\u2013" : ctx2[128](ctx2[227].attacksToKill)) + ""))
           set_data(t30, t30_value);
-        if (dirty[2] & 8192 && t32_value !== (t32_value = ctx2[132](ctx2[226]) + ""))
+        if (dirty[2] & 8192 && t32_value !== (t32_value = ctx2[132](ctx2[227]) + ""))
           set_data(t32, t32_value);
-        if (dirty[2] & 8192 && td13_title_value !== (td13_title_value = ctx2[133](ctx2[226]))) {
+        if (dirty[2] & 8192 && td13_title_value !== (td13_title_value = ctx2[133](ctx2[227]))) {
           attr(td13, "title", td13_title_value);
         }
       },
@@ -42860,72 +42901,72 @@
   function create_each_block_172(key_1, ctx) {
     let tr2;
     let td0;
-    let t0_value = (scoreOf(ctx[222]) == null ? "?" : scoreOf(ctx[222])) + "";
+    let t0_value = (scoreOf(ctx[223]) == null ? "?" : scoreOf(ctx[223])) + "";
     let t0;
     let td0_title_value;
     let t1;
     let td1;
-    let t2_value = ctx[132](ctx[222].mode) + "";
+    let t2_value = ctx[132](ctx[223].mode) + "";
     let t2;
     let td1_title_value;
     let t3;
     let td2;
     let t4;
     let td3;
-    let t5_value = (ctx[222].first ? armorValue(ctx[222].target, ctx[4]) : "") + "";
+    let t5_value = (ctx[223].first ? armorValue(ctx[223].target, ctx[4]) : "") + "";
     let t5;
     let t6;
     let td4;
-    let t7_value = (ctx[222].first ? ctx[222].target.health || "\u2013" : "") + "";
+    let t7_value = (ctx[223].first ? ctx[223].target.health || "\u2013" : "") + "";
     let t7;
     let t8;
     let td5;
-    let t9_value = ctx[222].mode.label + "";
+    let t9_value = ctx[223].mode.label + "";
     let t9;
     let t10;
     let td6;
-    let t11_value = ctx[128](ctx[222].mode.damage.min, 0) + "";
+    let t11_value = ctx[128](ctx[223].mode.damage.min, 0) + "";
     let t11;
     let t12;
-    let t13_value = ctx[128](ctx[222].mode.damage.max, 0) + "";
+    let t13_value = ctx[128](ctx[223].mode.damage.max, 0) + "";
     let t13;
     let span;
     let t14;
-    let t15_value = Math.round(ctx[222].mode.damage.resist * 100) + "";
+    let t15_value = Math.round(ctx[223].mode.damage.resist * 100) + "";
     let t15;
     let t16;
     let t17;
     let td7;
-    let t18_value = Math.round(ctx[222].mode.accuracy) + "";
+    let t18_value = Math.round(ctx[223].mode.accuracy) + "";
     let t18;
     let t19;
     let t20;
     let td8;
-    let t21_value = Math.round(ctx[222].mode.hitRate * 100) + "";
+    let t21_value = Math.round(ctx[223].mode.hitRate * 100) + "";
     let t21;
     let t22;
     let t23;
     let td9;
-    let t24_value = ctx[128](ctx[222].mode.perAttack) + "";
+    let t24_value = ctx[128](ctx[223].mode.perAttack) + "";
     let t24;
     let t25;
     let td10;
-    let t26_value = (ctx[222].mode.approachTu > 0 ? ctx[128](ctx[222].mode.approachTu, 0) : "\u2013") + "";
+    let t26_value = (ctx[223].mode.approachTu > 0 ? ctx[128](ctx[223].mode.approachTu, 0) : "\u2013") + "";
     let t26;
     let t27;
     let td11;
-    let t28_value = (ctx[222].mode.tuToKill == null ? "\u2013" : ctx[128](ctx[222].mode.tuToKill, 0)) + "";
+    let t28_value = (ctx[223].mode.tuToKill == null ? "\u2013" : ctx[128](ctx[223].mode.tuToKill, 0)) + "";
     let t28;
     let t29;
     let if_block2_anchor;
     let mounted;
     let dispose;
-    let if_block0 = ctx[222].first && create_if_block_452(ctx);
-    let if_block1 = ctx[222].mode.damage.hitsPerAttack > 1 && create_if_block_442(ctx);
+    let if_block0 = ctx[223].first && create_if_block_452(ctx);
+    let if_block1 = ctx[223].mode.damage.hitsPerAttack > 1 && create_if_block_442(ctx);
     function click_handler_28() {
-      return ctx[215](ctx[222]);
+      return ctx[216](ctx[223]);
     }
-    let if_block2 = ctx[69] == ctx[222].target.id && ctx[222].last && create_if_block_412(ctx);
+    let if_block2 = ctx[69] == ctx[223].target.id && ctx[223].last && create_if_block_412(ctx);
     return {
       key: key_1,
       first: null,
@@ -42982,33 +43023,33 @@
           if_block2.c();
         if_block2_anchor = empty();
         attr(td0, "class", "num dmg-score");
-        attr(td0, "title", td0_title_value = ctx[130](ctx[222]));
-        toggle_class(td0, "dmg-score-sub", !ctx[222].first);
-        toggle_class(td0, "dmg-score-good", scoreBand(scoreOf(ctx[222])) == "good");
-        toggle_class(td0, "dmg-score-fair", scoreBand(scoreOf(ctx[222])) == "fair");
-        toggle_class(td0, "dmg-score-poor", scoreBand(scoreOf(ctx[222])) == "poor");
-        toggle_class(td0, "dmg-score-none", scoreBand(scoreOf(ctx[222])) == "none");
+        attr(td0, "title", td0_title_value = ctx[130](ctx[223]));
+        toggle_class(td0, "dmg-score-sub", !ctx[223].first);
+        toggle_class(td0, "dmg-score-good", scoreBand(scoreOf(ctx[223])) == "good");
+        toggle_class(td0, "dmg-score-fair", scoreBand(scoreOf(ctx[223])) == "fair");
+        toggle_class(td0, "dmg-score-poor", scoreBand(scoreOf(ctx[223])) == "poor");
+        toggle_class(td0, "dmg-score-none", scoreBand(scoreOf(ctx[223])) == "none");
         attr(td1, "class", "num");
-        attr(td1, "title", td1_title_value = ctx[133](ctx[222].mode));
+        attr(td1, "title", td1_title_value = ctx[133](ctx[223].mode));
         attr(td2, "class", "dmg-name");
         attr(td3, "class", "num");
         attr(td4, "class", "num");
-        toggle_class(td5, "dmg-submode", !ctx[222].first);
+        toggle_class(td5, "dmg-submode", !ctx[223].first);
         attr(span, "class", "dmg-resist");
         attr(span, "title", ctx[113]);
-        toggle_class(span, "dmg-immune", ctx[222].mode.damage.resist == 0);
+        toggle_class(span, "dmg-immune", ctx[223].mode.damage.resist == 0);
         attr(td6, "class", "num");
         attr(td7, "class", "num");
-        toggle_class(td7, "dmg-outofrange", outOfRange(ctx[222].mode));
+        toggle_class(td7, "dmg-outofrange", outOfRange(ctx[223].mode));
         attr(td8, "class", "num");
-        toggle_class(td8, "dmg-outofrange", outOfRange(ctx[222].mode));
+        toggle_class(td8, "dmg-outofrange", outOfRange(ctx[223].mode));
         attr(td9, "class", "num");
         attr(td10, "class", "num");
         attr(td10, "title", ctx[114]);
         attr(td11, "class", "num dmg-key");
         attr(tr2, "class", "dmg-click");
-        toggle_class(tr2, "dmg-group-first", ctx[222].first);
-        toggle_class(tr2, "dmg-open", ctx[69] == ctx[222].target.id);
+        toggle_class(tr2, "dmg-group-first", ctx[223].first);
+        toggle_class(tr2, "dmg-open", ctx[69] == ctx[223].target.id);
         this.first = tr2;
       },
       m(target, anchor) {
@@ -43070,32 +43111,32 @@
       },
       p(new_ctx, dirty) {
         ctx = new_ctx;
-        if (dirty[2] & 8192 && t0_value !== (t0_value = (scoreOf(ctx[222]) == null ? "?" : scoreOf(ctx[222])) + ""))
+        if (dirty[2] & 8192 && t0_value !== (t0_value = (scoreOf(ctx[223]) == null ? "?" : scoreOf(ctx[223])) + ""))
           set_data(t0, t0_value);
-        if (dirty[2] & 8192 && td0_title_value !== (td0_title_value = ctx[130](ctx[222]))) {
+        if (dirty[2] & 8192 && td0_title_value !== (td0_title_value = ctx[130](ctx[223]))) {
           attr(td0, "title", td0_title_value);
         }
         if (dirty[2] & 8192) {
-          toggle_class(td0, "dmg-score-sub", !ctx[222].first);
+          toggle_class(td0, "dmg-score-sub", !ctx[223].first);
         }
         if (dirty[2] & 8192) {
-          toggle_class(td0, "dmg-score-good", scoreBand(scoreOf(ctx[222])) == "good");
+          toggle_class(td0, "dmg-score-good", scoreBand(scoreOf(ctx[223])) == "good");
         }
         if (dirty[2] & 8192) {
-          toggle_class(td0, "dmg-score-fair", scoreBand(scoreOf(ctx[222])) == "fair");
+          toggle_class(td0, "dmg-score-fair", scoreBand(scoreOf(ctx[223])) == "fair");
         }
         if (dirty[2] & 8192) {
-          toggle_class(td0, "dmg-score-poor", scoreBand(scoreOf(ctx[222])) == "poor");
+          toggle_class(td0, "dmg-score-poor", scoreBand(scoreOf(ctx[223])) == "poor");
         }
         if (dirty[2] & 8192) {
-          toggle_class(td0, "dmg-score-none", scoreBand(scoreOf(ctx[222])) == "none");
+          toggle_class(td0, "dmg-score-none", scoreBand(scoreOf(ctx[223])) == "none");
         }
-        if (dirty[2] & 8192 && t2_value !== (t2_value = ctx[132](ctx[222].mode) + ""))
+        if (dirty[2] & 8192 && t2_value !== (t2_value = ctx[132](ctx[223].mode) + ""))
           set_data(t2, t2_value);
-        if (dirty[2] & 8192 && td1_title_value !== (td1_title_value = ctx[133](ctx[222].mode))) {
+        if (dirty[2] & 8192 && td1_title_value !== (td1_title_value = ctx[133](ctx[223].mode))) {
           attr(td1, "title", td1_title_value);
         }
-        if (ctx[222].first) {
+        if (ctx[223].first) {
           if (if_block0) {
             if_block0.p(ctx, dirty);
           } else {
@@ -43107,25 +43148,25 @@
           if_block0.d(1);
           if_block0 = null;
         }
-        if (dirty[0] & 16 | dirty[2] & 8192 && t5_value !== (t5_value = (ctx[222].first ? armorValue(ctx[222].target, ctx[4]) : "") + ""))
+        if (dirty[0] & 16 | dirty[2] & 8192 && t5_value !== (t5_value = (ctx[223].first ? armorValue(ctx[223].target, ctx[4]) : "") + ""))
           set_data(t5, t5_value);
-        if (dirty[2] & 8192 && t7_value !== (t7_value = (ctx[222].first ? ctx[222].target.health || "\u2013" : "") + ""))
+        if (dirty[2] & 8192 && t7_value !== (t7_value = (ctx[223].first ? ctx[223].target.health || "\u2013" : "") + ""))
           set_data(t7, t7_value);
-        if (dirty[2] & 8192 && t9_value !== (t9_value = ctx[222].mode.label + ""))
+        if (dirty[2] & 8192 && t9_value !== (t9_value = ctx[223].mode.label + ""))
           set_data(t9, t9_value);
         if (dirty[2] & 8192) {
-          toggle_class(td5, "dmg-submode", !ctx[222].first);
+          toggle_class(td5, "dmg-submode", !ctx[223].first);
         }
-        if (dirty[2] & 8192 && t11_value !== (t11_value = ctx[128](ctx[222].mode.damage.min, 0) + ""))
+        if (dirty[2] & 8192 && t11_value !== (t11_value = ctx[128](ctx[223].mode.damage.min, 0) + ""))
           set_data(t11, t11_value);
-        if (dirty[2] & 8192 && t13_value !== (t13_value = ctx[128](ctx[222].mode.damage.max, 0) + ""))
+        if (dirty[2] & 8192 && t13_value !== (t13_value = ctx[128](ctx[223].mode.damage.max, 0) + ""))
           set_data(t13, t13_value);
-        if (dirty[2] & 8192 && t15_value !== (t15_value = Math.round(ctx[222].mode.damage.resist * 100) + ""))
+        if (dirty[2] & 8192 && t15_value !== (t15_value = Math.round(ctx[223].mode.damage.resist * 100) + ""))
           set_data(t15, t15_value);
         if (dirty[2] & 8192) {
-          toggle_class(span, "dmg-immune", ctx[222].mode.damage.resist == 0);
+          toggle_class(span, "dmg-immune", ctx[223].mode.damage.resist == 0);
         }
-        if (ctx[222].mode.damage.hitsPerAttack > 1) {
+        if (ctx[223].mode.damage.hitsPerAttack > 1) {
           if (if_block1) {
             if_block1.p(ctx, dirty);
           } else {
@@ -43137,29 +43178,29 @@
           if_block1.d(1);
           if_block1 = null;
         }
-        if (dirty[2] & 8192 && t18_value !== (t18_value = Math.round(ctx[222].mode.accuracy) + ""))
+        if (dirty[2] & 8192 && t18_value !== (t18_value = Math.round(ctx[223].mode.accuracy) + ""))
           set_data(t18, t18_value);
         if (dirty[2] & 8192) {
-          toggle_class(td7, "dmg-outofrange", outOfRange(ctx[222].mode));
+          toggle_class(td7, "dmg-outofrange", outOfRange(ctx[223].mode));
         }
-        if (dirty[2] & 8192 && t21_value !== (t21_value = Math.round(ctx[222].mode.hitRate * 100) + ""))
+        if (dirty[2] & 8192 && t21_value !== (t21_value = Math.round(ctx[223].mode.hitRate * 100) + ""))
           set_data(t21, t21_value);
         if (dirty[2] & 8192) {
-          toggle_class(td8, "dmg-outofrange", outOfRange(ctx[222].mode));
+          toggle_class(td8, "dmg-outofrange", outOfRange(ctx[223].mode));
         }
-        if (dirty[2] & 8192 && t24_value !== (t24_value = ctx[128](ctx[222].mode.perAttack) + ""))
+        if (dirty[2] & 8192 && t24_value !== (t24_value = ctx[128](ctx[223].mode.perAttack) + ""))
           set_data(t24, t24_value);
-        if (dirty[2] & 8192 && t26_value !== (t26_value = (ctx[222].mode.approachTu > 0 ? ctx[128](ctx[222].mode.approachTu, 0) : "\u2013") + ""))
+        if (dirty[2] & 8192 && t26_value !== (t26_value = (ctx[223].mode.approachTu > 0 ? ctx[128](ctx[223].mode.approachTu, 0) : "\u2013") + ""))
           set_data(t26, t26_value);
-        if (dirty[2] & 8192 && t28_value !== (t28_value = (ctx[222].mode.tuToKill == null ? "\u2013" : ctx[128](ctx[222].mode.tuToKill, 0)) + ""))
+        if (dirty[2] & 8192 && t28_value !== (t28_value = (ctx[223].mode.tuToKill == null ? "\u2013" : ctx[128](ctx[223].mode.tuToKill, 0)) + ""))
           set_data(t28, t28_value);
         if (dirty[2] & 8192) {
-          toggle_class(tr2, "dmg-group-first", ctx[222].first);
+          toggle_class(tr2, "dmg-group-first", ctx[223].first);
         }
         if (dirty[2] & 8320) {
-          toggle_class(tr2, "dmg-open", ctx[69] == ctx[222].target.id);
+          toggle_class(tr2, "dmg-open", ctx[69] == ctx[223].target.id);
         }
-        if (ctx[69] == ctx[222].target.id && ctx[222].last) {
+        if (ctx[69] == ctx[223].target.id && ctx[223].last) {
           if (if_block2) {
             if_block2.p(ctx, dirty);
           } else {
@@ -43331,7 +43372,7 @@
       each_blocks_1[i] = create_each_block_36(get_each_context_36(ctx, each_value_3, i));
     }
     let each_value = ctx[72].slice(0, 400);
-    const get_key = (ctx2) => ctx2[222].id;
+    const get_key = (ctx2) => ctx2[223].id;
     for (let i = 0; i < each_value.length; i += 1) {
       let child_ctx = get_each_context29(ctx, each_value, i);
       let key = get_key(child_ctx);
@@ -43450,13 +43491,13 @@
         attr(select0, "class", "dmg-input dmg-dtpick");
         attr(select0, "title", "Filter by the mod's own weapon types - pistols, shotguns, rifles and so on. Pick several to combine them.");
         if (ctx[62] === void 0)
-          add_render_callback(() => ctx[201].call(select0));
+          add_render_callback(() => ctx[202].call(select0));
         option1.__value = "all";
         option1.value = option1.__value;
         attr(select1, "class", "dmg-input dmg-dtpick");
         attr(select1, "title", "Add a damage type to the filter. The enemy's resistance chips above do the same thing.");
         if (ctx[61] === void 0)
-          add_render_callback(() => ctx[204].call(select1));
+          add_render_callback(() => ctx[205].call(select1));
         attr(input1, "type", "checkbox");
         attr(label, "class", "dmg-check dmg-inline");
         attr(div4, "class", "dmg-filters");
@@ -43562,14 +43603,14 @@
         insert(target, if_block8_anchor, anchor);
         if (!mounted) {
           dispose = [
-            listen(button0, "click", ctx[190]),
-            listen(input0, "input", ctx[197]),
-            listen(button1, "click", ctx[198]),
-            listen(select0, "change", ctx[201]),
+            listen(button0, "click", ctx[191]),
+            listen(input0, "input", ctx[198]),
+            listen(button1, "click", ctx[199]),
             listen(select0, "change", ctx[202]),
-            listen(select1, "change", ctx[204]),
+            listen(select0, "change", ctx[203]),
             listen(select1, "change", ctx[205]),
-            listen(input1, "change", ctx[207])
+            listen(select1, "change", ctx[206]),
+            listen(input1, "change", ctx[208])
           ];
           mounted = true;
         }
@@ -43949,11 +43990,11 @@
   }
   function create_each_block_162(ctx) {
     let span;
-    let t0_value = ctx[265] + "";
+    let t0_value = ctx[266] + "";
     let t0;
     let t1;
     let b;
-    let t2_value = armorValue(ctx[41], ctx[265]) + "";
+    let t2_value = armorValue(ctx[41], ctx[266]) + "";
     let t2;
     let t3;
     return {
@@ -43965,7 +44006,7 @@
         t2 = text(t2_value);
         t3 = space();
         attr(span, "class", "dmg-armor");
-        toggle_class(span, "dmg-armor-on", ctx[265] == ctx[4]);
+        toggle_class(span, "dmg-armor-on", ctx[266] == ctx[4]);
       },
       m(target, anchor) {
         insert(target, span, anchor);
@@ -43976,10 +44017,10 @@
         append(span, t3);
       },
       p(ctx2, dirty) {
-        if (dirty[1] & 1024 && t2_value !== (t2_value = armorValue(ctx2[41], ctx2[265]) + ""))
+        if (dirty[1] & 1024 && t2_value !== (t2_value = armorValue(ctx2[41], ctx2[266]) + ""))
           set_data(t2, t2_value);
         if (dirty[0] & 16) {
-          toggle_class(span, "dmg-armor-on", ctx2[265] == ctx2[4]);
+          toggle_class(span, "dmg-armor-on", ctx2[266] == ctx2[4]);
         }
       },
       d(detaching) {
@@ -44038,7 +44079,7 @@
   }
   function create_each_block_152(ctx) {
     let span;
-    let t_value = ctx[260] + "";
+    let t_value = ctx[261] + "";
     let t;
     return {
       c() {
@@ -44050,7 +44091,7 @@
         append(span, t);
       },
       p(ctx2, dirty) {
-        if (dirty[2] & 256 && t_value !== (t_value = ctx2[260] + ""))
+        if (dirty[2] & 256 && t_value !== (t_value = ctx2[261] + ""))
           set_data(t, t_value);
       },
       d(detaching) {
@@ -44140,7 +44181,7 @@
           if_block1.m(target, anchor);
         insert(target, if_block1_anchor, anchor);
         if (!mounted) {
-          dispose = listen(button, "click", ctx[191]);
+          dispose = listen(button, "click", ctx[192]);
           mounted = true;
         }
       },
@@ -44346,12 +44387,12 @@
   }
   function create_each_block_143(ctx) {
     let li;
-    let t0_value = ctx[260].text + "";
+    let t0_value = ctx[261].text + "";
     let t0;
     let t1;
     let b;
     let t2;
-    let t3_value = ctx[260].value + "";
+    let t3_value = ctx[261].value + "";
     let t3;
     return {
       c() {
@@ -44371,9 +44412,9 @@
         append(b, t3);
       },
       p(ctx2, dirty) {
-        if (dirty[2] & 4194304 && t0_value !== (t0_value = ctx2[260].text + ""))
+        if (dirty[2] & 4194304 && t0_value !== (t0_value = ctx2[261].text + ""))
           set_data(t0, t0_value);
-        if (dirty[2] & 4194304 && t3_value !== (t3_value = ctx2[260].value + ""))
+        if (dirty[2] & 4194304 && t3_value !== (t3_value = ctx2[261].value + ""))
           set_data(t3, t3_value);
       },
       d(detaching) {
@@ -44436,19 +44477,19 @@
   function create_each_block_133(ctx) {
     let tr2;
     let td0;
-    let t0_value = ctx[257].side + "";
+    let t0_value = ctx[258].side + "";
     let t0;
     let t1;
     let td1;
-    let t2_value = ctx[257].label + "";
+    let t2_value = ctx[258].label + "";
     let t2;
     let t3;
     let td2;
-    let t4_value = ctx[257].value + "";
+    let t4_value = ctx[258].value + "";
     let t4;
     let t5;
     let td3;
-    let t6_value = ctx[257].used ? "used" : "not modelled";
+    let t6_value = ctx[258].used ? "used" : "not modelled";
     let t6;
     let t7;
     let tr_title_value;
@@ -44468,8 +44509,8 @@
         t6 = text(t6_value);
         t7 = space();
         attr(td2, "class", "num");
-        attr(tr2, "title", tr_title_value = ctx[257].note);
-        toggle_class(tr2, "dmg-sightunused", !ctx[257].used);
+        attr(tr2, "title", tr_title_value = ctx[258].note);
+        toggle_class(tr2, "dmg-sightunused", !ctx[258].used);
       },
       m(target, anchor) {
         insert(target, tr2, anchor);
@@ -44487,19 +44528,19 @@
         append(tr2, t7);
       },
       p(ctx2, dirty) {
-        if (dirty[2] & 4194304 && t0_value !== (t0_value = ctx2[257].side + ""))
+        if (dirty[2] & 4194304 && t0_value !== (t0_value = ctx2[258].side + ""))
           set_data(t0, t0_value);
-        if (dirty[2] & 4194304 && t2_value !== (t2_value = ctx2[257].label + ""))
+        if (dirty[2] & 4194304 && t2_value !== (t2_value = ctx2[258].label + ""))
           set_data(t2, t2_value);
-        if (dirty[2] & 4194304 && t4_value !== (t4_value = ctx2[257].value + ""))
+        if (dirty[2] & 4194304 && t4_value !== (t4_value = ctx2[258].value + ""))
           set_data(t4, t4_value);
-        if (dirty[2] & 4194304 && t6_value !== (t6_value = ctx2[257].used ? "used" : "not modelled"))
+        if (dirty[2] & 4194304 && t6_value !== (t6_value = ctx2[258].used ? "used" : "not modelled"))
           set_data(t6, t6_value);
-        if (dirty[2] & 4194304 && tr_title_value !== (tr_title_value = ctx2[257].note)) {
+        if (dirty[2] & 4194304 && tr_title_value !== (tr_title_value = ctx2[258].note)) {
           attr(tr2, "title", tr_title_value);
         }
         if (dirty[2] & 4194304) {
-          toggle_class(tr2, "dmg-sightunused", !ctx2[257].used);
+          toggle_class(tr2, "dmg-sightunused", !ctx2[258].used);
         }
       },
       d(detaching) {
@@ -44590,17 +44631,17 @@
   function create_each_block_123(ctx) {
     let button;
     let html_tag;
-    let raw_value = ctx[252].name + "";
+    let raw_value = ctx[253].name + "";
     let t0;
     let b;
-    let t1_value = ctx[252].pct + "";
+    let t1_value = ctx[253].pct + "";
     let t1;
     let t2;
     let button_title_value;
     let mounted;
     let dispose;
     function click_handler_13() {
-      return ctx[192](ctx[252]);
+      return ctx[193](ctx[253]);
     }
     return {
       c() {
@@ -44612,11 +44653,11 @@
         t2 = text("%");
         html_tag.a = t0;
         attr(button, "class", "dmg-resist dmg-resist-pick");
-        attr(button, "title", button_title_value = (ctx[19].includes(ctx[252].i) ? "Showing" : "Show") + " only weapons that deal this damage type" + (ctx[79][ctx[252].i] ? " (" + ctx[79][ctx[252].i] + " of them)" : " - none in the list") + (ctx[19].includes(ctx[252].i) ? ". Click to drop it." : ". Click to add it."));
-        toggle_class(button, "dmg-resist-weak", ctx[252].pct > 100);
-        toggle_class(button, "dmg-resist-strong", ctx[252].pct < 100);
-        toggle_class(button, "dmg-immune", ctx[252].pct == 0);
-        toggle_class(button, "dmg-resist-on", ctx[19].includes(ctx[252].i));
+        attr(button, "title", button_title_value = (ctx[19].includes(ctx[253].i) ? "Showing" : "Show") + " only weapons that deal this damage type" + (ctx[79][ctx[253].i] ? " (" + ctx[79][ctx[253].i] + " of them)" : " - none in the list") + (ctx[19].includes(ctx[253].i) ? ". Click to drop it." : ". Click to add it."));
+        toggle_class(button, "dmg-resist-weak", ctx[253].pct > 100);
+        toggle_class(button, "dmg-resist-strong", ctx[253].pct < 100);
+        toggle_class(button, "dmg-immune", ctx[253].pct == 0);
+        toggle_class(button, "dmg-resist-on", ctx[19].includes(ctx[253].i));
       },
       m(target, anchor) {
         insert(target, button, anchor);
@@ -44632,24 +44673,24 @@
       },
       p(new_ctx, dirty) {
         ctx = new_ctx;
-        if (dirty[2] & 512 && raw_value !== (raw_value = ctx[252].name + ""))
+        if (dirty[2] & 512 && raw_value !== (raw_value = ctx[253].name + ""))
           html_tag.p(raw_value);
-        if (dirty[2] & 512 && t1_value !== (t1_value = ctx[252].pct + ""))
+        if (dirty[2] & 512 && t1_value !== (t1_value = ctx[253].pct + ""))
           set_data(t1, t1_value);
-        if (dirty[0] & 524288 | dirty[2] & 131584 && button_title_value !== (button_title_value = (ctx[19].includes(ctx[252].i) ? "Showing" : "Show") + " only weapons that deal this damage type" + (ctx[79][ctx[252].i] ? " (" + ctx[79][ctx[252].i] + " of them)" : " - none in the list") + (ctx[19].includes(ctx[252].i) ? ". Click to drop it." : ". Click to add it."))) {
+        if (dirty[0] & 524288 | dirty[2] & 131584 && button_title_value !== (button_title_value = (ctx[19].includes(ctx[253].i) ? "Showing" : "Show") + " only weapons that deal this damage type" + (ctx[79][ctx[253].i] ? " (" + ctx[79][ctx[253].i] + " of them)" : " - none in the list") + (ctx[19].includes(ctx[253].i) ? ". Click to drop it." : ". Click to add it."))) {
           attr(button, "title", button_title_value);
         }
         if (dirty[2] & 512) {
-          toggle_class(button, "dmg-resist-weak", ctx[252].pct > 100);
+          toggle_class(button, "dmg-resist-weak", ctx[253].pct > 100);
         }
         if (dirty[2] & 512) {
-          toggle_class(button, "dmg-resist-strong", ctx[252].pct < 100);
+          toggle_class(button, "dmg-resist-strong", ctx[253].pct < 100);
         }
         if (dirty[2] & 512) {
-          toggle_class(button, "dmg-immune", ctx[252].pct == 0);
+          toggle_class(button, "dmg-immune", ctx[253].pct == 0);
         }
         if (dirty[0] & 524288 | dirty[2] & 512) {
-          toggle_class(button, "dmg-resist-on", ctx[19].includes(ctx[252].i));
+          toggle_class(button, "dmg-resist-on", ctx[19].includes(ctx[253].i));
         }
       },
       d(detaching) {
@@ -44674,7 +44715,7 @@
       m(target, anchor) {
         insert(target, button, anchor);
         if (!mounted) {
-          dispose = listen(button, "click", ctx[193]);
+          dispose = listen(button, "click", ctx[194]);
           mounted = true;
         }
       },
@@ -44750,7 +44791,7 @@
           if_block1.m(target, anchor);
         insert(target, if_block1_anchor, anchor);
         if (!mounted) {
-          dispose = listen(button, "click", ctx[194]);
+          dispose = listen(button, "click", ctx[195]);
           mounted = true;
         }
       },
@@ -44963,7 +45004,7 @@
   }
   function create_if_block_283(ctx) {
     let html_tag;
-    let raw_value = ctx[252].units.map(ctx[195]).join(", ") + "";
+    let raw_value = ctx[253].units.map(ctx[196]).join(", ") + "";
     let html_anchor;
     return {
       c() {
@@ -44976,7 +45017,7 @@
         insert(target, html_anchor, anchor);
       },
       p(ctx2, dirty) {
-        if (dirty[2] & 65536 && raw_value !== (raw_value = ctx2[252].units.map(ctx2[195]).join(", ") + ""))
+        if (dirty[2] & 65536 && raw_value !== (raw_value = ctx2[253].units.map(ctx2[196]).join(", ") + ""))
           html_tag.p(raw_value);
       },
       d(detaching) {
@@ -44988,7 +45029,7 @@
     };
   }
   function create_else_block_42(ctx) {
-    let t_value = (ctx[252].low == ctx[252].high ? ctx[252].low : ctx[252].low + "\u2013" + ctx[252].high) + "";
+    let t_value = (ctx[253].low == ctx[253].high ? ctx[253].low : ctx[253].low + "\u2013" + ctx[253].high) + "";
     let t;
     return {
       c() {
@@ -44998,7 +45039,7 @@
         insert(target, t, anchor);
       },
       p(ctx2, dirty) {
-        if (dirty[2] & 65536 && t_value !== (t_value = (ctx2[252].low == ctx2[252].high ? ctx2[252].low : ctx2[252].low + "\u2013" + ctx2[252].high) + ""))
+        if (dirty[2] & 65536 && t_value !== (t_value = (ctx2[253].low == ctx2[253].high ? ctx2[253].low : ctx2[253].low + "\u2013" + ctx2[253].high) + ""))
           set_data(t, t_value);
       },
       d(detaching) {
@@ -45027,7 +45068,7 @@
     };
   }
   function create_else_block_33(ctx) {
-    let t0_value = ctx[252].reinforcement ? "reinforcement" : "start";
+    let t0_value = ctx[253].reinforcement ? "reinforcement" : "start";
     let t0;
     let t1;
     return {
@@ -45040,7 +45081,7 @@
         insert(target, t1, anchor);
       },
       p(ctx2, dirty) {
-        if (dirty[2] & 65536 && t0_value !== (t0_value = ctx2[252].reinforcement ? "reinforcement" : "start"))
+        if (dirty[2] & 65536 && t0_value !== (t0_value = ctx2[253].reinforcement ? "reinforcement" : "start"))
           set_data(t0, t0_value);
       },
       d(detaching) {
@@ -45053,10 +45094,10 @@
   }
   function create_if_block_263(ctx) {
     let span;
-    let t0_value = ctx[252].certain ? "emplacement" : "on the map";
+    let t0_value = ctx[253].certain ? "emplacement" : "on the map";
     let t0;
     let t1;
-    let t2_value = ctx[252].placedBy.map(ctx[196]).join(", ") + "";
+    let t2_value = ctx[253].placedBy.map(ctx[197]).join(", ") + "";
     let t2;
     let span_title_value;
     let t3;
@@ -45067,7 +45108,7 @@
         t1 = text(" \xB7 ");
         t2 = text(t2_value);
         t3 = space();
-        attr(span, "title", span_title_value = ctx[252].certain ? "Placed by the map script every time, not by the deployment's troop table" : "Sits in a map block the generator may or may not roll, so it is not guaranteed");
+        attr(span, "title", span_title_value = ctx[253].certain ? "Placed by the map script every time, not by the deployment's troop table" : "Sits in a map block the generator may or may not roll, so it is not guaranteed");
       },
       m(target, anchor) {
         insert(target, span, anchor);
@@ -45077,11 +45118,11 @@
         insert(target, t3, anchor);
       },
       p(ctx2, dirty) {
-        if (dirty[2] & 65536 && t0_value !== (t0_value = ctx2[252].certain ? "emplacement" : "on the map"))
+        if (dirty[2] & 65536 && t0_value !== (t0_value = ctx2[253].certain ? "emplacement" : "on the map"))
           set_data(t0, t0_value);
-        if (dirty[2] & 65536 && t2_value !== (t2_value = ctx2[252].placedBy.map(ctx2[196]).join(", ") + ""))
+        if (dirty[2] & 65536 && t2_value !== (t2_value = ctx2[253].placedBy.map(ctx2[197]).join(", ") + ""))
           set_data(t2, t2_value);
-        if (dirty[2] & 65536 && span_title_value !== (span_title_value = ctx2[252].certain ? "Placed by the map script every time, not by the deployment's troop table" : "Sits in a map block the generator may or may not roll, so it is not guaranteed")) {
+        if (dirty[2] & 65536 && span_title_value !== (span_title_value = ctx2[253].certain ? "Placed by the map script every time, not by the deployment's troop table" : "Sits in a map block the generator may or may not roll, so it is not guaranteed")) {
           attr(span, "title", span_title_value);
         }
       },
@@ -45100,29 +45141,29 @@
     let td1;
     let t1;
     let td2;
-    let t2_value = ctx[252].placedBy ? "\u2014" : ctx[252].outside + "%";
+    let t2_value = ctx[253].placedBy ? "\u2014" : ctx[253].outside + "%";
     let t2;
     let t3;
     let td3;
-    let t4_value = ctx[252].stage ? " \xB7 " + ctx[252].stage : "";
+    let t4_value = ctx[253].stage ? " \xB7 " + ctx[253].stage : "";
     let t4;
     let t5;
     function select_block_type_13(ctx2, dirty) {
-      if (ctx2[252].units.length)
+      if (ctx2[253].units.length)
         return create_if_block_283;
       return create_else_block_52;
     }
     let current_block_type = select_block_type_13(ctx, [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1]);
     let if_block0 = current_block_type(ctx);
     function select_block_type_14(ctx2, dirty) {
-      if (ctx2[252].placedBy && !ctx2[252].certain)
+      if (ctx2[253].placedBy && !ctx2[253].certain)
         return create_if_block_273;
       return create_else_block_42;
     }
     let current_block_type_1 = select_block_type_14(ctx, [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1]);
     let if_block1 = current_block_type_1(ctx);
     function select_block_type_15(ctx2, dirty) {
-      if (ctx2[252].placedBy)
+      if (ctx2[253].placedBy)
         return create_if_block_263;
       return create_else_block_33;
     }
@@ -45146,7 +45187,7 @@
         t5 = space();
         attr(td1, "class", "num");
         attr(td2, "class", "num");
-        toggle_class(td2, "dmg-outofrange", !ctx[252].placedBy && ctx[252].outside >= 50);
+        toggle_class(td2, "dmg-outofrange", !ctx[253].placedBy && ctx[253].outside >= 50);
         attr(td3, "class", "dmg-cap");
       },
       m(target, anchor) {
@@ -45186,10 +45227,10 @@
             if_block1.m(td1, null);
           }
         }
-        if (dirty[2] & 65536 && t2_value !== (t2_value = ctx2[252].placedBy ? "\u2014" : ctx2[252].outside + "%"))
+        if (dirty[2] & 65536 && t2_value !== (t2_value = ctx2[253].placedBy ? "\u2014" : ctx2[253].outside + "%"))
           set_data(t2, t2_value);
         if (dirty[2] & 65536) {
-          toggle_class(td2, "dmg-outofrange", !ctx2[252].placedBy && ctx2[252].outside >= 50);
+          toggle_class(td2, "dmg-outofrange", !ctx2[253].placedBy && ctx2[253].outside >= 50);
         }
         if (current_block_type_2 === (current_block_type_2 = select_block_type_15(ctx2, dirty)) && if_block2) {
           if_block2.p(ctx2, dirty);
@@ -45201,7 +45242,7 @@
             if_block2.m(td3, t4);
           }
         }
-        if (dirty[2] & 65536 && t4_value !== (t4_value = ctx2[252].stage ? " \xB7 " + ctx2[252].stage : ""))
+        if (dirty[2] & 65536 && t4_value !== (t4_value = ctx2[253].stage ? " \xB7 " + ctx2[253].stage : ""))
           set_data(t4, t4_value);
       },
       d(detaching) {
@@ -45254,17 +45295,17 @@
   }
   function create_if_block_224(ctx) {
     let button;
-    let t0_value = ctx[234].label + "";
+    let t0_value = ctx[235].label + "";
     let t0;
     let t1;
     let span;
-    let t2_value = (ctx[82][ctx[234].id] || 0) + "";
+    let t2_value = (ctx[82][ctx[235].id] || 0) + "";
     let t2;
     let t3;
     let mounted;
     let dispose;
     function click_handler_17() {
-      return ctx[199](ctx[234]);
+      return ctx[200](ctx[235]);
     }
     return {
       c() {
@@ -45276,7 +45317,7 @@
         t3 = space();
         attr(span, "class", "dmg-chip-n");
         attr(button, "class", "dmg-chip");
-        toggle_class(button, "dmg-chip-on", ctx[17] == ctx[234].id);
+        toggle_class(button, "dmg-chip-on", ctx[17] == ctx[235].id);
       },
       m(target, anchor) {
         insert(target, button, anchor);
@@ -45292,10 +45333,10 @@
       },
       p(new_ctx, dirty) {
         ctx = new_ctx;
-        if (dirty[2] & 1048576 && t2_value !== (t2_value = (ctx[82][ctx[234].id] || 0) + ""))
+        if (dirty[2] & 1048576 && t2_value !== (t2_value = (ctx[82][ctx[235].id] || 0) + ""))
           set_data(t2, t2_value);
         if (dirty[0] & 131072 | dirty[3] & 1024) {
-          toggle_class(button, "dmg-chip-on", ctx[17] == ctx[234].id);
+          toggle_class(button, "dmg-chip-on", ctx[17] == ctx[235].id);
         }
       },
       d(detaching) {
@@ -45308,7 +45349,7 @@
   }
   function create_each_block_102(ctx) {
     let if_block_anchor;
-    let if_block = (ctx[234].id == "all" || ctx[82][ctx[234].id] || ctx[17] == ctx[234].id) && create_if_block_224(ctx);
+    let if_block = (ctx[235].id == "all" || ctx[82][ctx[235].id] || ctx[17] == ctx[235].id) && create_if_block_224(ctx);
     return {
       c() {
         if (if_block)
@@ -45321,7 +45362,7 @@
         insert(target, if_block_anchor, anchor);
       },
       p(ctx2, dirty) {
-        if (ctx2[234].id == "all" || ctx2[82][ctx2[234].id] || ctx2[17] == ctx2[234].id) {
+        if (ctx2[235].id == "all" || ctx2[82][ctx2[235].id] || ctx2[17] == ctx2[235].id) {
           if (if_block) {
             if_block.p(ctx2, dirty);
           } else {
@@ -45344,18 +45385,18 @@
   }
   function create_if_block_218(ctx) {
     let button;
-    let t0_value = ctx[247].label + "";
+    let t0_value = ctx[248].label + "";
     let t0;
     let t1;
     let span;
-    let t2_value = (ctx[81][ctx[247].id] || 0) + "";
+    let t2_value = (ctx[81][ctx[248].id] || 0) + "";
     let t2;
     let t3;
     let button_title_value;
     let mounted;
     let dispose;
     function click_handler_18() {
-      return ctx[200](ctx[247]);
+      return ctx[201](ctx[248]);
     }
     return {
       c() {
@@ -45367,8 +45408,8 @@
         t3 = space();
         attr(span, "class", "dmg-chip-n");
         attr(button, "class", "dmg-chip");
-        attr(button, "title", button_title_value = ctx[247].title);
-        toggle_class(button, "dmg-chip-on", ctx[18] == ctx[247].id);
+        attr(button, "title", button_title_value = ctx[248].title);
+        toggle_class(button, "dmg-chip-on", ctx[18] == ctx[248].id);
       },
       m(target, anchor) {
         insert(target, button, anchor);
@@ -45384,10 +45425,10 @@
       },
       p(new_ctx, dirty) {
         ctx = new_ctx;
-        if (dirty[2] & 524288 && t2_value !== (t2_value = (ctx[81][ctx[247].id] || 0) + ""))
+        if (dirty[2] & 524288 && t2_value !== (t2_value = (ctx[81][ctx[248].id] || 0) + ""))
           set_data(t2, t2_value);
         if (dirty[0] & 262144 | dirty[3] & 2048) {
-          toggle_class(button, "dmg-chip-on", ctx[18] == ctx[247].id);
+          toggle_class(button, "dmg-chip-on", ctx[18] == ctx[248].id);
         }
       },
       d(detaching) {
@@ -45400,7 +45441,7 @@
   }
   function create_each_block_92(ctx) {
     let if_block_anchor;
-    let if_block = (ctx[247].id == "all" || ctx[81][ctx[247].id] || ctx[18] == ctx[247].id) && create_if_block_218(ctx);
+    let if_block = (ctx[248].id == "all" || ctx[81][ctx[248].id] || ctx[18] == ctx[248].id) && create_if_block_218(ctx);
     return {
       c() {
         if (if_block)
@@ -45413,7 +45454,7 @@
         insert(target, if_block_anchor, anchor);
       },
       p(ctx2, dirty) {
-        if (ctx2[247].id == "all" || ctx2[81][ctx2[247].id] || ctx2[18] == ctx2[247].id) {
+        if (ctx2[248].id == "all" || ctx2[81][ctx2[248].id] || ctx2[18] == ctx2[248].id) {
           if (if_block) {
             if_block.p(ctx2, dirty);
           } else {
@@ -45436,12 +45477,12 @@
   }
   function create_each_block_82(ctx) {
     let option;
-    let t0_value = ctx[20].includes(ctx[225].id) ? "\u2713 " : "";
+    let t0_value = ctx[20].includes(ctx[226].id) ? "\u2713 " : "";
     let t0;
     let html_tag;
-    let raw_value = ctx[225].label + "";
+    let raw_value = ctx[226].label + "";
     let t1;
-    let t2_value = ctx[225].n + "";
+    let t2_value = ctx[226].n + "";
     let t2;
     let t3;
     let option_value_value;
@@ -45454,7 +45495,7 @@
         t2 = text(t2_value);
         t3 = text(")\n                ");
         html_tag.a = t1;
-        option.__value = option_value_value = ctx[225].id;
+        option.__value = option_value_value = ctx[226].id;
         option.value = option.__value;
       },
       m(target, anchor) {
@@ -45466,13 +45507,13 @@
         append(option, t3);
       },
       p(ctx2, dirty) {
-        if (dirty[0] & 1048576 | dirty[2] & 262144 && t0_value !== (t0_value = ctx2[20].includes(ctx2[225].id) ? "\u2713 " : ""))
+        if (dirty[0] & 1048576 | dirty[2] & 262144 && t0_value !== (t0_value = ctx2[20].includes(ctx2[226].id) ? "\u2713 " : ""))
           set_data(t0, t0_value);
-        if (dirty[2] & 262144 && raw_value !== (raw_value = ctx2[225].label + ""))
+        if (dirty[2] & 262144 && raw_value !== (raw_value = ctx2[226].label + ""))
           html_tag.p(raw_value);
-        if (dirty[2] & 262144 && t2_value !== (t2_value = ctx2[225].n + ""))
+        if (dirty[2] & 262144 && t2_value !== (t2_value = ctx2[226].n + ""))
           set_data(t2, t2_value);
-        if (dirty[2] & 262144 && option_value_value !== (option_value_value = ctx2[225].id)) {
+        if (dirty[2] & 262144 && option_value_value !== (option_value_value = ctx2[226].id)) {
           option.__value = option_value_value;
           option.value = option.__value;
         }
@@ -45486,14 +45527,14 @@
   function create_each_block_73(ctx) {
     let button;
     let html_tag;
-    let raw_value = rul.tr(ctx[225]) + "";
+    let raw_value = rul.tr(ctx[226]) + "";
     let t0;
     let span;
     let t2;
     let mounted;
     let dispose;
     function click_handler_19() {
-      return ctx[203](ctx[225]);
+      return ctx[204](ctx[226]);
     }
     return {
       c() {
@@ -45521,7 +45562,7 @@
       },
       p(new_ctx, dirty) {
         ctx = new_ctx;
-        if (dirty[0] & 1048576 && raw_value !== (raw_value = rul.tr(ctx[225]) + ""))
+        if (dirty[0] & 1048576 && raw_value !== (raw_value = rul.tr(ctx[226]) + ""))
           html_tag.p(raw_value);
       },
       d(detaching) {
@@ -45534,12 +45575,12 @@
   }
   function create_each_block_64(ctx) {
     let option;
-    let t0_value = ctx[19].includes(+ctx[240].id) ? "\u2713 " : "";
+    let t0_value = ctx[19].includes(+ctx[241].id) ? "\u2713 " : "";
     let t0;
     let html_tag;
-    let raw_value = ctx[240].label + "";
+    let raw_value = ctx[241].label + "";
     let t1;
-    let t2_value = ctx[240].n + "";
+    let t2_value = ctx[241].n + "";
     let t2;
     let t3;
     let option_value_value;
@@ -45552,7 +45593,7 @@
         t2 = text(t2_value);
         t3 = text(")\n                ");
         html_tag.a = t1;
-        option.__value = option_value_value = ctx[240].id;
+        option.__value = option_value_value = ctx[241].id;
         option.value = option.__value;
       },
       m(target, anchor) {
@@ -45564,13 +45605,13 @@
         append(option, t3);
       },
       p(ctx2, dirty) {
-        if (dirty[0] & 524288 | dirty[1] & 131072 && t0_value !== (t0_value = ctx2[19].includes(+ctx2[240].id) ? "\u2713 " : ""))
+        if (dirty[0] & 524288 | dirty[1] & 131072 && t0_value !== (t0_value = ctx2[19].includes(+ctx2[241].id) ? "\u2713 " : ""))
           set_data(t0, t0_value);
-        if (dirty[1] & 131072 && raw_value !== (raw_value = ctx2[240].label + ""))
+        if (dirty[1] & 131072 && raw_value !== (raw_value = ctx2[241].label + ""))
           html_tag.p(raw_value);
-        if (dirty[1] & 131072 && t2_value !== (t2_value = ctx2[240].n + ""))
+        if (dirty[1] & 131072 && t2_value !== (t2_value = ctx2[241].n + ""))
           set_data(t2, t2_value);
-        if (dirty[1] & 131072 && option_value_value !== (option_value_value = ctx2[240].id)) {
+        if (dirty[1] & 131072 && option_value_value !== (option_value_value = ctx2[241].id)) {
           option.__value = option_value_value;
           option.value = option.__value;
         }
@@ -45584,13 +45625,13 @@
   function create_each_block_54(ctx) {
     let button;
     let html_tag;
-    let raw_value = rul.tr(damageTypes[ctx[237]] || "type " + ctx[237]) + "";
+    let raw_value = rul.tr(damageTypes[ctx[238]] || "type " + ctx[238]) + "";
     let t0;
     let span;
     let mounted;
     let dispose;
     function click_handler_20() {
-      return ctx[206](ctx[237]);
+      return ctx[207](ctx[238]);
     }
     return {
       c() {
@@ -45616,7 +45657,7 @@
       },
       p(new_ctx, dirty) {
         ctx = new_ctx;
-        if (dirty[0] & 524288 && raw_value !== (raw_value = rul.tr(damageTypes[ctx[237]] || "type " + ctx[237]) + ""))
+        if (dirty[0] & 524288 && raw_value !== (raw_value = rul.tr(damageTypes[ctx[238]] || "type " + ctx[238]) + ""))
           html_tag.p(raw_value);
       },
       d(detaching) {
@@ -45722,20 +45763,20 @@
   }
   function create_each_block_45(ctx) {
     let button;
-    let t0_value = ctx[236] + 1 + "";
+    let t0_value = ctx[237] + 1 + "";
     let t0;
     let t1;
-    let t2_value = ctx[123](ctx[234].id).label + "";
+    let t2_value = ctx[123](ctx[235].id).label + "";
     let t2;
     let t3;
-    let t4_value = ctx[234].desc ? "\u25BC" : "\u25B2";
+    let t4_value = ctx[235].desc ? "\u25BC" : "\u25B2";
     let t4;
     let t5;
     let span;
     let mounted;
     let dispose;
     function click_handler_21() {
-      return ctx[208](ctx[234]);
+      return ctx[209](ctx[235]);
     }
     return {
       c() {
@@ -45768,9 +45809,9 @@
       },
       p(new_ctx, dirty) {
         ctx = new_ctx;
-        if (dirty[1] & 512 && t2_value !== (t2_value = ctx[123](ctx[234].id).label + ""))
+        if (dirty[1] & 512 && t2_value !== (t2_value = ctx[123](ctx[235].id).label + ""))
           set_data(t2, t2_value);
-        if (dirty[1] & 512 && t4_value !== (t4_value = ctx[234].desc ? "\u25BC" : "\u25B2"))
+        if (dirty[1] & 512 && t4_value !== (t4_value = ctx[235].desc ? "\u25BC" : "\u25B2"))
           set_data(t4, t4_value);
       },
       d(detaching) {
@@ -45794,7 +45835,7 @@
       m(target, anchor) {
         insert(target, button, anchor);
         if (!mounted) {
-          dispose = listen(button, "click", ctx[209]);
+          dispose = listen(button, "click", ctx[210]);
           mounted = true;
         }
       },
@@ -45809,7 +45850,7 @@
   }
   function create_if_block_175(ctx) {
     let span;
-    let t_value = ctx[40][ctx[127](ctx[40], ctx[225].id)].desc ? "\u25BC" : "\u25B2";
+    let t_value = ctx[40][ctx[127](ctx[40], ctx[226].id)].desc ? "\u25BC" : "\u25B2";
     let t;
     let if_block = ctx[40].length > 1 && create_if_block_185(ctx);
     return {
@@ -45827,7 +45868,7 @@
           if_block.m(span, null);
       },
       p(ctx2, dirty) {
-        if (dirty[1] & 512 | dirty[2] & 4096 && t_value !== (t_value = ctx2[40][ctx2[127](ctx2[40], ctx2[225].id)].desc ? "\u25BC" : "\u25B2"))
+        if (dirty[1] & 512 | dirty[2] & 4096 && t_value !== (t_value = ctx2[40][ctx2[127](ctx2[40], ctx2[226].id)].desc ? "\u25BC" : "\u25B2"))
           set_data(t, t_value);
         if (ctx2[40].length > 1) {
           if (if_block) {
@@ -45852,7 +45893,7 @@
   }
   function create_if_block_185(ctx) {
     let sup;
-    let t_value = ctx[127](ctx[40], ctx[225].id) + 1 + "";
+    let t_value = ctx[127](ctx[40], ctx[226].id) + 1 + "";
     let t;
     return {
       c() {
@@ -45864,7 +45905,7 @@
         append(sup, t);
       },
       p(ctx2, dirty) {
-        if (dirty[1] & 512 | dirty[2] & 4096 && t_value !== (t_value = ctx2[127](ctx2[40], ctx2[225].id) + 1 + ""))
+        if (dirty[1] & 512 | dirty[2] & 4096 && t_value !== (t_value = ctx2[127](ctx2[40], ctx2[226].id) + 1 + ""))
           set_data(t, t_value);
       },
       d(detaching) {
@@ -45875,16 +45916,16 @@
   }
   function create_each_block_36(ctx) {
     let td;
-    let t0_value = ctx[225].label + "";
+    let t0_value = ctx[226].label + "";
     let t0;
-    let show_if = ctx[127](ctx[40], ctx[225].id) != -1;
+    let show_if = ctx[127](ctx[40], ctx[226].id) != -1;
     let t1;
     let td_title_value;
     let mounted;
     let dispose;
     let if_block = show_if && create_if_block_175(ctx);
     function click_handler_23() {
-      return ctx[210](ctx[225]);
+      return ctx[211](ctx[226]);
     }
     return {
       c() {
@@ -45894,8 +45935,8 @@
           if_block.c();
         t1 = space();
         attr(td, "class", "dmg-sortable");
-        attr(td, "title", td_title_value = (ctx[225].title || "Sort by " + ctx[225].label) + " \u2014 click again to reverse, click another column to add it as a tiebreak");
-        toggle_class(td, "dmg-sorted", ctx[127](ctx[40], ctx[225].id) != -1);
+        attr(td, "title", td_title_value = (ctx[226].title || "Sort by " + ctx[226].label) + " \u2014 click again to reverse, click another column to add it as a tiebreak");
+        toggle_class(td, "dmg-sorted", ctx[127](ctx[40], ctx[226].id) != -1);
       },
       m(target, anchor) {
         insert(target, td, anchor);
@@ -45910,10 +45951,10 @@
       },
       p(new_ctx, dirty) {
         ctx = new_ctx;
-        if (dirty[2] & 4096 && t0_value !== (t0_value = ctx[225].label + ""))
+        if (dirty[2] & 4096 && t0_value !== (t0_value = ctx[226].label + ""))
           set_data(t0, t0_value);
         if (dirty[1] & 512 | dirty[2] & 4096)
-          show_if = ctx[127](ctx[40], ctx[225].id) != -1;
+          show_if = ctx[127](ctx[40], ctx[226].id) != -1;
         if (show_if) {
           if (if_block) {
             if_block.p(ctx, dirty);
@@ -45926,11 +45967,11 @@
           if_block.d(1);
           if_block = null;
         }
-        if (dirty[2] & 4096 && td_title_value !== (td_title_value = (ctx[225].title || "Sort by " + ctx[225].label) + " \u2014 click again to reverse, click another column to add it as a tiebreak")) {
+        if (dirty[2] & 4096 && td_title_value !== (td_title_value = (ctx[226].title || "Sort by " + ctx[226].label) + " \u2014 click again to reverse, click another column to add it as a tiebreak")) {
           attr(td, "title", td_title_value);
         }
         if (dirty[1] & 512 | dirty[2] & 4096 | dirty[4] & 8) {
-          toggle_class(td, "dmg-sorted", ctx[127](ctx[40], ctx[225].id) != -1);
+          toggle_class(td, "dmg-sorted", ctx[127](ctx[40], ctx[226].id) != -1);
         }
       },
       d(detaching) {
@@ -45945,15 +45986,15 @@
   }
   function create_if_block_106(ctx) {
     let html_tag;
-    let raw_value = ctx[222].weapon.title + "";
+    let raw_value = ctx[223].weapon.title + "";
     let t0;
-    let show_if = ctx[28] != "off" && ctx[49].get(ctx[222].weapon.id);
+    let show_if = ctx[28] != "off" && ctx[49].get(ctx[223].weapon.id);
     let t1;
     let t2;
     let if_block2_anchor;
     let if_block0 = show_if && create_if_block_136(get_if_ctx(ctx));
-    let if_block1 = ctx[222].weapon.clips.length > 1 && create_if_block_129(ctx);
-    let if_block2 = ctx[222].modeCount > 1 && create_if_block_1111(ctx);
+    let if_block1 = ctx[223].weapon.clips.length > 1 && create_if_block_129(ctx);
+    let if_block2 = ctx[223].modeCount > 1 && create_if_block_1111(ctx);
     return {
       c() {
         html_tag = new HtmlTag(false);
@@ -45983,10 +46024,10 @@
         insert(target, if_block2_anchor, anchor);
       },
       p(ctx2, dirty) {
-        if (dirty[2] & 1024 && raw_value !== (raw_value = ctx2[222].weapon.title + ""))
+        if (dirty[2] & 1024 && raw_value !== (raw_value = ctx2[223].weapon.title + ""))
           html_tag.p(raw_value);
         if (dirty[0] & 268435456 | dirty[1] & 262144 | dirty[2] & 1024)
-          show_if = ctx2[28] != "off" && ctx2[49].get(ctx2[222].weapon.id);
+          show_if = ctx2[28] != "off" && ctx2[49].get(ctx2[223].weapon.id);
         if (show_if) {
           if (if_block0) {
             if_block0.p(get_if_ctx(ctx2), dirty);
@@ -45999,7 +46040,7 @@
           if_block0.d(1);
           if_block0 = null;
         }
-        if (ctx2[222].weapon.clips.length > 1) {
+        if (ctx2[223].weapon.clips.length > 1) {
           if (if_block1) {
             if_block1.p(ctx2, dirty);
           } else {
@@ -46011,7 +46052,7 @@
           if_block1.d(1);
           if_block1 = null;
         }
-        if (ctx2[222].modeCount > 1) {
+        if (ctx2[223].modeCount > 1) {
           if (if_block2) {
             if_block2.p(ctx2, dirty);
           } else {
@@ -46049,15 +46090,15 @@
     let if_block0_anchor;
     let span_title_value;
     function select_block_type_17(ctx2, dirty) {
-      if (ctx2[231].owned)
+      if (ctx2[232].owned)
         return create_if_block_155;
-      if (ctx2[231].buyable)
+      if (ctx2[232].buyable)
         return create_if_block_165;
       return create_else_block_18;
     }
     let current_block_type = select_block_type_17(ctx, [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1]);
     let if_block0 = current_block_type(ctx);
-    let if_block1 = !ctx[231].ammoOwned && create_if_block_145(ctx);
+    let if_block1 = !ctx[232].ammoOwned && create_if_block_145(ctx);
     return {
       c() {
         span = element("span");
@@ -46066,8 +46107,8 @@
         if (if_block1)
           if_block1.c();
         attr(span, "class", "dmg-avail");
-        attr(span, "title", span_title_value = availabilityNote(ctx[231]));
-        toggle_class(span, "dmg-avail-dry", !ctx[231].ammoOwned);
+        attr(span, "title", span_title_value = availabilityNote(ctx[232]));
+        toggle_class(span, "dmg-avail-dry", !ctx[232].ammoOwned);
       },
       m(target, anchor) {
         insert(target, span, anchor);
@@ -46087,7 +46128,7 @@
             if_block0.m(span, if_block0_anchor);
           }
         }
-        if (!ctx2[231].ammoOwned) {
+        if (!ctx2[232].ammoOwned) {
           if (if_block1) {
           } else {
             if_block1 = create_if_block_145(ctx2);
@@ -46098,11 +46139,11 @@
           if_block1.d(1);
           if_block1 = null;
         }
-        if (dirty[1] & 262144 | dirty[2] & 1024 && span_title_value !== (span_title_value = availabilityNote(ctx2[231]))) {
+        if (dirty[1] & 262144 | dirty[2] & 1024 && span_title_value !== (span_title_value = availabilityNote(ctx2[232]))) {
           attr(span, "title", span_title_value);
         }
         if (dirty[1] & 262144 | dirty[2] & 1024) {
-          toggle_class(span, "dmg-avail-dry", !ctx2[231].ammoOwned);
+          toggle_class(span, "dmg-avail-dry", !ctx2[232].ammoOwned);
         }
       },
       d(detaching) {
@@ -46148,7 +46189,7 @@
   }
   function create_if_block_155(ctx) {
     let t0;
-    let t1_value = ctx[231].count + "";
+    let t1_value = ctx[232].count + "";
     let t1;
     return {
       c() {
@@ -46160,7 +46201,7 @@
         insert(target, t1, anchor);
       },
       p(ctx2, dirty) {
-        if (dirty[1] & 262144 | dirty[2] & 1024 && t1_value !== (t1_value = ctx2[231].count + ""))
+        if (dirty[1] & 262144 | dirty[2] & 1024 && t1_value !== (t1_value = ctx2[232].count + ""))
           set_data(t1, t1_value);
       },
       d(detaching) {
@@ -46188,23 +46229,23 @@
   }
   function create_if_block_129(ctx) {
     let span;
-    let raw_value = chosenClip(ctx[222].weapon).title + "";
+    let raw_value = chosenClip(ctx[223].weapon).title + "";
     let span_title_value;
     return {
       c() {
         span = element("span");
         attr(span, "class", "dmg-clip");
-        attr(span, "title", span_title_value = ctx[134](ctx[222].weapon));
+        attr(span, "title", span_title_value = ctx[134](ctx[223].weapon));
       },
       m(target, anchor) {
         insert(target, span, anchor);
         span.innerHTML = raw_value;
       },
       p(ctx2, dirty) {
-        if (dirty[2] & 1024 && raw_value !== (raw_value = chosenClip(ctx2[222].weapon).title + ""))
+        if (dirty[2] & 1024 && raw_value !== (raw_value = chosenClip(ctx2[223].weapon).title + ""))
           span.innerHTML = raw_value;
         ;
-        if (dirty[2] & 1024 && span_title_value !== (span_title_value = ctx2[134](ctx2[222].weapon))) {
+        if (dirty[2] & 1024 && span_title_value !== (span_title_value = ctx2[134](ctx2[223].weapon))) {
           attr(span, "title", span_title_value);
         }
       },
@@ -46216,7 +46257,7 @@
   }
   function create_if_block_1111(ctx) {
     let span;
-    let t0_value = ctx[222].modeCount + "";
+    let t0_value = ctx[223].modeCount + "";
     let t0;
     let t1;
     return {
@@ -46232,7 +46273,7 @@
         append(span, t1);
       },
       p(ctx2, dirty) {
-        if (dirty[2] & 1024 && t0_value !== (t0_value = ctx2[222].modeCount + ""))
+        if (dirty[2] & 1024 && t0_value !== (t0_value = ctx2[223].modeCount + ""))
           set_data(t0, t0_value);
       },
       d(detaching) {
@@ -46242,10 +46283,10 @@
     };
   }
   function create_if_block_96(ctx) {
-    let t0_value = (+ctx[222].weapon.item.invWidth || 1) + "";
+    let t0_value = (+ctx[223].weapon.item.invWidth || 1) + "";
     let t0;
     let t1;
-    let t2_value = (+ctx[222].weapon.item.invHeight || 1) + "";
+    let t2_value = (+ctx[223].weapon.item.invHeight || 1) + "";
     let t2;
     return {
       c() {
@@ -46259,9 +46300,9 @@
         insert(target, t2, anchor);
       },
       p(ctx2, dirty) {
-        if (dirty[2] & 1024 && t0_value !== (t0_value = (+ctx2[222].weapon.item.invWidth || 1) + ""))
+        if (dirty[2] & 1024 && t0_value !== (t0_value = (+ctx2[223].weapon.item.invWidth || 1) + ""))
           set_data(t0, t0_value);
-        if (dirty[2] & 1024 && t2_value !== (t2_value = (+ctx2[222].weapon.item.invHeight || 1) + ""))
+        if (dirty[2] & 1024 && t2_value !== (t2_value = (+ctx2[223].weapon.item.invHeight || 1) + ""))
           set_data(t2, t2_value);
       },
       d(detaching) {
@@ -46277,10 +46318,10 @@
   function create_if_block_710(ctx) {
     let span;
     let t0;
-    let t1_value = ctx[222].mode.damage.hitsPerAttack + "";
+    let t1_value = ctx[223].mode.damage.hitsPerAttack + "";
     let t1;
     let span_title_value;
-    let if_block = ctx[222].mode.damage.expectedHitsPerAttack < ctx[222].mode.damage.hitsPerAttack - 0.05 && create_if_block_87(ctx);
+    let if_block = ctx[223].mode.damage.expectedHitsPerAttack < ctx[223].mode.damage.hitsPerAttack - 0.05 && create_if_block_87(ctx);
     return {
       c() {
         span = element("span");
@@ -46289,7 +46330,7 @@
         if (if_block)
           if_block.c();
         attr(span, "class", "dmg-hits");
-        attr(span, "title", span_title_value = ctx[222].mode.damage.hitsPerAttack + " projectiles fired, about " + ctx[128](ctx[222].mode.damage.expectedHitsPerAttack, 1) + " assumed to land");
+        attr(span, "title", span_title_value = ctx[223].mode.damage.hitsPerAttack + " projectiles fired, about " + ctx[128](ctx[223].mode.damage.expectedHitsPerAttack, 1) + " assumed to land");
       },
       m(target, anchor) {
         insert(target, span, anchor);
@@ -46299,9 +46340,9 @@
           if_block.m(span, null);
       },
       p(ctx2, dirty) {
-        if (dirty[2] & 1024 && t1_value !== (t1_value = ctx2[222].mode.damage.hitsPerAttack + ""))
+        if (dirty[2] & 1024 && t1_value !== (t1_value = ctx2[223].mode.damage.hitsPerAttack + ""))
           set_data(t1, t1_value);
-        if (ctx2[222].mode.damage.expectedHitsPerAttack < ctx2[222].mode.damage.hitsPerAttack - 0.05) {
+        if (ctx2[223].mode.damage.expectedHitsPerAttack < ctx2[223].mode.damage.hitsPerAttack - 0.05) {
           if (if_block) {
             if_block.p(ctx2, dirty);
           } else {
@@ -46313,7 +46354,7 @@
           if_block.d(1);
           if_block = null;
         }
-        if (dirty[2] & 1024 && span_title_value !== (span_title_value = ctx2[222].mode.damage.hitsPerAttack + " projectiles fired, about " + ctx2[128](ctx2[222].mode.damage.expectedHitsPerAttack, 1) + " assumed to land")) {
+        if (dirty[2] & 1024 && span_title_value !== (span_title_value = ctx2[223].mode.damage.hitsPerAttack + " projectiles fired, about " + ctx2[128](ctx2[223].mode.damage.expectedHitsPerAttack, 1) + " assumed to land")) {
           attr(span, "title", span_title_value);
         }
       },
@@ -46328,7 +46369,7 @@
   function create_if_block_87(ctx) {
     let span;
     let t0;
-    let t1_value = ctx[128](ctx[222].mode.damage.expectedHitsPerAttack, 1) + "";
+    let t1_value = ctx[128](ctx[223].mode.damage.expectedHitsPerAttack, 1) + "";
     let t1;
     return {
       c() {
@@ -46343,7 +46384,7 @@
         append(span, t1);
       },
       p(ctx2, dirty) {
-        if (dirty[2] & 1024 && t1_value !== (t1_value = ctx2[128](ctx2[222].mode.damage.expectedHitsPerAttack, 1) + ""))
+        if (dirty[2] & 1024 && t1_value !== (t1_value = ctx2[128](ctx2[223].mode.damage.expectedHitsPerAttack, 1) + ""))
           set_data(t1, t1_value);
       },
       d(detaching) {
@@ -46385,19 +46426,19 @@
     let t22;
     let p;
     let html_tag;
-    let raw_value = (ctx[222].weapon.best.damage.damageTypeName ? rul.tr(ctx[222].weapon.best.damage.damageTypeName) : "") + "";
+    let raw_value = (ctx[223].weapon.best.damage.damageTypeName ? rul.tr(ctx[223].weapon.best.damage.damageTypeName) : "") + "";
     let t23;
-    let t24_value = ctx[128](ctx[222].weapon.best.damage.effectiveArmor, 0) + "";
+    let t24_value = ctx[128](ctx[223].weapon.best.damage.effectiveArmor, 0) + "";
     let t24;
     let t25;
     let td15_colspan_value;
     let t26;
-    let each_value_2 = ctx[222].weapon.modes;
+    let each_value_2 = ctx[223].weapon.modes;
     let each_blocks = [];
     for (let i = 0; i < each_value_2.length; i += 1) {
       each_blocks[i] = create_each_block_210(get_each_context_26(ctx, each_value_2, i));
     }
-    let if_block = ctx[222].weapon.clips.length > 1 && create_if_block_510(ctx);
+    let if_block = ctx[223].weapon.clips.length > 1 && create_if_block_510(ctx);
     return {
       c() {
         tr1 = element("tr");
@@ -46511,7 +46552,7 @@
       },
       p(ctx2, dirty) {
         if (dirty[2] & 1024 | dirty[4] & 2928) {
-          each_value_2 = ctx2[222].weapon.modes;
+          each_value_2 = ctx2[223].weapon.modes;
           let i;
           for (i = 0; i < each_value_2.length; i += 1) {
             const child_ctx = get_each_context_26(ctx2, each_value_2, i);
@@ -46528,7 +46569,7 @@
           }
           each_blocks.length = each_value_2.length;
         }
-        if (ctx2[222].weapon.clips.length > 1) {
+        if (ctx2[223].weapon.clips.length > 1) {
           if (if_block) {
             if_block.p(ctx2, dirty);
           } else {
@@ -46540,9 +46581,9 @@
           if_block.d(1);
           if_block = null;
         }
-        if (dirty[2] & 1024 && raw_value !== (raw_value = (ctx2[222].weapon.best.damage.damageTypeName ? rul.tr(ctx2[222].weapon.best.damage.damageTypeName) : "") + ""))
+        if (dirty[2] & 1024 && raw_value !== (raw_value = (ctx2[223].weapon.best.damage.damageTypeName ? rul.tr(ctx2[223].weapon.best.damage.damageTypeName) : "") + ""))
           html_tag.p(raw_value);
-        if (dirty[2] & 1024 && t24_value !== (t24_value = ctx2[128](ctx2[222].weapon.best.damage.effectiveArmor, 0) + ""))
+        if (dirty[2] & 1024 && t24_value !== (t24_value = ctx2[128](ctx2[223].weapon.best.damage.effectiveArmor, 0) + ""))
           set_data(t24, t24_value);
         if (dirty[2] & 4096 && td15_colspan_value !== (td15_colspan_value = ctx2[74].length)) {
           attr(td15, "colspan", td15_colspan_value);
@@ -46560,73 +46601,73 @@
   function create_each_block_210(ctx) {
     let tr2;
     let td0;
-    let t0_value = (ctx[226].score == null ? "?" : ctx[226].score) + "";
+    let t0_value = (ctx[227].score == null ? "?" : ctx[227].score) + "";
     let t0;
     let td0_title_value;
     let t1;
     let td1;
-    let t2_value = ctx[226].label + "";
+    let t2_value = ctx[227].label + "";
     let t2;
     let t3;
     let td2;
-    let t4_value = ctx[128](ctx[226].damage.power, 0) + "";
+    let t4_value = ctx[128](ctx[227].damage.power, 0) + "";
     let t4;
     let t5;
     let td3;
-    let t6_value = ctx[128](ctx[226].damage.rollMin, 0) + "";
+    let t6_value = ctx[128](ctx[227].damage.rollMin, 0) + "";
     let t6;
     let t7;
-    let t8_value = ctx[128](ctx[226].damage.rollMax, 0) + "";
+    let t8_value = ctx[128](ctx[227].damage.rollMax, 0) + "";
     let t8;
     let t9;
     let td4;
-    let t10_value = ctx[128](ctx[226].damage.min, 0) + "";
+    let t10_value = ctx[128](ctx[227].damage.min, 0) + "";
     let t10;
     let t11;
-    let t12_value = ctx[128](ctx[226].damage.max, 0) + "";
+    let t12_value = ctx[128](ctx[227].damage.max, 0) + "";
     let t12;
     let t13;
     let td5;
-    let t14_value = ctx[129](ctx[226].damage.pZero) + "";
+    let t14_value = ctx[129](ctx[227].damage.pZero) + "";
     let t14;
     let t15;
     let td6;
-    let t16_value = ctx[226].damage.hitsPerAttack + "";
+    let t16_value = ctx[227].damage.hitsPerAttack + "";
     let t16;
     let t17;
     let td7;
-    let t18_value = ctx[128](ctx[226].damage.expectedHitsPerAttack, 1) + "";
+    let t18_value = ctx[128](ctx[227].damage.expectedHitsPerAttack, 1) + "";
     let t18;
     let t19;
     let td8;
-    let t20_value = Math.round(ctx[226].accuracy) + "";
+    let t20_value = Math.round(ctx[227].accuracy) + "";
     let t20;
     let t21;
     let t22;
     let td9;
-    let t23_value = Math.round(ctx[226].hitRate * 100) + "";
+    let t23_value = Math.round(ctx[227].hitRate * 100) + "";
     let t23;
     let t24;
     let t25;
     let td10;
-    let t26_value = ctx[128](ctx[226].tuCost, 0) + "";
+    let t26_value = ctx[128](ctx[227].tuCost, 0) + "";
     let t26;
     let t27;
     let td11;
-    let t28_value = ctx[128](ctx[226].perAttack) + "";
+    let t28_value = ctx[128](ctx[227].perAttack) + "";
     let t28;
     let t29;
     let td12;
-    let t30_value = (ctx[226].armorPerAttack > 0.05 ? ctx[128](ctx[226].armorPerAttack) : "\u2013") + "";
+    let t30_value = (ctx[227].armorPerAttack > 0.05 ? ctx[128](ctx[227].armorPerAttack) : "\u2013") + "";
     let t30;
     let td12_title_value;
     let t31;
     let td13;
-    let t32_value = (ctx[226].attacksToKill == null ? "\u2013" : ctx[128](ctx[226].attacksToKill)) + "";
+    let t32_value = (ctx[227].attacksToKill == null ? "\u2013" : ctx[128](ctx[227].attacksToKill)) + "";
     let t32;
     let t33;
     let td14;
-    let t34_value = ctx[132](ctx[226]) + "";
+    let t34_value = ctx[132](ctx[227]) + "";
     let t34;
     let td14_title_value;
     let t35;
@@ -46685,16 +46726,16 @@
         t34 = text(t34_value);
         t35 = space();
         attr(td0, "class", "num dmg-score");
-        attr(td0, "title", td0_title_value = ctx[130]({ mode: ctx[226], first: false }));
-        toggle_class(td0, "dmg-score-good", scoreBand(ctx[226].score) == "good");
-        toggle_class(td0, "dmg-score-fair", scoreBand(ctx[226].score) == "fair");
-        toggle_class(td0, "dmg-score-poor", scoreBand(ctx[226].score) == "poor");
-        toggle_class(td0, "dmg-score-none", scoreBand(ctx[226].score) == "none");
+        attr(td0, "title", td0_title_value = ctx[130]({ mode: ctx[227], first: false }));
+        toggle_class(td0, "dmg-score-good", scoreBand(ctx[227].score) == "good");
+        toggle_class(td0, "dmg-score-fair", scoreBand(ctx[227].score) == "fair");
+        toggle_class(td0, "dmg-score-poor", scoreBand(ctx[227].score) == "poor");
+        toggle_class(td0, "dmg-score-none", scoreBand(ctx[227].score) == "none");
         attr(td2, "class", "num");
         attr(td3, "class", "num");
         attr(td4, "class", "num");
         attr(td5, "class", "num");
-        toggle_class(td5, "dmg-immune", ctx[226].damage.pZero > 0.5);
+        toggle_class(td5, "dmg-immune", ctx[227].damage.pZero > 0.5);
         attr(td6, "class", "num");
         attr(td7, "class", "num");
         attr(td8, "class", "num");
@@ -46702,10 +46743,10 @@
         attr(td10, "class", "num");
         attr(td11, "class", "num");
         attr(td12, "class", "num");
-        attr(td12, "title", td12_title_value = ctx[135](ctx[226]));
+        attr(td12, "title", td12_title_value = ctx[135](ctx[227]));
         attr(td13, "class", "num");
         attr(td14, "class", "num dmg-key");
-        attr(td14, "title", td14_title_value = ctx[133](ctx[226]));
+        attr(td14, "title", td14_title_value = ctx[133](ctx[227]));
       },
       m(target, anchor) {
         insert(target, tr2, anchor);
@@ -46762,62 +46803,62 @@
         append(tr2, t35);
       },
       p(ctx2, dirty) {
-        if (dirty[2] & 1024 && t0_value !== (t0_value = (ctx2[226].score == null ? "?" : ctx2[226].score) + ""))
+        if (dirty[2] & 1024 && t0_value !== (t0_value = (ctx2[227].score == null ? "?" : ctx2[227].score) + ""))
           set_data(t0, t0_value);
-        if (dirty[2] & 1024 && td0_title_value !== (td0_title_value = ctx2[130]({ mode: ctx2[226], first: false }))) {
+        if (dirty[2] & 1024 && td0_title_value !== (td0_title_value = ctx2[130]({ mode: ctx2[227], first: false }))) {
           attr(td0, "title", td0_title_value);
         }
         if (dirty[2] & 1024) {
-          toggle_class(td0, "dmg-score-good", scoreBand(ctx2[226].score) == "good");
+          toggle_class(td0, "dmg-score-good", scoreBand(ctx2[227].score) == "good");
         }
         if (dirty[2] & 1024) {
-          toggle_class(td0, "dmg-score-fair", scoreBand(ctx2[226].score) == "fair");
+          toggle_class(td0, "dmg-score-fair", scoreBand(ctx2[227].score) == "fair");
         }
         if (dirty[2] & 1024) {
-          toggle_class(td0, "dmg-score-poor", scoreBand(ctx2[226].score) == "poor");
+          toggle_class(td0, "dmg-score-poor", scoreBand(ctx2[227].score) == "poor");
         }
         if (dirty[2] & 1024) {
-          toggle_class(td0, "dmg-score-none", scoreBand(ctx2[226].score) == "none");
+          toggle_class(td0, "dmg-score-none", scoreBand(ctx2[227].score) == "none");
         }
-        if (dirty[2] & 1024 && t2_value !== (t2_value = ctx2[226].label + ""))
+        if (dirty[2] & 1024 && t2_value !== (t2_value = ctx2[227].label + ""))
           set_data(t2, t2_value);
-        if (dirty[2] & 1024 && t4_value !== (t4_value = ctx2[128](ctx2[226].damage.power, 0) + ""))
+        if (dirty[2] & 1024 && t4_value !== (t4_value = ctx2[128](ctx2[227].damage.power, 0) + ""))
           set_data(t4, t4_value);
-        if (dirty[2] & 1024 && t6_value !== (t6_value = ctx2[128](ctx2[226].damage.rollMin, 0) + ""))
+        if (dirty[2] & 1024 && t6_value !== (t6_value = ctx2[128](ctx2[227].damage.rollMin, 0) + ""))
           set_data(t6, t6_value);
-        if (dirty[2] & 1024 && t8_value !== (t8_value = ctx2[128](ctx2[226].damage.rollMax, 0) + ""))
+        if (dirty[2] & 1024 && t8_value !== (t8_value = ctx2[128](ctx2[227].damage.rollMax, 0) + ""))
           set_data(t8, t8_value);
-        if (dirty[2] & 1024 && t10_value !== (t10_value = ctx2[128](ctx2[226].damage.min, 0) + ""))
+        if (dirty[2] & 1024 && t10_value !== (t10_value = ctx2[128](ctx2[227].damage.min, 0) + ""))
           set_data(t10, t10_value);
-        if (dirty[2] & 1024 && t12_value !== (t12_value = ctx2[128](ctx2[226].damage.max, 0) + ""))
+        if (dirty[2] & 1024 && t12_value !== (t12_value = ctx2[128](ctx2[227].damage.max, 0) + ""))
           set_data(t12, t12_value);
-        if (dirty[2] & 1024 && t14_value !== (t14_value = ctx2[129](ctx2[226].damage.pZero) + ""))
+        if (dirty[2] & 1024 && t14_value !== (t14_value = ctx2[129](ctx2[227].damage.pZero) + ""))
           set_data(t14, t14_value);
         if (dirty[2] & 1024) {
-          toggle_class(td5, "dmg-immune", ctx2[226].damage.pZero > 0.5);
+          toggle_class(td5, "dmg-immune", ctx2[227].damage.pZero > 0.5);
         }
-        if (dirty[2] & 1024 && t16_value !== (t16_value = ctx2[226].damage.hitsPerAttack + ""))
+        if (dirty[2] & 1024 && t16_value !== (t16_value = ctx2[227].damage.hitsPerAttack + ""))
           set_data(t16, t16_value);
-        if (dirty[2] & 1024 && t18_value !== (t18_value = ctx2[128](ctx2[226].damage.expectedHitsPerAttack, 1) + ""))
+        if (dirty[2] & 1024 && t18_value !== (t18_value = ctx2[128](ctx2[227].damage.expectedHitsPerAttack, 1) + ""))
           set_data(t18, t18_value);
-        if (dirty[2] & 1024 && t20_value !== (t20_value = Math.round(ctx2[226].accuracy) + ""))
+        if (dirty[2] & 1024 && t20_value !== (t20_value = Math.round(ctx2[227].accuracy) + ""))
           set_data(t20, t20_value);
-        if (dirty[2] & 1024 && t23_value !== (t23_value = Math.round(ctx2[226].hitRate * 100) + ""))
+        if (dirty[2] & 1024 && t23_value !== (t23_value = Math.round(ctx2[227].hitRate * 100) + ""))
           set_data(t23, t23_value);
-        if (dirty[2] & 1024 && t26_value !== (t26_value = ctx2[128](ctx2[226].tuCost, 0) + ""))
+        if (dirty[2] & 1024 && t26_value !== (t26_value = ctx2[128](ctx2[227].tuCost, 0) + ""))
           set_data(t26, t26_value);
-        if (dirty[2] & 1024 && t28_value !== (t28_value = ctx2[128](ctx2[226].perAttack) + ""))
+        if (dirty[2] & 1024 && t28_value !== (t28_value = ctx2[128](ctx2[227].perAttack) + ""))
           set_data(t28, t28_value);
-        if (dirty[2] & 1024 && t30_value !== (t30_value = (ctx2[226].armorPerAttack > 0.05 ? ctx2[128](ctx2[226].armorPerAttack) : "\u2013") + ""))
+        if (dirty[2] & 1024 && t30_value !== (t30_value = (ctx2[227].armorPerAttack > 0.05 ? ctx2[128](ctx2[227].armorPerAttack) : "\u2013") + ""))
           set_data(t30, t30_value);
-        if (dirty[2] & 1024 && td12_title_value !== (td12_title_value = ctx2[135](ctx2[226]))) {
+        if (dirty[2] & 1024 && td12_title_value !== (td12_title_value = ctx2[135](ctx2[227]))) {
           attr(td12, "title", td12_title_value);
         }
-        if (dirty[2] & 1024 && t32_value !== (t32_value = (ctx2[226].attacksToKill == null ? "\u2013" : ctx2[128](ctx2[226].attacksToKill)) + ""))
+        if (dirty[2] & 1024 && t32_value !== (t32_value = (ctx2[227].attacksToKill == null ? "\u2013" : ctx2[128](ctx2[227].attacksToKill)) + ""))
           set_data(t32, t32_value);
-        if (dirty[2] & 1024 && t34_value !== (t34_value = ctx2[132](ctx2[226]) + ""))
+        if (dirty[2] & 1024 && t34_value !== (t34_value = ctx2[132](ctx2[227]) + ""))
           set_data(t34, t34_value);
-        if (dirty[2] & 1024 && td14_title_value !== (td14_title_value = ctx2[133](ctx2[226]))) {
+        if (dirty[2] & 1024 && td14_title_value !== (td14_title_value = ctx2[133](ctx2[227]))) {
           attr(td14, "title", td14_title_value);
         }
       },
@@ -46861,7 +46902,7 @@
     let td17;
     let t27;
     let tbody;
-    let each_value_1 = ctx[222].weapon.clips;
+    let each_value_1 = ctx[223].weapon.clips;
     let each_blocks = [];
     for (let i = 0; i < each_value_1.length; i += 1) {
       each_blocks[i] = create_each_block_111(get_each_context_111(ctx, each_value_1, i));
@@ -46969,7 +47010,7 @@
       },
       p(ctx2, dirty) {
         if (dirty[2] & 1024 | dirty[4] & 2928) {
-          each_value_1 = ctx2[222].weapon.clips;
+          each_value_1 = ctx2[223].weapon.clips;
           let i;
           for (i = 0; i < each_value_1.length; i += 1) {
             const child_ctx = get_each_context_111(ctx2, each_value_1, i);
@@ -47014,81 +47055,81 @@
   function create_each_block_111(ctx) {
     let tr2;
     let td0;
-    let t0_value = (ctx[226] && ctx[226].score != null ? ctx[226].score : "?") + "";
+    let t0_value = (ctx[227] && ctx[227].score != null ? ctx[227].score : "?") + "";
     let t0;
     let td0_title_value;
     let t1;
     let td1;
     let html_tag;
-    let raw0_value = ctx[225].title + "";
+    let raw0_value = ctx[226].title + "";
     let html_anchor;
     let t2;
     let td2;
-    let raw1_value = (ctx[226] && ctx[226].damage.damageTypeName ? rul.tr(ctx[226].damage.damageTypeName) : "\u2013") + "";
+    let raw1_value = (ctx[227] && ctx[227].damage.damageTypeName ? rul.tr(ctx[227].damage.damageTypeName) : "\u2013") + "";
     let t3;
     let td3;
-    let t4_value = (ctx[226] ? ctx[226].label : "\u2013") + "";
+    let t4_value = (ctx[227] ? ctx[227].label : "\u2013") + "";
     let t4;
     let t5;
     let td4;
-    let t6_value = (ctx[226] ? ctx[128](ctx[226].damage.power, 0) : "\u2013") + "";
+    let t6_value = (ctx[227] ? ctx[128](ctx[227].damage.power, 0) : "\u2013") + "";
     let t6;
     let t7;
     let td5;
-    let t8_value = ctx[226] ? ctx[128](ctx[226].damage.rollMin, 0) + "\u2013" + ctx[128](ctx[226].damage.rollMax, 0) : "\u2013";
+    let t8_value = ctx[227] ? ctx[128](ctx[227].damage.rollMin, 0) + "\u2013" + ctx[128](ctx[227].damage.rollMax, 0) : "\u2013";
     let t8;
     let t9;
     let td6;
-    let t10_value = ctx[226] ? ctx[128](ctx[226].damage.min, 0) + "\u2013" + ctx[128](ctx[226].damage.max, 0) : "\u2013";
+    let t10_value = ctx[227] ? ctx[128](ctx[227].damage.min, 0) + "\u2013" + ctx[128](ctx[227].damage.max, 0) : "\u2013";
     let t10;
     let t11;
     let td7;
-    let t12_value = (ctx[226] ? ctx[129](ctx[226].damage.pZero) : "\u2013") + "";
+    let t12_value = (ctx[227] ? ctx[129](ctx[227].damage.pZero) : "\u2013") + "";
     let t12;
     let t13;
     let td8;
-    let t14_value = (ctx[226] ? ctx[226].damage.hitsPerAttack : "\u2013") + "";
+    let t14_value = (ctx[227] ? ctx[227].damage.hitsPerAttack : "\u2013") + "";
     let t14;
     let t15;
     let td9;
-    let t16_value = (ctx[226] ? ctx[128](ctx[226].damage.expectedHitsPerAttack, 1) : "\u2013") + "";
+    let t16_value = (ctx[227] ? ctx[128](ctx[227].damage.expectedHitsPerAttack, 1) : "\u2013") + "";
     let t16;
     let t17;
     let td10;
-    let t18_value = ctx[226] ? Math.round(ctx[226].accuracy) + "%" : "\u2013";
+    let t18_value = ctx[227] ? Math.round(ctx[227].accuracy) + "%" : "\u2013";
     let t18;
     let t19;
     let td11;
-    let t20_value = ctx[226] ? Math.round(ctx[226].hitRate * 100) + "%" : "\u2013";
+    let t20_value = ctx[227] ? Math.round(ctx[227].hitRate * 100) + "%" : "\u2013";
     let t20;
     let t21;
     let td12;
-    let t22_value = (ctx[226] ? ctx[128](ctx[226].tuCost, 0) : "\u2013") + "";
+    let t22_value = (ctx[227] ? ctx[128](ctx[227].tuCost, 0) : "\u2013") + "";
     let t22;
     let t23;
     let td13;
-    let t24_value = (ctx[226] ? ctx[128](ctx[226].perAttack) : "\u2013") + "";
+    let t24_value = (ctx[227] ? ctx[128](ctx[227].perAttack) : "\u2013") + "";
     let t24;
     let t25;
     let td14;
-    let t26_value = (ctx[226] && ctx[226].armorPerAttack > 0.05 ? ctx[128](ctx[226].armorPerAttack) : "\u2013") + "";
+    let t26_value = (ctx[227] && ctx[227].armorPerAttack > 0.05 ? ctx[128](ctx[227].armorPerAttack) : "\u2013") + "";
     let t26;
     let td14_title_value;
     let t27;
     let td15;
-    let t28_value = (ctx[226] && ctx[226].attacksToKill != null ? ctx[128](ctx[226].attacksToKill) : "\u2013") + "";
+    let t28_value = (ctx[227] && ctx[227].attacksToKill != null ? ctx[128](ctx[227].attacksToKill) : "\u2013") + "";
     let t28;
     let t29;
     let td16;
-    let t30_value = (ctx[226] ? ctx[132](ctx[226]) : "\u2013") + "";
+    let t30_value = (ctx[227] ? ctx[132](ctx[227]) : "\u2013") + "";
     let t30;
     let td16_title_value;
     let t31;
     let td17;
-    let t32_value = ctx[225].fieldable ? "yes" : "no";
+    let t32_value = ctx[226].fieldable ? "yes" : "no";
     let t32;
     let t33;
-    let if_block = ctx[225].chosen && create_if_block_610(ctx);
+    let if_block = ctx[226].chosen && create_if_block_610(ctx);
     return {
       c() {
         tr2 = element("tr");
@@ -47149,17 +47190,17 @@
         t32 = text(t32_value);
         t33 = space();
         attr(td0, "class", "num dmg-score");
-        attr(td0, "title", td0_title_value = ctx[226] ? ctx[130]({ mode: ctx[226], first: false }) : "");
-        toggle_class(td0, "dmg-score-good", scoreBand(ctx[226] && ctx[226].score) == "good");
-        toggle_class(td0, "dmg-score-fair", scoreBand(ctx[226] && ctx[226].score) == "fair");
-        toggle_class(td0, "dmg-score-poor", scoreBand(ctx[226] && ctx[226].score) == "poor");
-        toggle_class(td0, "dmg-score-none", scoreBand(ctx[226] && ctx[226].score) == "none");
+        attr(td0, "title", td0_title_value = ctx[227] ? ctx[130]({ mode: ctx[227], first: false }) : "");
+        toggle_class(td0, "dmg-score-good", scoreBand(ctx[227] && ctx[227].score) == "good");
+        toggle_class(td0, "dmg-score-fair", scoreBand(ctx[227] && ctx[227].score) == "fair");
+        toggle_class(td0, "dmg-score-poor", scoreBand(ctx[227] && ctx[227].score) == "poor");
+        toggle_class(td0, "dmg-score-none", scoreBand(ctx[227] && ctx[227].score) == "none");
         html_tag.a = html_anchor;
         attr(td4, "class", "num");
         attr(td5, "class", "num");
         attr(td6, "class", "num");
         attr(td7, "class", "num");
-        toggle_class(td7, "dmg-immune", ctx[226] && ctx[226].damage.pZero > 0.5);
+        toggle_class(td7, "dmg-immune", ctx[227] && ctx[227].damage.pZero > 0.5);
         attr(td8, "class", "num");
         attr(td9, "class", "num");
         attr(td10, "class", "num");
@@ -47167,13 +47208,13 @@
         attr(td12, "class", "num");
         attr(td13, "class", "num");
         attr(td14, "class", "num");
-        attr(td14, "title", td14_title_value = ctx[226] ? ctx[135](ctx[226]) : "");
+        attr(td14, "title", td14_title_value = ctx[227] ? ctx[135](ctx[227]) : "");
         attr(td15, "class", "num");
         attr(td16, "class", "num dmg-key");
-        attr(td16, "title", td16_title_value = ctx[226] ? ctx[133](ctx[226]) : "");
+        attr(td16, "title", td16_title_value = ctx[227] ? ctx[133](ctx[227]) : "");
         attr(td17, "class", "num");
-        toggle_class(tr2, "dmg-clip-off", !ctx[225].fieldable);
-        toggle_class(tr2, "dmg-clip-on", ctx[225].chosen);
+        toggle_class(tr2, "dmg-clip-off", !ctx[226].fieldable);
+        toggle_class(tr2, "dmg-clip-on", ctx[226].chosen);
       },
       m(target, anchor) {
         insert(target, tr2, anchor);
@@ -47236,26 +47277,26 @@
         append(tr2, t33);
       },
       p(ctx2, dirty) {
-        if (dirty[2] & 1024 && t0_value !== (t0_value = (ctx2[226] && ctx2[226].score != null ? ctx2[226].score : "?") + ""))
+        if (dirty[2] & 1024 && t0_value !== (t0_value = (ctx2[227] && ctx2[227].score != null ? ctx2[227].score : "?") + ""))
           set_data(t0, t0_value);
-        if (dirty[2] & 1024 && td0_title_value !== (td0_title_value = ctx2[226] ? ctx2[130]({ mode: ctx2[226], first: false }) : "")) {
+        if (dirty[2] & 1024 && td0_title_value !== (td0_title_value = ctx2[227] ? ctx2[130]({ mode: ctx2[227], first: false }) : "")) {
           attr(td0, "title", td0_title_value);
         }
         if (dirty[2] & 1024) {
-          toggle_class(td0, "dmg-score-good", scoreBand(ctx2[226] && ctx2[226].score) == "good");
+          toggle_class(td0, "dmg-score-good", scoreBand(ctx2[227] && ctx2[227].score) == "good");
         }
         if (dirty[2] & 1024) {
-          toggle_class(td0, "dmg-score-fair", scoreBand(ctx2[226] && ctx2[226].score) == "fair");
+          toggle_class(td0, "dmg-score-fair", scoreBand(ctx2[227] && ctx2[227].score) == "fair");
         }
         if (dirty[2] & 1024) {
-          toggle_class(td0, "dmg-score-poor", scoreBand(ctx2[226] && ctx2[226].score) == "poor");
+          toggle_class(td0, "dmg-score-poor", scoreBand(ctx2[227] && ctx2[227].score) == "poor");
         }
         if (dirty[2] & 1024) {
-          toggle_class(td0, "dmg-score-none", scoreBand(ctx2[226] && ctx2[226].score) == "none");
+          toggle_class(td0, "dmg-score-none", scoreBand(ctx2[227] && ctx2[227].score) == "none");
         }
-        if (dirty[2] & 1024 && raw0_value !== (raw0_value = ctx2[225].title + ""))
+        if (dirty[2] & 1024 && raw0_value !== (raw0_value = ctx2[226].title + ""))
           html_tag.p(raw0_value);
-        if (ctx2[225].chosen) {
+        if (ctx2[226].chosen) {
           if (if_block) {
           } else {
             if_block = create_if_block_610(ctx2);
@@ -47266,53 +47307,53 @@
           if_block.d(1);
           if_block = null;
         }
-        if (dirty[2] & 1024 && raw1_value !== (raw1_value = (ctx2[226] && ctx2[226].damage.damageTypeName ? rul.tr(ctx2[226].damage.damageTypeName) : "\u2013") + ""))
+        if (dirty[2] & 1024 && raw1_value !== (raw1_value = (ctx2[227] && ctx2[227].damage.damageTypeName ? rul.tr(ctx2[227].damage.damageTypeName) : "\u2013") + ""))
           td2.innerHTML = raw1_value;
         ;
-        if (dirty[2] & 1024 && t4_value !== (t4_value = (ctx2[226] ? ctx2[226].label : "\u2013") + ""))
+        if (dirty[2] & 1024 && t4_value !== (t4_value = (ctx2[227] ? ctx2[227].label : "\u2013") + ""))
           set_data(t4, t4_value);
-        if (dirty[2] & 1024 && t6_value !== (t6_value = (ctx2[226] ? ctx2[128](ctx2[226].damage.power, 0) : "\u2013") + ""))
+        if (dirty[2] & 1024 && t6_value !== (t6_value = (ctx2[227] ? ctx2[128](ctx2[227].damage.power, 0) : "\u2013") + ""))
           set_data(t6, t6_value);
-        if (dirty[2] & 1024 && t8_value !== (t8_value = ctx2[226] ? ctx2[128](ctx2[226].damage.rollMin, 0) + "\u2013" + ctx2[128](ctx2[226].damage.rollMax, 0) : "\u2013"))
+        if (dirty[2] & 1024 && t8_value !== (t8_value = ctx2[227] ? ctx2[128](ctx2[227].damage.rollMin, 0) + "\u2013" + ctx2[128](ctx2[227].damage.rollMax, 0) : "\u2013"))
           set_data(t8, t8_value);
-        if (dirty[2] & 1024 && t10_value !== (t10_value = ctx2[226] ? ctx2[128](ctx2[226].damage.min, 0) + "\u2013" + ctx2[128](ctx2[226].damage.max, 0) : "\u2013"))
+        if (dirty[2] & 1024 && t10_value !== (t10_value = ctx2[227] ? ctx2[128](ctx2[227].damage.min, 0) + "\u2013" + ctx2[128](ctx2[227].damage.max, 0) : "\u2013"))
           set_data(t10, t10_value);
-        if (dirty[2] & 1024 && t12_value !== (t12_value = (ctx2[226] ? ctx2[129](ctx2[226].damage.pZero) : "\u2013") + ""))
+        if (dirty[2] & 1024 && t12_value !== (t12_value = (ctx2[227] ? ctx2[129](ctx2[227].damage.pZero) : "\u2013") + ""))
           set_data(t12, t12_value);
         if (dirty[2] & 1024) {
-          toggle_class(td7, "dmg-immune", ctx2[226] && ctx2[226].damage.pZero > 0.5);
+          toggle_class(td7, "dmg-immune", ctx2[227] && ctx2[227].damage.pZero > 0.5);
         }
-        if (dirty[2] & 1024 && t14_value !== (t14_value = (ctx2[226] ? ctx2[226].damage.hitsPerAttack : "\u2013") + ""))
+        if (dirty[2] & 1024 && t14_value !== (t14_value = (ctx2[227] ? ctx2[227].damage.hitsPerAttack : "\u2013") + ""))
           set_data(t14, t14_value);
-        if (dirty[2] & 1024 && t16_value !== (t16_value = (ctx2[226] ? ctx2[128](ctx2[226].damage.expectedHitsPerAttack, 1) : "\u2013") + ""))
+        if (dirty[2] & 1024 && t16_value !== (t16_value = (ctx2[227] ? ctx2[128](ctx2[227].damage.expectedHitsPerAttack, 1) : "\u2013") + ""))
           set_data(t16, t16_value);
-        if (dirty[2] & 1024 && t18_value !== (t18_value = ctx2[226] ? Math.round(ctx2[226].accuracy) + "%" : "\u2013"))
+        if (dirty[2] & 1024 && t18_value !== (t18_value = ctx2[227] ? Math.round(ctx2[227].accuracy) + "%" : "\u2013"))
           set_data(t18, t18_value);
-        if (dirty[2] & 1024 && t20_value !== (t20_value = ctx2[226] ? Math.round(ctx2[226].hitRate * 100) + "%" : "\u2013"))
+        if (dirty[2] & 1024 && t20_value !== (t20_value = ctx2[227] ? Math.round(ctx2[227].hitRate * 100) + "%" : "\u2013"))
           set_data(t20, t20_value);
-        if (dirty[2] & 1024 && t22_value !== (t22_value = (ctx2[226] ? ctx2[128](ctx2[226].tuCost, 0) : "\u2013") + ""))
+        if (dirty[2] & 1024 && t22_value !== (t22_value = (ctx2[227] ? ctx2[128](ctx2[227].tuCost, 0) : "\u2013") + ""))
           set_data(t22, t22_value);
-        if (dirty[2] & 1024 && t24_value !== (t24_value = (ctx2[226] ? ctx2[128](ctx2[226].perAttack) : "\u2013") + ""))
+        if (dirty[2] & 1024 && t24_value !== (t24_value = (ctx2[227] ? ctx2[128](ctx2[227].perAttack) : "\u2013") + ""))
           set_data(t24, t24_value);
-        if (dirty[2] & 1024 && t26_value !== (t26_value = (ctx2[226] && ctx2[226].armorPerAttack > 0.05 ? ctx2[128](ctx2[226].armorPerAttack) : "\u2013") + ""))
+        if (dirty[2] & 1024 && t26_value !== (t26_value = (ctx2[227] && ctx2[227].armorPerAttack > 0.05 ? ctx2[128](ctx2[227].armorPerAttack) : "\u2013") + ""))
           set_data(t26, t26_value);
-        if (dirty[2] & 1024 && td14_title_value !== (td14_title_value = ctx2[226] ? ctx2[135](ctx2[226]) : "")) {
+        if (dirty[2] & 1024 && td14_title_value !== (td14_title_value = ctx2[227] ? ctx2[135](ctx2[227]) : "")) {
           attr(td14, "title", td14_title_value);
         }
-        if (dirty[2] & 1024 && t28_value !== (t28_value = (ctx2[226] && ctx2[226].attacksToKill != null ? ctx2[128](ctx2[226].attacksToKill) : "\u2013") + ""))
+        if (dirty[2] & 1024 && t28_value !== (t28_value = (ctx2[227] && ctx2[227].attacksToKill != null ? ctx2[128](ctx2[227].attacksToKill) : "\u2013") + ""))
           set_data(t28, t28_value);
-        if (dirty[2] & 1024 && t30_value !== (t30_value = (ctx2[226] ? ctx2[132](ctx2[226]) : "\u2013") + ""))
+        if (dirty[2] & 1024 && t30_value !== (t30_value = (ctx2[227] ? ctx2[132](ctx2[227]) : "\u2013") + ""))
           set_data(t30, t30_value);
-        if (dirty[2] & 1024 && td16_title_value !== (td16_title_value = ctx2[226] ? ctx2[133](ctx2[226]) : "")) {
+        if (dirty[2] & 1024 && td16_title_value !== (td16_title_value = ctx2[227] ? ctx2[133](ctx2[227]) : "")) {
           attr(td16, "title", td16_title_value);
         }
-        if (dirty[2] & 1024 && t32_value !== (t32_value = ctx2[225].fieldable ? "yes" : "no"))
+        if (dirty[2] & 1024 && t32_value !== (t32_value = ctx2[226].fieldable ? "yes" : "no"))
           set_data(t32, t32_value);
         if (dirty[2] & 1024) {
-          toggle_class(tr2, "dmg-clip-off", !ctx2[225].fieldable);
+          toggle_class(tr2, "dmg-clip-off", !ctx2[226].fieldable);
         }
         if (dirty[2] & 1024) {
-          toggle_class(tr2, "dmg-clip-on", ctx2[225].chosen);
+          toggle_class(tr2, "dmg-clip-on", ctx2[226].chosen);
         }
       },
       d(detaching) {
@@ -47326,12 +47367,12 @@
   function create_each_block29(key_1, ctx) {
     let tr2;
     let td0;
-    let t0_value = (scoreOf(ctx[222]) == null ? "?" : scoreOf(ctx[222])) + "";
+    let t0_value = (scoreOf(ctx[223]) == null ? "?" : scoreOf(ctx[223])) + "";
     let t0;
     let td0_title_value;
     let t1;
     let td1;
-    let t2_value = ctx[132](ctx[222].mode) + "";
+    let t2_value = ctx[132](ctx[223].mode) + "";
     let t2;
     let td1_title_value;
     let t3;
@@ -47340,62 +47381,62 @@
     let td3;
     let t5;
     let td4;
-    let t6_value = ctx[222].mode.label + "";
+    let t6_value = ctx[223].mode.label + "";
     let t6;
     let t7;
     let td5;
-    let t8_value = ctx[128](ctx[222].mode.damage.min, 0) + "";
+    let t8_value = ctx[128](ctx[223].mode.damage.min, 0) + "";
     let t8;
     let t9;
-    let t10_value = ctx[128](ctx[222].mode.damage.max, 0) + "";
+    let t10_value = ctx[128](ctx[223].mode.damage.max, 0) + "";
     let t10;
     let span;
     let t11;
-    let t12_value = Math.round(ctx[222].mode.damage.resist * 100) + "";
+    let t12_value = Math.round(ctx[223].mode.damage.resist * 100) + "";
     let t12;
     let t13;
     let t14;
     let td6;
-    let t15_value = (ctx[222].mode.attack.range == null ? "\u2013" : ctx[128](ctx[222].mode.attack.range, 0)) + "";
+    let t15_value = (ctx[223].mode.attack.range == null ? "\u2013" : ctx[128](ctx[223].mode.attack.range, 0)) + "";
     let t15;
     let td6_title_value;
     let t16;
     let td7;
-    let t17_value = Math.round(ctx[222].mode.accuracy) + "";
+    let t17_value = Math.round(ctx[223].mode.accuracy) + "";
     let t17;
     let t18;
     let t19;
     let td8;
-    let t20_value = Math.round(ctx[222].mode.hitRate * 100) + "";
+    let t20_value = Math.round(ctx[223].mode.hitRate * 100) + "";
     let t20;
     let t21;
     let t22;
     let td9;
-    let t23_value = ctx[128](ctx[222].mode.perAttack) + "";
+    let t23_value = ctx[128](ctx[223].mode.perAttack) + "";
     let t23;
     let t24;
     let td10;
-    let t25_value = (ctx[222].mode.approachTu > 0 ? ctx[128](ctx[222].mode.approachTu, 0) : "\u2013") + "";
+    let t25_value = (ctx[223].mode.approachTu > 0 ? ctx[128](ctx[223].mode.approachTu, 0) : "\u2013") + "";
     let t25;
     let t26;
     let td11;
-    let t27_value = (ctx[222].mode.attacksToKill == null ? "\u2013" : ctx[128](ctx[222].mode.attacksToKill)) + "";
+    let t27_value = (ctx[223].mode.attacksToKill == null ? "\u2013" : ctx[128](ctx[223].mode.attacksToKill)) + "";
     let t27;
     let t28;
     let td12;
-    let t29_value = (ctx[222].mode.tuToKill == null ? "\u2013" : ctx[128](ctx[222].mode.tuToKill, 0)) + "";
+    let t29_value = (ctx[223].mode.tuToKill == null ? "\u2013" : ctx[128](ctx[223].mode.tuToKill, 0)) + "";
     let t29;
     let t30;
     let if_block3_anchor;
     let mounted;
     let dispose;
-    let if_block0 = ctx[222].first && create_if_block_106(ctx);
-    let if_block1 = ctx[222].first && create_if_block_96(ctx);
-    let if_block2 = ctx[222].mode.damage.hitsPerAttack > 1 && create_if_block_710(ctx);
+    let if_block0 = ctx[223].first && create_if_block_106(ctx);
+    let if_block1 = ctx[223].first && create_if_block_96(ctx);
+    let if_block2 = ctx[223].mode.damage.hitsPerAttack > 1 && create_if_block_710(ctx);
     function click_handler_24() {
-      return ctx[211](ctx[222]);
+      return ctx[212](ctx[223]);
     }
-    let if_block3 = ctx[63] == ctx[222].weapon.id && ctx[222].last && create_if_block_410(ctx);
+    let if_block3 = ctx[63] == ctx[223].weapon.id && ctx[223].last && create_if_block_410(ctx);
     return {
       key: key_1,
       first: null,
@@ -47456,25 +47497,25 @@
           if_block3.c();
         if_block3_anchor = empty();
         attr(td0, "class", "num dmg-score");
-        attr(td0, "title", td0_title_value = ctx[130](ctx[222]));
-        toggle_class(td0, "dmg-score-sub", !ctx[222].first);
-        toggle_class(td0, "dmg-score-good", scoreBand(scoreOf(ctx[222])) == "good");
-        toggle_class(td0, "dmg-score-fair", scoreBand(scoreOf(ctx[222])) == "fair");
-        toggle_class(td0, "dmg-score-poor", scoreBand(scoreOf(ctx[222])) == "poor");
-        toggle_class(td0, "dmg-score-none", scoreBand(scoreOf(ctx[222])) == "none");
+        attr(td0, "title", td0_title_value = ctx[130](ctx[223]));
+        toggle_class(td0, "dmg-score-sub", !ctx[223].first);
+        toggle_class(td0, "dmg-score-good", scoreBand(scoreOf(ctx[223])) == "good");
+        toggle_class(td0, "dmg-score-fair", scoreBand(scoreOf(ctx[223])) == "fair");
+        toggle_class(td0, "dmg-score-poor", scoreBand(scoreOf(ctx[223])) == "poor");
+        toggle_class(td0, "dmg-score-none", scoreBand(scoreOf(ctx[223])) == "none");
         attr(td1, "class", "num");
-        attr(td1, "title", td1_title_value = ctx[133](ctx[222].mode));
+        attr(td1, "title", td1_title_value = ctx[133](ctx[223].mode));
         attr(td2, "class", "dmg-name");
         attr(td3, "class", "num dmg-cap");
-        toggle_class(td4, "dmg-submode", !ctx[222].first);
+        toggle_class(td4, "dmg-submode", !ctx[223].first);
         attr(span, "class", "dmg-resist");
         attr(span, "title", ctx[113]);
-        toggle_class(span, "dmg-immune", ctx[222].mode.damage.resist == 0);
+        toggle_class(span, "dmg-immune", ctx[223].mode.damage.resist == 0);
         attr(td5, "class", "num");
         attr(td6, "class", "num");
-        attr(td6, "title", td6_title_value = ctx[131](ctx[222].mode));
-        toggle_class(td6, "dmg-outofrange", outOfRange(ctx[222].mode));
-        toggle_class(td6, "dmg-offrange", !rangeGoverns(ctx[222].mode));
+        attr(td6, "title", td6_title_value = ctx[131](ctx[223].mode));
+        toggle_class(td6, "dmg-outofrange", outOfRange(ctx[223].mode));
+        toggle_class(td6, "dmg-offrange", !rangeGoverns(ctx[223].mode));
         attr(td7, "class", "num");
         attr(td8, "class", "num");
         attr(td9, "class", "num");
@@ -47483,8 +47524,8 @@
         attr(td11, "class", "num");
         attr(td12, "class", "num dmg-key");
         attr(tr2, "class", "dmg-click");
-        toggle_class(tr2, "dmg-group-first", ctx[222].first);
-        toggle_class(tr2, "dmg-open", ctx[63] == ctx[222].weapon.id);
+        toggle_class(tr2, "dmg-group-first", ctx[223].first);
+        toggle_class(tr2, "dmg-open", ctx[63] == ctx[223].weapon.id);
         this.first = tr2;
       },
       m(target, anchor) {
@@ -47550,32 +47591,32 @@
       },
       p(new_ctx, dirty) {
         ctx = new_ctx;
-        if (dirty[2] & 1024 && t0_value !== (t0_value = (scoreOf(ctx[222]) == null ? "?" : scoreOf(ctx[222])) + ""))
+        if (dirty[2] & 1024 && t0_value !== (t0_value = (scoreOf(ctx[223]) == null ? "?" : scoreOf(ctx[223])) + ""))
           set_data(t0, t0_value);
-        if (dirty[2] & 1024 && td0_title_value !== (td0_title_value = ctx[130](ctx[222]))) {
+        if (dirty[2] & 1024 && td0_title_value !== (td0_title_value = ctx[130](ctx[223]))) {
           attr(td0, "title", td0_title_value);
         }
         if (dirty[2] & 1024) {
-          toggle_class(td0, "dmg-score-sub", !ctx[222].first);
+          toggle_class(td0, "dmg-score-sub", !ctx[223].first);
         }
         if (dirty[2] & 1024) {
-          toggle_class(td0, "dmg-score-good", scoreBand(scoreOf(ctx[222])) == "good");
+          toggle_class(td0, "dmg-score-good", scoreBand(scoreOf(ctx[223])) == "good");
         }
         if (dirty[2] & 1024) {
-          toggle_class(td0, "dmg-score-fair", scoreBand(scoreOf(ctx[222])) == "fair");
+          toggle_class(td0, "dmg-score-fair", scoreBand(scoreOf(ctx[223])) == "fair");
         }
         if (dirty[2] & 1024) {
-          toggle_class(td0, "dmg-score-poor", scoreBand(scoreOf(ctx[222])) == "poor");
+          toggle_class(td0, "dmg-score-poor", scoreBand(scoreOf(ctx[223])) == "poor");
         }
         if (dirty[2] & 1024) {
-          toggle_class(td0, "dmg-score-none", scoreBand(scoreOf(ctx[222])) == "none");
+          toggle_class(td0, "dmg-score-none", scoreBand(scoreOf(ctx[223])) == "none");
         }
-        if (dirty[2] & 1024 && t2_value !== (t2_value = ctx[132](ctx[222].mode) + ""))
+        if (dirty[2] & 1024 && t2_value !== (t2_value = ctx[132](ctx[223].mode) + ""))
           set_data(t2, t2_value);
-        if (dirty[2] & 1024 && td1_title_value !== (td1_title_value = ctx[133](ctx[222].mode))) {
+        if (dirty[2] & 1024 && td1_title_value !== (td1_title_value = ctx[133](ctx[223].mode))) {
           attr(td1, "title", td1_title_value);
         }
-        if (ctx[222].first) {
+        if (ctx[223].first) {
           if (if_block0) {
             if_block0.p(ctx, dirty);
           } else {
@@ -47587,7 +47628,7 @@
           if_block0.d(1);
           if_block0 = null;
         }
-        if (ctx[222].first) {
+        if (ctx[223].first) {
           if (if_block1) {
             if_block1.p(ctx, dirty);
           } else {
@@ -47599,21 +47640,21 @@
           if_block1.d(1);
           if_block1 = null;
         }
-        if (dirty[2] & 1024 && t6_value !== (t6_value = ctx[222].mode.label + ""))
+        if (dirty[2] & 1024 && t6_value !== (t6_value = ctx[223].mode.label + ""))
           set_data(t6, t6_value);
         if (dirty[2] & 1024) {
-          toggle_class(td4, "dmg-submode", !ctx[222].first);
+          toggle_class(td4, "dmg-submode", !ctx[223].first);
         }
-        if (dirty[2] & 1024 && t8_value !== (t8_value = ctx[128](ctx[222].mode.damage.min, 0) + ""))
+        if (dirty[2] & 1024 && t8_value !== (t8_value = ctx[128](ctx[223].mode.damage.min, 0) + ""))
           set_data(t8, t8_value);
-        if (dirty[2] & 1024 && t10_value !== (t10_value = ctx[128](ctx[222].mode.damage.max, 0) + ""))
+        if (dirty[2] & 1024 && t10_value !== (t10_value = ctx[128](ctx[223].mode.damage.max, 0) + ""))
           set_data(t10, t10_value);
-        if (dirty[2] & 1024 && t12_value !== (t12_value = Math.round(ctx[222].mode.damage.resist * 100) + ""))
+        if (dirty[2] & 1024 && t12_value !== (t12_value = Math.round(ctx[223].mode.damage.resist * 100) + ""))
           set_data(t12, t12_value);
         if (dirty[2] & 1024) {
-          toggle_class(span, "dmg-immune", ctx[222].mode.damage.resist == 0);
+          toggle_class(span, "dmg-immune", ctx[223].mode.damage.resist == 0);
         }
-        if (ctx[222].mode.damage.hitsPerAttack > 1) {
+        if (ctx[223].mode.damage.hitsPerAttack > 1) {
           if (if_block2) {
             if_block2.p(ctx, dirty);
           } else {
@@ -47625,36 +47666,36 @@
           if_block2.d(1);
           if_block2 = null;
         }
-        if (dirty[2] & 1024 && t15_value !== (t15_value = (ctx[222].mode.attack.range == null ? "\u2013" : ctx[128](ctx[222].mode.attack.range, 0)) + ""))
+        if (dirty[2] & 1024 && t15_value !== (t15_value = (ctx[223].mode.attack.range == null ? "\u2013" : ctx[128](ctx[223].mode.attack.range, 0)) + ""))
           set_data(t15, t15_value);
-        if (dirty[2] & 1024 && td6_title_value !== (td6_title_value = ctx[131](ctx[222].mode))) {
+        if (dirty[2] & 1024 && td6_title_value !== (td6_title_value = ctx[131](ctx[223].mode))) {
           attr(td6, "title", td6_title_value);
         }
         if (dirty[2] & 1024) {
-          toggle_class(td6, "dmg-outofrange", outOfRange(ctx[222].mode));
+          toggle_class(td6, "dmg-outofrange", outOfRange(ctx[223].mode));
         }
         if (dirty[2] & 1024) {
-          toggle_class(td6, "dmg-offrange", !rangeGoverns(ctx[222].mode));
+          toggle_class(td6, "dmg-offrange", !rangeGoverns(ctx[223].mode));
         }
-        if (dirty[2] & 1024 && t17_value !== (t17_value = Math.round(ctx[222].mode.accuracy) + ""))
+        if (dirty[2] & 1024 && t17_value !== (t17_value = Math.round(ctx[223].mode.accuracy) + ""))
           set_data(t17, t17_value);
-        if (dirty[2] & 1024 && t20_value !== (t20_value = Math.round(ctx[222].mode.hitRate * 100) + ""))
+        if (dirty[2] & 1024 && t20_value !== (t20_value = Math.round(ctx[223].mode.hitRate * 100) + ""))
           set_data(t20, t20_value);
-        if (dirty[2] & 1024 && t23_value !== (t23_value = ctx[128](ctx[222].mode.perAttack) + ""))
+        if (dirty[2] & 1024 && t23_value !== (t23_value = ctx[128](ctx[223].mode.perAttack) + ""))
           set_data(t23, t23_value);
-        if (dirty[2] & 1024 && t25_value !== (t25_value = (ctx[222].mode.approachTu > 0 ? ctx[128](ctx[222].mode.approachTu, 0) : "\u2013") + ""))
+        if (dirty[2] & 1024 && t25_value !== (t25_value = (ctx[223].mode.approachTu > 0 ? ctx[128](ctx[223].mode.approachTu, 0) : "\u2013") + ""))
           set_data(t25, t25_value);
-        if (dirty[2] & 1024 && t27_value !== (t27_value = (ctx[222].mode.attacksToKill == null ? "\u2013" : ctx[128](ctx[222].mode.attacksToKill)) + ""))
+        if (dirty[2] & 1024 && t27_value !== (t27_value = (ctx[223].mode.attacksToKill == null ? "\u2013" : ctx[128](ctx[223].mode.attacksToKill)) + ""))
           set_data(t27, t27_value);
-        if (dirty[2] & 1024 && t29_value !== (t29_value = (ctx[222].mode.tuToKill == null ? "\u2013" : ctx[128](ctx[222].mode.tuToKill, 0)) + ""))
+        if (dirty[2] & 1024 && t29_value !== (t29_value = (ctx[223].mode.tuToKill == null ? "\u2013" : ctx[128](ctx[223].mode.tuToKill, 0)) + ""))
           set_data(t29, t29_value);
         if (dirty[2] & 1024) {
-          toggle_class(tr2, "dmg-group-first", ctx[222].first);
+          toggle_class(tr2, "dmg-group-first", ctx[223].first);
         }
         if (dirty[2] & 1026) {
-          toggle_class(tr2, "dmg-open", ctx[63] == ctx[222].weapon.id);
+          toggle_class(tr2, "dmg-open", ctx[63] == ctx[223].weapon.id);
         }
-        if (ctx[63] == ctx[222].weapon.id && ctx[222].last) {
+        if (ctx[63] == ctx[223].weapon.id && ctx[223].last) {
           if (if_block3) {
             if_block3.p(ctx, dirty);
           } else {
@@ -47879,7 +47920,7 @@
     let current_block_type_2 = select_block_type_10(ctx, [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1]);
     let if_block7 = current_block_type_2(ctx);
     function articlepeek_id_binding(value) {
-      ctx[216](value);
+      ctx[217](value);
     }
     let articlepeek_props = {};
     if (ctx[60] !== void 0) {
@@ -48061,7 +48102,7 @@
         attr(select0, "class", "dmg-input dmg-list");
         attr(select0, "size", select0_size_value = ctx[55].length > 1 ? 8 : 2);
         if (ctx[3] === void 0)
-          add_render_callback(() => ctx[162].call(select0));
+          add_render_callback(() => ctx[163].call(select0));
         attr(section1, "class", "dmg-block");
         attr(header2, "title", ctx[109]);
         attr(button4, "class", "dmg-chip");
@@ -48092,7 +48133,7 @@
         attr(p, "title", ctx[111]);
         attr(select1, "class", "dmg-input");
         if (ctx[4] === void 0)
-          add_render_callback(() => ctx[176].call(select1));
+          add_render_callback(() => ctx[177].call(select1));
         attr(label3, "class", "dmg-row");
         attr(input4, "type", "checkbox");
         attr(label4, "class", "dmg-check");
@@ -48115,7 +48156,7 @@
         attr(select2, "class", "dmg-input");
         attr(select2, "title", "Take down: health runs out OR stun exceeds the health that is left - the two add, which is why a rifle with ToStun can drop a target that the health damage alone would not. Kill outright: health damage only. Capture: stun only, for taking one alive.");
         if (ctx[15] === void 0)
-          add_render_callback(() => ctx[181].call(select2));
+          add_render_callback(() => ctx[182].call(select2));
         attr(label8, "class", "dmg-row");
         option3.__value = "derived";
         option3.value = option3.__value;
@@ -48126,7 +48167,7 @@
         attr(select3, "class", "dmg-input");
         attr(select3, "title", "Shotguns only. Whether scattered pellets are assumed to land. OXCE traces each pellet through voxels against the target's model, so this is an assumption rather than a calculation.");
         if (ctx[14] === void 0)
-          add_render_callback(() => ctx[182].call(select3));
+          add_render_callback(() => ctx[183].call(select3));
         attr(label9, "class", "dmg-row");
         attr(section2, "class", "dmg-block");
         attr(aside, "class", "dmg-side");
@@ -48280,27 +48321,27 @@
         current = true;
         if (!mounted) {
           dispose = [
-            listen(button0, "click", ctx[151]),
-            listen(button1, "click", ctx[152]),
-            listen(section0, "dragover", prevent_default(ctx[157])),
-            listen(section0, "dragleave", ctx[158]),
+            listen(button0, "click", ctx[152]),
+            listen(button1, "click", ctx[153]),
+            listen(section0, "dragover", prevent_default(ctx[158])),
+            listen(section0, "dragleave", ctx[159]),
             listen(section0, "drop", ctx[93]),
             listen(button2, "click", ctx[100]),
             listen(button3, "click", ctx[101]),
-            listen(input0, "input", ctx[161]),
-            listen(select0, "change", ctx[162]),
-            listen(button4, "click", ctx[171]),
-            listen(button5, "click", ctx[172]),
-            listen(input1, "input", ctx[173]),
-            listen(input2, "input", ctx[174]),
-            listen(input3, "input", ctx[175]),
-            listen(select1, "change", ctx[176]),
-            listen(input4, "change", ctx[177]),
-            listen(input5, "change", ctx[178]),
-            listen(input6, "change", ctx[179]),
-            listen(input7, "change", ctx[180]),
-            listen(select2, "change", ctx[181]),
-            listen(select3, "change", ctx[182])
+            listen(input0, "input", ctx[162]),
+            listen(select0, "change", ctx[163]),
+            listen(button4, "click", ctx[172]),
+            listen(button5, "click", ctx[173]),
+            listen(input1, "input", ctx[174]),
+            listen(input2, "input", ctx[175]),
+            listen(input3, "input", ctx[176]),
+            listen(select1, "change", ctx[177]),
+            listen(input4, "change", ctx[178]),
+            listen(input5, "change", ctx[179]),
+            listen(input6, "change", ctx[180]),
+            listen(input7, "change", ctx[181]),
+            listen(select2, "change", ctx[182]),
+            listen(select3, "change", ctx[183])
           ];
           mounted = true;
         }
@@ -48647,6 +48688,8 @@
     let rows;
     let resistances;
     let targetStats;
+    let $centcomSoldier;
+    component_subscribe($$self, centcomSoldier, ($$value) => $$invalidate(151, $centcomSoldier = $$value));
     let { targetId = "" } = $$props;
     let view = "weapons";
     let soldiers = [];
@@ -48876,7 +48919,7 @@
         return;
       }
       $$invalidate(50, current.armor = id, current);
-      persist();
+      persist2();
     }
     function copyToManual() {
       if (!current || !current.fromSave)
@@ -48889,9 +48932,9 @@
       $$invalidate(30, soldierSource = "manual");
       $$invalidate(31, sourceTouched = true);
       $$invalidate(3, currentId = copy.id);
-      persist();
+      persist2();
     }
-    function persist() {
+    function persist2() {
       $$invalidate(2, soldiers);
       saveSoldiers(soldiers);
     }
@@ -48900,14 +48943,14 @@
       $$invalidate(2, soldiers = [...soldiers, s]);
       $$invalidate(3, currentId = s.id);
       $$invalidate(58, editing = true);
-      persist();
+      persist2();
     }
     function removeSoldier() {
       if (!current || soldiers.length <= 1)
         return;
       $$invalidate(2, soldiers = soldiers.filter((s) => s.id != currentId));
       $$invalidate(3, currentId = soldiers[0].id);
-      persist();
+      persist2();
     }
     function onImport(e) {
       const file = e.target.files && e.target.files[0];
@@ -48919,7 +48962,7 @@
           $$invalidate(2, soldiers = importSoldiers(String(reader.result)));
           $$invalidate(3, currentId = soldiers[0].id);
           $$invalidate(64, importError = "");
-          persist();
+          persist2();
         } catch (err) {
           $$invalidate(64, importError = String(err.message || err));
         }
@@ -49269,16 +49312,16 @@
     };
     function input0_input_handler() {
       crewFilter = this.value;
-      $$invalidate(33, crewFilter);
+      $$invalidate(33, crewFilter), $$invalidate(151, $centcomSoldier), $$invalidate(32, saveCrew), $$invalidate(35, saveState);
     }
     function select0_change_handler() {
       currentId = select_value(this);
-      $$invalidate(3, currentId), $$invalidate(55, roster), $$invalidate(30, soldierSource), $$invalidate(32, saveCrew), $$invalidate(2, soldiers), $$invalidate(31, sourceTouched), $$invalidate(35, saveState);
-      $$invalidate(56, shownRoster), $$invalidate(33, crewFilter), $$invalidate(55, roster), $$invalidate(30, soldierSource), $$invalidate(32, saveCrew), $$invalidate(2, soldiers), $$invalidate(31, sourceTouched), $$invalidate(35, saveState);
+      $$invalidate(3, currentId), $$invalidate(151, $centcomSoldier), $$invalidate(32, saveCrew), $$invalidate(55, roster), $$invalidate(35, saveState), $$invalidate(30, soldierSource), $$invalidate(2, soldiers), $$invalidate(31, sourceTouched);
+      $$invalidate(56, shownRoster), $$invalidate(33, crewFilter), $$invalidate(55, roster), $$invalidate(151, $centcomSoldier), $$invalidate(32, saveCrew), $$invalidate(30, soldierSource), $$invalidate(2, soldiers), $$invalidate(35, saveState), $$invalidate(31, sourceTouched);
     }
     function input_input_handler() {
       current.name = this.value;
-      $$invalidate(50, current), $$invalidate(56, shownRoster), $$invalidate(55, roster), $$invalidate(3, currentId), $$invalidate(137, crewArmor), $$invalidate(33, crewFilter), $$invalidate(30, soldierSource), $$invalidate(32, saveCrew), $$invalidate(2, soldiers), $$invalidate(31, sourceTouched), $$invalidate(35, saveState);
+      $$invalidate(50, current), $$invalidate(56, shownRoster), $$invalidate(55, roster), $$invalidate(3, currentId), $$invalidate(137, crewArmor), $$invalidate(33, crewFilter), $$invalidate(30, soldierSource), $$invalidate(32, saveCrew), $$invalidate(2, soldiers), $$invalidate(151, $centcomSoldier), $$invalidate(31, sourceTouched), $$invalidate(35, saveState);
     }
     function input0_input_handler_1() {
       armorFilter = this.value;
@@ -49286,8 +49329,8 @@
     }
     function select_change_handler() {
       armorPick = select_value(this);
-      $$invalidate(68, armorPick), $$invalidate(50, current), $$invalidate(56, shownRoster), $$invalidate(55, roster), $$invalidate(3, currentId), $$invalidate(137, crewArmor), $$invalidate(33, crewFilter), $$invalidate(30, soldierSource), $$invalidate(32, saveCrew), $$invalidate(2, soldiers), $$invalidate(31, sourceTouched), $$invalidate(35, saveState);
-      $$invalidate(89, armorOptions), $$invalidate(57, shownArmors), $$invalidate(50, current), $$invalidate(54, previewing), $$invalidate(27, armorFilter), $$invalidate(38, armorChoices), $$invalidate(56, shownRoster), $$invalidate(55, roster), $$invalidate(3, currentId), $$invalidate(137, crewArmor), $$invalidate(28, availMode), $$invalidate(35, saveState), $$invalidate(33, crewFilter), $$invalidate(30, soldierSource), $$invalidate(32, saveCrew), $$invalidate(2, soldiers), $$invalidate(29, availTouched), $$invalidate(31, sourceTouched);
+      $$invalidate(68, armorPick), $$invalidate(50, current), $$invalidate(56, shownRoster), $$invalidate(55, roster), $$invalidate(3, currentId), $$invalidate(137, crewArmor), $$invalidate(33, crewFilter), $$invalidate(30, soldierSource), $$invalidate(32, saveCrew), $$invalidate(2, soldiers), $$invalidate(151, $centcomSoldier), $$invalidate(31, sourceTouched), $$invalidate(35, saveState);
+      $$invalidate(89, armorOptions), $$invalidate(57, shownArmors), $$invalidate(50, current), $$invalidate(54, previewing), $$invalidate(27, armorFilter), $$invalidate(38, armorChoices), $$invalidate(56, shownRoster), $$invalidate(55, roster), $$invalidate(3, currentId), $$invalidate(137, crewArmor), $$invalidate(28, availMode), $$invalidate(35, saveState), $$invalidate(33, crewFilter), $$invalidate(30, soldierSource), $$invalidate(32, saveCrew), $$invalidate(2, soldiers), $$invalidate(151, $centcomSoldier), $$invalidate(29, availTouched), $$invalidate(31, sourceTouched);
     }
     const change_handler_3 = (e) => setArmor(e.target.value);
     const click_handler_5 = () => setArmor(current.fromSave.wornArmor);
@@ -49296,7 +49339,7 @@
       if (readOnlySoldier)
         return;
       $$invalidate(50, current.stats[k] = +e.target.value || 0, current);
-      persist();
+      persist2();
     };
     const click_handler_7 = () => download("xpedia-soldiers.json", exportSoldiers(soldiers));
     const click_handler_8 = () => $$invalidate(8, isDay = true);
@@ -49446,6 +49489,16 @@
       if ($$self.$$.dirty[1] & 16) {
         $:
           $$invalidate(32, saveCrew = saveState ? soldiersFromSave(saveState.crew) : []);
+      }
+      if ($$self.$$.dirty[1] & 2 | $$self.$$.dirty[4] & 134217728) {
+        $:
+          if ($centcomSoldier && saveCrew.some((s) => s.id == $centcomSoldier)) {
+            $$invalidate(30, soldierSource = "save");
+            $$invalidate(31, sourceTouched = true);
+            $$invalidate(33, crewFilter = "");
+            $$invalidate(3, currentId = $centcomSoldier);
+            centcomSoldier.set("");
+          }
       }
       if ($$self.$$.dirty[0] & 1073741824 | $$self.$$.dirty[1] & 3) {
         $:
@@ -50061,7 +50114,7 @@
       bare,
       setArmor,
       copyToManual,
-      persist,
+      persist2,
       addSoldier,
       removeSoldier,
       onImport,
@@ -50113,6 +50166,7 @@
       passing,
       soldierArmor,
       wornStats,
+      $centcomSoldier,
       click_handler,
       click_handler_1,
       change_handler,
@@ -55790,8 +55844,7389 @@
   };
   var TechTree_default = TechTree;
 
-  // src/Notepad.svelte
+  // src/pax.ts
+  var PAX_STATS = [
+    { k: "tu", ab: "TU", name: "Time Units" },
+    { k: "stamina", ab: "STA", name: "Stamina" },
+    { k: "health", ab: "HP", name: "Health" },
+    { k: "bravery", ab: "BRV", name: "Bravery" },
+    { k: "reactions", ab: "REA", name: "Reactions" },
+    { k: "firing", ab: "FIR", name: "Firing" },
+    { k: "throwing", ab: "THR", name: "Throwing" },
+    { k: "melee", ab: "MEL", name: "Melee" },
+    { k: "strength", ab: "STR", name: "Strength" },
+    { k: "mana", ab: "FRS", name: "Freshness" },
+    { k: "psiStrength", ab: "VPW", name: "Voodoo Power" },
+    { k: "psiSkill", ab: "VSK", name: "Voodoo Skill" }
+  ];
+  var PAX_KEYS = PAX_STATS.map((s) => s.k);
+  var STAT_NAME = {};
+  for (const s of PAX_STATS)
+    STAT_NAME[s.k] = s.name;
+  var DEFAULT_RANKS = [
+    "STR_ROOKIE",
+    "STR_SQUADDIE",
+    "STR_SERGEANT",
+    "STR_CAPTAIN",
+    "STR_COLONEL",
+    "STR_COMMANDER"
+  ];
+  function typeRule(type2) {
+    return rul.soldiers && rul.soldiers[type2] || {};
+  }
+  function numbers(src) {
+    const out = {};
+    for (const k of PAX_KEYS)
+      out[k] = src && typeof src == "object" ? +src[k] || 0 : 0;
+    return out;
+  }
+  function rankName(type2, rank) {
+    const own = typeRule(type2).rankStrings;
+    const id = Array.isArray(own) && own.length ? own[Math.min(rank, own.length - 1)] : DEFAULT_RANKS[rank];
+    return id ? rul.tr(id) : "Rank " + rank;
+  }
+  function paxRows(save, withFallen = false) {
+    if (!save)
+      return [];
+    const raws = [...save.crew || [], ...withFallen ? save.fallen || [] : []];
+    const profiles = soldiersFromSave(raws);
+    return raws.map((raw, i) => buildRow(raw, profiles[i]));
+  }
+  function buildRow(raw, profile) {
+    const rule = typeRule(raw.type);
+    const stats = numbers(profile.stats);
+    const armored = numbers(effectiveStats(profile));
+    const cur = numbers(raw.stats);
+    const initial = numbers(raw.initial);
+    const cap = numbers(rule.statCaps);
+    const train = numbers(rule.trainingStatCaps);
+    const d = raw.diary || {};
+    let gymLeft = 0;
+    let capLeft = 0;
+    for (const k of PAX_KEYS) {
+      if (train[k] > 0)
+        gymLeft += Math.max(0, train[k] - cur[k]);
+      if (cap[k] > 0)
+        capLeft += Math.max(0, cap[k] - cur[k]);
+    }
+    let gained = +d.statGainTotal || 0;
+    if (!gained)
+      for (const k of PAX_KEYS)
+        gained += Math.max(0, cur[k] - initial[k]);
+    const fired = +d.shotsFiredCounterTotal || 0;
+    const landed = +d.shotsLandedCounterTotal || 0;
+    const mana = cur.mana || 0;
+    return {
+      id: profile.id,
+      name: raw.name,
+      type: raw.type,
+      typeName: rul.tr(raw.type),
+      rank: raw.rank,
+      rankName: rankName(raw.type, raw.rank),
+      base: raw.fallen ? "Memorial" : raw.base,
+      craft: raw.craft ? rul.tr(raw.craft) : "",
+      armor: raw.armor,
+      armorName: raw.armor ? rul.tr(raw.armor) : "",
+      status: raw.fallen ? "fallen" : raw.recovery > 0 ? "wounded" : "fit",
+      recovery: raw.recovery > 0 ? Math.ceil(raw.recovery) : 0,
+      fresh: mana > 0 ? Math.max(0, Math.min(1, (mana - (raw.manaMissing || 0)) / mana)) : 1,
+      stats,
+      armored,
+      raw: cur,
+      initial,
+      cap,
+      train,
+      missions: raw.missions,
+      kills: raw.kills,
+      stuns: raw.stuns,
+      medals: raw.commendations || [],
+      shots: fired,
+      hits: landed,
+      timesWounded: +d.timesWoundedTotal || 0,
+      daysWounded: +d.daysWoundedTotal || 0,
+      months: +d.monthsService || 0,
+      gained,
+      gainRate: raw.missions > 0 ? gained / raw.missions : null,
+      gymLeft,
+      capLeft,
+      weapons: Object.entries(raw.killsByWeapon || {}).sort((a, b) => b[1] - a[1])
+    };
+  }
+  function percentiles(pool, value, basis = "rank", graded = pool) {
+    const out = /* @__PURE__ */ new Map();
+    for (const r of graded)
+      out.set(r.id, {});
+    if (!pool.length)
+      return out;
+    for (const k of PAX_KEYS) {
+      const vals = pool.map((r) => value(r, k)).sort((a, b) => a - b);
+      const top = vals[vals.length - 1];
+      for (const r of graded) {
+        const v = value(r, k);
+        if (v <= 0) {
+          out.get(r.id)[k] = 0;
+          continue;
+        }
+        if (basis == "scaled") {
+          out.get(r.id)[k] = top > 0 ? 100 * v / top : 0;
+          continue;
+        }
+        let below = 0;
+        let equal = 0;
+        for (const x of vals) {
+          if (x < v)
+            below++;
+          else if (x == v)
+            equal++;
+        }
+        out.get(r.id)[k] = 100 * (below + equal / 2) / vals.length;
+      }
+    }
+    return out;
+  }
+  var DEFAULT_ROLES = [
+    {
+      id: "gunner",
+      name: "Gunner",
+      weights: { firing: 4, tu: 2, reactions: 1, bravery: 1 },
+      note: "Aimed and auto fire on your turn. Firing first, TU to get more shots off."
+    },
+    {
+      id: "overwatch",
+      name: "Overwatch",
+      weights: { reactions: 4, firing: 3, tu: 1 },
+      note: "Reaction fire. Reactions decide who shoots first, Firing decides whether it lands."
+    },
+    {
+      id: "brawler",
+      name: "Brawler",
+      weights: { melee: 4, strength: 2, tu: 2, health: 1, bravery: 1 },
+      note: "Melee. Most melee weapons add Strength to damage, and you have to walk there."
+    },
+    {
+      id: "tank",
+      name: "Tank",
+      weights: { health: 4, bravery: 2, strength: 1, stamina: 1 },
+      note: "Point gal. Soaks hits and does not panic when she does."
+    },
+    {
+      id: "bomber",
+      name: "Bomber",
+      weights: { throwing: 4, strength: 2, tu: 1 },
+      note: "Grenades and thrown weapons. Strength sets how far they fly."
+    },
+    {
+      id: "scout",
+      name: "Scout",
+      weights: { tu: 4, stamina: 2, reactions: 2, bravery: 1 },
+      note: "Moves far, spots first, survives the first reaction shot."
+    },
+    {
+      id: "heavy",
+      name: "Heavy",
+      weights: { strength: 4, firing: 2, health: 1, tu: 1 },
+      note: "Carries the big gun. Strength is the weight limit before TU and Stamina suffer."
+    },
+    {
+      id: "voodoo",
+      name: "Voodoo",
+      weights: { psiSkill: 4, psiStrength: 2, mana: 2 },
+      note: "Psionics. Skill to attack, Power to resist, Freshness to keep going."
+    },
+    {
+      id: "pilot",
+      name: "Pilot",
+      weights: { firing: 2, reactions: 2, bravery: 1 },
+      note: "Craft crew. The three stats dogfights train."
+    }
+  ];
+  var ROLE_PREF = "xpediaPaxRoles";
+  function loadRoles() {
+    try {
+      const raw = JSON.parse(localStorage[ROLE_PREF] || "null");
+      if (!Array.isArray(raw))
+        return cloneRoles(DEFAULT_ROLES);
+      const out = raw.map(sanitizeRole).filter(Boolean);
+      return out.length ? out : cloneRoles(DEFAULT_ROLES);
+    } catch (e) {
+      return cloneRoles(DEFAULT_ROLES);
+    }
+  }
+  function saveRoles(roles) {
+    try {
+      localStorage[ROLE_PREF] = JSON.stringify(roles);
+    } catch (e) {
+    }
+  }
+  function cloneRoles(roles) {
+    return roles.map((r) => __spreadProps(__spreadValues({}, r), { weights: __spreadValues({}, r.weights) }));
+  }
+  function sanitizeRole(raw) {
+    if (!raw || typeof raw != "object")
+      return null;
+    const weights = {};
+    if (raw.weights && typeof raw.weights == "object")
+      for (const k of PAX_KEYS) {
+        const w = Math.max(0, Math.min(5, Math.round(+raw.weights[k] || 0)));
+        if (w)
+          weights[k] = w;
+      }
+    return {
+      id: typeof raw.id == "string" && raw.id ? raw.id : "r" + Math.random().toString(36).slice(2, 8),
+      name: typeof raw.name == "string" && raw.name ? raw.name.slice(0, 24) : "Role",
+      weights,
+      note: typeof raw.note == "string" ? raw.note : ""
+    };
+  }
+  function roleScore(role, pct) {
+    let sum = 0;
+    let total = 0;
+    for (const k of Object.keys(role.weights)) {
+      const w = role.weights[k];
+      if (!w || pct[k] == null)
+        continue;
+      sum += w * pct[k];
+      total += w;
+    }
+    return total ? sum / total : null;
+  }
+  function roleScores(rows, roles, ranks) {
+    const out = /* @__PURE__ */ new Map();
+    for (const r of rows) {
+      const pct = ranks.get(r.id) || {};
+      const s = {};
+      for (const role of roles)
+        s[role.id] = roleScore(role, pct);
+      out.set(r.id, s);
+    }
+    return out;
+  }
+  function bestRole(scores, roles) {
+    let best = null;
+    let top = -1;
+    for (const role of roles) {
+      const s = scores && scores[role.id];
+      if (s != null && s > top) {
+        top = s;
+        best = role;
+      }
+    }
+    return best;
+  }
+  var EMPTY_FILTER = {
+    text: "",
+    status: "all",
+    base: "",
+    craft: "",
+    type: "",
+    rank: -1,
+    rules: [],
+    armored: false
+  };
+  function passes(r, f) {
+    if (f.text && !r.name.toLowerCase().includes(f.text.toLowerCase()))
+      return false;
+    if (f.status != "all" && r.status != f.status)
+      return false;
+    if (f.base && r.base != f.base)
+      return false;
+    if (f.craft && (f.craft == "-" ? r.craft : r.craft != f.craft))
+      return false;
+    if (f.type && r.type != f.type)
+      return false;
+    if (f.rank >= 0 && r.rank != f.rank)
+      return false;
+    const st = f.armored ? r.armored : r.stats;
+    for (const rule of f.rules) {
+      const v = +st[rule.k] || 0;
+      if (rule.op == ">=" ? v < rule.v : v > rule.v)
+        return false;
+    }
+    return true;
+  }
+  function staffSquad(candidates, slots, scores) {
+    const seats = [];
+    for (const s of slots)
+      for (let i = 0; i < s.count; i++)
+        seats.push(s.role);
+    const n = Math.min(seats.length, candidates.length);
+    if (!n)
+      return [];
+    const rows = seats.slice(0, n);
+    const m = candidates.length;
+    const cost = rows.map((role) => candidates.map((c) => {
+      var _a;
+      return -((_a = (scores.get(c.id) || {})[role]) != null ? _a : 0);
+    }));
+    const match = hungarian(cost, n, m);
+    const out = [];
+    for (let i = 0; i < n; i++) {
+      const row = candidates[match[i]];
+      out.push({ role: rows[i], row, score: -cost[i][match[i]] });
+    }
+    return out;
+  }
+  function hungarian(a, n, m) {
+    const INF = 1e18;
+    const u = new Array(n + 1).fill(0);
+    const v = new Array(m + 1).fill(0);
+    const p = new Array(m + 1).fill(0);
+    const way = new Array(m + 1).fill(0);
+    for (let i = 1; i <= n; i++) {
+      p[0] = i;
+      let j0 = 0;
+      const minv = new Array(m + 1).fill(INF);
+      const used = new Array(m + 1).fill(false);
+      do {
+        used[j0] = true;
+        const i0 = p[j0];
+        let delta2 = INF;
+        let j1 = 0;
+        for (let j2 = 1; j2 <= m; j2++) {
+          if (used[j2])
+            continue;
+          const cur = a[i0 - 1][j2 - 1] - u[i0] - v[j2];
+          if (cur < minv[j2]) {
+            minv[j2] = cur;
+            way[j2] = j0;
+          }
+          if (minv[j2] < delta2) {
+            delta2 = minv[j2];
+            j1 = j2;
+          }
+        }
+        for (let j2 = 0; j2 <= m; j2++) {
+          if (used[j2]) {
+            u[p[j2]] += delta2;
+            v[j2] -= delta2;
+          } else
+            minv[j2] -= delta2;
+        }
+        j0 = j1;
+      } while (p[j0] != 0);
+      do {
+        const j1 = way[j0];
+        p[j0] = p[j1];
+        j0 = j1;
+      } while (j0);
+    }
+    const ans = new Array(n).fill(-1);
+    for (let j2 = 1; j2 <= m; j2++)
+      if (p[j2])
+        ans[p[j2] - 1] = j2 - 1;
+    return ans;
+  }
+  function toCsv(header, rows) {
+    const cell = (x) => {
+      const s = x == null ? "" : String(x);
+      return /[",\n]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s;
+    };
+    return [header, ...rows].map((r) => r.map(cell).join(",")).join("\n");
+  }
+
+  // src/Pax.svelte
+  var { Map: Map_12 } = globals;
+  function get_each_context31(ctx, list2, i) {
+    const child_ctx = ctx.slice();
+    child_ctx[136] = list2[i];
+    return child_ctx;
+  }
+  function get_each_context_115(ctx, list2, i) {
+    const child_ctx = ctx.slice();
+    child_ctx[139] = list2[i][0];
+    child_ctx[140] = list2[i][1];
+    return child_ctx;
+  }
+  function get_each_context_211(ctx, list2, i) {
+    const child_ctx = ctx.slice();
+    child_ctx[143] = list2[i];
+    return child_ctx;
+  }
+  function get_each_context_38(ctx, list2, i) {
+    const child_ctx = ctx.slice();
+    child_ctx[146] = list2[i];
+    const constants_0 = bar(child_ctx[17], child_ctx[146].k);
+    child_ctx[147] = constants_0;
+    return child_ctx;
+  }
+  function get_each_context_75(ctx, list2, i) {
+    const child_ctx = ctx.slice();
+    child_ctx[160] = list2[i];
+    return child_ctx;
+  }
+  function get_each_context_84(ctx, list2, i) {
+    const child_ctx = ctx.slice();
+    child_ctx[163] = list2[i];
+    return child_ctx;
+  }
+  function get_each_context_116(ctx, list2, i) {
+    const child_ctx = ctx.slice();
+    child_ctx[171] = list2[i];
+    const constants_0 = child_ctx[171].get(child_ctx[163]);
+    child_ctx[172] = constants_0;
+    return child_ctx;
+  }
+  function get_each_context_104(ctx, list2, i) {
+    const child_ctx = ctx.slice();
+    child_ctx[151] = list2[i];
+    const constants_0 = child_ctx[15].get(child_ctx[163].id)[child_ctx[151].id];
+    child_ctx[146] = constants_0;
+    return child_ctx;
+  }
+  function get_if_ctx2(ctx) {
+    const child_ctx = ctx.slice();
+    const constants_0 = child_ctx[16].get(child_ctx[163].id);
+    child_ctx[147] = constants_0;
+    const constants_1 = child_ctx[15].get(child_ctx[163].id)[child_ctx[147].id];
+    child_ctx[146] = constants_1;
+    return child_ctx;
+  }
+  function get_each_context_94(ctx, list2, i) {
+    const child_ctx = ctx.slice();
+    child_ctx[166] = list2[i];
+    return child_ctx;
+  }
+  function get_each_context_145(ctx, list2, i) {
+    const child_ctx = ctx.slice();
+    child_ctx[171] = list2[i];
+    return child_ctx;
+  }
+  function get_each_context_135(ctx, list2, i) {
+    const child_ctx = ctx.slice();
+    child_ctx[151] = list2[i];
+    return child_ctx;
+  }
+  function get_each_context_125(ctx, list2, i) {
+    const child_ctx = ctx.slice();
+    child_ctx[146] = list2[i];
+    return child_ctx;
+  }
+  function get_each_context_47(ctx, list2, i) {
+    const child_ctx = ctx.slice();
+    child_ctx[150] = list2[i];
+    const constants_0 = child_ctx[21].get(child_ctx[150].role);
+    child_ctx[151] = constants_0;
+    const constants_1 = child_ctx[69](child_ctx[150].role, child_ctx[35]);
+    child_ctx[152] = constants_1;
+    return child_ctx;
+  }
+  function get_each_context_56(ctx, list2, i) {
+    const child_ctx = ctx.slice();
+    child_ctx[155] = list2[i];
+    child_ctx[156] = list2;
+    child_ctx[157] = i;
+    return child_ctx;
+  }
+  function get_each_context_66(ctx, list2, i) {
+    const child_ctx = ctx.slice();
+    child_ctx[151] = list2[i];
+    return child_ctx;
+  }
+  function get_each_context_154(ctx, list2, i) {
+    const child_ctx = ctx.slice();
+    child_ctx[151] = list2[i];
+    child_ctx[181] = list2;
+    child_ctx[182] = i;
+    return child_ctx;
+  }
+  function get_each_context_164(ctx, list2, i) {
+    const child_ctx = ctx.slice();
+    child_ctx[166] = list2[i];
+    return child_ctx;
+  }
+  function get_each_context_174(ctx, list2, i) {
+    const child_ctx = ctx.slice();
+    child_ctx[146] = list2[i];
+    return child_ctx;
+  }
+  function get_each_context_184(ctx, list2, i) {
+    const child_ctx = ctx.slice();
+    child_ctx[187] = list2[i];
+    return child_ctx;
+  }
+  function get_each_context_194(ctx, list2, i) {
+    const child_ctx = ctx.slice();
+    child_ctx[147] = list2[i];
+    return child_ctx;
+  }
+  function get_each_context_203(ctx, list2, i) {
+    const child_ctx = ctx.slice();
+    child_ctx[136] = list2[i];
+    return child_ctx;
+  }
+  function get_each_context_213(ctx, list2, i) {
+    const child_ctx = ctx.slice();
+    child_ctx[172] = list2[i];
+    return child_ctx;
+  }
+  function get_each_context_224(ctx, list2, i) {
+    const child_ctx = ctx.slice();
+    child_ctx[160] = list2[i];
+    return child_ctx;
+  }
+  function get_each_context_233(ctx, list2, i) {
+    const child_ctx = ctx.slice();
+    child_ctx[198] = list2[i];
+    child_ctx[199] = list2;
+    child_ctx[157] = i;
+    return child_ctx;
+  }
+  function get_each_context_243(ctx, list2, i) {
+    const child_ctx = ctx.slice();
+    child_ctx[146] = list2[i];
+    return child_ctx;
+  }
+  function get_each_context_253(ctx, list2, i) {
+    const child_ctx = ctx.slice();
+    child_ctx[140] = list2[i];
+    return child_ctx;
+  }
+  function get_each_context_263(ctx, list2, i) {
+    const child_ctx = ctx.slice();
+    child_ctx[204] = list2[i][0];
+    child_ctx[205] = list2[i][1];
+    return child_ctx;
+  }
+  function get_each_context_272(ctx, list2, i) {
+    const child_ctx = ctx.slice();
+    child_ctx[171] = list2[i];
+    return child_ctx;
+  }
+  function get_each_context_282(ctx, list2, i) {
+    const child_ctx = ctx.slice();
+    child_ctx[147] = list2[i];
+    return child_ctx;
+  }
+  function get_each_context_292(ctx, list2, i) {
+    const child_ctx = ctx.slice();
+    child_ctx[204] = list2[i][0];
+    child_ctx[212] = list2[i][1];
+    return child_ctx;
+  }
+  function get_each_context_302(ctx, list2, i) {
+    const child_ctx = ctx.slice();
+    child_ctx[215] = list2[i];
+    return child_ctx;
+  }
+  function create_else_block_83(ctx) {
+    let select_1;
+    let option;
+    let mounted;
+    let dispose;
+    let each_value_30 = ctx[25];
+    let each_blocks = [];
+    for (let i = 0; i < each_value_30.length; i += 1) {
+      each_blocks[i] = create_each_block_302(get_each_context_302(ctx, each_value_30, i));
+    }
+    return {
+      c() {
+        select_1 = element("select");
+        option = element("option");
+        option.textContent = "(pick a save)";
+        for (let i = 0; i < each_blocks.length; i += 1) {
+          each_blocks[i].c();
+        }
+        option.__value = "";
+        option.value = option.__value;
+        attr(select_1, "class", "dmg-input");
+        attr(select_1, "title", "Whose crew to show");
+      },
+      m(target, anchor) {
+        insert(target, select_1, anchor);
+        append(select_1, option);
+        for (let i = 0; i < each_blocks.length; i += 1) {
+          each_blocks[i].m(select_1, null);
+        }
+        select_option(select_1, ctx[26]);
+        if (!mounted) {
+          dispose = listen(select_1, "change", ctx[81]);
+          mounted = true;
+        }
+      },
+      p(ctx2, dirty) {
+        if (dirty[0] & 33554432) {
+          each_value_30 = ctx2[25];
+          let i;
+          for (i = 0; i < each_value_30.length; i += 1) {
+            const child_ctx = get_each_context_302(ctx2, each_value_30, i);
+            if (each_blocks[i]) {
+              each_blocks[i].p(child_ctx, dirty);
+            } else {
+              each_blocks[i] = create_each_block_302(child_ctx);
+              each_blocks[i].c();
+              each_blocks[i].m(select_1, null);
+            }
+          }
+          for (; i < each_blocks.length; i += 1) {
+            each_blocks[i].d(1);
+          }
+          each_blocks.length = each_value_30.length;
+        }
+        if (dirty[0] & 100663296) {
+          select_option(select_1, ctx2[26]);
+        }
+      },
+      d(detaching) {
+        if (detaching)
+          detach(select_1);
+        destroy_each(each_blocks, detaching);
+        mounted = false;
+        dispose();
+      }
+    };
+  }
+  function create_if_block_502(ctx) {
+    let p;
+    return {
+      c() {
+        p = element("p");
+        p.innerHTML = `No saved games found. Drop a <code>.sav</code> on this panel, or open one below.`;
+        attr(p, "class", "dmg-cap");
+      },
+      m(target, anchor) {
+        insert(target, p, anchor);
+      },
+      p: noop,
+      d(detaching) {
+        if (detaching)
+          detach(p);
+      }
+    };
+  }
+  function create_each_block_302(ctx) {
+    let option;
+    let t_value = ctx[215].file.replace(/\.a?sav$/, "") + "";
+    let t;
+    let option_value_value;
+    return {
+      c() {
+        option = element("option");
+        t = text(t_value);
+        option.__value = option_value_value = ctx[215].path;
+        option.value = option.__value;
+      },
+      m(target, anchor) {
+        insert(target, option, anchor);
+        append(option, t);
+      },
+      p(ctx2, dirty) {
+        if (dirty[0] & 33554432 && t_value !== (t_value = ctx2[215].file.replace(/\.a?sav$/, "") + ""))
+          set_data(t, t_value);
+        if (dirty[0] & 33554432 && option_value_value !== (option_value_value = ctx2[215].path)) {
+          option.__value = option_value_value;
+          option.value = option.__value;
+        }
+      },
+      d(detaching) {
+        if (detaching)
+          detach(option);
+      }
+    };
+  }
+  function create_if_block_473(ctx) {
+    let p;
+    let t0_value = (ctx[75](ctx[0].name) || "save") + "";
+    let t0;
+    let br;
+    let t1;
+    let b;
+    let t2_value = ctx[22].length + "";
+    let t2;
+    let t3;
+    let t4_value = ctx[41].fit + "";
+    let t4;
+    let t5;
+    let t6_value = ctx[41].wounded + "";
+    let t6;
+    let t7;
+    let if_block0 = ctx[0].date && create_if_block_493(ctx);
+    let if_block1 = ctx[46] && create_if_block_483(ctx);
+    return {
+      c() {
+        p = element("p");
+        t0 = text(t0_value);
+        if (if_block0)
+          if_block0.c();
+        br = element("br");
+        t1 = space();
+        b = element("b");
+        t2 = text(t2_value);
+        t3 = text(" crew \xB7 ");
+        t4 = text(t4_value);
+        t5 = text(" fit \xB7 ");
+        t6 = text(t6_value);
+        t7 = text(" wounded");
+        if (if_block1)
+          if_block1.c();
+        attr(p, "class", "dmg-cap");
+      },
+      m(target, anchor) {
+        insert(target, p, anchor);
+        append(p, t0);
+        if (if_block0)
+          if_block0.m(p, null);
+        append(p, br);
+        append(p, t1);
+        append(p, b);
+        append(b, t2);
+        append(p, t3);
+        append(p, t4);
+        append(p, t5);
+        append(p, t6);
+        append(p, t7);
+        if (if_block1)
+          if_block1.m(p, null);
+      },
+      p(ctx2, dirty) {
+        if (dirty[0] & 1 && t0_value !== (t0_value = (ctx2[75](ctx2[0].name) || "save") + ""))
+          set_data(t0, t0_value);
+        if (ctx2[0].date) {
+          if (if_block0) {
+            if_block0.p(ctx2, dirty);
+          } else {
+            if_block0 = create_if_block_493(ctx2);
+            if_block0.c();
+            if_block0.m(p, br);
+          }
+        } else if (if_block0) {
+          if_block0.d(1);
+          if_block0 = null;
+        }
+        if (dirty[0] & 4194304 && t2_value !== (t2_value = ctx2[22].length + ""))
+          set_data(t2, t2_value);
+        if (dirty[1] & 1024 && t4_value !== (t4_value = ctx2[41].fit + ""))
+          set_data(t4, t4_value);
+        if (dirty[1] & 1024 && t6_value !== (t6_value = ctx2[41].wounded + ""))
+          set_data(t6, t6_value);
+        if (ctx2[46]) {
+          if (if_block1) {
+            if_block1.p(ctx2, dirty);
+          } else {
+            if_block1 = create_if_block_483(ctx2);
+            if_block1.c();
+            if_block1.m(p, null);
+          }
+        } else if (if_block1) {
+          if_block1.d(1);
+          if_block1 = null;
+        }
+      },
+      d(detaching) {
+        if (detaching)
+          detach(p);
+        if (if_block0)
+          if_block0.d();
+        if (if_block1)
+          if_block1.d();
+      }
+    };
+  }
+  function create_if_block_463(ctx) {
+    let p;
+    let t0;
+    let t1;
+    return {
+      c() {
+        p = element("p");
+        t0 = text("\u26A0 ");
+        t1 = text(ctx[28]);
+        attr(p, "class", "dmg-warn");
+      },
+      m(target, anchor) {
+        insert(target, p, anchor);
+        append(p, t0);
+        append(p, t1);
+      },
+      p(ctx2, dirty) {
+        if (dirty[0] & 268435456)
+          set_data(t1, ctx2[28]);
+      },
+      d(detaching) {
+        if (detaching)
+          detach(p);
+      }
+    };
+  }
+  function create_if_block_453(ctx) {
+    let p;
+    return {
+      c() {
+        p = element("p");
+        p.textContent = "Reading save\u2026";
+        attr(p, "class", "dmg-cap");
+      },
+      m(target, anchor) {
+        insert(target, p, anchor);
+      },
+      p: noop,
+      d(detaching) {
+        if (detaching)
+          detach(p);
+      }
+    };
+  }
+  function create_if_block_493(ctx) {
+    let t0;
+    let t1_value = ctx[0].date + "";
+    let t1;
+    return {
+      c() {
+        t0 = text("\xA0\xB7 ");
+        t1 = text(t1_value);
+      },
+      m(target, anchor) {
+        insert(target, t0, anchor);
+        insert(target, t1, anchor);
+      },
+      p(ctx2, dirty) {
+        if (dirty[0] & 1 && t1_value !== (t1_value = ctx2[0].date + ""))
+          set_data(t1, t1_value);
+      },
+      d(detaching) {
+        if (detaching)
+          detach(t0);
+        if (detaching)
+          detach(t1);
+      }
+    };
+  }
+  function create_if_block_483(ctx) {
+    let t0;
+    let t1;
+    let t2;
+    return {
+      c() {
+        t0 = text("\xB7 ");
+        t1 = text(ctx[46]);
+        t2 = text(" fallen");
+      },
+      m(target, anchor) {
+        insert(target, t0, anchor);
+        insert(target, t1, anchor);
+        insert(target, t2, anchor);
+      },
+      p(ctx2, dirty) {
+        if (dirty[1] & 32768)
+          set_data(t1, ctx2[46]);
+      },
+      d(detaching) {
+        if (detaching)
+          detach(t0);
+        if (detaching)
+          detach(t1);
+        if (detaching)
+          detach(t2);
+      }
+    };
+  }
+  function create_if_block_424(ctx) {
+    let section0;
+    let header0;
+    let t0;
+    let t1;
+    let input0;
+    let t2;
+    let div0;
+    let t3;
+    let t4;
+    let select0;
+    let option0;
+    let option1;
+    let t7;
+    let select1;
+    let option2;
+    let t9;
+    let select2;
+    let option3;
+    let option3_value_value;
+    let t11;
+    let div1;
+    let t12;
+    let button;
+    let t14;
+    let label0;
+    let input1;
+    let t15;
+    let t16;
+    let label1;
+    let input2;
+    let t17;
+    let t18;
+    let section1;
+    let header1;
+    let t20;
+    let select3;
+    let mounted;
+    let dispose;
+    let if_block0 = ctx[38] && create_if_block_443(ctx);
+    let each_value_29 = [["all", "All"], ["fit", "Fit"], ["wounded", "Wounded"]];
+    let each_blocks_5 = [];
+    for (let i = 0; i < 3; i += 1) {
+      each_blocks_5[i] = create_each_block_292(get_each_context_292(ctx, each_value_29, i));
+    }
+    let if_block1 = ctx[42] && create_if_block_434(ctx);
+    let each_value_27 = ctx[45];
+    let each_blocks_4 = [];
+    for (let i = 0; i < each_value_27.length; i += 1) {
+      each_blocks_4[i] = create_each_block_272(get_each_context_272(ctx, each_value_27, i));
+    }
+    let each_value_26 = ctx[44];
+    let each_blocks_3 = [];
+    for (let i = 0; i < each_value_26.length; i += 1) {
+      each_blocks_3[i] = create_each_block_262(get_each_context_263(ctx, each_value_26, i));
+    }
+    let each_value_25 = ctx[43];
+    let each_blocks_2 = [];
+    for (let i = 0; i < each_value_25.length; i += 1) {
+      each_blocks_2[i] = create_each_block_253(get_each_context_253(ctx, each_value_25, i));
+    }
+    let each_value_23 = ctx[10].rules;
+    let each_blocks_1 = [];
+    for (let i = 0; i < each_value_23.length; i += 1) {
+      each_blocks_1[i] = create_each_block_233(get_each_context_233(ctx, each_value_23, i));
+    }
+    let each_value_22 = ctx[50];
+    let each_blocks = [];
+    for (let i = 0; i < each_value_22.length; i += 1) {
+      each_blocks[i] = create_each_block_224(get_each_context_224(ctx, each_value_22, i));
+    }
+    return {
+      c() {
+        section0 = element("section");
+        header0 = element("header");
+        t0 = text("Filter\n            ");
+        if (if_block0)
+          if_block0.c();
+        t1 = space();
+        input0 = element("input");
+        t2 = space();
+        div0 = element("div");
+        for (let i = 0; i < 3; i += 1) {
+          each_blocks_5[i].c();
+        }
+        t3 = space();
+        if (if_block1)
+          if_block1.c();
+        t4 = space();
+        select0 = element("select");
+        option0 = element("option");
+        option0.textContent = "Aboard anything or nothing";
+        option1 = element("option");
+        option1.textContent = "Not on a craft";
+        for (let i = 0; i < each_blocks_4.length; i += 1) {
+          each_blocks_4[i].c();
+        }
+        t7 = space();
+        select1 = element("select");
+        option2 = element("option");
+        option2.textContent = "Any type";
+        for (let i = 0; i < each_blocks_3.length; i += 1) {
+          each_blocks_3[i].c();
+        }
+        t9 = space();
+        select2 = element("select");
+        option3 = element("option");
+        option3.textContent = "Any rank";
+        for (let i = 0; i < each_blocks_2.length; i += 1) {
+          each_blocks_2[i].c();
+        }
+        t11 = space();
+        div1 = element("div");
+        for (let i = 0; i < each_blocks_1.length; i += 1) {
+          each_blocks_1[i].c();
+        }
+        t12 = space();
+        button = element("button");
+        button.textContent = "+ stat rule";
+        t14 = space();
+        label0 = element("label");
+        input1 = element("input");
+        t15 = text(" In their armour");
+        t16 = space();
+        label1 = element("label");
+        input2 = element("input");
+        t17 = text(" Show the fallen");
+        t18 = space();
+        section1 = element("section");
+        header1 = element("header");
+        header1.textContent = "Group";
+        t20 = space();
+        select3 = element("select");
+        for (let i = 0; i < each_blocks.length; i += 1) {
+          each_blocks[i].c();
+        }
+        attr(input0, "class", "dmg-input");
+        attr(input0, "placeholder", "Name\u2026");
+        attr(div0, "class", "dmg-chips");
+        option0.__value = "";
+        option0.value = option0.__value;
+        option1.__value = "-";
+        option1.value = option1.__value;
+        attr(select0, "class", "dmg-input");
+        if (ctx[10].craft === void 0)
+          add_render_callback(() => ctx[88].call(select0));
+        option2.__value = "";
+        option2.value = option2.__value;
+        attr(select1, "class", "dmg-input");
+        if (ctx[10].type === void 0)
+          add_render_callback(() => ctx[89].call(select1));
+        option3.__value = option3_value_value = -1;
+        option3.value = option3.__value;
+        attr(select2, "class", "dmg-input");
+        if (ctx[10].rank === void 0)
+          add_render_callback(() => ctx[90].call(select2));
+        attr(button, "class", "dmg-mini dmg-wide");
+        attr(button, "title", "Like the in-game soldier filter, but stackable: Firing \u2265 70 AND Reactions \u2265 60");
+        attr(div1, "class", "pax-rules");
+        attr(input1, "type", "checkbox");
+        attr(label0, "class", "pax-check");
+        attr(label0, "title", "Test stat rules, show stats, and grade the crew in the armour each soldier has on, rather than bare.");
+        attr(input2, "type", "checkbox");
+        attr(label1, "class", "pax-check");
+        attr(label1, "title", "Add the fallen from the memorial, greyed out. They are graded against the living and never staffed into a squad.");
+        attr(section0, "class", "dmg-block");
+        attr(select3, "class", "dmg-input");
+        if (ctx[7] === void 0)
+          add_render_callback(() => ctx[97].call(select3));
+        attr(section1, "class", "dmg-block");
+      },
+      m(target, anchor) {
+        insert(target, section0, anchor);
+        append(section0, header0);
+        append(header0, t0);
+        if (if_block0)
+          if_block0.m(header0, null);
+        append(section0, t1);
+        append(section0, input0);
+        set_input_value(input0, ctx[10].text);
+        append(section0, t2);
+        append(section0, div0);
+        for (let i = 0; i < 3; i += 1) {
+          each_blocks_5[i].m(div0, null);
+        }
+        append(section0, t3);
+        if (if_block1)
+          if_block1.m(section0, null);
+        append(section0, t4);
+        append(section0, select0);
+        append(select0, option0);
+        append(select0, option1);
+        for (let i = 0; i < each_blocks_4.length; i += 1) {
+          each_blocks_4[i].m(select0, null);
+        }
+        select_option(select0, ctx[10].craft);
+        append(section0, t7);
+        append(section0, select1);
+        append(select1, option2);
+        for (let i = 0; i < each_blocks_3.length; i += 1) {
+          each_blocks_3[i].m(select1, null);
+        }
+        select_option(select1, ctx[10].type);
+        append(section0, t9);
+        append(section0, select2);
+        append(select2, option3);
+        for (let i = 0; i < each_blocks_2.length; i += 1) {
+          each_blocks_2[i].m(select2, null);
+        }
+        select_option(select2, ctx[10].rank);
+        append(section0, t11);
+        append(section0, div1);
+        for (let i = 0; i < each_blocks_1.length; i += 1) {
+          each_blocks_1[i].m(div1, null);
+        }
+        append(div1, t12);
+        append(div1, button);
+        append(section0, t14);
+        append(section0, label0);
+        append(label0, input1);
+        input1.checked = ctx[4];
+        append(label0, t15);
+        append(section0, t16);
+        append(section0, label1);
+        append(label1, input2);
+        input2.checked = ctx[5];
+        append(label1, t17);
+        insert(target, t18, anchor);
+        insert(target, section1, anchor);
+        append(section1, header1);
+        append(section1, t20);
+        append(section1, select3);
+        for (let i = 0; i < each_blocks.length; i += 1) {
+          each_blocks[i].m(select3, null);
+        }
+        select_option(select3, ctx[7]);
+        if (!mounted) {
+          dispose = [
+            listen(input0, "input", ctx[85]),
+            listen(select0, "change", ctx[88]),
+            listen(select1, "change", ctx[89]),
+            listen(select2, "change", ctx[90]),
+            listen(button, "click", ctx[61]),
+            listen(input1, "change", ctx[95]),
+            listen(input2, "change", ctx[96]),
+            listen(select3, "change", ctx[97])
+          ];
+          mounted = true;
+        }
+      },
+      p(ctx2, dirty) {
+        if (ctx2[38]) {
+          if (if_block0) {
+            if_block0.p(ctx2, dirty);
+          } else {
+            if_block0 = create_if_block_443(ctx2);
+            if_block0.c();
+            if_block0.m(header0, null);
+          }
+        } else if (if_block0) {
+          if_block0.d(1);
+          if_block0 = null;
+        }
+        if (dirty[0] & 16778240 && input0.value !== ctx2[10].text) {
+          set_input_value(input0, ctx2[10].text);
+        }
+        if (dirty[0] & 1024 | dirty[1] & 1024) {
+          each_value_29 = [["all", "All"], ["fit", "Fit"], ["wounded", "Wounded"]];
+          let i;
+          for (i = 0; i < 3; i += 1) {
+            const child_ctx = get_each_context_292(ctx2, each_value_29, i);
+            if (each_blocks_5[i]) {
+              each_blocks_5[i].p(child_ctx, dirty);
+            } else {
+              each_blocks_5[i] = create_each_block_292(child_ctx);
+              each_blocks_5[i].c();
+              each_blocks_5[i].m(div0, null);
+            }
+          }
+          for (; i < 3; i += 1) {
+            each_blocks_5[i].d(1);
+          }
+        }
+        if (ctx2[42]) {
+          if (if_block1) {
+            if_block1.p(ctx2, dirty);
+          } else {
+            if_block1 = create_if_block_434(ctx2);
+            if_block1.c();
+            if_block1.m(section0, t4);
+          }
+        } else if (if_block1) {
+          if_block1.d(1);
+          if_block1 = null;
+        }
+        if (dirty[1] & 16384) {
+          each_value_27 = ctx2[45];
+          let i;
+          for (i = 0; i < each_value_27.length; i += 1) {
+            const child_ctx = get_each_context_272(ctx2, each_value_27, i);
+            if (each_blocks_4[i]) {
+              each_blocks_4[i].p(child_ctx, dirty);
+            } else {
+              each_blocks_4[i] = create_each_block_272(child_ctx);
+              each_blocks_4[i].c();
+              each_blocks_4[i].m(select0, null);
+            }
+          }
+          for (; i < each_blocks_4.length; i += 1) {
+            each_blocks_4[i].d(1);
+          }
+          each_blocks_4.length = each_value_27.length;
+        }
+        if (dirty[0] & 16778240) {
+          select_option(select0, ctx2[10].craft);
+        }
+        if (dirty[1] & 8192) {
+          each_value_26 = ctx2[44];
+          let i;
+          for (i = 0; i < each_value_26.length; i += 1) {
+            const child_ctx = get_each_context_263(ctx2, each_value_26, i);
+            if (each_blocks_3[i]) {
+              each_blocks_3[i].p(child_ctx, dirty);
+            } else {
+              each_blocks_3[i] = create_each_block_262(child_ctx);
+              each_blocks_3[i].c();
+              each_blocks_3[i].m(select1, null);
+            }
+          }
+          for (; i < each_blocks_3.length; i += 1) {
+            each_blocks_3[i].d(1);
+          }
+          each_blocks_3.length = each_value_26.length;
+        }
+        if (dirty[0] & 16778240) {
+          select_option(select1, ctx2[10].type);
+        }
+        if (dirty[1] & 4096) {
+          each_value_25 = ctx2[43];
+          let i;
+          for (i = 0; i < each_value_25.length; i += 1) {
+            const child_ctx = get_each_context_253(ctx2, each_value_25, i);
+            if (each_blocks_2[i]) {
+              each_blocks_2[i].p(child_ctx, dirty);
+            } else {
+              each_blocks_2[i] = create_each_block_253(child_ctx);
+              each_blocks_2[i].c();
+              each_blocks_2[i].m(select2, null);
+            }
+          }
+          for (; i < each_blocks_2.length; i += 1) {
+            each_blocks_2[i].d(1);
+          }
+          each_blocks_2.length = each_value_25.length;
+        }
+        if (dirty[0] & 16778240) {
+          select_option(select2, ctx2[10].rank);
+        }
+        if (dirty[0] & 1024 | dirty[2] & 1) {
+          each_value_23 = ctx2[10].rules;
+          let i;
+          for (i = 0; i < each_value_23.length; i += 1) {
+            const child_ctx = get_each_context_233(ctx2, each_value_23, i);
+            if (each_blocks_1[i]) {
+              each_blocks_1[i].p(child_ctx, dirty);
+            } else {
+              each_blocks_1[i] = create_each_block_233(child_ctx);
+              each_blocks_1[i].c();
+              each_blocks_1[i].m(div1, t12);
+            }
+          }
+          for (; i < each_blocks_1.length; i += 1) {
+            each_blocks_1[i].d(1);
+          }
+          each_blocks_1.length = each_value_23.length;
+        }
+        if (dirty[0] & 16) {
+          input1.checked = ctx2[4];
+        }
+        if (dirty[0] & 32) {
+          input2.checked = ctx2[5];
+        }
+        if (dirty[1] & 524288) {
+          each_value_22 = ctx2[50];
+          let i;
+          for (i = 0; i < each_value_22.length; i += 1) {
+            const child_ctx = get_each_context_224(ctx2, each_value_22, i);
+            if (each_blocks[i]) {
+              each_blocks[i].p(child_ctx, dirty);
+            } else {
+              each_blocks[i] = create_each_block_224(child_ctx);
+              each_blocks[i].c();
+              each_blocks[i].m(select3, null);
+            }
+          }
+          for (; i < each_blocks.length; i += 1) {
+            each_blocks[i].d(1);
+          }
+          each_blocks.length = each_value_22.length;
+        }
+        if (dirty[0] & 128 | dirty[1] & 524288) {
+          select_option(select3, ctx2[7]);
+        }
+      },
+      d(detaching) {
+        if (detaching)
+          detach(section0);
+        if (if_block0)
+          if_block0.d();
+        destroy_each(each_blocks_5, detaching);
+        if (if_block1)
+          if_block1.d();
+        destroy_each(each_blocks_4, detaching);
+        destroy_each(each_blocks_3, detaching);
+        destroy_each(each_blocks_2, detaching);
+        destroy_each(each_blocks_1, detaching);
+        if (detaching)
+          detach(t18);
+        if (detaching)
+          detach(section1);
+        destroy_each(each_blocks, detaching);
+        mounted = false;
+        run_all(dispose);
+      }
+    };
+  }
+  function create_if_block_443(ctx) {
+    let button;
+    let mounted;
+    let dispose;
+    return {
+      c() {
+        button = element("button");
+        button.textContent = "clear";
+        attr(button, "class", "dmg-mini");
+        attr(button, "title", "Show everyone again");
+      },
+      m(target, anchor) {
+        insert(target, button, anchor);
+        if (!mounted) {
+          dispose = listen(button, "click", ctx[63]);
+          mounted = true;
+        }
+      },
+      p: noop,
+      d(detaching) {
+        if (detaching)
+          detach(button);
+        mounted = false;
+        dispose();
+      }
+    };
+  }
+  function create_each_block_292(ctx) {
+    let button;
+    let t0;
+    let t1;
+    let span;
+    let t2_value = ctx[41][ctx[204]] + "";
+    let t2;
+    let t3;
+    let mounted;
+    let dispose;
+    function click_handler() {
+      return ctx[86](ctx[204]);
+    }
+    return {
+      c() {
+        button = element("button");
+        t0 = text(ctx[212]);
+        t1 = space();
+        span = element("span");
+        t2 = text(t2_value);
+        t3 = space();
+        attr(span, "class", "dmg-chip-n");
+        attr(button, "class", "dmg-chip");
+        toggle_class(button, "dmg-chip-on", ctx[10].status == ctx[204]);
+      },
+      m(target, anchor) {
+        insert(target, button, anchor);
+        append(button, t0);
+        append(button, t1);
+        append(button, span);
+        append(span, t2);
+        append(button, t3);
+        if (!mounted) {
+          dispose = listen(button, "click", click_handler);
+          mounted = true;
+        }
+      },
+      p(new_ctx, dirty) {
+        ctx = new_ctx;
+        if (dirty[1] & 1024 && t2_value !== (t2_value = ctx[41][ctx[204]] + ""))
+          set_data(t2, t2_value);
+        if (dirty[0] & 1024) {
+          toggle_class(button, "dmg-chip-on", ctx[10].status == ctx[204]);
+        }
+      },
+      d(detaching) {
+        if (detaching)
+          detach(button);
+        mounted = false;
+        dispose();
+      }
+    };
+  }
+  function create_if_block_434(ctx) {
+    let select_1;
+    let option;
+    let mounted;
+    let dispose;
+    let each_value_28 = ctx[24];
+    let each_blocks = [];
+    for (let i = 0; i < each_value_28.length; i += 1) {
+      each_blocks[i] = create_each_block_282(get_each_context_282(ctx, each_value_28, i));
+    }
+    return {
+      c() {
+        select_1 = element("select");
+        option = element("option");
+        option.textContent = "Any base";
+        for (let i = 0; i < each_blocks.length; i += 1) {
+          each_blocks[i].c();
+        }
+        option.__value = "";
+        option.value = option.__value;
+        attr(select_1, "class", "dmg-input");
+        if (ctx[10].base === void 0)
+          add_render_callback(() => ctx[87].call(select_1));
+      },
+      m(target, anchor) {
+        insert(target, select_1, anchor);
+        append(select_1, option);
+        for (let i = 0; i < each_blocks.length; i += 1) {
+          each_blocks[i].m(select_1, null);
+        }
+        select_option(select_1, ctx[10].base);
+        if (!mounted) {
+          dispose = listen(select_1, "change", ctx[87]);
+          mounted = true;
+        }
+      },
+      p(ctx2, dirty) {
+        if (dirty[0] & 16777216) {
+          each_value_28 = ctx2[24];
+          let i;
+          for (i = 0; i < each_value_28.length; i += 1) {
+            const child_ctx = get_each_context_282(ctx2, each_value_28, i);
+            if (each_blocks[i]) {
+              each_blocks[i].p(child_ctx, dirty);
+            } else {
+              each_blocks[i] = create_each_block_282(child_ctx);
+              each_blocks[i].c();
+              each_blocks[i].m(select_1, null);
+            }
+          }
+          for (; i < each_blocks.length; i += 1) {
+            each_blocks[i].d(1);
+          }
+          each_blocks.length = each_value_28.length;
+        }
+        if (dirty[0] & 16778240) {
+          select_option(select_1, ctx2[10].base);
+        }
+      },
+      d(detaching) {
+        if (detaching)
+          detach(select_1);
+        destroy_each(each_blocks, detaching);
+        mounted = false;
+        dispose();
+      }
+    };
+  }
+  function create_each_block_282(ctx) {
+    let option;
+    let t_value = ctx[147] + "";
+    let t;
+    let option_value_value;
+    return {
+      c() {
+        option = element("option");
+        t = text(t_value);
+        option.__value = option_value_value = ctx[147];
+        option.value = option.__value;
+      },
+      m(target, anchor) {
+        insert(target, option, anchor);
+        append(option, t);
+      },
+      p(ctx2, dirty) {
+        if (dirty[0] & 16777216 && t_value !== (t_value = ctx2[147] + ""))
+          set_data(t, t_value);
+        if (dirty[0] & 16777216 && option_value_value !== (option_value_value = ctx2[147])) {
+          option.__value = option_value_value;
+          option.value = option.__value;
+        }
+      },
+      d(detaching) {
+        if (detaching)
+          detach(option);
+      }
+    };
+  }
+  function create_each_block_272(ctx) {
+    let option;
+    let t0;
+    let t1_value = ctx[171] + "";
+    let t1;
+    let option_value_value;
+    return {
+      c() {
+        option = element("option");
+        t0 = text("On ");
+        t1 = text(t1_value);
+        option.__value = option_value_value = ctx[171];
+        option.value = option.__value;
+      },
+      m(target, anchor) {
+        insert(target, option, anchor);
+        append(option, t0);
+        append(option, t1);
+      },
+      p(ctx2, dirty) {
+        if (dirty[1] & 16384 && t1_value !== (t1_value = ctx2[171] + ""))
+          set_data(t1, t1_value);
+        if (dirty[1] & 16384 && option_value_value !== (option_value_value = ctx2[171])) {
+          option.__value = option_value_value;
+          option.value = option.__value;
+        }
+      },
+      d(detaching) {
+        if (detaching)
+          detach(option);
+      }
+    };
+  }
+  function create_each_block_262(ctx) {
+    let option;
+    let t_value = ctx[205] + "";
+    let t;
+    let option_value_value;
+    return {
+      c() {
+        option = element("option");
+        t = text(t_value);
+        option.__value = option_value_value = ctx[204];
+        option.value = option.__value;
+      },
+      m(target, anchor) {
+        insert(target, option, anchor);
+        append(option, t);
+      },
+      p(ctx2, dirty) {
+        if (dirty[1] & 8192 && t_value !== (t_value = ctx2[205] + ""))
+          set_data(t, t_value);
+        if (dirty[1] & 8192 && option_value_value !== (option_value_value = ctx2[204])) {
+          option.__value = option_value_value;
+          option.value = option.__value;
+        }
+      },
+      d(detaching) {
+        if (detaching)
+          detach(option);
+      }
+    };
+  }
+  function create_each_block_253(ctx) {
+    let option;
+    let t0_value = rankName("STR_SOLDIER", ctx[140]) + "";
+    let t0;
+    let t1;
+    let t2_value = ctx[140] + "";
+    let t2;
+    let t3;
+    let option_value_value;
+    return {
+      c() {
+        option = element("option");
+        t0 = text(t0_value);
+        t1 = text(" (rank ");
+        t2 = text(t2_value);
+        t3 = text(")");
+        option.__value = option_value_value = ctx[140];
+        option.value = option.__value;
+      },
+      m(target, anchor) {
+        insert(target, option, anchor);
+        append(option, t0);
+        append(option, t1);
+        append(option, t2);
+        append(option, t3);
+      },
+      p(ctx2, dirty) {
+        if (dirty[1] & 4096 && t0_value !== (t0_value = rankName("STR_SOLDIER", ctx2[140]) + ""))
+          set_data(t0, t0_value);
+        if (dirty[1] & 4096 && t2_value !== (t2_value = ctx2[140] + ""))
+          set_data(t2, t2_value);
+        if (dirty[1] & 4096 && option_value_value !== (option_value_value = ctx2[140])) {
+          option.__value = option_value_value;
+          option.value = option.__value;
+        }
+      },
+      d(detaching) {
+        if (detaching)
+          detach(option);
+      }
+    };
+  }
+  function create_each_block_243(ctx) {
+    let option;
+    let t_value = ctx[146].name + "";
+    let t;
+    let option_value_value;
+    return {
+      c() {
+        option = element("option");
+        t = text(t_value);
+        option.__value = option_value_value = ctx[146].k;
+        option.value = option.__value;
+      },
+      m(target, anchor) {
+        insert(target, option, anchor);
+        append(option, t);
+      },
+      p: noop,
+      d(detaching) {
+        if (detaching)
+          detach(option);
+      }
+    };
+  }
+  function create_each_block_233(ctx) {
+    let div;
+    let select0;
+    let t0;
+    let select1;
+    let option0;
+    let option1;
+    let t3;
+    let input;
+    let t4;
+    let button;
+    let mounted;
+    let dispose;
+    let each_value_24 = PAX_STATS;
+    let each_blocks = [];
+    for (let i = 0; i < each_value_24.length; i += 1) {
+      each_blocks[i] = create_each_block_243(get_each_context_243(ctx, each_value_24, i));
+    }
+    function select0_change_handler_1() {
+      ctx[91].call(select0, ctx[199], ctx[157]);
+    }
+    function select1_change_handler_1() {
+      ctx[92].call(select1, ctx[199], ctx[157]);
+    }
+    function input_input_handler() {
+      ctx[93].call(input, ctx[199], ctx[157]);
+    }
+    function click_handler_1() {
+      return ctx[94](ctx[157]);
+    }
+    return {
+      c() {
+        div = element("div");
+        select0 = element("select");
+        for (let i = 0; i < each_blocks.length; i += 1) {
+          each_blocks[i].c();
+        }
+        t0 = space();
+        select1 = element("select");
+        option0 = element("option");
+        option0.textContent = "\u2265";
+        option1 = element("option");
+        option1.textContent = "\u2264";
+        t3 = space();
+        input = element("input");
+        t4 = space();
+        button = element("button");
+        button.textContent = "\u2715";
+        attr(select0, "class", "dmg-input");
+        if (ctx[198].k === void 0)
+          add_render_callback(select0_change_handler_1);
+        option0.__value = ">=";
+        option0.value = option0.__value;
+        option1.__value = "<=";
+        option1.value = option1.__value;
+        attr(select1, "class", "dmg-input pax-op");
+        if (ctx[198].op === void 0)
+          add_render_callback(select1_change_handler_1);
+        attr(input, "class", "dmg-input pax-num");
+        attr(input, "type", "number");
+        attr(button, "class", "dmg-mini");
+        attr(button, "title", "Remove this rule");
+        attr(div, "class", "pax-rule");
+      },
+      m(target, anchor) {
+        insert(target, div, anchor);
+        append(div, select0);
+        for (let i = 0; i < each_blocks.length; i += 1) {
+          each_blocks[i].m(select0, null);
+        }
+        select_option(select0, ctx[198].k);
+        append(div, t0);
+        append(div, select1);
+        append(select1, option0);
+        append(select1, option1);
+        select_option(select1, ctx[198].op);
+        append(div, t3);
+        append(div, input);
+        set_input_value(input, ctx[198].v);
+        append(div, t4);
+        append(div, button);
+        if (!mounted) {
+          dispose = [
+            listen(select0, "change", select0_change_handler_1),
+            listen(select1, "change", select1_change_handler_1),
+            listen(input, "input", input_input_handler),
+            listen(button, "click", click_handler_1)
+          ];
+          mounted = true;
+        }
+      },
+      p(new_ctx, dirty) {
+        ctx = new_ctx;
+        if (dirty & 0) {
+          each_value_24 = PAX_STATS;
+          let i;
+          for (i = 0; i < each_value_24.length; i += 1) {
+            const child_ctx = get_each_context_243(ctx, each_value_24, i);
+            if (each_blocks[i]) {
+              each_blocks[i].p(child_ctx, dirty);
+            } else {
+              each_blocks[i] = create_each_block_243(child_ctx);
+              each_blocks[i].c();
+              each_blocks[i].m(select0, null);
+            }
+          }
+          for (; i < each_blocks.length; i += 1) {
+            each_blocks[i].d(1);
+          }
+          each_blocks.length = each_value_24.length;
+        }
+        if (dirty[0] & 16778240) {
+          select_option(select0, ctx[198].k);
+        }
+        if (dirty[0] & 16778240) {
+          select_option(select1, ctx[198].op);
+        }
+        if (dirty[0] & 16778240 && to_number(input.value) !== ctx[198].v) {
+          set_input_value(input, ctx[198].v);
+        }
+      },
+      d(detaching) {
+        if (detaching)
+          detach(div);
+        destroy_each(each_blocks, detaching);
+        mounted = false;
+        run_all(dispose);
+      }
+    };
+  }
+  function create_each_block_224(ctx) {
+    let option;
+    let t_value = ctx[160].label + "";
+    let t;
+    let option_value_value;
+    return {
+      c() {
+        option = element("option");
+        t = text(t_value);
+        option.__value = option_value_value = ctx[160].id;
+        option.value = option.__value;
+      },
+      m(target, anchor) {
+        insert(target, option, anchor);
+        append(option, t);
+      },
+      p: noop,
+      d(detaching) {
+        if (detaching)
+          detach(option);
+      }
+    };
+  }
+  function create_else_block_110(ctx) {
+    let div1;
+    let div0;
+    let t0;
+    let t1;
+    let t2;
+    let span0;
+    let t3;
+    let t4;
+    let span1;
+    let t5_value = ctx[20].length + "";
+    let t5;
+    let t6;
+    let t7_value = ctx[23].length + "";
+    let t7;
+    let t8;
+    let button;
+    let t10;
+    let t11;
+    let t12;
+    let if_block5_anchor;
+    let mounted;
+    let dispose;
+    let each_value_21 = ctx[47];
+    let each_blocks = [];
+    for (let i = 0; i < each_value_21.length; i += 1) {
+      each_blocks[i] = create_each_block_213(get_each_context_213(ctx, each_value_21, i));
+    }
+    let if_block0 = ctx[1] == "stats" && create_if_block_414(ctx);
+    let if_block1 = (ctx[1] == "stats" || ctx[1] == "roles" || ctx[1] == "squad") && create_if_block_404(ctx);
+    let if_block2 = ctx[1] != "squad" && create_if_block_395(ctx);
+    let if_block3 = ctx[1] != "squad" && create_if_block_325(ctx);
+    let if_block4 = ctx[1] == "roles" && create_if_block_304(ctx);
+    function select_block_type_4(ctx2, dirty) {
+      if (ctx2[1] == "squad")
+        return create_if_block_157;
+      return create_else_block_44;
+    }
+    let current_block_type = select_block_type_4(ctx, [-1, -1, -1, -1, -1, -1, -1, -1]);
+    let if_block5 = current_block_type(ctx);
+    return {
+      c() {
+        div1 = element("div");
+        div0 = element("div");
+        for (let i = 0; i < each_blocks.length; i += 1) {
+          each_blocks[i].c();
+        }
+        t0 = space();
+        if (if_block0)
+          if_block0.c();
+        t1 = space();
+        if (if_block1)
+          if_block1.c();
+        t2 = space();
+        span0 = element("span");
+        t3 = space();
+        if (if_block2)
+          if_block2.c();
+        t4 = space();
+        span1 = element("span");
+        t5 = text(t5_value);
+        t6 = text(" of ");
+        t7 = text(t7_value);
+        t8 = space();
+        button = element("button");
+        button.textContent = "CSV";
+        t10 = space();
+        if (if_block3)
+          if_block3.c();
+        t11 = space();
+        if (if_block4)
+          if_block4.c();
+        t12 = space();
+        if_block5.c();
+        if_block5_anchor = empty();
+        attr(div0, "class", "dmg-chips pax-tabs");
+        attr(span0, "class", "pax-stretch");
+        attr(span1, "class", "dmg-cap");
+        attr(button, "class", "dmg-mini");
+        attr(button, "title", "Download what is on screen - every stat, role and career column - as a spreadsheet");
+        attr(div1, "class", "pax-bar");
+      },
+      m(target, anchor) {
+        insert(target, div1, anchor);
+        append(div1, div0);
+        for (let i = 0; i < each_blocks.length; i += 1) {
+          each_blocks[i].m(div0, null);
+        }
+        append(div1, t0);
+        if (if_block0)
+          if_block0.m(div1, null);
+        append(div1, t1);
+        if (if_block1)
+          if_block1.m(div1, null);
+        append(div1, t2);
+        append(div1, span0);
+        append(div1, t3);
+        if (if_block2)
+          if_block2.m(div1, null);
+        append(div1, t4);
+        append(div1, span1);
+        append(span1, t5);
+        append(span1, t6);
+        append(span1, t7);
+        append(div1, t8);
+        append(div1, button);
+        insert(target, t10, anchor);
+        if (if_block3)
+          if_block3.m(target, anchor);
+        insert(target, t11, anchor);
+        if (if_block4)
+          if_block4.m(target, anchor);
+        insert(target, t12, anchor);
+        if_block5.m(target, anchor);
+        insert(target, if_block5_anchor, anchor);
+        if (!mounted) {
+          dispose = listen(button, "click", ctx[74]);
+          mounted = true;
+        }
+      },
+      p(ctx2, dirty) {
+        if (dirty[0] & 2 | dirty[1] & 65536) {
+          each_value_21 = ctx2[47];
+          let i;
+          for (i = 0; i < each_value_21.length; i += 1) {
+            const child_ctx = get_each_context_213(ctx2, each_value_21, i);
+            if (each_blocks[i]) {
+              each_blocks[i].p(child_ctx, dirty);
+            } else {
+              each_blocks[i] = create_each_block_213(child_ctx);
+              each_blocks[i].c();
+              each_blocks[i].m(div0, null);
+            }
+          }
+          for (; i < each_blocks.length; i += 1) {
+            each_blocks[i].d(1);
+          }
+          each_blocks.length = each_value_21.length;
+        }
+        if (ctx2[1] == "stats") {
+          if (if_block0) {
+            if_block0.p(ctx2, dirty);
+          } else {
+            if_block0 = create_if_block_414(ctx2);
+            if_block0.c();
+            if_block0.m(div1, t1);
+          }
+        } else if (if_block0) {
+          if_block0.d(1);
+          if_block0 = null;
+        }
+        if (ctx2[1] == "stats" || ctx2[1] == "roles" || ctx2[1] == "squad") {
+          if (if_block1) {
+            if_block1.p(ctx2, dirty);
+          } else {
+            if_block1 = create_if_block_404(ctx2);
+            if_block1.c();
+            if_block1.m(div1, t2);
+          }
+        } else if (if_block1) {
+          if_block1.d(1);
+          if_block1 = null;
+        }
+        if (ctx2[1] != "squad") {
+          if (if_block2) {
+            if_block2.p(ctx2, dirty);
+          } else {
+            if_block2 = create_if_block_395(ctx2);
+            if_block2.c();
+            if_block2.m(div1, t4);
+          }
+        } else if (if_block2) {
+          if_block2.d(1);
+          if_block2 = null;
+        }
+        if (dirty[0] & 1048576 && t5_value !== (t5_value = ctx2[20].length + ""))
+          set_data(t5, t5_value);
+        if (dirty[0] & 8388608 && t7_value !== (t7_value = ctx2[23].length + ""))
+          set_data(t7, t7_value);
+        if (ctx2[1] != "squad") {
+          if (if_block3) {
+            if_block3.p(ctx2, dirty);
+          } else {
+            if_block3 = create_if_block_325(ctx2);
+            if_block3.c();
+            if_block3.m(t11.parentNode, t11);
+          }
+        } else if (if_block3) {
+          if_block3.d(1);
+          if_block3 = null;
+        }
+        if (ctx2[1] == "roles") {
+          if (if_block4) {
+            if_block4.p(ctx2, dirty);
+          } else {
+            if_block4 = create_if_block_304(ctx2);
+            if_block4.c();
+            if_block4.m(t12.parentNode, t12);
+          }
+        } else if (if_block4) {
+          if_block4.d(1);
+          if_block4 = null;
+        }
+        if (current_block_type === (current_block_type = select_block_type_4(ctx2, dirty)) && if_block5) {
+          if_block5.p(ctx2, dirty);
+        } else {
+          if_block5.d(1);
+          if_block5 = current_block_type(ctx2);
+          if (if_block5) {
+            if_block5.c();
+            if_block5.m(if_block5_anchor.parentNode, if_block5_anchor);
+          }
+        }
+      },
+      d(detaching) {
+        if (detaching)
+          detach(div1);
+        destroy_each(each_blocks, detaching);
+        if (if_block0)
+          if_block0.d();
+        if (if_block1)
+          if_block1.d();
+        if (if_block2)
+          if_block2.d();
+        if (detaching)
+          detach(t10);
+        if (if_block3)
+          if_block3.d(detaching);
+        if (detaching)
+          detach(t11);
+        if (if_block4)
+          if_block4.d(detaching);
+        if (detaching)
+          detach(t12);
+        if_block5.d(detaching);
+        if (detaching)
+          detach(if_block5_anchor);
+        mounted = false;
+        dispose();
+      }
+    };
+  }
+  function create_if_block_147(ctx) {
+    let div;
+    return {
+      c() {
+        div = element("div");
+        div.innerHTML = `<h3>PAX \u2014 personnel</h3> 
+          <p>Pick a save on the left, or drop a <code>.sav</code> on the Campaign panel.</p> 
+          <p class="dmg-hint">PAX reads your crew straight out of the save: every stat, every diary, every
+            medal. Nothing is written back.</p>`;
+        attr(div, "class", "pax-empty");
+      },
+      m(target, anchor) {
+        insert(target, div, anchor);
+      },
+      p: noop,
+      d(detaching) {
+        if (detaching)
+          detach(div);
+      }
+    };
+  }
+  function create_each_block_213(ctx) {
+    let button;
+    let t0_value = ctx[172].label + "";
+    let t0;
+    let t1;
+    let button_title_value;
+    let mounted;
+    let dispose;
+    function click_handler_2() {
+      return ctx[98](ctx[172]);
+    }
+    return {
+      c() {
+        button = element("button");
+        t0 = text(t0_value);
+        t1 = space();
+        attr(button, "class", "dmg-chip");
+        attr(button, "title", button_title_value = ctx[172].title);
+        toggle_class(button, "dmg-chip-on", ctx[1] == ctx[172].id);
+      },
+      m(target, anchor) {
+        insert(target, button, anchor);
+        append(button, t0);
+        append(button, t1);
+        if (!mounted) {
+          dispose = listen(button, "click", click_handler_2);
+          mounted = true;
+        }
+      },
+      p(new_ctx, dirty) {
+        ctx = new_ctx;
+        if (dirty[0] & 2 | dirty[1] & 65536) {
+          toggle_class(button, "dmg-chip-on", ctx[1] == ctx[172].id);
+        }
+      },
+      d(detaching) {
+        if (detaching)
+          detach(button);
+        mounted = false;
+        dispose();
+      }
+    };
+  }
+  function create_if_block_414(ctx) {
+    let div;
+    let each_value_20 = ctx[48];
+    let each_blocks = [];
+    for (let i = 0; i < each_value_20.length; i += 1) {
+      each_blocks[i] = create_each_block_203(get_each_context_203(ctx, each_value_20, i));
+    }
+    return {
+      c() {
+        div = element("div");
+        for (let i = 0; i < each_blocks.length; i += 1) {
+          each_blocks[i].c();
+        }
+        attr(div, "class", "dmg-chips");
+      },
+      m(target, anchor) {
+        insert(target, div, anchor);
+        for (let i = 0; i < each_blocks.length; i += 1) {
+          each_blocks[i].m(div, null);
+        }
+      },
+      p(ctx2, dirty) {
+        if (dirty[0] & 4 | dirty[1] & 131072) {
+          each_value_20 = ctx2[48];
+          let i;
+          for (i = 0; i < each_value_20.length; i += 1) {
+            const child_ctx = get_each_context_203(ctx2, each_value_20, i);
+            if (each_blocks[i]) {
+              each_blocks[i].p(child_ctx, dirty);
+            } else {
+              each_blocks[i] = create_each_block_203(child_ctx);
+              each_blocks[i].c();
+              each_blocks[i].m(div, null);
+            }
+          }
+          for (; i < each_blocks.length; i += 1) {
+            each_blocks[i].d(1);
+          }
+          each_blocks.length = each_value_20.length;
+        }
+      },
+      d(detaching) {
+        if (detaching)
+          detach(div);
+        destroy_each(each_blocks, detaching);
+      }
+    };
+  }
+  function create_each_block_203(ctx) {
+    let button;
+    let t0_value = ctx[136].label + "";
+    let t0;
+    let t1;
+    let button_title_value;
+    let mounted;
+    let dispose;
+    function click_handler_3() {
+      return ctx[99](ctx[136]);
+    }
+    return {
+      c() {
+        button = element("button");
+        t0 = text(t0_value);
+        t1 = space();
+        attr(button, "class", "dmg-chip");
+        attr(button, "title", button_title_value = ctx[136].title);
+        toggle_class(button, "dmg-chip-on", ctx[2] == ctx[136].id);
+      },
+      m(target, anchor) {
+        insert(target, button, anchor);
+        append(button, t0);
+        append(button, t1);
+        if (!mounted) {
+          dispose = listen(button, "click", click_handler_3);
+          mounted = true;
+        }
+      },
+      p(new_ctx, dirty) {
+        ctx = new_ctx;
+        if (dirty[0] & 4 | dirty[1] & 131072) {
+          toggle_class(button, "dmg-chip-on", ctx[2] == ctx[136].id);
+        }
+      },
+      d(detaching) {
+        if (detaching)
+          detach(button);
+        mounted = false;
+        dispose();
+      }
+    };
+  }
+  function create_if_block_404(ctx) {
+    let div;
+    let each_value_19 = ctx[49];
+    let each_blocks = [];
+    for (let i = 0; i < each_value_19.length; i += 1) {
+      each_blocks[i] = create_each_block_194(get_each_context_194(ctx, each_value_19, i));
+    }
+    return {
+      c() {
+        div = element("div");
+        for (let i = 0; i < each_blocks.length; i += 1) {
+          each_blocks[i].c();
+        }
+        attr(div, "class", "dmg-chips");
+      },
+      m(target, anchor) {
+        insert(target, div, anchor);
+        for (let i = 0; i < each_blocks.length; i += 1) {
+          each_blocks[i].m(div, null);
+        }
+      },
+      p(ctx2, dirty) {
+        if (dirty[0] & 8 | dirty[1] & 262144) {
+          each_value_19 = ctx2[49];
+          let i;
+          for (i = 0; i < each_value_19.length; i += 1) {
+            const child_ctx = get_each_context_194(ctx2, each_value_19, i);
+            if (each_blocks[i]) {
+              each_blocks[i].p(child_ctx, dirty);
+            } else {
+              each_blocks[i] = create_each_block_194(child_ctx);
+              each_blocks[i].c();
+              each_blocks[i].m(div, null);
+            }
+          }
+          for (; i < each_blocks.length; i += 1) {
+            each_blocks[i].d(1);
+          }
+          each_blocks.length = each_value_19.length;
+        }
+      },
+      d(detaching) {
+        if (detaching)
+          detach(div);
+        destroy_each(each_blocks, detaching);
+      }
+    };
+  }
+  function create_each_block_194(ctx) {
+    let button;
+    let t0_value = ctx[147].label + "";
+    let t0;
+    let t1;
+    let button_title_value;
+    let mounted;
+    let dispose;
+    function click_handler_4() {
+      return ctx[100](ctx[147]);
+    }
+    return {
+      c() {
+        button = element("button");
+        t0 = text(t0_value);
+        t1 = space();
+        attr(button, "class", "dmg-chip");
+        attr(button, "title", button_title_value = ctx[147].title);
+        toggle_class(button, "dmg-chip-on", ctx[3] == ctx[147].id);
+      },
+      m(target, anchor) {
+        insert(target, button, anchor);
+        append(button, t0);
+        append(button, t1);
+        if (!mounted) {
+          dispose = listen(button, "click", click_handler_4);
+          mounted = true;
+        }
+      },
+      p(new_ctx, dirty) {
+        ctx = new_ctx;
+        if (dirty[0] & 8 | dirty[1] & 262144) {
+          toggle_class(button, "dmg-chip-on", ctx[3] == ctx[147].id);
+        }
+      },
+      d(detaching) {
+        if (detaching)
+          detach(button);
+        mounted = false;
+        dispose();
+      }
+    };
+  }
+  function create_if_block_395(ctx) {
+    let button;
+    let mounted;
+    let dispose;
+    return {
+      c() {
+        button = element("button");
+        button.textContent = "Type \xB7 Rank \xB7 Where";
+        attr(button, "class", "dmg-chip");
+        attr(button, "title", "Show the Type, Rank and Where columns. Hide them to give the grid more room - the soldier file still has all three.");
+        toggle_class(button, "dmg-chip-on", ctx[6]);
+      },
+      m(target, anchor) {
+        insert(target, button, anchor);
+        if (!mounted) {
+          dispose = listen(button, "click", ctx[101]);
+          mounted = true;
+        }
+      },
+      p(ctx2, dirty) {
+        if (dirty[0] & 64) {
+          toggle_class(button, "dmg-chip-on", ctx2[6]);
+        }
+      },
+      d(detaching) {
+        if (detaching)
+          detach(button);
+        mounted = false;
+        dispose();
+      }
+    };
+  }
+  function create_if_block_325(ctx) {
+    let div;
+    let span0;
+    let t1;
+    let t2;
+    let span1;
+    let t4;
+    let span2;
+    let each_value_18 = [1, 2, 3, 4, 5];
+    let each_blocks = [];
+    for (let i = 0; i < 5; i += 1) {
+      each_blocks[i] = create_each_block_184(get_each_context_184(ctx, each_value_18, i));
+    }
+    function select_block_type_3(ctx2, dirty) {
+      if (ctx2[1] == "stats" && ctx2[2] == "value")
+        return create_if_block_335;
+      if (ctx2[1] == "stats" && ctx2[2] == "cap")
+        return create_if_block_345;
+      if (ctx2[1] == "stats" && ctx2[2] == "gym")
+        return create_if_block_355;
+      if (ctx2[1] == "stats" && ctx2[2] == "growth")
+        return create_if_block_365;
+      if (ctx2[1] == "stats")
+        return create_if_block_375;
+      if (ctx2[1] == "roles")
+        return create_if_block_385;
+      return create_else_block_74;
+    }
+    let current_block_type = select_block_type_3(ctx, [-1, -1, -1, -1, -1, -1, -1, -1]);
+    let if_block = current_block_type(ctx);
+    return {
+      c() {
+        div = element("div");
+        span0 = element("span");
+        span0.textContent = "low";
+        t1 = space();
+        for (let i = 0; i < 5; i += 1) {
+          each_blocks[i].c();
+        }
+        t2 = space();
+        span1 = element("span");
+        span1.textContent = "high";
+        t4 = space();
+        span2 = element("span");
+        if_block.c();
+        attr(span2, "class", "dmg-cap");
+        attr(div, "class", "pax-legend");
+        attr(div, "aria-hidden", "true");
+      },
+      m(target, anchor) {
+        insert(target, div, anchor);
+        append(div, span0);
+        append(div, t1);
+        for (let i = 0; i < 5; i += 1) {
+          each_blocks[i].m(div, null);
+        }
+        append(div, t2);
+        append(div, span1);
+        append(div, t4);
+        append(div, span2);
+        if_block.m(span2, null);
+      },
+      p(ctx2, dirty) {
+        if (current_block_type === (current_block_type = select_block_type_3(ctx2, dirty)) && if_block) {
+          if_block.p(ctx2, dirty);
+        } else {
+          if_block.d(1);
+          if_block = current_block_type(ctx2);
+          if (if_block) {
+            if_block.c();
+            if_block.m(span2, null);
+          }
+        }
+      },
+      d(detaching) {
+        if (detaching)
+          detach(div);
+        destroy_each(each_blocks, detaching);
+        if_block.d();
+      }
+    };
+  }
+  function create_each_block_184(ctx) {
+    let span;
+    let span_class_value;
+    return {
+      c() {
+        span = element("span");
+        attr(span, "class", span_class_value = "pax-swatch pax-h" + ctx[187]);
+      },
+      m(target, anchor) {
+        insert(target, span, anchor);
+      },
+      p: noop,
+      d(detaching) {
+        if (detaching)
+          detach(span);
+      }
+    };
+  }
+  function create_else_block_74(ctx) {
+    let t;
+    return {
+      c() {
+        t = text("shading: share of the crew's best");
+      },
+      m(target, anchor) {
+        insert(target, t, anchor);
+      },
+      p: noop,
+      d(detaching) {
+        if (detaching)
+          detach(t);
+      }
+    };
+  }
+  function create_if_block_385(ctx) {
+    let t0;
+    let t1_value = ctx[3] == "rank" ? "by rank in crew" : "by share of crew best";
+    let t1;
+    return {
+      c() {
+        t0 = text("role score 0\u2013100, ");
+        t1 = text(t1_value);
+      },
+      m(target, anchor) {
+        insert(target, t0, anchor);
+        insert(target, t1, anchor);
+      },
+      p(ctx2, dirty) {
+        if (dirty[0] & 8 && t1_value !== (t1_value = ctx2[3] == "rank" ? "by rank in crew" : "by share of crew best"))
+          set_data(t1, t1_value);
+      },
+      d(detaching) {
+        if (detaching)
+          detach(t0);
+        if (detaching)
+          detach(t1);
+      }
+    };
+  }
+  function create_if_block_375(ctx) {
+    let t;
+    return {
+      c() {
+        t = text("shading: share of the cap still to gain");
+      },
+      m(target, anchor) {
+        insert(target, t, anchor);
+      },
+      p: noop,
+      d(detaching) {
+        if (detaching)
+          detach(t);
+      }
+    };
+  }
+  function create_if_block_365(ctx) {
+    let t;
+    return {
+      c() {
+        t = text("shading: share of the crew's biggest gain");
+      },
+      m(target, anchor) {
+        insert(target, t, anchor);
+      },
+      p: noop,
+      d(detaching) {
+        if (detaching)
+          detach(t);
+      }
+    };
+  }
+  function create_if_block_355(ctx) {
+    let t;
+    return {
+      c() {
+        t = text("shading: gym room left (30+ is full)");
+      },
+      m(target, anchor) {
+        insert(target, t, anchor);
+      },
+      p: noop,
+      d(detaching) {
+        if (detaching)
+          detach(t);
+      }
+    };
+  }
+  function create_if_block_345(ctx) {
+    let t;
+    return {
+      c() {
+        t = text("shading: how close to the hard cap");
+      },
+      m(target, anchor) {
+        insert(target, t, anchor);
+      },
+      p: noop,
+      d(detaching) {
+        if (detaching)
+          detach(t);
+      }
+    };
+  }
+  function create_if_block_335(ctx) {
+    let t0;
+    let t1_value = ctx[3] == "rank" ? "rank in crew" : "share of crew best";
+    let t1;
+    return {
+      c() {
+        t0 = text("shading: ");
+        t1 = text(t1_value);
+      },
+      m(target, anchor) {
+        insert(target, t0, anchor);
+        insert(target, t1, anchor);
+      },
+      p(ctx2, dirty) {
+        if (dirty[0] & 8 && t1_value !== (t1_value = ctx2[3] == "rank" ? "rank in crew" : "share of crew best"))
+          set_data(t1, t1_value);
+      },
+      d(detaching) {
+        if (detaching)
+          detach(t0);
+        if (detaching)
+          detach(t1);
+      }
+    };
+  }
+  function create_if_block_304(ctx) {
+    let div;
+    let button;
+    let t0_value = ctx[30] ? "Done editing roles" : "Edit roles\u2026";
+    let t0;
+    let t1;
+    let mounted;
+    let dispose;
+    let if_block = ctx[30] && create_if_block_318(ctx);
+    return {
+      c() {
+        div = element("div");
+        button = element("button");
+        t0 = text(t0_value);
+        t1 = space();
+        if (if_block)
+          if_block.c();
+        attr(button, "class", "dmg-mini");
+        attr(div, "class", "pax-roleedit");
+      },
+      m(target, anchor) {
+        insert(target, div, anchor);
+        append(div, button);
+        append(button, t0);
+        append(div, t1);
+        if (if_block)
+          if_block.m(div, null);
+        if (!mounted) {
+          dispose = listen(button, "click", ctx[102]);
+          mounted = true;
+        }
+      },
+      p(ctx2, dirty) {
+        if (dirty[0] & 1073741824 && t0_value !== (t0_value = ctx2[30] ? "Done editing roles" : "Edit roles\u2026"))
+          set_data(t0, t0_value);
+        if (ctx2[30]) {
+          if (if_block) {
+            if_block.p(ctx2, dirty);
+          } else {
+            if_block = create_if_block_318(ctx2);
+            if_block.c();
+            if_block.m(div, null);
+          }
+        } else if (if_block) {
+          if_block.d(1);
+          if_block = null;
+        }
+      },
+      d(detaching) {
+        if (detaching)
+          detach(div);
+        if (if_block)
+          if_block.d();
+        mounted = false;
+        dispose();
+      }
+    };
+  }
+  function create_if_block_318(ctx) {
+    let span;
+    let t1;
+    let table;
+    let thead;
+    let tr2;
+    let th0;
+    let t3;
+    let t4;
+    let th1;
+    let t5;
+    let tbody;
+    let each_blocks = [];
+    let each1_lookup = new Map_12();
+    let t6;
+    let div;
+    let button0;
+    let t8;
+    let button1;
+    let mounted;
+    let dispose;
+    let each_value_17 = PAX_STATS;
+    let each_blocks_1 = [];
+    for (let i = 0; i < each_value_17.length; i += 1) {
+      each_blocks_1[i] = create_each_block_174(get_each_context_174(ctx, each_value_17, i));
+    }
+    let each_value_15 = ctx[11];
+    const get_key = (ctx2) => ctx2[151].id;
+    for (let i = 0; i < each_value_15.length; i += 1) {
+      let child_ctx = get_each_context_154(ctx, each_value_15, i);
+      let key = get_key(child_ctx);
+      each1_lookup.set(key, each_blocks[i] = create_each_block_154(key, child_ctx));
+    }
+    return {
+      c() {
+        span = element("span");
+        span.textContent = "Weights 0\u20135. A role's score is the weighted average of the soldier's grades.";
+        t1 = space();
+        table = element("table");
+        thead = element("thead");
+        tr2 = element("tr");
+        th0 = element("th");
+        th0.textContent = "Role";
+        t3 = space();
+        for (let i = 0; i < each_blocks_1.length; i += 1) {
+          each_blocks_1[i].c();
+        }
+        t4 = space();
+        th1 = element("th");
+        t5 = space();
+        tbody = element("tbody");
+        for (let i = 0; i < each_blocks.length; i += 1) {
+          each_blocks[i].c();
+        }
+        t6 = space();
+        div = element("div");
+        button0 = element("button");
+        button0.textContent = "+ role";
+        t8 = space();
+        button1 = element("button");
+        button1.textContent = "Reset to defaults";
+        attr(span, "class", "dmg-cap");
+        attr(table, "class", "pax-weights");
+        attr(button0, "class", "dmg-mini");
+        attr(button1, "class", "dmg-mini");
+        attr(button1, "title", "Throw away your edits and go back to the nine starting roles");
+        attr(div, "class", "dmg-chips");
+      },
+      m(target, anchor) {
+        insert(target, span, anchor);
+        insert(target, t1, anchor);
+        insert(target, table, anchor);
+        append(table, thead);
+        append(thead, tr2);
+        append(tr2, th0);
+        append(tr2, t3);
+        for (let i = 0; i < each_blocks_1.length; i += 1) {
+          each_blocks_1[i].m(tr2, null);
+        }
+        append(tr2, t4);
+        append(tr2, th1);
+        append(table, t5);
+        append(table, tbody);
+        for (let i = 0; i < each_blocks.length; i += 1) {
+          each_blocks[i].m(tbody, null);
+        }
+        insert(target, t6, anchor);
+        insert(target, div, anchor);
+        append(div, button0);
+        append(div, t8);
+        append(div, button1);
+        if (!mounted) {
+          dispose = [
+            listen(button0, "click", ctx[66]),
+            listen(button1, "click", ctx[68])
+          ];
+          mounted = true;
+        }
+      },
+      p(ctx2, dirty) {
+        if (dirty & 0) {
+          each_value_17 = PAX_STATS;
+          let i;
+          for (i = 0; i < each_value_17.length; i += 1) {
+            const child_ctx = get_each_context_174(ctx2, each_value_17, i);
+            if (each_blocks_1[i]) {
+              each_blocks_1[i].p(child_ctx, dirty);
+            } else {
+              each_blocks_1[i] = create_each_block_174(child_ctx);
+              each_blocks_1[i].c();
+              each_blocks_1[i].m(tr2, t4);
+            }
+          }
+          for (; i < each_blocks_1.length; i += 1) {
+            each_blocks_1[i].d(1);
+          }
+          each_blocks_1.length = each_value_17.length;
+        }
+        if (dirty[0] & 2048 | dirty[2] & 44) {
+          each_value_15 = ctx2[11];
+          each_blocks = update_keyed_each(each_blocks, dirty, get_key, 1, ctx2, each_value_15, each1_lookup, tbody, destroy_block, create_each_block_154, null, get_each_context_154);
+        }
+      },
+      d(detaching) {
+        if (detaching)
+          detach(span);
+        if (detaching)
+          detach(t1);
+        if (detaching)
+          detach(table);
+        destroy_each(each_blocks_1, detaching);
+        for (let i = 0; i < each_blocks.length; i += 1) {
+          each_blocks[i].d();
+        }
+        if (detaching)
+          detach(t6);
+        if (detaching)
+          detach(div);
+        mounted = false;
+        run_all(dispose);
+      }
+    };
+  }
+  function create_each_block_174(ctx) {
+    let th;
+    let t_value = ctx[146].ab + "";
+    let t;
+    let th_title_value;
+    return {
+      c() {
+        th = element("th");
+        t = text(t_value);
+        attr(th, "title", th_title_value = ctx[146].name);
+      },
+      m(target, anchor) {
+        insert(target, th, anchor);
+        append(th, t);
+      },
+      p: noop,
+      d(detaching) {
+        if (detaching)
+          detach(th);
+      }
+    };
+  }
+  function create_each_block_164(ctx) {
+    let td;
+    let input;
+    let input_value_value;
+    let mounted;
+    let dispose;
+    function change_handler_2(...args) {
+      return ctx[104](ctx[151], ctx[166], ...args);
+    }
+    return {
+      c() {
+        td = element("td");
+        input = element("input");
+        attr(input, "class", "dmg-input pax-w");
+        attr(input, "type", "number");
+        attr(input, "min", "0");
+        attr(input, "max", "5");
+        input.value = input_value_value = ctx[151].weights[ctx[166]] || 0;
+        toggle_class(input, "pax-w-on", ctx[151].weights[ctx[166]]);
+      },
+      m(target, anchor) {
+        insert(target, td, anchor);
+        append(td, input);
+        if (!mounted) {
+          dispose = listen(input, "change", change_handler_2);
+          mounted = true;
+        }
+      },
+      p(new_ctx, dirty) {
+        ctx = new_ctx;
+        if (dirty[0] & 2048 && input_value_value !== (input_value_value = ctx[151].weights[ctx[166]] || 0) && input.value !== input_value_value) {
+          input.value = input_value_value;
+        }
+        if (dirty[0] & 2048) {
+          toggle_class(input, "pax-w-on", ctx[151].weights[ctx[166]]);
+        }
+      },
+      d(detaching) {
+        if (detaching)
+          detach(td);
+        mounted = false;
+        dispose();
+      }
+    };
+  }
+  function create_each_block_154(key_1, ctx) {
+    let tr2;
+    let td0;
+    let input;
+    let t0;
+    let t1;
+    let td1;
+    let button;
+    let t3;
+    let mounted;
+    let dispose;
+    function input_input_handler_1() {
+      ctx[103].call(input, ctx[181], ctx[182]);
+    }
+    let each_value_16 = PAX_KEYS;
+    let each_blocks = [];
+    for (let i = 0; i < each_value_16.length; i += 1) {
+      each_blocks[i] = create_each_block_164(get_each_context_164(ctx, each_value_16, i));
+    }
+    function click_handler_7() {
+      return ctx[105](ctx[151]);
+    }
+    return {
+      key: key_1,
+      first: null,
+      c() {
+        tr2 = element("tr");
+        td0 = element("td");
+        input = element("input");
+        t0 = space();
+        for (let i = 0; i < each_blocks.length; i += 1) {
+          each_blocks[i].c();
+        }
+        t1 = space();
+        td1 = element("td");
+        button = element("button");
+        button.textContent = "\u2715";
+        t3 = space();
+        attr(input, "class", "dmg-input pax-rolename");
+        attr(button, "class", "dmg-mini");
+        attr(button, "title", "Delete this role");
+        this.first = tr2;
+      },
+      m(target, anchor) {
+        insert(target, tr2, anchor);
+        append(tr2, td0);
+        append(td0, input);
+        set_input_value(input, ctx[151].name);
+        append(tr2, t0);
+        for (let i = 0; i < each_blocks.length; i += 1) {
+          each_blocks[i].m(tr2, null);
+        }
+        append(tr2, t1);
+        append(tr2, td1);
+        append(td1, button);
+        append(tr2, t3);
+        if (!mounted) {
+          dispose = [
+            listen(input, "input", input_input_handler_1),
+            listen(input, "change", ctx[64]),
+            listen(button, "click", click_handler_7)
+          ];
+          mounted = true;
+        }
+      },
+      p(new_ctx, dirty) {
+        ctx = new_ctx;
+        if (dirty[0] & 2048 && input.value !== ctx[151].name) {
+          set_input_value(input, ctx[151].name);
+        }
+        if (dirty[0] & 2048 | dirty[2] & 8) {
+          each_value_16 = PAX_KEYS;
+          let i;
+          for (i = 0; i < each_value_16.length; i += 1) {
+            const child_ctx = get_each_context_164(ctx, each_value_16, i);
+            if (each_blocks[i]) {
+              each_blocks[i].p(child_ctx, dirty);
+            } else {
+              each_blocks[i] = create_each_block_164(child_ctx);
+              each_blocks[i].c();
+              each_blocks[i].m(tr2, t1);
+            }
+          }
+          for (; i < each_blocks.length; i += 1) {
+            each_blocks[i].d(1);
+          }
+          each_blocks.length = each_value_16.length;
+        }
+      },
+      d(detaching) {
+        if (detaching)
+          detach(tr2);
+        destroy_each(each_blocks, detaching);
+        mounted = false;
+        run_all(dispose);
+      }
+    };
+  }
+  function create_else_block_44(ctx) {
+    let div;
+    let table;
+    let thead;
+    let tr2;
+    let th0;
+    let t0;
+    let t1_value = arrow("name", ctx[8], ctx[9]) + "";
+    let t1;
+    let t2;
+    let t3;
+    let th1;
+    let t4;
+    let t5_value = arrow("status", ctx[8], ctx[9]) + "";
+    let t5;
+    let t6;
+    let t7;
+    let tbody;
+    let t8;
+    let mounted;
+    let dispose;
+    let if_block0 = ctx[6] && create_if_block_295(ctx);
+    function select_block_type_7(ctx2, dirty) {
+      if (ctx2[1] == "stats")
+        return create_if_block_275;
+      if (ctx2[1] == "roles")
+        return create_if_block_285;
+      return create_else_block_64;
+    }
+    let current_block_type = select_block_type_7(ctx, [-1, -1, -1, -1, -1, -1, -1, -1]);
+    let if_block1 = current_block_type(ctx);
+    let each_value_7 = ctx[39];
+    let each_blocks = [];
+    for (let i = 0; i < each_value_7.length; i += 1) {
+      each_blocks[i] = create_each_block_75(get_each_context_75(ctx, each_value_7, i));
+    }
+    let if_block2 = !ctx[20].length && create_if_block_206(ctx);
+    return {
+      c() {
+        div = element("div");
+        table = element("table");
+        thead = element("thead");
+        tr2 = element("tr");
+        th0 = element("th");
+        t0 = text("Name");
+        t1 = text(t1_value);
+        t2 = space();
+        if (if_block0)
+          if_block0.c();
+        t3 = space();
+        th1 = element("th");
+        t4 = text("Status");
+        t5 = text(t5_value);
+        t6 = space();
+        if_block1.c();
+        t7 = space();
+        tbody = element("tbody");
+        for (let i = 0; i < each_blocks.length; i += 1) {
+          each_blocks[i].c();
+        }
+        t8 = space();
+        if (if_block2)
+          if_block2.c();
+        attr(th0, "class", "pax-name pax-sort");
+        attr(th1, "class", "pax-sort");
+        attr(th1, "title", "Days to fit");
+        attr(table, "class", "pax-grid");
+        attr(div, "class", "pax-scroll");
+      },
+      m(target, anchor) {
+        insert(target, div, anchor);
+        append(div, table);
+        append(table, thead);
+        append(thead, tr2);
+        append(tr2, th0);
+        append(th0, t0);
+        append(th0, t1);
+        append(tr2, t2);
+        if (if_block0)
+          if_block0.m(tr2, null);
+        append(tr2, t3);
+        append(tr2, th1);
+        append(th1, t4);
+        append(th1, t5);
+        append(tr2, t6);
+        if_block1.m(tr2, null);
+        append(table, t7);
+        append(table, tbody);
+        for (let i = 0; i < each_blocks.length; i += 1) {
+          each_blocks[i].m(tbody, null);
+        }
+        append(div, t8);
+        if (if_block2)
+          if_block2.m(div, null);
+        if (!mounted) {
+          dispose = [
+            listen(th0, "click", ctx[113]),
+            listen(th1, "click", ctx[117])
+          ];
+          mounted = true;
+        }
+      },
+      p(ctx2, dirty) {
+        if (dirty[0] & 768 && t1_value !== (t1_value = arrow("name", ctx2[8], ctx2[9]) + ""))
+          set_data(t1, t1_value);
+        if (ctx2[6]) {
+          if (if_block0) {
+            if_block0.p(ctx2, dirty);
+          } else {
+            if_block0 = create_if_block_295(ctx2);
+            if_block0.c();
+            if_block0.m(tr2, t3);
+          }
+        } else if (if_block0) {
+          if_block0.d(1);
+          if_block0 = null;
+        }
+        if (dirty[0] & 768 && t5_value !== (t5_value = arrow("status", ctx2[8], ctx2[9]) + ""))
+          set_data(t5, t5_value);
+        if (current_block_type === (current_block_type = select_block_type_7(ctx2, dirty)) && if_block1) {
+          if_block1.p(ctx2, dirty);
+        } else {
+          if_block1.d(1);
+          if_block1 = current_block_type(ctx2);
+          if (if_block1) {
+            if_block1.c();
+            if_block1.m(tr2, null);
+          }
+        }
+        if (dirty[0] & 116802 | dirty[1] & 1007684352 | dirty[2] & 1024) {
+          each_value_7 = ctx2[39];
+          let i;
+          for (i = 0; i < each_value_7.length; i += 1) {
+            const child_ctx = get_each_context_75(ctx2, each_value_7, i);
+            if (each_blocks[i]) {
+              each_blocks[i].p(child_ctx, dirty);
+            } else {
+              each_blocks[i] = create_each_block_75(child_ctx);
+              each_blocks[i].c();
+              each_blocks[i].m(tbody, null);
+            }
+          }
+          for (; i < each_blocks.length; i += 1) {
+            each_blocks[i].d(1);
+          }
+          each_blocks.length = each_value_7.length;
+        }
+        if (!ctx2[20].length) {
+          if (if_block2) {
+            if_block2.p(ctx2, dirty);
+          } else {
+            if_block2 = create_if_block_206(ctx2);
+            if_block2.c();
+            if_block2.m(div, null);
+          }
+        } else if (if_block2) {
+          if_block2.d(1);
+          if_block2 = null;
+        }
+      },
+      d(detaching) {
+        if (detaching)
+          detach(div);
+        if (if_block0)
+          if_block0.d();
+        if_block1.d();
+        destroy_each(each_blocks, detaching);
+        if (if_block2)
+          if_block2.d();
+        mounted = false;
+        run_all(dispose);
+      }
+    };
+  }
+  function create_if_block_157(ctx) {
+    let div;
+    let section0;
+    let h4;
+    let t1;
+    let t2;
+    let button;
+    let t4;
+    let label;
+    let input;
+    let t5;
+    let t6;
+    let p;
+    let t7;
+    let t8_value = ctx[19].length + "";
+    let t8;
+    let t9;
+    let t10_value = ctx[13] ? " who are fit" : "";
+    let t10;
+    let t11;
+    let t12;
+    let section1;
+    let mounted;
+    let dispose;
+    let each_value_5 = ctx[12];
+    let each_blocks = [];
+    for (let i = 0; i < each_value_5.length; i += 1) {
+      each_blocks[i] = create_each_block_56(get_each_context_56(ctx, each_value_5, i));
+    }
+    function select_block_type_5(ctx2, dirty) {
+      if (!ctx2[37])
+        return create_if_block_167;
+      if (!ctx2[18].length)
+        return create_if_block_177;
+      return create_else_block_25;
+    }
+    let current_block_type = select_block_type_5(ctx, [-1, -1, -1, -1, -1, -1, -1, -1]);
+    let if_block = current_block_type(ctx);
+    return {
+      c() {
+        div = element("div");
+        section0 = element("section");
+        h4 = element("h4");
+        h4.textContent = "Slots to fill";
+        t1 = space();
+        for (let i = 0; i < each_blocks.length; i += 1) {
+          each_blocks[i].c();
+        }
+        t2 = space();
+        button = element("button");
+        button.textContent = "+ slot";
+        t4 = space();
+        label = element("label");
+        input = element("input");
+        t5 = text(" Fit for duty only");
+        t6 = space();
+        p = element("p");
+        t7 = text("Picks from the ");
+        t8 = text(t8_value);
+        t9 = text(" soldiers the filter on the left lets through");
+        t10 = text(t10_value);
+        t11 = text(".\n                Solved exactly: the highest total score with no one used twice, so your best\n                all-rounder is not burned on a slot someone else could fill.");
+        t12 = space();
+        section1 = element("section");
+        if_block.c();
+        attr(button, "class", "dmg-mini dmg-wide");
+        attr(input, "type", "checkbox");
+        attr(label, "class", "pax-check");
+        attr(p, "class", "dmg-hint");
+        attr(section0, "class", "pax-slots");
+        attr(section1, "class", "pax-picks");
+        attr(div, "class", "pax-squad");
+      },
+      m(target, anchor) {
+        insert(target, div, anchor);
+        append(div, section0);
+        append(section0, h4);
+        append(section0, t1);
+        for (let i = 0; i < each_blocks.length; i += 1) {
+          each_blocks[i].m(section0, null);
+        }
+        append(section0, t2);
+        append(section0, button);
+        append(section0, t4);
+        append(section0, label);
+        append(label, input);
+        input.checked = ctx[13];
+        append(label, t5);
+        append(section0, t6);
+        append(section0, p);
+        append(p, t7);
+        append(p, t8);
+        append(p, t9);
+        append(p, t10);
+        append(p, t11);
+        append(div, t12);
+        append(div, section1);
+        if_block.m(section1, null);
+        if (!mounted) {
+          dispose = [
+            listen(button, "click", ctx[70]),
+            listen(input, "change", ctx[109])
+          ];
+          mounted = true;
+        }
+      },
+      p(ctx2, dirty) {
+        if (dirty[0] & 6144 | dirty[2] & 512) {
+          each_value_5 = ctx2[12];
+          let i;
+          for (i = 0; i < each_value_5.length; i += 1) {
+            const child_ctx = get_each_context_56(ctx2, each_value_5, i);
+            if (each_blocks[i]) {
+              each_blocks[i].p(child_ctx, dirty);
+            } else {
+              each_blocks[i] = create_each_block_56(child_ctx);
+              each_blocks[i].c();
+              each_blocks[i].m(section0, t2);
+            }
+          }
+          for (; i < each_blocks.length; i += 1) {
+            each_blocks[i].d(1);
+          }
+          each_blocks.length = each_value_5.length;
+        }
+        if (dirty[0] & 8192) {
+          input.checked = ctx2[13];
+        }
+        if (dirty[0] & 524288 && t8_value !== (t8_value = ctx2[19].length + ""))
+          set_data(t8, t8_value);
+        if (dirty[0] & 8192 && t10_value !== (t10_value = ctx2[13] ? " who are fit" : ""))
+          set_data(t10, t10_value);
+        if (current_block_type === (current_block_type = select_block_type_5(ctx2, dirty)) && if_block) {
+          if_block.p(ctx2, dirty);
+        } else {
+          if_block.d(1);
+          if_block = current_block_type(ctx2);
+          if (if_block) {
+            if_block.c();
+            if_block.m(section1, null);
+          }
+        }
+      },
+      d(detaching) {
+        if (detaching)
+          detach(div);
+        destroy_each(each_blocks, detaching);
+        if_block.d();
+        mounted = false;
+        run_all(dispose);
+      }
+    };
+  }
+  function create_if_block_295(ctx) {
+    let th0;
+    let t0;
+    let t1_value = arrow("type", ctx[8], ctx[9]) + "";
+    let t1;
+    let t2;
+    let th1;
+    let t3;
+    let t4_value = arrow("rank", ctx[8], ctx[9]) + "";
+    let t4;
+    let t5;
+    let th2;
+    let t6;
+    let t7_value = arrow("where", ctx[8], ctx[9]) + "";
+    let t7;
+    let mounted;
+    let dispose;
+    return {
+      c() {
+        th0 = element("th");
+        t0 = text("Type");
+        t1 = text(t1_value);
+        t2 = space();
+        th1 = element("th");
+        t3 = text("Rank");
+        t4 = text(t4_value);
+        t5 = space();
+        th2 = element("th");
+        t6 = text("Where");
+        t7 = text(t7_value);
+        attr(th0, "class", "pax-sort");
+        attr(th1, "class", "pax-sort");
+        attr(th2, "class", "pax-sort");
+        attr(th2, "title", "Craft, else base");
+      },
+      m(target, anchor) {
+        insert(target, th0, anchor);
+        append(th0, t0);
+        append(th0, t1);
+        insert(target, t2, anchor);
+        insert(target, th1, anchor);
+        append(th1, t3);
+        append(th1, t4);
+        insert(target, t5, anchor);
+        insert(target, th2, anchor);
+        append(th2, t6);
+        append(th2, t7);
+        if (!mounted) {
+          dispose = [
+            listen(th0, "click", ctx[114]),
+            listen(th1, "click", ctx[115]),
+            listen(th2, "click", ctx[116])
+          ];
+          mounted = true;
+        }
+      },
+      p(ctx2, dirty) {
+        if (dirty[0] & 768 && t1_value !== (t1_value = arrow("type", ctx2[8], ctx2[9]) + ""))
+          set_data(t1, t1_value);
+        if (dirty[0] & 768 && t4_value !== (t4_value = arrow("rank", ctx2[8], ctx2[9]) + ""))
+          set_data(t4, t4_value);
+        if (dirty[0] & 768 && t7_value !== (t7_value = arrow("where", ctx2[8], ctx2[9]) + ""))
+          set_data(t7, t7_value);
+      },
+      d(detaching) {
+        if (detaching)
+          detach(th0);
+        if (detaching)
+          detach(t2);
+        if (detaching)
+          detach(th1);
+        if (detaching)
+          detach(t5);
+        if (detaching)
+          detach(th2);
+        mounted = false;
+        run_all(dispose);
+      }
+    };
+  }
+  function create_else_block_64(ctx) {
+    let t0;
+    let th;
+    let each_value_14 = ctx[51];
+    let each_blocks = [];
+    for (let i = 0; i < each_value_14.length; i += 1) {
+      each_blocks[i] = create_each_block_145(get_each_context_145(ctx, each_value_14, i));
+    }
+    return {
+      c() {
+        for (let i = 0; i < each_blocks.length; i += 1) {
+          each_blocks[i].c();
+        }
+        t0 = space();
+        th = element("th");
+        th.textContent = "Favourite";
+        attr(th, "title", "Weapon with the most kills and stuns");
+      },
+      m(target, anchor) {
+        for (let i = 0; i < each_blocks.length; i += 1) {
+          each_blocks[i].m(target, anchor);
+        }
+        insert(target, t0, anchor);
+        insert(target, th, anchor);
+      },
+      p(ctx2, dirty) {
+        if (dirty[0] & 768 | dirty[1] & 34603008) {
+          each_value_14 = ctx2[51];
+          let i;
+          for (i = 0; i < each_value_14.length; i += 1) {
+            const child_ctx = get_each_context_145(ctx2, each_value_14, i);
+            if (each_blocks[i]) {
+              each_blocks[i].p(child_ctx, dirty);
+            } else {
+              each_blocks[i] = create_each_block_145(child_ctx);
+              each_blocks[i].c();
+              each_blocks[i].m(t0.parentNode, t0);
+            }
+          }
+          for (; i < each_blocks.length; i += 1) {
+            each_blocks[i].d(1);
+          }
+          each_blocks.length = each_value_14.length;
+        }
+      },
+      d(detaching) {
+        destroy_each(each_blocks, detaching);
+        if (detaching)
+          detach(t0);
+        if (detaching)
+          detach(th);
+      }
+    };
+  }
+  function create_if_block_285(ctx) {
+    let each_blocks = [];
+    let each_1_lookup = new Map_12();
+    let each_1_anchor;
+    let each_value_13 = ctx[11];
+    const get_key = (ctx2) => ctx2[151].id;
+    for (let i = 0; i < each_value_13.length; i += 1) {
+      let child_ctx = get_each_context_135(ctx, each_value_13, i);
+      let key = get_key(child_ctx);
+      each_1_lookup.set(key, each_blocks[i] = create_each_block_135(key, child_ctx));
+    }
+    return {
+      c() {
+        for (let i = 0; i < each_blocks.length; i += 1) {
+          each_blocks[i].c();
+        }
+        each_1_anchor = empty();
+      },
+      m(target, anchor) {
+        for (let i = 0; i < each_blocks.length; i += 1) {
+          each_blocks[i].m(target, anchor);
+        }
+        insert(target, each_1_anchor, anchor);
+      },
+      p(ctx2, dirty) {
+        if (dirty[0] & 2816 | dirty[1] & 570425344) {
+          each_value_13 = ctx2[11];
+          each_blocks = update_keyed_each(each_blocks, dirty, get_key, 1, ctx2, each_value_13, each_1_lookup, each_1_anchor.parentNode, destroy_block, create_each_block_135, each_1_anchor, get_each_context_135);
+        }
+      },
+      d(detaching) {
+        for (let i = 0; i < each_blocks.length; i += 1) {
+          each_blocks[i].d(detaching);
+        }
+        if (detaching)
+          detach(each_1_anchor);
+      }
+    };
+  }
+  function create_if_block_275(ctx) {
+    let t0;
+    let th0;
+    let t1;
+    let t2_value = arrow("gym", ctx[8], ctx[9]) + "";
+    let t2;
+    let t3;
+    let th1;
+    let t4;
+    let t5_value = arrow("best", ctx[8], ctx[9]) + "";
+    let t5;
+    let mounted;
+    let dispose;
+    let each_value_12 = PAX_STATS;
+    let each_blocks = [];
+    for (let i = 0; i < each_value_12.length; i += 1) {
+      each_blocks[i] = create_each_block_125(get_each_context_125(ctx, each_value_12, i));
+    }
+    return {
+      c() {
+        for (let i = 0; i < each_blocks.length; i += 1) {
+          each_blocks[i].c();
+        }
+        t0 = space();
+        th0 = element("th");
+        t1 = text("Gym");
+        t2 = text(t2_value);
+        t3 = space();
+        th1 = element("th");
+        t4 = text("Best role");
+        t5 = text(t5_value);
+        attr(th0, "class", "pax-sort pax-numh");
+        attr(th0, "title", "Stat points the gym can still add, all stats");
+        attr(th1, "class", "pax-sort");
+        attr(th1, "title", "Highest-scoring role");
+      },
+      m(target, anchor) {
+        for (let i = 0; i < each_blocks.length; i += 1) {
+          each_blocks[i].m(target, anchor);
+        }
+        insert(target, t0, anchor);
+        insert(target, th0, anchor);
+        append(th0, t1);
+        append(th0, t2);
+        insert(target, t3, anchor);
+        insert(target, th1, anchor);
+        append(th1, t4);
+        append(th1, t5);
+        if (!mounted) {
+          dispose = [
+            listen(th0, "click", ctx[119]),
+            listen(th1, "click", ctx[120])
+          ];
+          mounted = true;
+        }
+      },
+      p(ctx2, dirty) {
+        if (dirty[0] & 768 | dirty[1] & 33554432) {
+          each_value_12 = PAX_STATS;
+          let i;
+          for (i = 0; i < each_value_12.length; i += 1) {
+            const child_ctx = get_each_context_125(ctx2, each_value_12, i);
+            if (each_blocks[i]) {
+              each_blocks[i].p(child_ctx, dirty);
+            } else {
+              each_blocks[i] = create_each_block_125(child_ctx);
+              each_blocks[i].c();
+              each_blocks[i].m(t0.parentNode, t0);
+            }
+          }
+          for (; i < each_blocks.length; i += 1) {
+            each_blocks[i].d(1);
+          }
+          each_blocks.length = each_value_12.length;
+        }
+        if (dirty[0] & 768 && t2_value !== (t2_value = arrow("gym", ctx2[8], ctx2[9]) + ""))
+          set_data(t2, t2_value);
+        if (dirty[0] & 768 && t5_value !== (t5_value = arrow("best", ctx2[8], ctx2[9]) + ""))
+          set_data(t5, t5_value);
+      },
+      d(detaching) {
+        destroy_each(each_blocks, detaching);
+        if (detaching)
+          detach(t0);
+        if (detaching)
+          detach(th0);
+        if (detaching)
+          detach(t3);
+        if (detaching)
+          detach(th1);
+        mounted = false;
+        run_all(dispose);
+      }
+    };
+  }
+  function create_each_block_145(ctx) {
+    let th;
+    let t0_value = ctx[171].ab + "";
+    let t0;
+    let t1_value = arrow("c:" + ctx[171].id, ctx[8], ctx[9]) + "";
+    let t1;
+    let th_title_value;
+    let mounted;
+    let dispose;
+    function click_handler_19() {
+      return ctx[122](ctx[171]);
+    }
+    return {
+      c() {
+        th = element("th");
+        t0 = text(t0_value);
+        t1 = text(t1_value);
+        attr(th, "class", "pax-sort pax-numh");
+        attr(th, "title", th_title_value = ctx[171].title);
+      },
+      m(target, anchor) {
+        insert(target, th, anchor);
+        append(th, t0);
+        append(th, t1);
+        if (!mounted) {
+          dispose = listen(th, "click", click_handler_19);
+          mounted = true;
+        }
+      },
+      p(new_ctx, dirty) {
+        ctx = new_ctx;
+        if (dirty[0] & 768 && t1_value !== (t1_value = arrow("c:" + ctx[171].id, ctx[8], ctx[9]) + ""))
+          set_data(t1, t1_value);
+      },
+      d(detaching) {
+        if (detaching)
+          detach(th);
+        mounted = false;
+        dispose();
+      }
+    };
+  }
+  function create_each_block_135(key_1, ctx) {
+    let th;
+    let t0_value = ctx[151].name + "";
+    let t0;
+    let t1_value = arrow("role:" + ctx[151].id, ctx[8], ctx[9]) + "";
+    let t1;
+    let t2;
+    let th_title_value;
+    let mounted;
+    let dispose;
+    function click_handler_18() {
+      return ctx[121](ctx[151]);
+    }
+    return {
+      key: key_1,
+      first: null,
+      c() {
+        th = element("th");
+        t0 = text(t0_value);
+        t1 = text(t1_value);
+        t2 = space();
+        attr(th, "class", "pax-sort pax-numh");
+        attr(th, "title", th_title_value = ctx[60](ctx[151]));
+        this.first = th;
+      },
+      m(target, anchor) {
+        insert(target, th, anchor);
+        append(th, t0);
+        append(th, t1);
+        append(th, t2);
+        if (!mounted) {
+          dispose = listen(th, "click", click_handler_18);
+          mounted = true;
+        }
+      },
+      p(new_ctx, dirty) {
+        ctx = new_ctx;
+        if (dirty[0] & 2048 && t0_value !== (t0_value = ctx[151].name + ""))
+          set_data(t0, t0_value);
+        if (dirty[0] & 2816 && t1_value !== (t1_value = arrow("role:" + ctx[151].id, ctx[8], ctx[9]) + ""))
+          set_data(t1, t1_value);
+        if (dirty[0] & 2048 && th_title_value !== (th_title_value = ctx[60](ctx[151]))) {
+          attr(th, "title", th_title_value);
+        }
+      },
+      d(detaching) {
+        if (detaching)
+          detach(th);
+        mounted = false;
+        dispose();
+      }
+    };
+  }
+  function create_each_block_125(ctx) {
+    let th;
+    let t0_value = ctx[146].ab + "";
+    let t0;
+    let t1_value = arrow("stat:" + ctx[146].k, ctx[8], ctx[9]) + "";
+    let t1;
+    let th_title_value;
+    let mounted;
+    let dispose;
+    function click_handler_15() {
+      return ctx[118](ctx[146]);
+    }
+    return {
+      c() {
+        th = element("th");
+        t0 = text(t0_value);
+        t1 = text(t1_value);
+        attr(th, "class", "pax-sort pax-numh");
+        attr(th, "title", th_title_value = ctx[146].name);
+      },
+      m(target, anchor) {
+        insert(target, th, anchor);
+        append(th, t0);
+        append(th, t1);
+        if (!mounted) {
+          dispose = listen(th, "click", click_handler_15);
+          mounted = true;
+        }
+      },
+      p(new_ctx, dirty) {
+        ctx = new_ctx;
+        if (dirty[0] & 768 && t1_value !== (t1_value = arrow("stat:" + ctx[146].k, ctx[8], ctx[9]) + ""))
+          set_data(t1, t1_value);
+      },
+      d(detaching) {
+        if (detaching)
+          detach(th);
+        mounted = false;
+        dispose();
+      }
+    };
+  }
+  function create_if_block_265(ctx) {
+    let tr2;
+    let td;
+    let t0_value = ctx[160].name + "";
+    let t0;
+    let t1;
+    let span;
+    let t2_value = ctx[160].rows.length + "";
+    let t2;
+    return {
+      c() {
+        tr2 = element("tr");
+        td = element("td");
+        t0 = text(t0_value);
+        t1 = space();
+        span = element("span");
+        t2 = text(t2_value);
+        attr(span, "class", "dmg-cap");
+        attr(td, "colspan", "99");
+        attr(tr2, "class", "pax-group");
+      },
+      m(target, anchor) {
+        insert(target, tr2, anchor);
+        append(tr2, td);
+        append(td, t0);
+        append(td, t1);
+        append(td, span);
+        append(span, t2);
+      },
+      p(ctx2, dirty) {
+        if (dirty[1] & 256 && t0_value !== (t0_value = ctx2[160].name + ""))
+          set_data(t0, t0_value);
+        if (dirty[1] & 256 && t2_value !== (t2_value = ctx2[160].rows.length + ""))
+          set_data(t2, t2_value);
+      },
+      d(detaching) {
+        if (detaching)
+          detach(tr2);
+      }
+    };
+  }
+  function create_if_block_255(ctx) {
+    let td0;
+    let t0_value = ctx[163].typeName + "";
+    let t0;
+    let t1;
+    let td1;
+    let t2_value = ctx[163].rankName + "";
+    let t2;
+    let t3;
+    let td2;
+    let t4_value = (ctx[163].craft || (ctx[42] ? ctx[163].base : "")) + "";
+    let t4;
+    return {
+      c() {
+        td0 = element("td");
+        t0 = text(t0_value);
+        t1 = space();
+        td1 = element("td");
+        t2 = text(t2_value);
+        t3 = space();
+        td2 = element("td");
+        t4 = text(t4_value);
+        attr(td0, "class", "dmg-cap");
+        attr(td1, "class", "dmg-cap");
+        attr(td2, "class", "dmg-cap");
+      },
+      m(target, anchor) {
+        insert(target, td0, anchor);
+        append(td0, t0);
+        insert(target, t1, anchor);
+        insert(target, td1, anchor);
+        append(td1, t2);
+        insert(target, t3, anchor);
+        insert(target, td2, anchor);
+        append(td2, t4);
+      },
+      p(ctx2, dirty) {
+        if (dirty[1] & 256 && t0_value !== (t0_value = ctx2[163].typeName + ""))
+          set_data(t0, t0_value);
+        if (dirty[1] & 256 && t2_value !== (t2_value = ctx2[163].rankName + ""))
+          set_data(t2, t2_value);
+        if (dirty[1] & 2304 && t4_value !== (t4_value = (ctx2[163].craft || (ctx2[42] ? ctx2[163].base : "")) + ""))
+          set_data(t4, t4_value);
+      },
+      d(detaching) {
+        if (detaching)
+          detach(td0);
+        if (detaching)
+          detach(t1);
+        if (detaching)
+          detach(td1);
+        if (detaching)
+          detach(t3);
+        if (detaching)
+          detach(td2);
+      }
+    };
+  }
+  function create_else_block_54(ctx) {
+    let t;
+    let td;
+    let each_value_11 = ctx[51];
+    let each_blocks = [];
+    for (let i = 0; i < each_value_11.length; i += 1) {
+      each_blocks[i] = create_each_block_115(get_each_context_116(ctx, each_value_11, i));
+    }
+    let if_block = ctx[163].weapons.length && create_if_block_245(ctx);
+    return {
+      c() {
+        for (let i = 0; i < each_blocks.length; i += 1) {
+          each_blocks[i].c();
+        }
+        t = space();
+        td = element("td");
+        if (if_block)
+          if_block.c();
+        attr(td, "class", "dmg-cap");
+      },
+      m(target, anchor) {
+        for (let i = 0; i < each_blocks.length; i += 1) {
+          each_blocks[i].m(target, anchor);
+        }
+        insert(target, t, anchor);
+        insert(target, td, anchor);
+        if (if_block)
+          if_block.m(td, null);
+      },
+      p(ctx2, dirty) {
+        if (dirty[1] & 1049344) {
+          each_value_11 = ctx2[51];
+          let i;
+          for (i = 0; i < each_value_11.length; i += 1) {
+            const child_ctx = get_each_context_116(ctx2, each_value_11, i);
+            if (each_blocks[i]) {
+              each_blocks[i].p(child_ctx, dirty);
+            } else {
+              each_blocks[i] = create_each_block_115(child_ctx);
+              each_blocks[i].c();
+              each_blocks[i].m(t.parentNode, t);
+            }
+          }
+          for (; i < each_blocks.length; i += 1) {
+            each_blocks[i].d(1);
+          }
+          each_blocks.length = each_value_11.length;
+        }
+        if (ctx2[163].weapons.length) {
+          if (if_block) {
+            if_block.p(ctx2, dirty);
+          } else {
+            if_block = create_if_block_245(ctx2);
+            if_block.c();
+            if_block.m(td, null);
+          }
+        } else if (if_block) {
+          if_block.d(1);
+          if_block = null;
+        }
+      },
+      d(detaching) {
+        destroy_each(each_blocks, detaching);
+        if (detaching)
+          detach(t);
+        if (detaching)
+          detach(td);
+        if (if_block)
+          if_block.d();
+      }
+    };
+  }
+  function create_if_block_235(ctx) {
+    let each_blocks = [];
+    let each_1_lookup = new Map_12();
+    let each_1_anchor;
+    let each_value_10 = ctx[11];
+    const get_key = (ctx2) => ctx2[151].id;
+    for (let i = 0; i < each_value_10.length; i += 1) {
+      let child_ctx = get_each_context_104(ctx, each_value_10, i);
+      let key = get_key(child_ctx);
+      each_1_lookup.set(key, each_blocks[i] = create_each_block_104(key, child_ctx));
+    }
+    return {
+      c() {
+        for (let i = 0; i < each_blocks.length; i += 1) {
+          each_blocks[i].c();
+        }
+        each_1_anchor = empty();
+      },
+      m(target, anchor) {
+        for (let i = 0; i < each_blocks.length; i += 1) {
+          each_blocks[i].m(target, anchor);
+        }
+        insert(target, each_1_anchor, anchor);
+      },
+      p(ctx2, dirty) {
+        if (dirty[0] & 100352 | dirty[1] & 536871168) {
+          each_value_10 = ctx2[11];
+          each_blocks = update_keyed_each(each_blocks, dirty, get_key, 1, ctx2, each_value_10, each_1_lookup, each_1_anchor.parentNode, destroy_block, create_each_block_104, each_1_anchor, get_each_context_104);
+        }
+      },
+      d(detaching) {
+        for (let i = 0; i < each_blocks.length; i += 1) {
+          each_blocks[i].d(detaching);
+        }
+        if (detaching)
+          detach(each_1_anchor);
+      }
+    };
+  }
+  function create_if_block_2110(ctx) {
+    let t0;
+    let td0;
+    let t1_value = (ctx[163].gymLeft || "\u2713") + "";
+    let t1;
+    let td0_class_value;
+    let td0_title_value;
+    let t2;
+    let td1;
+    let show_if = ctx[16].get(ctx[163].id);
+    let each_value_9 = PAX_KEYS;
+    let each_blocks = [];
+    for (let i = 0; i < each_value_9.length; i += 1) {
+      each_blocks[i] = create_each_block_94(get_each_context_94(ctx, each_value_9, i));
+    }
+    let if_block = show_if && create_if_block_226(get_if_ctx2(ctx));
+    return {
+      c() {
+        for (let i = 0; i < each_blocks.length; i += 1) {
+          each_blocks[i].c();
+        }
+        t0 = space();
+        td0 = element("td");
+        t1 = text(t1_value);
+        t2 = space();
+        td1 = element("td");
+        if (if_block)
+          if_block.c();
+        attr(td0, "class", td0_class_value = "pax-cell pax-h" + step(ctx[163].gymLeft / 150));
+        attr(td0, "title", td0_title_value = ctx[163].gymLeft + " stat points of gym training left");
+      },
+      m(target, anchor) {
+        for (let i = 0; i < each_blocks.length; i += 1) {
+          each_blocks[i].m(target, anchor);
+        }
+        insert(target, t0, anchor);
+        insert(target, td0, anchor);
+        append(td0, t1);
+        insert(target, t2, anchor);
+        insert(target, td1, anchor);
+        if (if_block)
+          if_block.m(td1, null);
+      },
+      p(ctx2, dirty) {
+        if (dirty[1] & 469762304) {
+          each_value_9 = PAX_KEYS;
+          let i;
+          for (i = 0; i < each_value_9.length; i += 1) {
+            const child_ctx = get_each_context_94(ctx2, each_value_9, i);
+            if (each_blocks[i]) {
+              each_blocks[i].p(child_ctx, dirty);
+            } else {
+              each_blocks[i] = create_each_block_94(child_ctx);
+              each_blocks[i].c();
+              each_blocks[i].m(t0.parentNode, t0);
+            }
+          }
+          for (; i < each_blocks.length; i += 1) {
+            each_blocks[i].d(1);
+          }
+          each_blocks.length = each_value_9.length;
+        }
+        if (dirty[1] & 256 && t1_value !== (t1_value = (ctx2[163].gymLeft || "\u2713") + ""))
+          set_data(t1, t1_value);
+        if (dirty[1] & 256 && td0_class_value !== (td0_class_value = "pax-cell pax-h" + step(ctx2[163].gymLeft / 150))) {
+          attr(td0, "class", td0_class_value);
+        }
+        if (dirty[1] & 256 && td0_title_value !== (td0_title_value = ctx2[163].gymLeft + " stat points of gym training left")) {
+          attr(td0, "title", td0_title_value);
+        }
+        if (dirty[0] & 65536 | dirty[1] & 256)
+          show_if = ctx2[16].get(ctx2[163].id);
+        if (show_if) {
+          if (if_block) {
+            if_block.p(get_if_ctx2(ctx2), dirty);
+          } else {
+            if_block = create_if_block_226(get_if_ctx2(ctx2));
+            if_block.c();
+            if_block.m(td1, null);
+          }
+        } else if (if_block) {
+          if_block.d(1);
+          if_block = null;
+        }
+      },
+      d(detaching) {
+        destroy_each(each_blocks, detaching);
+        if (detaching)
+          detach(t0);
+        if (detaching)
+          detach(td0);
+        if (detaching)
+          detach(t2);
+        if (detaching)
+          detach(td1);
+        if (if_block)
+          if_block.d();
+      }
+    };
+  }
+  function create_each_block_115(ctx) {
+    let td;
+    let t_value = (ctx[172] == null ? "" : ctx[171].fmt ? ctx[171].fmt(ctx[172]) : ctx[172]) + "";
+    let t;
+    let td_class_value;
+    let td_title_value;
+    return {
+      c() {
+        td = element("td");
+        t = text(t_value);
+        attr(td, "class", td_class_value = "pax-cell " + (ctx[171].heat && ctx[172] != null && ctx[40][ctx[171].id] > 0 ? "pax-h" + step(ctx[172] / ctx[40][ctx[171].id]) : ""));
+        attr(td, "title", td_title_value = ctx[171].title);
+      },
+      m(target, anchor) {
+        insert(target, td, anchor);
+        append(td, t);
+      },
+      p(ctx2, dirty) {
+        if (dirty[1] & 256 && t_value !== (t_value = (ctx2[172] == null ? "" : ctx2[171].fmt ? ctx2[171].fmt(ctx2[172]) : ctx2[172]) + ""))
+          set_data(t, t_value);
+        if (dirty[1] & 768 && td_class_value !== (td_class_value = "pax-cell " + (ctx2[171].heat && ctx2[172] != null && ctx2[40][ctx2[171].id] > 0 ? "pax-h" + step(ctx2[172] / ctx2[40][ctx2[171].id]) : ""))) {
+          attr(td, "class", td_class_value);
+        }
+      },
+      d(detaching) {
+        if (detaching)
+          detach(td);
+      }
+    };
+  }
+  function create_if_block_245(ctx) {
+    let t0_value = rul.tr(ctx[163].weapons[0][0]) + "";
+    let t0;
+    let t1;
+    let t2_value = ctx[163].weapons[0][1] + "";
+    let t2;
+    return {
+      c() {
+        t0 = text(t0_value);
+        t1 = text(" \xD7");
+        t2 = text(t2_value);
+      },
+      m(target, anchor) {
+        insert(target, t0, anchor);
+        insert(target, t1, anchor);
+        insert(target, t2, anchor);
+      },
+      p(ctx2, dirty) {
+        if (dirty[1] & 256 && t0_value !== (t0_value = rul.tr(ctx2[163].weapons[0][0]) + ""))
+          set_data(t0, t0_value);
+        if (dirty[1] & 256 && t2_value !== (t2_value = ctx2[163].weapons[0][1] + ""))
+          set_data(t2, t2_value);
+      },
+      d(detaching) {
+        if (detaching)
+          detach(t0);
+        if (detaching)
+          detach(t1);
+        if (detaching)
+          detach(t2);
+      }
+    };
+  }
+  function create_each_block_104(key_1, ctx) {
+    let td;
+    let t0_value = (ctx[146] == null ? "" : Math.round(ctx[146])) + "";
+    let t0;
+    let t1;
+    let td_class_value;
+    let td_title_value;
+    return {
+      key: key_1,
+      first: null,
+      c() {
+        td = element("td");
+        t0 = text(t0_value);
+        t1 = space();
+        attr(td, "class", td_class_value = "pax-cell pax-h" + step(ctx[146] / 100));
+        attr(td, "title", td_title_value = ctx[60](ctx[151]));
+        toggle_class(td, "pax-top", ctx[16].get(ctx[163].id) == ctx[151]);
+        this.first = td;
+      },
+      m(target, anchor) {
+        insert(target, td, anchor);
+        append(td, t0);
+        append(td, t1);
+      },
+      p(new_ctx, dirty) {
+        ctx = new_ctx;
+        if (dirty[0] & 34816 | dirty[1] & 256 && t0_value !== (t0_value = (ctx[146] == null ? "" : Math.round(ctx[146])) + ""))
+          set_data(t0, t0_value);
+        if (dirty[0] & 34816 | dirty[1] & 256 && td_class_value !== (td_class_value = "pax-cell pax-h" + step(ctx[146] / 100))) {
+          attr(td, "class", td_class_value);
+        }
+        if (dirty[0] & 2048 && td_title_value !== (td_title_value = ctx[60](ctx[151]))) {
+          attr(td, "title", td_title_value);
+        }
+        if (dirty[0] & 100352 | dirty[1] & 256) {
+          toggle_class(td, "pax-top", ctx[16].get(ctx[163].id) == ctx[151]);
+        }
+      },
+      d(detaching) {
+        if (detaching)
+          detach(td);
+      }
+    };
+  }
+  function create_each_block_94(ctx) {
+    let td;
+    let t_value = ctx[58](ctx[163], ctx[166]) + "";
+    let t;
+    let td_class_value;
+    let td_title_value;
+    return {
+      c() {
+        td = element("td");
+        t = text(t_value);
+        attr(td, "class", td_class_value = "pax-cell pax-h" + ctx[57](ctx[163], ctx[166]));
+        attr(td, "title", td_title_value = ctx[59](ctx[163], ctx[166]));
+        toggle_class(td, "pax-maxed", ctx[163].cap[ctx[166]] > 0 && ctx[163].raw[ctx[166]] >= ctx[163].cap[ctx[166]]);
+      },
+      m(target, anchor) {
+        insert(target, td, anchor);
+        append(td, t);
+      },
+      p(ctx2, dirty) {
+        if (dirty[1] & 256 && t_value !== (t_value = ctx2[58](ctx2[163], ctx2[166]) + ""))
+          set_data(t, t_value);
+        if (dirty[1] & 256 && td_class_value !== (td_class_value = "pax-cell pax-h" + ctx2[57](ctx2[163], ctx2[166]))) {
+          attr(td, "class", td_class_value);
+        }
+        if (dirty[1] & 256 && td_title_value !== (td_title_value = ctx2[59](ctx2[163], ctx2[166]))) {
+          attr(td, "title", td_title_value);
+        }
+        if (dirty[1] & 256) {
+          toggle_class(td, "pax-maxed", ctx2[163].cap[ctx2[166]] > 0 && ctx2[163].raw[ctx2[166]] >= ctx2[163].cap[ctx2[166]]);
+        }
+      },
+      d(detaching) {
+        if (detaching)
+          detach(td);
+      }
+    };
+  }
+  function create_if_block_226(ctx) {
+    let span;
+    let t0_value = ctx[147].name + "";
+    let t0;
+    let t1;
+    let t2_value = Math.round(ctx[146]) + "";
+    let t2;
+    let span_title_value;
+    return {
+      c() {
+        span = element("span");
+        t0 = text(t0_value);
+        t1 = space();
+        t2 = text(t2_value);
+        attr(span, "title", span_title_value = ctx[60](ctx[147]));
+        toggle_class(span, "pax-weak", ctx[146] < 40);
+      },
+      m(target, anchor) {
+        insert(target, span, anchor);
+        append(span, t0);
+        append(span, t1);
+        append(span, t2);
+      },
+      p(ctx2, dirty) {
+        if (dirty[0] & 65536 | dirty[1] & 256 && t0_value !== (t0_value = ctx2[147].name + ""))
+          set_data(t0, t0_value);
+        if (dirty[0] & 98304 | dirty[1] & 256 && t2_value !== (t2_value = Math.round(ctx2[146]) + ""))
+          set_data(t2, t2_value);
+        if (dirty[0] & 65536 | dirty[1] & 256 && span_title_value !== (span_title_value = ctx2[60](ctx2[147]))) {
+          attr(span, "title", span_title_value);
+        }
+        if (dirty[0] & 98304 | dirty[1] & 256) {
+          toggle_class(span, "pax-weak", ctx2[146] < 40);
+        }
+      },
+      d(detaching) {
+        if (detaching)
+          detach(span);
+      }
+    };
+  }
+  function create_each_block_84(key_1, ctx) {
+    let tr2;
+    let td0;
+    let t0_value = ctx[163].name + "";
+    let t0;
+    let t1;
+    let t2;
+    let td1;
+    let t3_value = statusText(ctx[163]) + "";
+    let t3;
+    let td1_title_value;
+    let t4;
+    let t5;
+    let mounted;
+    let dispose;
+    let if_block0 = ctx[6] && create_if_block_255(ctx);
+    function select_block_type_8(ctx2, dirty) {
+      if (ctx2[1] == "stats")
+        return create_if_block_2110;
+      if (ctx2[1] == "roles")
+        return create_if_block_235;
+      return create_else_block_54;
+    }
+    let current_block_type = select_block_type_8(ctx, [-1, -1, -1, -1, -1, -1, -1, -1]);
+    let if_block1 = current_block_type(ctx);
+    function click_handler_20() {
+      return ctx[123](ctx[163]);
+    }
+    return {
+      key: key_1,
+      first: null,
+      c() {
+        tr2 = element("tr");
+        td0 = element("td");
+        t0 = text(t0_value);
+        t1 = space();
+        if (if_block0)
+          if_block0.c();
+        t2 = space();
+        td1 = element("td");
+        t3 = text(t3_value);
+        t4 = space();
+        if_block1.c();
+        t5 = space();
+        attr(td0, "class", "pax-name");
+        attr(td1, "class", "pax-status");
+        attr(td1, "title", td1_title_value = statusTip(ctx[163]));
+        toggle_class(td1, "pax-hurt", ctx[163].status == "wounded");
+        toggle_class(tr2, "pax-on", ctx[14] == ctx[163].id);
+        toggle_class(tr2, "pax-fallen", ctx[163].status == "fallen");
+        this.first = tr2;
+      },
+      m(target, anchor) {
+        insert(target, tr2, anchor);
+        append(tr2, td0);
+        append(td0, t0);
+        append(tr2, t1);
+        if (if_block0)
+          if_block0.m(tr2, null);
+        append(tr2, t2);
+        append(tr2, td1);
+        append(td1, t3);
+        append(tr2, t4);
+        if_block1.m(tr2, null);
+        append(tr2, t5);
+        if (!mounted) {
+          dispose = listen(tr2, "click", click_handler_20);
+          mounted = true;
+        }
+      },
+      p(new_ctx, dirty) {
+        ctx = new_ctx;
+        if (dirty[1] & 256 && t0_value !== (t0_value = ctx[163].name + ""))
+          set_data(t0, t0_value);
+        if (ctx[6]) {
+          if (if_block0) {
+            if_block0.p(ctx, dirty);
+          } else {
+            if_block0 = create_if_block_255(ctx);
+            if_block0.c();
+            if_block0.m(tr2, t2);
+          }
+        } else if (if_block0) {
+          if_block0.d(1);
+          if_block0 = null;
+        }
+        if (dirty[1] & 256 && t3_value !== (t3_value = statusText(ctx[163]) + ""))
+          set_data(t3, t3_value);
+        if (dirty[1] & 256 && td1_title_value !== (td1_title_value = statusTip(ctx[163]))) {
+          attr(td1, "title", td1_title_value);
+        }
+        if (dirty[1] & 256) {
+          toggle_class(td1, "pax-hurt", ctx[163].status == "wounded");
+        }
+        if (current_block_type === (current_block_type = select_block_type_8(ctx, dirty)) && if_block1) {
+          if_block1.p(ctx, dirty);
+        } else {
+          if_block1.d(1);
+          if_block1 = current_block_type(ctx);
+          if (if_block1) {
+            if_block1.c();
+            if_block1.m(tr2, t5);
+          }
+        }
+        if (dirty[0] & 16384 | dirty[1] & 256) {
+          toggle_class(tr2, "pax-on", ctx[14] == ctx[163].id);
+        }
+        if (dirty[1] & 256) {
+          toggle_class(tr2, "pax-fallen", ctx[163].status == "fallen");
+        }
+      },
+      d(detaching) {
+        if (detaching)
+          detach(tr2);
+        if (if_block0)
+          if_block0.d();
+        if_block1.d();
+        mounted = false;
+        dispose();
+      }
+    };
+  }
+  function create_each_block_75(ctx) {
+    let t;
+    let each_blocks = [];
+    let each_1_lookup = new Map_12();
+    let each_1_anchor;
+    let if_block = ctx[160].name && create_if_block_265(ctx);
+    let each_value_8 = ctx[160].rows;
+    const get_key = (ctx2) => ctx2[163].id;
+    for (let i = 0; i < each_value_8.length; i += 1) {
+      let child_ctx = get_each_context_84(ctx, each_value_8, i);
+      let key = get_key(child_ctx);
+      each_1_lookup.set(key, each_blocks[i] = create_each_block_84(key, child_ctx));
+    }
+    return {
+      c() {
+        if (if_block)
+          if_block.c();
+        t = space();
+        for (let i = 0; i < each_blocks.length; i += 1) {
+          each_blocks[i].c();
+        }
+        each_1_anchor = empty();
+      },
+      m(target, anchor) {
+        if (if_block)
+          if_block.m(target, anchor);
+        insert(target, t, anchor);
+        for (let i = 0; i < each_blocks.length; i += 1) {
+          each_blocks[i].m(target, anchor);
+        }
+        insert(target, each_1_anchor, anchor);
+      },
+      p(ctx2, dirty) {
+        if (ctx2[160].name) {
+          if (if_block) {
+            if_block.p(ctx2, dirty);
+          } else {
+            if_block = create_if_block_265(ctx2);
+            if_block.c();
+            if_block.m(t.parentNode, t);
+          }
+        } else if (if_block) {
+          if_block.d(1);
+          if_block = null;
+        }
+        if (dirty[0] & 116802 | dirty[1] & 1007684352 | dirty[2] & 1024) {
+          each_value_8 = ctx2[160].rows;
+          each_blocks = update_keyed_each(each_blocks, dirty, get_key, 1, ctx2, each_value_8, each_1_lookup, each_1_anchor.parentNode, destroy_block, create_each_block_84, each_1_anchor, get_each_context_84);
+        }
+      },
+      d(detaching) {
+        if (if_block)
+          if_block.d(detaching);
+        if (detaching)
+          detach(t);
+        for (let i = 0; i < each_blocks.length; i += 1) {
+          each_blocks[i].d(detaching);
+        }
+        if (detaching)
+          detach(each_1_anchor);
+      }
+    };
+  }
+  function create_if_block_206(ctx) {
+    let p;
+    let t0;
+    let button;
+    let mounted;
+    let dispose;
+    return {
+      c() {
+        p = element("p");
+        t0 = text("Nobody matches. ");
+        button = element("button");
+        button.textContent = "Clear the filter";
+        attr(button, "class", "dmg-mini");
+        attr(p, "class", "dmg-hint");
+      },
+      m(target, anchor) {
+        insert(target, p, anchor);
+        append(p, t0);
+        append(p, button);
+        if (!mounted) {
+          dispose = listen(button, "click", ctx[63]);
+          mounted = true;
+        }
+      },
+      p: noop,
+      d(detaching) {
+        if (detaching)
+          detach(p);
+        mounted = false;
+        dispose();
+      }
+    };
+  }
+  function create_each_block_66(ctx) {
+    let option;
+    let t_value = ctx[151].name + "";
+    let t;
+    let option_value_value;
+    return {
+      c() {
+        option = element("option");
+        t = text(t_value);
+        option.__value = option_value_value = ctx[151].id;
+        option.value = option.__value;
+      },
+      m(target, anchor) {
+        insert(target, option, anchor);
+        append(option, t);
+      },
+      p(ctx2, dirty) {
+        if (dirty[0] & 2048 && t_value !== (t_value = ctx2[151].name + ""))
+          set_data(t, t_value);
+        if (dirty[0] & 2048 && option_value_value !== (option_value_value = ctx2[151].id)) {
+          option.__value = option_value_value;
+          option.value = option.__value;
+        }
+      },
+      d(detaching) {
+        if (detaching)
+          detach(option);
+      }
+    };
+  }
+  function create_each_block_56(ctx) {
+    let div;
+    let input;
+    let t0;
+    let select_1;
+    let t1;
+    let button;
+    let mounted;
+    let dispose;
+    function input_input_handler_2() {
+      ctx[106].call(input, ctx[156], ctx[157]);
+    }
+    let each_value_6 = ctx[11];
+    let each_blocks = [];
+    for (let i = 0; i < each_value_6.length; i += 1) {
+      each_blocks[i] = create_each_block_66(get_each_context_66(ctx, each_value_6, i));
+    }
+    function select_1_change_handler_1() {
+      ctx[107].call(select_1, ctx[156], ctx[157]);
+    }
+    function click_handler_8() {
+      return ctx[108](ctx[157]);
+    }
+    return {
+      c() {
+        div = element("div");
+        input = element("input");
+        t0 = text("\n                  \xD7\n                  ");
+        select_1 = element("select");
+        for (let i = 0; i < each_blocks.length; i += 1) {
+          each_blocks[i].c();
+        }
+        t1 = space();
+        button = element("button");
+        button.textContent = "\u2715";
+        attr(input, "class", "dmg-input pax-num");
+        attr(input, "type", "number");
+        attr(input, "min", "1");
+        attr(input, "max", "12");
+        attr(select_1, "class", "dmg-input");
+        if (ctx[155].role === void 0)
+          add_render_callback(select_1_change_handler_1);
+        attr(button, "class", "dmg-mini");
+        attr(div, "class", "pax-slot");
+      },
+      m(target, anchor) {
+        insert(target, div, anchor);
+        append(div, input);
+        set_input_value(input, ctx[155].count);
+        append(div, t0);
+        append(div, select_1);
+        for (let i = 0; i < each_blocks.length; i += 1) {
+          each_blocks[i].m(select_1, null);
+        }
+        select_option(select_1, ctx[155].role);
+        append(div, t1);
+        append(div, button);
+        if (!mounted) {
+          dispose = [
+            listen(input, "input", input_input_handler_2),
+            listen(select_1, "change", select_1_change_handler_1),
+            listen(button, "click", click_handler_8)
+          ];
+          mounted = true;
+        }
+      },
+      p(new_ctx, dirty) {
+        ctx = new_ctx;
+        if (dirty[0] & 6144 && to_number(input.value) !== ctx[155].count) {
+          set_input_value(input, ctx[155].count);
+        }
+        if (dirty[0] & 2048) {
+          each_value_6 = ctx[11];
+          let i;
+          for (i = 0; i < each_value_6.length; i += 1) {
+            const child_ctx = get_each_context_66(ctx, each_value_6, i);
+            if (each_blocks[i]) {
+              each_blocks[i].p(child_ctx, dirty);
+            } else {
+              each_blocks[i] = create_each_block_66(child_ctx);
+              each_blocks[i].c();
+              each_blocks[i].m(select_1, null);
+            }
+          }
+          for (; i < each_blocks.length; i += 1) {
+            each_blocks[i].d(1);
+          }
+          each_blocks.length = each_value_6.length;
+        }
+        if (dirty[0] & 6144) {
+          select_option(select_1, ctx[155].role);
+        }
+      },
+      d(detaching) {
+        if (detaching)
+          detach(div);
+        destroy_each(each_blocks, detaching);
+        mounted = false;
+        run_all(dispose);
+      }
+    };
+  }
+  function create_else_block_25(ctx) {
+    let table;
+    let thead;
+    let t9;
+    let tbody;
+    let t10;
+    let p;
+    let t11_value = ctx[18].length + "";
+    let t11;
+    let t12;
+    let t13;
+    let t14;
+    let b;
+    let t15_value = Math.round(ctx[36]) + "";
+    let t15;
+    let t16;
+    let each_value_4 = ctx[18];
+    let each_blocks = [];
+    for (let i = 0; i < each_value_4.length; i += 1) {
+      each_blocks[i] = create_each_block_47(get_each_context_47(ctx, each_value_4, i));
+    }
+    let if_block = ctx[18].length < ctx[37] && create_if_block_187(ctx);
+    return {
+      c() {
+        table = element("table");
+        thead = element("thead");
+        thead.innerHTML = `<tr><th>Slot</th> 
+                      <th class="pax-name">Soldier</th> 
+                      <th>Score</th> 
+                      <th>Why</th> 
+                      <th>Next in line</th></tr>`;
+        t9 = space();
+        tbody = element("tbody");
+        for (let i = 0; i < each_blocks.length; i += 1) {
+          each_blocks[i].c();
+        }
+        t10 = space();
+        p = element("p");
+        t11 = text(t11_value);
+        t12 = text(" of ");
+        t13 = text(ctx[37]);
+        t14 = text(" slots filled \xB7 average score ");
+        b = element("b");
+        t15 = text(t15_value);
+        t16 = space();
+        if (if_block)
+          if_block.c();
+        attr(table, "class", "pax-grid");
+        attr(p, "class", "dmg-cap");
+      },
+      m(target, anchor) {
+        insert(target, table, anchor);
+        append(table, thead);
+        append(table, t9);
+        append(table, tbody);
+        for (let i = 0; i < each_blocks.length; i += 1) {
+          each_blocks[i].m(tbody, null);
+        }
+        insert(target, t10, anchor);
+        insert(target, p, anchor);
+        append(p, t11);
+        append(p, t12);
+        append(p, t13);
+        append(p, t14);
+        append(p, b);
+        append(b, t15);
+        append(p, t16);
+        if (if_block)
+          if_block.m(p, null);
+      },
+      p(ctx2, dirty) {
+        if (dirty[0] & 2375680 | dirty[1] & 536870932 | dirty[2] & 1152) {
+          each_value_4 = ctx2[18];
+          let i;
+          for (i = 0; i < each_value_4.length; i += 1) {
+            const child_ctx = get_each_context_47(ctx2, each_value_4, i);
+            if (each_blocks[i]) {
+              each_blocks[i].p(child_ctx, dirty);
+            } else {
+              each_blocks[i] = create_each_block_47(child_ctx);
+              each_blocks[i].c();
+              each_blocks[i].m(tbody, null);
+            }
+          }
+          for (; i < each_blocks.length; i += 1) {
+            each_blocks[i].d(1);
+          }
+          each_blocks.length = each_value_4.length;
+        }
+        if (dirty[0] & 262144 && t11_value !== (t11_value = ctx2[18].length + ""))
+          set_data(t11, t11_value);
+        if (dirty[1] & 64)
+          set_data(t13, ctx2[37]);
+        if (dirty[1] & 32 && t15_value !== (t15_value = Math.round(ctx2[36]) + ""))
+          set_data(t15, t15_value);
+        if (ctx2[18].length < ctx2[37]) {
+          if (if_block) {
+          } else {
+            if_block = create_if_block_187(ctx2);
+            if_block.c();
+            if_block.m(p, null);
+          }
+        } else if (if_block) {
+          if_block.d(1);
+          if_block = null;
+        }
+      },
+      d(detaching) {
+        if (detaching)
+          detach(table);
+        destroy_each(each_blocks, detaching);
+        if (detaching)
+          detach(t10);
+        if (detaching)
+          detach(p);
+        if (if_block)
+          if_block.d();
+      }
+    };
+  }
+  function create_if_block_177(ctx) {
+    let p;
+    return {
+      c() {
+        p = element("p");
+        p.textContent = "Nobody to pick from - loosen the filter.";
+        attr(p, "class", "dmg-warn");
+      },
+      m(target, anchor) {
+        insert(target, p, anchor);
+      },
+      p: noop,
+      d(detaching) {
+        if (detaching)
+          detach(p);
+      }
+    };
+  }
+  function create_if_block_167(ctx) {
+    let p;
+    return {
+      c() {
+        p = element("p");
+        p.textContent = "Add a slot to staff a squad.";
+        attr(p, "class", "dmg-hint");
+      },
+      m(target, anchor) {
+        insert(target, p, anchor);
+      },
+      p: noop,
+      d(detaching) {
+        if (detaching)
+          detach(p);
+      }
+    };
+  }
+  function create_else_block_35(ctx) {
+    let t;
+    return {
+      c() {
+        t = text("\u2014");
+      },
+      m(target, anchor) {
+        insert(target, t, anchor);
+      },
+      p: noop,
+      d(detaching) {
+        if (detaching)
+          detach(t);
+      }
+    };
+  }
+  function create_if_block_196(ctx) {
+    let t0_value = ctx[152].r.name + "";
+    let t0;
+    let t1;
+    let t2_value = Math.round(ctx[152].s) + "";
+    let t2;
+    let t3;
+    return {
+      c() {
+        t0 = text(t0_value);
+        t1 = text(" (");
+        t2 = text(t2_value);
+        t3 = text(")");
+      },
+      m(target, anchor) {
+        insert(target, t0, anchor);
+        insert(target, t1, anchor);
+        insert(target, t2, anchor);
+        insert(target, t3, anchor);
+      },
+      p(ctx2, dirty) {
+        if (dirty[0] & 262144 | dirty[1] & 16 && t0_value !== (t0_value = ctx2[152].r.name + ""))
+          set_data(t0, t0_value);
+        if (dirty[0] & 262144 | dirty[1] & 16 && t2_value !== (t2_value = Math.round(ctx2[152].s) + ""))
+          set_data(t2, t2_value);
+      },
+      d(detaching) {
+        if (detaching)
+          detach(t0);
+        if (detaching)
+          detach(t1);
+        if (detaching)
+          detach(t2);
+        if (detaching)
+          detach(t3);
+      }
+    };
+  }
+  function create_each_block_47(ctx) {
+    let tr2;
+    let td0;
+    let t0_value = ctx[151].name + "";
+    let t0;
+    let td0_title_value;
+    let t1;
+    let td1;
+    let t2_value = ctx[150].row.name + "";
+    let t2;
+    let t3;
+    let span;
+    let t4_value = ctx[150].row.typeName + "";
+    let t4;
+    let t5;
+    let td2;
+    let t6_value = Math.round(ctx[150].score) + "";
+    let t6;
+    let td2_class_value;
+    let t7;
+    let td3;
+    let t8_value = Object.keys(ctx[151].weights).sort(func7).slice(0, 3).map(func_13).join(" \xB7 ") + "";
+    let t8;
+    let t9;
+    let td4;
+    let t10;
+    let mounted;
+    let dispose;
+    function func7(...args) {
+      return ctx[110](ctx[151], ...args);
+    }
+    function func_13(...args) {
+      return ctx[111](ctx[150], ...args);
+    }
+    function select_block_type_6(ctx2, dirty) {
+      if (ctx2[152])
+        return create_if_block_196;
+      return create_else_block_35;
+    }
+    let current_block_type = select_block_type_6(ctx, [-1, -1, -1, -1, -1, -1, -1, -1]);
+    let if_block = current_block_type(ctx);
+    function click_handler_9() {
+      return ctx[112](ctx[150]);
+    }
+    return {
+      c() {
+        tr2 = element("tr");
+        td0 = element("td");
+        t0 = text(t0_value);
+        t1 = space();
+        td1 = element("td");
+        t2 = text(t2_value);
+        t3 = space();
+        span = element("span");
+        t4 = text(t4_value);
+        t5 = space();
+        td2 = element("td");
+        t6 = text(t6_value);
+        t7 = space();
+        td3 = element("td");
+        t8 = text(t8_value);
+        t9 = space();
+        td4 = element("td");
+        if_block.c();
+        t10 = space();
+        attr(td0, "title", td0_title_value = ctx[60](ctx[151]));
+        attr(span, "class", "dmg-cap");
+        attr(td1, "class", "pax-name");
+        attr(td2, "class", td2_class_value = "pax-cell pax-h" + step(ctx[150].score / 100));
+        attr(td3, "class", "dmg-cap");
+        attr(td4, "class", "dmg-cap");
+        toggle_class(tr2, "pax-on", ctx[14] == ctx[150].row.id);
+      },
+      m(target, anchor) {
+        insert(target, tr2, anchor);
+        append(tr2, td0);
+        append(td0, t0);
+        append(tr2, t1);
+        append(tr2, td1);
+        append(td1, t2);
+        append(td1, t3);
+        append(td1, span);
+        append(span, t4);
+        append(tr2, t5);
+        append(tr2, td2);
+        append(td2, t6);
+        append(tr2, t7);
+        append(tr2, td3);
+        append(td3, t8);
+        append(tr2, t9);
+        append(tr2, td4);
+        if_block.m(td4, null);
+        append(tr2, t10);
+        if (!mounted) {
+          dispose = listen(tr2, "click", click_handler_9);
+          mounted = true;
+        }
+      },
+      p(new_ctx, dirty) {
+        ctx = new_ctx;
+        if (dirty[0] & 2359296 && t0_value !== (t0_value = ctx[151].name + ""))
+          set_data(t0, t0_value);
+        if (dirty[0] & 2359296 && td0_title_value !== (td0_title_value = ctx[60](ctx[151]))) {
+          attr(td0, "title", td0_title_value);
+        }
+        if (dirty[0] & 262144 && t2_value !== (t2_value = ctx[150].row.name + ""))
+          set_data(t2, t2_value);
+        if (dirty[0] & 262144 && t4_value !== (t4_value = ctx[150].row.typeName + ""))
+          set_data(t4, t4_value);
+        if (dirty[0] & 262144 && t6_value !== (t6_value = Math.round(ctx[150].score) + ""))
+          set_data(t6, t6_value);
+        if (dirty[0] & 262144 && td2_class_value !== (td2_class_value = "pax-cell pax-h" + step(ctx[150].score / 100))) {
+          attr(td2, "class", td2_class_value);
+        }
+        if (dirty[0] & 2359296 | dirty[1] & 4 && t8_value !== (t8_value = Object.keys(ctx[151].weights).sort(func7).slice(0, 3).map(func_13).join(" \xB7 ") + ""))
+          set_data(t8, t8_value);
+        if (current_block_type === (current_block_type = select_block_type_6(ctx, dirty)) && if_block) {
+          if_block.p(ctx, dirty);
+        } else {
+          if_block.d(1);
+          if_block = current_block_type(ctx);
+          if (if_block) {
+            if_block.c();
+            if_block.m(td4, null);
+          }
+        }
+        if (dirty[0] & 278528) {
+          toggle_class(tr2, "pax-on", ctx[14] == ctx[150].row.id);
+        }
+      },
+      d(detaching) {
+        if (detaching)
+          detach(tr2);
+        if_block.d();
+        mounted = false;
+        dispose();
+      }
+    };
+  }
+  function create_if_block_187(ctx) {
+    let t0;
+    let span;
+    return {
+      c() {
+        t0 = text("\xB7 ");
+        span = element("span");
+        span.textContent = "not enough soldiers for every slot";
+        attr(span, "class", "dmg-warn");
+      },
+      m(target, anchor) {
+        insert(target, t0, anchor);
+        insert(target, span, anchor);
+      },
+      d(detaching) {
+        if (detaching)
+          detach(t0);
+        if (detaching)
+          detach(span);
+      }
+    };
+  }
   function create_if_block31(ctx) {
+    let aside;
+    let header;
+    let div1;
+    let h3;
+    let t0_value = ctx[17].name + "";
+    let t0;
+    let t1;
+    let div0;
+    let t2_value = ctx[17].rankName + "";
+    let t2;
+    let t3;
+    let t4_value = ctx[17].typeName + "";
+    let t4;
+    let br0;
+    let t5;
+    let t6_value = ctx[17].base + "";
+    let t6;
+    let t7;
+    let button;
+    let t9;
+    let p0;
+    let t10;
+    let br1;
+    let t11;
+    let t12;
+    let t13;
+    let h40;
+    let t15;
+    let div2;
+    let t16;
+    let p1;
+    let t22;
+    let h41;
+    let t24;
+    let div3;
+    let t25;
+    let h42;
+    let t27;
+    let p2;
+    let t28_value = ctx[17].missions + "";
+    let t28;
+    let t29;
+    let t30_value = ctx[17].kills + "";
+    let t30;
+    let t31;
+    let t32_value = ctx[17].stuns + "";
+    let t32;
+    let t33;
+    let br2;
+    let t34;
+    let t35;
+    let t36_value = ctx[17].gained + "";
+    let t36;
+    let t37;
+    let br3;
+    let t38;
+    let t39_value = ctx[17].timesWounded + "";
+    let t39;
+    let t40;
+    let t41_value = ctx[17].daysWounded + "";
+    let t41;
+    let t42;
+    let t43;
+    let t44;
+    let mounted;
+    let dispose;
+    let if_block0 = ctx[17].craft && create_if_block_138(ctx);
+    function select_block_type_9(ctx2, dirty) {
+      if (ctx2[17].status == "fallen")
+        return create_if_block_1113;
+      if (ctx2[17].status == "wounded")
+        return create_if_block_1211;
+      return create_else_block21;
+    }
+    let current_block_type = select_block_type_9(ctx, [-1, -1, -1, -1, -1, -1, -1, -1]);
+    let if_block1 = current_block_type(ctx);
+    let if_block2 = ctx[17].armor && create_if_block_108(ctx);
+    let if_block3 = ctx[17].status != "fallen" && create_if_block_98(ctx);
+    let each_value_3 = PAX_STATS;
+    let each_blocks_1 = [];
+    for (let i = 0; i < each_value_3.length; i += 1) {
+      each_blocks_1[i] = create_each_block_38(get_each_context_38(ctx, each_value_3, i));
+    }
+    let each_value_2 = ctx[34];
+    let each_blocks = [];
+    for (let i = 0; i < each_value_2.length; i += 1) {
+      each_blocks[i] = create_each_block_214(get_each_context_211(ctx, each_value_2, i));
+    }
+    let if_block4 = (ctx[17].shots || ctx[17].hits) && create_if_block_612(ctx);
+    let if_block5 = ctx[17].gainRate != null && create_if_block_512(ctx);
+    let if_block6 = ctx[17].months && create_if_block_415(ctx);
+    let if_block7 = ctx[17].weapons.length && create_if_block_319(ctx);
+    let if_block8 = ctx[17].medals.length && create_if_block_131(ctx);
+    return {
+      c() {
+        aside = element("aside");
+        header = element("header");
+        div1 = element("div");
+        h3 = element("h3");
+        t0 = text(t0_value);
+        t1 = space();
+        div0 = element("div");
+        t2 = text(t2_value);
+        t3 = text(" \xB7 ");
+        t4 = text(t4_value);
+        br0 = element("br");
+        t5 = space();
+        t6 = text(t6_value);
+        if (if_block0)
+          if_block0.c();
+        t7 = space();
+        button = element("button");
+        button.textContent = "\u2715";
+        t9 = space();
+        p0 = element("p");
+        if_block1.c();
+        t10 = space();
+        br1 = element("br");
+        t11 = space();
+        if (if_block2)
+          if_block2.c();
+        t12 = space();
+        if (if_block3)
+          if_block3.c();
+        t13 = space();
+        h40 = element("h4");
+        h40.textContent = "Stats";
+        t15 = space();
+        div2 = element("div");
+        for (let i = 0; i < each_blocks_1.length; i += 1) {
+          each_blocks_1[i].c();
+        }
+        t16 = space();
+        p1 = element("p");
+        p1.innerHTML = `bar = now, out of the hard cap \xB7 <span class="pax-key-start">|</span> rookie roll \xB7
+          <span class="pax-key-gym">|</span> gym cap`;
+        t22 = space();
+        h41 = element("h4");
+        h41.textContent = "Roles";
+        t24 = space();
+        div3 = element("div");
+        for (let i = 0; i < each_blocks.length; i += 1) {
+          each_blocks[i].c();
+        }
+        t25 = space();
+        h42 = element("h4");
+        h42.textContent = "Service";
+        t27 = space();
+        p2 = element("p");
+        t28 = text(t28_value);
+        t29 = text(" missions \xB7 ");
+        t30 = text(t30_value);
+        t31 = text(" kills \xB7 ");
+        t32 = text(t32_value);
+        t33 = text(" stuns");
+        br2 = element("br");
+        t34 = space();
+        if (if_block4)
+          if_block4.c();
+        t35 = space();
+        t36 = text(t36_value);
+        t37 = text(" stat points gained");
+        if (if_block5)
+          if_block5.c();
+        br3 = element("br");
+        t38 = text("\n          wounded ");
+        t39 = text(t39_value);
+        t40 = text("\xD7 for ");
+        t41 = text(t41_value);
+        t42 = text(" days");
+        if (if_block6)
+          if_block6.c();
+        t43 = space();
+        if (if_block7)
+          if_block7.c();
+        t44 = space();
+        if (if_block8)
+          if_block8.c();
+        attr(div0, "class", "dmg-cap");
+        attr(button, "class", "dmg-mini");
+        attr(button, "title", "Close");
+        attr(header, "class", "pax-dhead");
+        attr(p0, "class", "pax-dline");
+        attr(div2, "class", "pax-bars");
+        attr(p1, "class", "dmg-cap pax-barkey");
+        attr(div3, "class", "pax-bars");
+        attr(p2, "class", "pax-dline");
+        attr(aside, "class", "pax-detail");
+      },
+      m(target, anchor) {
+        insert(target, aside, anchor);
+        append(aside, header);
+        append(header, div1);
+        append(div1, h3);
+        append(h3, t0);
+        append(div1, t1);
+        append(div1, div0);
+        append(div0, t2);
+        append(div0, t3);
+        append(div0, t4);
+        append(div0, br0);
+        append(div0, t5);
+        append(div0, t6);
+        if (if_block0)
+          if_block0.m(div0, null);
+        append(header, t7);
+        append(header, button);
+        append(aside, t9);
+        append(aside, p0);
+        if_block1.m(p0, null);
+        append(p0, t10);
+        append(p0, br1);
+        append(p0, t11);
+        if (if_block2)
+          if_block2.m(p0, null);
+        append(aside, t12);
+        if (if_block3)
+          if_block3.m(aside, null);
+        append(aside, t13);
+        append(aside, h40);
+        append(aside, t15);
+        append(aside, div2);
+        for (let i = 0; i < each_blocks_1.length; i += 1) {
+          each_blocks_1[i].m(div2, null);
+        }
+        append(aside, t16);
+        append(aside, p1);
+        append(aside, t22);
+        append(aside, h41);
+        append(aside, t24);
+        append(aside, div3);
+        for (let i = 0; i < each_blocks.length; i += 1) {
+          each_blocks[i].m(div3, null);
+        }
+        append(aside, t25);
+        append(aside, h42);
+        append(aside, t27);
+        append(aside, p2);
+        append(p2, t28);
+        append(p2, t29);
+        append(p2, t30);
+        append(p2, t31);
+        append(p2, t32);
+        append(p2, t33);
+        append(p2, br2);
+        append(p2, t34);
+        if (if_block4)
+          if_block4.m(p2, null);
+        append(p2, t35);
+        append(p2, t36);
+        append(p2, t37);
+        if (if_block5)
+          if_block5.m(p2, null);
+        append(p2, br3);
+        append(p2, t38);
+        append(p2, t39);
+        append(p2, t40);
+        append(p2, t41);
+        append(p2, t42);
+        if (if_block6)
+          if_block6.m(p2, null);
+        append(aside, t43);
+        if (if_block7)
+          if_block7.m(aside, null);
+        append(aside, t44);
+        if (if_block8)
+          if_block8.m(aside, null);
+        if (!mounted) {
+          dispose = listen(button, "click", ctx[124]);
+          mounted = true;
+        }
+      },
+      p(ctx2, dirty) {
+        if (dirty[0] & 131072 && t0_value !== (t0_value = ctx2[17].name + ""))
+          set_data(t0, t0_value);
+        if (dirty[0] & 131072 && t2_value !== (t2_value = ctx2[17].rankName + ""))
+          set_data(t2, t2_value);
+        if (dirty[0] & 131072 && t4_value !== (t4_value = ctx2[17].typeName + ""))
+          set_data(t4, t4_value);
+        if (dirty[0] & 131072 && t6_value !== (t6_value = ctx2[17].base + ""))
+          set_data(t6, t6_value);
+        if (ctx2[17].craft) {
+          if (if_block0) {
+            if_block0.p(ctx2, dirty);
+          } else {
+            if_block0 = create_if_block_138(ctx2);
+            if_block0.c();
+            if_block0.m(div0, null);
+          }
+        } else if (if_block0) {
+          if_block0.d(1);
+          if_block0 = null;
+        }
+        if (current_block_type === (current_block_type = select_block_type_9(ctx2, dirty)) && if_block1) {
+          if_block1.p(ctx2, dirty);
+        } else {
+          if_block1.d(1);
+          if_block1 = current_block_type(ctx2);
+          if (if_block1) {
+            if_block1.c();
+            if_block1.m(p0, t10);
+          }
+        }
+        if (ctx2[17].armor) {
+          if (if_block2) {
+            if_block2.p(ctx2, dirty);
+          } else {
+            if_block2 = create_if_block_108(ctx2);
+            if_block2.c();
+            if_block2.m(p0, null);
+          }
+        } else if (if_block2) {
+          if_block2.d(1);
+          if_block2 = null;
+        }
+        if (ctx2[17].status != "fallen") {
+          if (if_block3) {
+            if_block3.p(ctx2, dirty);
+          } else {
+            if_block3 = create_if_block_98(ctx2);
+            if_block3.c();
+            if_block3.m(aside, t13);
+          }
+        } else if (if_block3) {
+          if_block3.d(1);
+          if_block3 = null;
+        }
+        if (dirty[0] & 131072 | dirty[1] & 268435456) {
+          each_value_3 = PAX_STATS;
+          let i;
+          for (i = 0; i < each_value_3.length; i += 1) {
+            const child_ctx = get_each_context_38(ctx2, each_value_3, i);
+            if (each_blocks_1[i]) {
+              each_blocks_1[i].p(child_ctx, dirty);
+            } else {
+              each_blocks_1[i] = create_each_block_38(child_ctx);
+              each_blocks_1[i].c();
+              each_blocks_1[i].m(div2, null);
+            }
+          }
+          for (; i < each_blocks_1.length; i += 1) {
+            each_blocks_1[i].d(1);
+          }
+          each_blocks_1.length = each_value_3.length;
+        }
+        if (dirty[1] & 536870920) {
+          each_value_2 = ctx2[34];
+          let i;
+          for (i = 0; i < each_value_2.length; i += 1) {
+            const child_ctx = get_each_context_211(ctx2, each_value_2, i);
+            if (each_blocks[i]) {
+              each_blocks[i].p(child_ctx, dirty);
+            } else {
+              each_blocks[i] = create_each_block_214(child_ctx);
+              each_blocks[i].c();
+              each_blocks[i].m(div3, null);
+            }
+          }
+          for (; i < each_blocks.length; i += 1) {
+            each_blocks[i].d(1);
+          }
+          each_blocks.length = each_value_2.length;
+        }
+        if (dirty[0] & 131072 && t28_value !== (t28_value = ctx2[17].missions + ""))
+          set_data(t28, t28_value);
+        if (dirty[0] & 131072 && t30_value !== (t30_value = ctx2[17].kills + ""))
+          set_data(t30, t30_value);
+        if (dirty[0] & 131072 && t32_value !== (t32_value = ctx2[17].stuns + ""))
+          set_data(t32, t32_value);
+        if (ctx2[17].shots || ctx2[17].hits) {
+          if (if_block4) {
+            if_block4.p(ctx2, dirty);
+          } else {
+            if_block4 = create_if_block_612(ctx2);
+            if_block4.c();
+            if_block4.m(p2, t35);
+          }
+        } else if (if_block4) {
+          if_block4.d(1);
+          if_block4 = null;
+        }
+        if (dirty[0] & 131072 && t36_value !== (t36_value = ctx2[17].gained + ""))
+          set_data(t36, t36_value);
+        if (ctx2[17].gainRate != null) {
+          if (if_block5) {
+            if_block5.p(ctx2, dirty);
+          } else {
+            if_block5 = create_if_block_512(ctx2);
+            if_block5.c();
+            if_block5.m(p2, br3);
+          }
+        } else if (if_block5) {
+          if_block5.d(1);
+          if_block5 = null;
+        }
+        if (dirty[0] & 131072 && t39_value !== (t39_value = ctx2[17].timesWounded + ""))
+          set_data(t39, t39_value);
+        if (dirty[0] & 131072 && t41_value !== (t41_value = ctx2[17].daysWounded + ""))
+          set_data(t41, t41_value);
+        if (ctx2[17].months) {
+          if (if_block6) {
+            if_block6.p(ctx2, dirty);
+          } else {
+            if_block6 = create_if_block_415(ctx2);
+            if_block6.c();
+            if_block6.m(p2, null);
+          }
+        } else if (if_block6) {
+          if_block6.d(1);
+          if_block6 = null;
+        }
+        if (ctx2[17].weapons.length) {
+          if (if_block7) {
+            if_block7.p(ctx2, dirty);
+          } else {
+            if_block7 = create_if_block_319(ctx2);
+            if_block7.c();
+            if_block7.m(aside, t44);
+          }
+        } else if (if_block7) {
+          if_block7.d(1);
+          if_block7 = null;
+        }
+        if (ctx2[17].medals.length) {
+          if (if_block8) {
+            if_block8.p(ctx2, dirty);
+          } else {
+            if_block8 = create_if_block_131(ctx2);
+            if_block8.c();
+            if_block8.m(aside, null);
+          }
+        } else if (if_block8) {
+          if_block8.d(1);
+          if_block8 = null;
+        }
+      },
+      d(detaching) {
+        if (detaching)
+          detach(aside);
+        if (if_block0)
+          if_block0.d();
+        if_block1.d();
+        if (if_block2)
+          if_block2.d();
+        if (if_block3)
+          if_block3.d();
+        destroy_each(each_blocks_1, detaching);
+        destroy_each(each_blocks, detaching);
+        if (if_block4)
+          if_block4.d();
+        if (if_block5)
+          if_block5.d();
+        if (if_block6)
+          if_block6.d();
+        if (if_block7)
+          if_block7.d();
+        if (if_block8)
+          if_block8.d();
+        mounted = false;
+        dispose();
+      }
+    };
+  }
+  function create_if_block_138(ctx) {
+    let t0;
+    let t1_value = ctx[17].craft + "";
+    let t1;
+    return {
+      c() {
+        t0 = text("\xA0\xB7 on ");
+        t1 = text(t1_value);
+      },
+      m(target, anchor) {
+        insert(target, t0, anchor);
+        insert(target, t1, anchor);
+      },
+      p(ctx2, dirty) {
+        if (dirty[0] & 131072 && t1_value !== (t1_value = ctx2[17].craft + ""))
+          set_data(t1, t1_value);
+      },
+      d(detaching) {
+        if (detaching)
+          detach(t0);
+        if (detaching)
+          detach(t1);
+      }
+    };
+  }
+  function create_else_block21(ctx) {
+    let t0;
+    let t1_value = Math.round(ctx[17].fresh * 100) + "";
+    let t1;
+    let t2;
+    return {
+      c() {
+        t0 = text("Fit \xB7 freshness ");
+        t1 = text(t1_value);
+        t2 = text("%");
+      },
+      m(target, anchor) {
+        insert(target, t0, anchor);
+        insert(target, t1, anchor);
+        insert(target, t2, anchor);
+      },
+      p(ctx2, dirty) {
+        if (dirty[0] & 131072 && t1_value !== (t1_value = Math.round(ctx2[17].fresh * 100) + ""))
+          set_data(t1, t1_value);
+      },
+      d(detaching) {
+        if (detaching)
+          detach(t0);
+        if (detaching)
+          detach(t1);
+        if (detaching)
+          detach(t2);
+      }
+    };
+  }
+  function create_if_block_1211(ctx) {
+    let b;
+    let t0;
+    let t1_value = ctx[17].recovery + "";
+    let t1;
+    let t2;
+    let t3;
+    let t4_value = Math.round(ctx[17].fresh * 100) + "";
+    let t4;
+    let t5;
+    return {
+      c() {
+        b = element("b");
+        t0 = text("\u271A Wounded, ");
+        t1 = text(t1_value);
+        t2 = text(" days");
+        t3 = text(" \xB7 freshness ");
+        t4 = text(t4_value);
+        t5 = text("%");
+        attr(b, "class", "pax-hurt");
+      },
+      m(target, anchor) {
+        insert(target, b, anchor);
+        append(b, t0);
+        append(b, t1);
+        append(b, t2);
+        insert(target, t3, anchor);
+        insert(target, t4, anchor);
+        insert(target, t5, anchor);
+      },
+      p(ctx2, dirty) {
+        if (dirty[0] & 131072 && t1_value !== (t1_value = ctx2[17].recovery + ""))
+          set_data(t1, t1_value);
+        if (dirty[0] & 131072 && t4_value !== (t4_value = Math.round(ctx2[17].fresh * 100) + ""))
+          set_data(t4, t4_value);
+      },
+      d(detaching) {
+        if (detaching)
+          detach(b);
+        if (detaching)
+          detach(t3);
+        if (detaching)
+          detach(t4);
+        if (detaching)
+          detach(t5);
+      }
+    };
+  }
+  function create_if_block_1113(ctx) {
+    let b;
+    return {
+      c() {
+        b = element("b");
+        b.textContent = "Killed in action";
+      },
+      m(target, anchor) {
+        insert(target, b, anchor);
+      },
+      p: noop,
+      d(detaching) {
+        if (detaching)
+          detach(b);
+      }
+    };
+  }
+  function create_if_block_108(ctx) {
+    let t0;
+    let a;
+    let t1_value = ctx[17].armorName + "";
+    let t1;
+    let a_href_value;
+    let mounted;
+    let dispose;
+    return {
+      c() {
+        t0 = text("Wearing ");
+        a = element("a");
+        t1 = text(t1_value);
+        attr(a, "href", a_href_value = "##" + ctx[17].armor);
+      },
+      m(target, anchor) {
+        insert(target, t0, anchor);
+        insert(target, a, anchor);
+        append(a, t1);
+        if (!mounted) {
+          dispose = listen(a, "click", prevent_default(ctx[125]));
+          mounted = true;
+        }
+      },
+      p(ctx2, dirty) {
+        if (dirty[0] & 131072 && t1_value !== (t1_value = ctx2[17].armorName + ""))
+          set_data(t1, t1_value);
+        if (dirty[0] & 131072 && a_href_value !== (a_href_value = "##" + ctx2[17].armor)) {
+          attr(a, "href", a_href_value);
+        }
+      },
+      d(detaching) {
+        if (detaching)
+          detach(t0);
+        if (detaching)
+          detach(a);
+        mounted = false;
+        dispose();
+      }
+    };
+  }
+  function create_if_block_98(ctx) {
+    let button;
+    let mounted;
+    let dispose;
+    return {
+      c() {
+        button = element("button");
+        button.textContent = "Open in CENTCOM \u2192";
+        attr(button, "class", "dmg-mini dmg-wide");
+        attr(button, "title", "Open this soldier in CENTCOM, to rank weapons against an enemy for them");
+      },
+      m(target, anchor) {
+        insert(target, button, anchor);
+        if (!mounted) {
+          dispose = listen(button, "click", ctx[126]);
+          mounted = true;
+        }
+      },
+      p: noop,
+      d(detaching) {
+        if (detaching)
+          detach(button);
+        mounted = false;
+        dispose();
+      }
+    };
+  }
+  function create_if_block_89(ctx) {
+    let span;
+    return {
+      c() {
+        span = element("span");
+        attr(span, "class", "pax-tick pax-tick-gym");
+        set_style(span, "left", ctx[147].gym + "%");
+      },
+      m(target, anchor) {
+        insert(target, span, anchor);
+      },
+      p(ctx2, dirty) {
+        if (dirty[0] & 131072) {
+          set_style(span, "left", ctx2[147].gym + "%");
+        }
+      },
+      d(detaching) {
+        if (detaching)
+          detach(span);
+      }
+    };
+  }
+  function create_if_block_712(ctx) {
+    let span;
+    let t0;
+    let t1_value = ctx[17].cap[ctx[146].k] + "";
+    let t1;
+    return {
+      c() {
+        span = element("span");
+        t0 = text("/");
+        t1 = text(t1_value);
+        attr(span, "class", "dmg-cap");
+      },
+      m(target, anchor) {
+        insert(target, span, anchor);
+        append(span, t0);
+        append(span, t1);
+      },
+      p(ctx2, dirty) {
+        if (dirty[0] & 131072 && t1_value !== (t1_value = ctx2[17].cap[ctx2[146].k] + ""))
+          set_data(t1, t1_value);
+      },
+      d(detaching) {
+        if (detaching)
+          detach(span);
+      }
+    };
+  }
+  function create_each_block_38(ctx) {
+    let div;
+    let span0;
+    let t0_value = ctx[146].ab + "";
+    let t0;
+    let t1;
+    let span3;
+    let span1;
+    let t2;
+    let span2;
+    let t3;
+    let t4;
+    let span4;
+    let t5_value = ctx[17].stats[ctx[146].k] + "";
+    let t5;
+    let t6;
+    let div_title_value;
+    let if_block0 = ctx[147].gym != null && create_if_block_89(ctx);
+    let if_block1 = ctx[17].cap[ctx[146].k] && create_if_block_712(ctx);
+    return {
+      c() {
+        div = element("div");
+        span0 = element("span");
+        t0 = text(t0_value);
+        t1 = space();
+        span3 = element("span");
+        span1 = element("span");
+        t2 = space();
+        span2 = element("span");
+        t3 = space();
+        if (if_block0)
+          if_block0.c();
+        t4 = space();
+        span4 = element("span");
+        t5 = text(t5_value);
+        if (if_block1)
+          if_block1.c();
+        t6 = space();
+        attr(span0, "class", "pax-barlabel");
+        attr(span1, "class", "pax-fill");
+        set_style(span1, "width", ctx[147].now + "%");
+        toggle_class(span1, "pax-fillmax", ctx[147].maxed);
+        attr(span2, "class", "pax-tick pax-tick-start");
+        set_style(span2, "left", ctx[147].start + "%");
+        attr(span3, "class", "pax-track");
+        attr(span4, "class", "pax-barval");
+        attr(div, "class", "pax-barrow");
+        attr(div, "title", div_title_value = ctx[59](ctx[17], ctx[146].k));
+      },
+      m(target, anchor) {
+        insert(target, div, anchor);
+        append(div, span0);
+        append(span0, t0);
+        append(div, t1);
+        append(div, span3);
+        append(span3, span1);
+        append(span3, t2);
+        append(span3, span2);
+        append(span3, t3);
+        if (if_block0)
+          if_block0.m(span3, null);
+        append(div, t4);
+        append(div, span4);
+        append(span4, t5);
+        if (if_block1)
+          if_block1.m(span4, null);
+        append(div, t6);
+      },
+      p(ctx2, dirty) {
+        if (dirty[0] & 131072) {
+          set_style(span1, "width", ctx2[147].now + "%");
+        }
+        if (dirty[0] & 131072) {
+          toggle_class(span1, "pax-fillmax", ctx2[147].maxed);
+        }
+        if (dirty[0] & 131072) {
+          set_style(span2, "left", ctx2[147].start + "%");
+        }
+        if (ctx2[147].gym != null) {
+          if (if_block0) {
+            if_block0.p(ctx2, dirty);
+          } else {
+            if_block0 = create_if_block_89(ctx2);
+            if_block0.c();
+            if_block0.m(span3, null);
+          }
+        } else if (if_block0) {
+          if_block0.d(1);
+          if_block0 = null;
+        }
+        if (dirty[0] & 131072 && t5_value !== (t5_value = ctx2[17].stats[ctx2[146].k] + ""))
+          set_data(t5, t5_value);
+        if (ctx2[17].cap[ctx2[146].k]) {
+          if (if_block1) {
+            if_block1.p(ctx2, dirty);
+          } else {
+            if_block1 = create_if_block_712(ctx2);
+            if_block1.c();
+            if_block1.m(span4, null);
+          }
+        } else if (if_block1) {
+          if_block1.d(1);
+          if_block1 = null;
+        }
+        if (dirty[0] & 131072 && div_title_value !== (div_title_value = ctx2[59](ctx2[17], ctx2[146].k))) {
+          attr(div, "title", div_title_value);
+        }
+      },
+      d(detaching) {
+        if (detaching)
+          detach(div);
+        if (if_block0)
+          if_block0.d();
+        if (if_block1)
+          if_block1.d();
+      }
+    };
+  }
+  function create_each_block_214(ctx) {
+    let div;
+    let span0;
+    let t0_value = ctx[143].role.name + "";
+    let t0;
+    let t1;
+    let span2;
+    let span1;
+    let t2;
+    let span3;
+    let t3_value = Math.round(ctx[143].s) + "";
+    let t3;
+    let t4;
+    let div_title_value;
+    return {
+      c() {
+        div = element("div");
+        span0 = element("span");
+        t0 = text(t0_value);
+        t1 = space();
+        span2 = element("span");
+        span1 = element("span");
+        t2 = space();
+        span3 = element("span");
+        t3 = text(t3_value);
+        t4 = space();
+        attr(span0, "class", "pax-barlabel pax-rolelabel");
+        attr(span1, "class", "pax-fill");
+        set_style(span1, "width", ctx[143].s + "%");
+        attr(span2, "class", "pax-track");
+        attr(span3, "class", "pax-barval");
+        attr(div, "class", "pax-barrow");
+        attr(div, "title", div_title_value = ctx[60](ctx[143].role));
+      },
+      m(target, anchor) {
+        insert(target, div, anchor);
+        append(div, span0);
+        append(span0, t0);
+        append(div, t1);
+        append(div, span2);
+        append(span2, span1);
+        append(div, t2);
+        append(div, span3);
+        append(span3, t3);
+        append(div, t4);
+      },
+      p(ctx2, dirty) {
+        if (dirty[1] & 8 && t0_value !== (t0_value = ctx2[143].role.name + ""))
+          set_data(t0, t0_value);
+        if (dirty[1] & 8) {
+          set_style(span1, "width", ctx2[143].s + "%");
+        }
+        if (dirty[1] & 8 && t3_value !== (t3_value = Math.round(ctx2[143].s) + ""))
+          set_data(t3, t3_value);
+        if (dirty[1] & 8 && div_title_value !== (div_title_value = ctx2[60](ctx2[143].role))) {
+          attr(div, "title", div_title_value);
+        }
+      },
+      d(detaching) {
+        if (detaching)
+          detach(div);
+      }
+    };
+  }
+  function create_if_block_612(ctx) {
+    let t0_value = ctx[17].shots + "";
+    let t0;
+    let t1;
+    let t2_value = ctx[17].hits + "";
+    let t2;
+    let t3;
+    let br;
+    return {
+      c() {
+        t0 = text(t0_value);
+        t1 = text(" shots fired \xB7 ");
+        t2 = text(t2_value);
+        t3 = text(" hits landed");
+        br = element("br");
+      },
+      m(target, anchor) {
+        insert(target, t0, anchor);
+        insert(target, t1, anchor);
+        insert(target, t2, anchor);
+        insert(target, t3, anchor);
+        insert(target, br, anchor);
+      },
+      p(ctx2, dirty) {
+        if (dirty[0] & 131072 && t0_value !== (t0_value = ctx2[17].shots + ""))
+          set_data(t0, t0_value);
+        if (dirty[0] & 131072 && t2_value !== (t2_value = ctx2[17].hits + ""))
+          set_data(t2, t2_value);
+      },
+      d(detaching) {
+        if (detaching)
+          detach(t0);
+        if (detaching)
+          detach(t1);
+        if (detaching)
+          detach(t2);
+        if (detaching)
+          detach(t3);
+        if (detaching)
+          detach(br);
+      }
+    };
+  }
+  function create_if_block_512(ctx) {
+    let t0;
+    let t1_value = ctx[17].gainRate.toFixed(1) + "";
+    let t1;
+    let t2;
+    return {
+      c() {
+        t0 = text("\xA0(");
+        t1 = text(t1_value);
+        t2 = text(" a mission)");
+      },
+      m(target, anchor) {
+        insert(target, t0, anchor);
+        insert(target, t1, anchor);
+        insert(target, t2, anchor);
+      },
+      p(ctx2, dirty) {
+        if (dirty[0] & 131072 && t1_value !== (t1_value = ctx2[17].gainRate.toFixed(1) + ""))
+          set_data(t1, t1_value);
+      },
+      d(detaching) {
+        if (detaching)
+          detach(t0);
+        if (detaching)
+          detach(t1);
+        if (detaching)
+          detach(t2);
+      }
+    };
+  }
+  function create_if_block_415(ctx) {
+    let t0;
+    let t1_value = ctx[17].months + "";
+    let t1;
+    let t2;
+    return {
+      c() {
+        t0 = text("\xA0\xB7 ");
+        t1 = text(t1_value);
+        t2 = text(" months served");
+      },
+      m(target, anchor) {
+        insert(target, t0, anchor);
+        insert(target, t1, anchor);
+        insert(target, t2, anchor);
+      },
+      p(ctx2, dirty) {
+        if (dirty[0] & 131072 && t1_value !== (t1_value = ctx2[17].months + ""))
+          set_data(t1, t1_value);
+      },
+      d(detaching) {
+        if (detaching)
+          detach(t0);
+        if (detaching)
+          detach(t1);
+        if (detaching)
+          detach(t2);
+      }
+    };
+  }
+  function create_if_block_319(ctx) {
+    let h4;
+    let t1;
+    let ul;
+    let each_value_1 = ctx[17].weapons.slice(0, 6);
+    let each_blocks = [];
+    for (let i = 0; i < each_value_1.length; i += 1) {
+      each_blocks[i] = create_each_block_116(get_each_context_115(ctx, each_value_1, i));
+    }
+    return {
+      c() {
+        h4 = element("h4");
+        h4.textContent = "Kills and stuns by weapon";
+        t1 = space();
+        ul = element("ul");
+        for (let i = 0; i < each_blocks.length; i += 1) {
+          each_blocks[i].c();
+        }
+        attr(ul, "class", "pax-list");
+      },
+      m(target, anchor) {
+        insert(target, h4, anchor);
+        insert(target, t1, anchor);
+        insert(target, ul, anchor);
+        for (let i = 0; i < each_blocks.length; i += 1) {
+          each_blocks[i].m(ul, null);
+        }
+      },
+      p(ctx2, dirty) {
+        if (dirty[0] & 131072 | dirty[1] & 1) {
+          each_value_1 = ctx2[17].weapons.slice(0, 6);
+          let i;
+          for (i = 0; i < each_value_1.length; i += 1) {
+            const child_ctx = get_each_context_115(ctx2, each_value_1, i);
+            if (each_blocks[i]) {
+              each_blocks[i].p(child_ctx, dirty);
+            } else {
+              each_blocks[i] = create_each_block_116(child_ctx);
+              each_blocks[i].c();
+              each_blocks[i].m(ul, null);
+            }
+          }
+          for (; i < each_blocks.length; i += 1) {
+            each_blocks[i].d(1);
+          }
+          each_blocks.length = each_value_1.length;
+        }
+      },
+      d(detaching) {
+        if (detaching)
+          detach(h4);
+        if (detaching)
+          detach(t1);
+        if (detaching)
+          detach(ul);
+        destroy_each(each_blocks, detaching);
+      }
+    };
+  }
+  function create_each_block_116(ctx) {
+    let li;
+    let a;
+    let t0_value = rul.tr(ctx[139]) + "";
+    let t0;
+    let a_href_value;
+    let t1;
+    let span;
+    let t2;
+    let t3_value = ctx[140] + "";
+    let t3;
+    let t4;
+    let mounted;
+    let dispose;
+    function click_handler_24() {
+      return ctx[127](ctx[139]);
+    }
+    return {
+      c() {
+        li = element("li");
+        a = element("a");
+        t0 = text(t0_value);
+        t1 = space();
+        span = element("span");
+        t2 = text("\xD7");
+        t3 = text(t3_value);
+        t4 = space();
+        attr(a, "href", a_href_value = "##" + ctx[139]);
+        attr(span, "class", "dmg-cap");
+      },
+      m(target, anchor) {
+        insert(target, li, anchor);
+        append(li, a);
+        append(a, t0);
+        append(li, t1);
+        append(li, span);
+        append(span, t2);
+        append(span, t3);
+        append(li, t4);
+        if (!mounted) {
+          dispose = listen(a, "click", prevent_default(click_handler_24));
+          mounted = true;
+        }
+      },
+      p(new_ctx, dirty) {
+        ctx = new_ctx;
+        if (dirty[0] & 131072 && t0_value !== (t0_value = rul.tr(ctx[139]) + ""))
+          set_data(t0, t0_value);
+        if (dirty[0] & 131072 && a_href_value !== (a_href_value = "##" + ctx[139])) {
+          attr(a, "href", a_href_value);
+        }
+        if (dirty[0] & 131072 && t3_value !== (t3_value = ctx[140] + ""))
+          set_data(t3, t3_value);
+      },
+      d(detaching) {
+        if (detaching)
+          detach(li);
+        mounted = false;
+        dispose();
+      }
+    };
+  }
+  function create_if_block_131(ctx) {
+    let h4;
+    let t1;
+    let ul;
+    let each_value = ctx[17].medals;
+    let each_blocks = [];
+    for (let i = 0; i < each_value.length; i += 1) {
+      each_blocks[i] = create_each_block31(get_each_context31(ctx, each_value, i));
+    }
+    return {
+      c() {
+        h4 = element("h4");
+        h4.textContent = "Commendations";
+        t1 = space();
+        ul = element("ul");
+        for (let i = 0; i < each_blocks.length; i += 1) {
+          each_blocks[i].c();
+        }
+        attr(ul, "class", "pax-list");
+      },
+      m(target, anchor) {
+        insert(target, h4, anchor);
+        insert(target, t1, anchor);
+        insert(target, ul, anchor);
+        for (let i = 0; i < each_blocks.length; i += 1) {
+          each_blocks[i].m(ul, null);
+        }
+      },
+      p(ctx2, dirty) {
+        if (dirty[0] & 131072 | dirty[1] & 1) {
+          each_value = ctx2[17].medals;
+          let i;
+          for (i = 0; i < each_value.length; i += 1) {
+            const child_ctx = get_each_context31(ctx2, each_value, i);
+            if (each_blocks[i]) {
+              each_blocks[i].p(child_ctx, dirty);
+            } else {
+              each_blocks[i] = create_each_block31(child_ctx);
+              each_blocks[i].c();
+              each_blocks[i].m(ul, null);
+            }
+          }
+          for (; i < each_blocks.length; i += 1) {
+            each_blocks[i].d(1);
+          }
+          each_blocks.length = each_value.length;
+        }
+      },
+      d(detaching) {
+        if (detaching)
+          detach(h4);
+        if (detaching)
+          detach(t1);
+        if (detaching)
+          detach(ul);
+        destroy_each(each_blocks, detaching);
+      }
+    };
+  }
+  function create_if_block_221(ctx) {
+    let span;
+    let t0;
+    let t1_value = ctx[136].level + 1 + "";
+    let t1;
+    return {
+      c() {
+        span = element("span");
+        t0 = text("level ");
+        t1 = text(t1_value);
+        attr(span, "class", "dmg-cap");
+      },
+      m(target, anchor) {
+        insert(target, span, anchor);
+        append(span, t0);
+        append(span, t1);
+      },
+      p(ctx2, dirty) {
+        if (dirty[0] & 131072 && t1_value !== (t1_value = ctx2[136].level + 1 + ""))
+          set_data(t1, t1_value);
+      },
+      d(detaching) {
+        if (detaching)
+          detach(span);
+      }
+    };
+  }
+  function create_each_block31(ctx) {
+    let li;
+    let a;
+    let t0_value = rul.tr(ctx[136].name) + "";
+    let t0;
+    let a_href_value;
+    let t1;
+    let t2;
+    let mounted;
+    let dispose;
+    function click_handler_25() {
+      return ctx[128](ctx[136]);
+    }
+    let if_block = ctx[136].level && create_if_block_221(ctx);
+    return {
+      c() {
+        li = element("li");
+        a = element("a");
+        t0 = text(t0_value);
+        t1 = space();
+        if (if_block)
+          if_block.c();
+        t2 = space();
+        attr(a, "href", a_href_value = "##" + ctx[136].name);
+      },
+      m(target, anchor) {
+        insert(target, li, anchor);
+        append(li, a);
+        append(a, t0);
+        append(li, t1);
+        if (if_block)
+          if_block.m(li, null);
+        append(li, t2);
+        if (!mounted) {
+          dispose = listen(a, "click", prevent_default(click_handler_25));
+          mounted = true;
+        }
+      },
+      p(new_ctx, dirty) {
+        ctx = new_ctx;
+        if (dirty[0] & 131072 && t0_value !== (t0_value = rul.tr(ctx[136].name) + ""))
+          set_data(t0, t0_value);
+        if (dirty[0] & 131072 && a_href_value !== (a_href_value = "##" + ctx[136].name)) {
+          attr(a, "href", a_href_value);
+        }
+        if (ctx[136].level) {
+          if (if_block) {
+            if_block.p(ctx, dirty);
+          } else {
+            if_block = create_if_block_221(ctx);
+            if_block.c();
+            if_block.m(li, t2);
+          }
+        } else if (if_block) {
+          if_block.d(1);
+          if_block = null;
+        }
+      },
+      d(detaching) {
+        if (detaching)
+          detach(li);
+        if (if_block)
+          if_block.d();
+        mounted = false;
+        dispose();
+      }
+    };
+  }
+  function create_fragment45(ctx) {
+    let div3;
+    let div0;
+    let t1;
+    let div2;
+    let aside;
+    let section;
+    let header;
+    let t2;
+    let button;
+    let t3;
+    let t4;
+    let t5;
+    let label;
+    let t6;
+    let input;
+    let t7;
+    let t8;
+    let t9;
+    let div1;
+    let t10;
+    let t11;
+    let articlepeek;
+    let updating_id;
+    let current;
+    let mounted;
+    let dispose;
+    function select_block_type(ctx2, dirty) {
+      if (!ctx2[25].length)
+        return create_if_block_502;
+      return create_else_block_83;
+    }
+    let current_block_type = select_block_type(ctx, [-1, -1, -1, -1, -1, -1, -1, -1]);
+    let if_block0 = current_block_type(ctx);
+    function select_block_type_1(ctx2, dirty) {
+      if (ctx2[27])
+        return create_if_block_453;
+      if (ctx2[28])
+        return create_if_block_463;
+      if (ctx2[0])
+        return create_if_block_473;
+    }
+    let current_block_type_1 = select_block_type_1(ctx, [-1, -1, -1, -1, -1, -1, -1, -1]);
+    let if_block1 = current_block_type_1 && current_block_type_1(ctx);
+    let if_block2 = ctx[0] && create_if_block_424(ctx);
+    function select_block_type_2(ctx2, dirty) {
+      if (!ctx2[0])
+        return create_if_block_147;
+      return create_else_block_110;
+    }
+    let current_block_type_2 = select_block_type_2(ctx, [-1, -1, -1, -1, -1, -1, -1, -1]);
+    let if_block3 = current_block_type_2(ctx);
+    let if_block4 = ctx[17] && create_if_block31(ctx);
+    function articlepeek_id_binding(value) {
+      ctx[129](value);
+    }
+    let articlepeek_props = {};
+    if (ctx[31] !== void 0) {
+      articlepeek_props.id = ctx[31];
+    }
+    articlepeek = new ArticlePeek_default({ props: articlepeek_props });
+    binding_callbacks.push(() => bind(articlepeek, "id", articlepeek_id_binding));
+    return {
+      c() {
+        div3 = element("div");
+        div0 = element("div");
+        div0.innerHTML = `<span class="dmg-note">The whole crew on one screen. Hover any cell for the full story; click a soldier for
+      their file.</span>`;
+        t1 = space();
+        div2 = element("div");
+        aside = element("aside");
+        section = element("section");
+        header = element("header");
+        t2 = text("Campaign\n          ");
+        button = element("button");
+        t3 = text("\u2B6F");
+        t4 = space();
+        if_block0.c();
+        t5 = space();
+        label = element("label");
+        t6 = text("Open a .sav\u2026\n          ");
+        input = element("input");
+        t7 = space();
+        if (if_block1)
+          if_block1.c();
+        t8 = space();
+        if (if_block2)
+          if_block2.c();
+        t9 = space();
+        div1 = element("div");
+        if_block3.c();
+        t10 = space();
+        if (if_block4)
+          if_block4.c();
+        t11 = space();
+        create_component(articlepeek.$$.fragment);
+        attr(div0, "class", "dmg-toolbar");
+        attr(button, "class", "dmg-mini dmg-refresh");
+        attr(button, "title", "Rescan for saved games and re-read the selected one - picks up a game you just saved, no page reload needed.");
+        button.disabled = ctx[29];
+        attr(input, "type", "file");
+        attr(input, "accept", ".sav,.asav");
+        attr(label, "class", "dmg-mini dmg-file");
+        attr(label, "title", "Read a .sav from anywhere on disk. You can also drop one on this panel.");
+        attr(section, "class", "dmg-block");
+        toggle_class(section, "dmg-dropping", ctx[32]);
+        attr(aside, "class", "dmg-side");
+        attr(div1, "class", "pax-main");
+        attr(div2, "class", "dmg-body pax-body");
+        attr(div3, "class", "dmg-root");
+      },
+      m(target, anchor) {
+        insert(target, div3, anchor);
+        append(div3, div0);
+        append(div3, t1);
+        append(div3, div2);
+        append(div2, aside);
+        append(aside, section);
+        append(section, header);
+        append(header, t2);
+        append(header, button);
+        append(button, t3);
+        append(section, t4);
+        if_block0.m(section, null);
+        append(section, t5);
+        append(section, label);
+        append(label, t6);
+        append(label, input);
+        append(section, t7);
+        if (if_block1)
+          if_block1.m(section, null);
+        append(aside, t8);
+        if (if_block2)
+          if_block2.m(aside, null);
+        append(div2, t9);
+        append(div2, div1);
+        if_block3.m(div1, null);
+        append(div2, t10);
+        if (if_block4)
+          if_block4.m(div2, null);
+        insert(target, t11, anchor);
+        mount_component(articlepeek, target, anchor);
+        current = true;
+        if (!mounted) {
+          dispose = [
+            listen(button, "click", ctx[52]),
+            listen(input, "change", ctx[82]),
+            listen(section, "dragover", prevent_default(ctx[83])),
+            listen(section, "dragleave", ctx[84]),
+            listen(section, "drop", ctx[55])
+          ];
+          mounted = true;
+        }
+      },
+      p(ctx2, dirty) {
+        if (!current || dirty[0] & 536870912) {
+          button.disabled = ctx2[29];
+        }
+        if (current_block_type === (current_block_type = select_block_type(ctx2, dirty)) && if_block0) {
+          if_block0.p(ctx2, dirty);
+        } else {
+          if_block0.d(1);
+          if_block0 = current_block_type(ctx2);
+          if (if_block0) {
+            if_block0.c();
+            if_block0.m(section, t5);
+          }
+        }
+        if (current_block_type_1 === (current_block_type_1 = select_block_type_1(ctx2, dirty)) && if_block1) {
+          if_block1.p(ctx2, dirty);
+        } else {
+          if (if_block1)
+            if_block1.d(1);
+          if_block1 = current_block_type_1 && current_block_type_1(ctx2);
+          if (if_block1) {
+            if_block1.c();
+            if_block1.m(section, null);
+          }
+        }
+        if (dirty[1] & 2) {
+          toggle_class(section, "dmg-dropping", ctx2[32]);
+        }
+        if (ctx2[0]) {
+          if (if_block2) {
+            if_block2.p(ctx2, dirty);
+          } else {
+            if_block2 = create_if_block_424(ctx2);
+            if_block2.c();
+            if_block2.m(aside, null);
+          }
+        } else if (if_block2) {
+          if_block2.d(1);
+          if_block2 = null;
+        }
+        if (current_block_type_2 === (current_block_type_2 = select_block_type_2(ctx2, dirty)) && if_block3) {
+          if_block3.p(ctx2, dirty);
+        } else {
+          if_block3.d(1);
+          if_block3 = current_block_type_2(ctx2);
+          if (if_block3) {
+            if_block3.c();
+            if_block3.m(div1, null);
+          }
+        }
+        if (ctx2[17]) {
+          if (if_block4) {
+            if_block4.p(ctx2, dirty);
+          } else {
+            if_block4 = create_if_block31(ctx2);
+            if_block4.c();
+            if_block4.m(div2, null);
+          }
+        } else if (if_block4) {
+          if_block4.d(1);
+          if_block4 = null;
+        }
+        const articlepeek_changes = {};
+        if (!updating_id && dirty[1] & 1) {
+          updating_id = true;
+          articlepeek_changes.id = ctx2[31];
+          add_flush_callback(() => updating_id = false);
+        }
+        articlepeek.$set(articlepeek_changes);
+      },
+      i(local) {
+        if (current)
+          return;
+        transition_in(articlepeek.$$.fragment, local);
+        current = true;
+      },
+      o(local) {
+        transition_out(articlepeek.$$.fragment, local);
+        current = false;
+      },
+      d(detaching) {
+        if (detaching)
+          detach(div3);
+        if_block0.d();
+        if (if_block1) {
+          if_block1.d();
+        }
+        if (if_block2)
+          if_block2.d();
+        if_block3.d();
+        if (if_block4)
+          if_block4.d();
+        if (detaching)
+          detach(t11);
+        destroy_component(articlepeek, detaching);
+        mounted = false;
+        run_all(dispose);
+      }
+    };
+  }
+  var SAVE_PREF3 = "xpediaSave";
+  var PREF = "xpediaPax";
+  function persist(p) {
+    try {
+      localStorage[PREF] = JSON.stringify(p);
+    } catch (e) {
+    }
+  }
+  function arrow(key, sk, sd) {
+    return sk == key ? sd > 0 ? " \u25B2" : " \u25BC" : "";
+  }
+  function step(t) {
+    if (!(t > 0))
+      return 0;
+    return Math.min(5, Math.ceil(Math.min(1, t) * 5));
+  }
+  function signed(n) {
+    return n > 0 ? "+" + n : String(n);
+  }
+  function statusText(r) {
+    if (r.status == "fallen")
+      return "KIA";
+    if (r.status == "wounded")
+      return "\u271A " + r.recovery + "d";
+    return "fit";
+  }
+  function statusTip(r) {
+    const bits = [];
+    if (r.status == "wounded")
+      bits.push("Wounded: " + r.recovery + " days to fit");
+    if (r.status == "fallen")
+      bits.push("Killed in action");
+    if (r.status != "fallen")
+      bits.push("Freshness " + Math.round(r.fresh * 100) + "%");
+    return bits.join("\n");
+  }
+  function bar(r, k) {
+    const top = Math.max(r.cap[k] || 0, r.stats[k], r.armored[k], 1);
+    const pc = (v) => Math.max(0, Math.min(100, 100 * v / top));
+    return {
+      now: pc(r.stats[k]),
+      start: pc(r.initial[k]),
+      gym: r.train[k] > 0 ? pc(r.train[k]) : null,
+      maxed: r.cap[k] > 0 && r.raw[k] >= r.cap[k]
+    };
+  }
+  function instance45($$self, $$props, $$invalidate) {
+    let allRows;
+    let living;
+    let fallenCount;
+    let rows;
+    let statOf;
+    let grades;
+    let scores;
+    let best;
+    let baseNames;
+    let craftNames;
+    let typeList;
+    let rankList;
+    let manyBases;
+    let shown;
+    let counts;
+    let careerMax;
+    let growthMax;
+    let sorted;
+    let groups;
+    let filtering;
+    let roleById;
+    let liveSlots;
+    let candidates;
+    let squad;
+    let seatCount;
+    let squadTotal;
+    let benched;
+    let selected;
+    let selectedRoles;
+    let saveList = [];
+    let savePath = "";
+    let saveState = null;
+    let saveLoading = false;
+    let saveError = "";
+    let savesRefreshing = false;
+    let view = "stats";
+    let statMode = "value";
+    let basis = "rank";
+    let armored = false;
+    let showFallen = false;
+    let showInfo = true;
+    let groupBy = "";
+    let sortKey = "rank";
+    let sortDir = -1;
+    let filter2 = __spreadProps(__spreadValues({}, EMPTY_FILTER), { rules: [] });
+    let roles = loadRoles();
+    let editingRoles = false;
+    let slots = [
+      { role: "gunner", count: 2 },
+      { role: "overwatch", count: 1 },
+      { role: "brawler", count: 1 },
+      { role: "scout", count: 1 },
+      { role: "bomber", count: 1 }
+    ];
+    let squadFitOnly = true;
+    let selectedId = "";
+    let peekId = "";
+    const VIEWS = [
+      {
+        id: "stats",
+        label: "Stats",
+        title: "Every stat, every soldier. Shading is how the stat ranks in your crew."
+      },
+      {
+        id: "roles",
+        label: "Roles",
+        title: "Weighted blends of stats, scored 0-100 against your crew. Edit the weights to match how you play."
+      },
+      {
+        id: "career",
+        label: "Career",
+        title: "Service record from each soldier's diary: missions, kills, stuns, shots, wounds, growth."
+      },
+      {
+        id: "squad",
+        label: "Squad",
+        title: "Name the slots you want filled; get the best squad from who is fit, with no one used twice."
+      }
+    ];
+    const STAT_MODES = [
+      {
+        id: "value",
+        label: "Value",
+        title: "The stat as they fight: the save's number plus traits and medals."
+      },
+      {
+        id: "cap",
+        label: "% of cap",
+        title: "How close the stat is to this soldier type's hard ceiling. 100 means done growing."
+      },
+      {
+        id: "gym",
+        label: "Gym room",
+        title: "Points the gym can still add before its training cap. Blank: the gym does not train this stat. \u2713: trained out."
+      },
+      {
+        id: "growth",
+        label: "Growth",
+        title: "Gained since recruitment: current minus the rookie roll."
+      },
+      {
+        id: "left",
+        label: "To cap",
+        title: "Points still to gain before the hard cap, from any source."
+      }
+    ];
+    const BASES = [
+      {
+        id: "rank",
+        label: "vs crew",
+        title: "Shading and role scores by order: 80 means better than 80% of your living crew."
+      },
+      {
+        id: "scaled",
+        label: "vs best",
+        title: "Shading and role scores as a share of the best in your crew, so a big lead looks big."
+      }
+    ];
+    const GROUPS = [
+      { id: "", label: "No grouping" },
+      { id: "base", label: "Base" },
+      { id: "craft", label: "Craft" },
+      { id: "type", label: "Soldier type" },
+      { id: "rank", label: "Rank" },
+      { id: "best", label: "Best role" },
+      { id: "status", label: "Status" }
+    ];
+    const CAREER = [
+      {
+        id: "missions",
+        ab: "Msn",
+        title: "Missions",
+        get: (r) => r.missions,
+        heat: true
+      },
+      {
+        id: "kills",
+        ab: "Kill",
+        title: "Kills",
+        get: (r) => r.kills,
+        heat: true
+      },
+      {
+        id: "stuns",
+        ab: "Stun",
+        title: "Stuns - captures are money",
+        get: (r) => r.stuns,
+        heat: true
+      },
+      {
+        id: "shots",
+        ab: "Shots",
+        title: "Ranged shots fired, career",
+        get: (r) => r.shots
+      },
+      {
+        id: "hits",
+        ab: "Hits",
+        title: "Hits landed, career - melee hits and every pellet included, which is why it can beat Shots. Not an accuracy figure.",
+        get: (r) => r.hits,
+        heat: true
+      },
+      {
+        id: "medals",
+        ab: "Med",
+        title: "Commendations",
+        get: (r) => r.medals.length,
+        heat: true
+      },
+      {
+        id: "gained",
+        ab: "Gain",
+        title: "Stat points gained in the field",
+        get: (r) => r.gained,
+        heat: true
+      },
+      {
+        id: "gainRate",
+        ab: "Gain/msn",
+        title: "Stat points gained per mission. High and young is your future ace.",
+        get: (r) => r.gainRate == null ? null : Math.round(r.gainRate * 10) / 10,
+        heat: true
+      },
+      {
+        id: "timesWounded",
+        ab: "Hurt",
+        title: "Times wounded",
+        get: (r) => r.timesWounded
+      },
+      {
+        id: "daysWounded",
+        ab: "Days",
+        title: "Days spent in the infirmary",
+        get: (r) => r.daysWounded
+      },
+      {
+        id: "months",
+        ab: "Mths",
+        title: "Months of service",
+        get: (r) => r.months
+      }
+    ];
+    onMount(() => {
+      try {
+        const p = JSON.parse(localStorage[PREF] || "{}");
+        if (VIEWS.some((v) => v.id == p.view))
+          $$invalidate(1, view = p.view);
+        if (STAT_MODES.some((m) => m.id == p.statMode))
+          $$invalidate(2, statMode = p.statMode);
+        if (BASES.some((b) => b.id == p.basis))
+          $$invalidate(3, basis = p.basis);
+        if (GROUPS.some((g) => g.id == p.groupBy))
+          $$invalidate(7, groupBy = p.groupBy);
+        if (typeof p.sortKey == "string")
+          $$invalidate(8, sortKey = p.sortKey);
+        if (p.sortDir == 1 || p.sortDir == -1)
+          $$invalidate(9, sortDir = p.sortDir);
+        $$invalidate(4, armored = !!p.armored);
+        $$invalidate(5, showFallen = !!p.showFallen);
+        $$invalidate(6, showInfo = p.showInfo !== false);
+        $$invalidate(13, squadFitOnly = p.squadFitOnly !== false);
+        if (Array.isArray(p.slots))
+          $$invalidate(12, slots = p.slots.filter((s) => s && typeof s.role == "string").map((s) => ({
+            role: s.role,
+            count: Math.max(1, Math.min(12, +s.count || 1))
+          })));
+        if (Array.isArray(p.rules))
+          $$invalidate(10, filter2.rules = p.rules.filter((r) => r && PAX_KEYS.includes(r.k)).map((r) => ({
+            k: r.k,
+            op: r.op == "<=" ? "<=" : ">=",
+            v: +r.v || 0
+          })), filter2);
+        if (["all", "fit", "wounded"].includes(p.status))
+          $$invalidate(10, filter2.status = p.status, filter2);
+      } catch (e) {
+      }
+      $$invalidate(76, prefsLoaded = true);
+      adoptSharedSave();
+      discoverSaves();
+    });
+    let prefsLoaded = false;
+    function adoptSharedSave() {
+      const path = get_store_value(currentSavePath);
+      const state = get_store_value(currentSave);
+      if (!path || !state)
+        return false;
+      $$invalidate(26, savePath = path);
+      $$invalidate(0, saveState = state);
+      if (droppedSaves.has(path) && !saveList.some((x) => x.path == path))
+        $$invalidate(25, saveList = [{ path, file: path, dir: "", modified: 0 }, ...saveList]);
+      return true;
+    }
+    function discoverSaves() {
+      return __async(this, null, function* () {
+        let found = [];
+        try {
+          found = yield findSaves();
+        } catch (e) {
+          return;
+        }
+        if (!found.length)
+          return;
+        try {
+          yield stampSaves(found);
+        } catch (e) {
+        }
+        $$invalidate(25, saveList = [
+          ...saveList.filter((x) => droppedSaves.has(x.path)),
+          ...sortSaves(found).filter((x) => !droppedSaves.has(x.path))
+        ]);
+        if (saveState)
+          return;
+        let remembered = "";
+        try {
+          remembered = localStorage[SAVE_PREF3] || "";
+        } catch (e) {
+          remembered = "";
+        }
+        if (remembered && saveList.some((x) => x.path == remembered))
+          pickSave(remembered);
+      });
+    }
+    function refreshSaves() {
+      return __async(this, null, function* () {
+        $$invalidate(29, savesRefreshing = true);
+        const keep = savePath;
+        yield discoverSaves();
+        if (keep && saveList.some((x) => x.path == keep))
+          yield pickSave(keep);
+        $$invalidate(29, savesRefreshing = false);
+      });
+    }
+    function pickSave(path) {
+      return __async(this, null, function* () {
+        $$invalidate(26, savePath = path);
+        $$invalidate(0, saveState = null);
+        $$invalidate(28, saveError = "");
+        try {
+          localStorage[SAVE_PREF3] = path;
+        } catch (e) {
+        }
+        if (!path) {
+          setCurrentSave("", null);
+          return;
+        }
+        if (droppedSaves.has(path)) {
+          $$invalidate(0, saveState = droppedSaves.get(path));
+          setCurrentSave(path, saveState);
+          return;
+        }
+        $$invalidate(27, saveLoading = true);
+        const loaded2 = yield loadSave(path);
+        $$invalidate(27, saveLoading = false);
+        if (!loaded2) {
+          $$invalidate(28, saveError = "Could not read that save");
+          return;
+        }
+        $$invalidate(0, saveState = loaded2);
+        setCurrentSave(path, loaded2);
+      });
+    }
+    function readSavFile(file) {
+      if (!file)
+        return;
+      $$invalidate(28, saveError = "");
+      $$invalidate(27, saveLoading = true);
+      const reader = new FileReader();
+      reader.onerror = () => {
+        $$invalidate(27, saveLoading = false);
+        $$invalidate(28, saveError = "Could not read that file");
+      };
+      reader.onload = () => {
+        $$invalidate(27, saveLoading = false);
+        const parsed = parseSave(String(reader.result), file.name);
+        if (!parsed) {
+          $$invalidate(28, saveError = "Could not read that save");
+          return;
+        }
+        $$invalidate(0, saveState = parsed);
+        $$invalidate(26, savePath = file.name);
+        droppedSaves.set(file.name, parsed);
+        setCurrentSave(file.name, parsed);
+        if (!saveList.some((x) => x.path == file.name))
+          $$invalidate(25, saveList = [
+            {
+              path: file.name,
+              file: file.name,
+              dir: "",
+              modified: 0
+            },
+            ...saveList
+          ]);
+      };
+      reader.readAsText(file);
+    }
+    let savDragOver = false;
+    function onSavDrop(e) {
+      e.preventDefault();
+      $$invalidate(32, savDragOver = false);
+      const dt2 = e.dataTransfer;
+      readSavFile(dt2 && dt2.files && dt2.files[0]);
+    }
+    function sortValue2(r, key) {
+      var _a;
+      if (key == "name")
+        return r.name.toLowerCase();
+      if (key == "type")
+        return r.typeName.toLowerCase();
+      if (key == "rank")
+        return r.rank;
+      if (key == "where")
+        return (r.craft || "~") + r.base;
+      if (key == "status")
+        return r.status == "fallen" ? 9999 : r.recovery;
+      if (key == "gym")
+        return r.gymLeft;
+      if (key == "best") {
+        const b = best.get(r.id);
+        return b ? scores.get(r.id)[b.id] : -1;
+      }
+      if (key.startsWith("stat:"))
+        return cellValue(r, key.slice(5));
+      if (key.startsWith("role:"))
+        return (_a = scores.get(r.id)[key.slice(5)]) != null ? _a : -1;
+      if (key.startsWith("c:")) {
+        const col = CAREER.find((c) => c.id == key.slice(2));
+        const v = col ? col.get(r) : null;
+        return v == null ? -1 : v;
+      }
+      return 0;
+    }
+    function sortBy(key) {
+      if (sortKey == key)
+        $$invalidate(9, sortDir = -sortDir);
+      else {
+        $$invalidate(8, sortKey = key);
+        $$invalidate(9, sortDir = key == "name" || key == "type" || key == "where" ? 1 : -1);
+      }
+    }
+    function groupOf(r) {
+      if (groupBy == "base")
+        return r.base;
+      if (groupBy == "craft")
+        return r.craft || "Not on a craft";
+      if (groupBy == "type")
+        return r.typeName;
+      if (groupBy == "rank")
+        return r.rankName;
+      if (groupBy == "status")
+        return r.status == "fallen" ? "Fallen" : r.status == "wounded" ? "Wounded" : "Fit";
+      if (groupBy == "best") {
+        const b = best.get(r.id);
+        return b ? b.name : "\u2014";
+      }
+      return "";
+    }
+    function cellValue(r, k) {
+      const raw = r.raw[k];
+      if (statMode == "cap")
+        return r.cap[k] > 0 ? Math.min(100, Math.round(100 * raw / r.cap[k])) : null;
+      if (statMode == "gym")
+        return r.train[k] > 0 ? Math.max(0, r.train[k] - raw) : null;
+      if (statMode == "growth")
+        return raw - r.initial[k];
+      if (statMode == "left")
+        return r.cap[k] > 0 ? Math.max(0, r.cap[k] - raw) : null;
+      return statOf(r, k);
+    }
+    function cellHeat(r, k) {
+      let t = 0;
+      if (statMode == "value")
+        t = (grades.get(r.id) || {})[k] / 100;
+      else if (statMode == "cap")
+        t = r.cap[k] > 0 ? r.raw[k] / r.cap[k] : 0;
+      else if (statMode == "gym")
+        t = r.train[k] > 0 ? Math.max(0, r.train[k] - r.raw[k]) / 30 : 0;
+      else if (statMode == "growth")
+        t = growthMax[k] > 0 ? (r.raw[k] - r.initial[k]) / growthMax[k] : 0;
+      else if (statMode == "left")
+        t = r.cap[k] > 0 ? Math.max(0, r.cap[k] - r.raw[k]) / r.cap[k] : 0;
+      return step(t);
+    }
+    function cellText(r, k) {
+      const v = cellValue(r, k);
+      if (v == null)
+        return "";
+      if (statMode == "gym" && v == 0)
+        return "\u2713";
+      if (statMode == "growth" && v > 0)
+        return "+" + v;
+      return String(v);
+    }
+    function statTip(r, k) {
+      const parts = [STAT_NAME[k] + " " + r.stats[k]];
+      if (r.armored[k] != r.stats[k])
+        parts.push("in armour " + r.armored[k]);
+      if (r.stats[k] != r.raw[k])
+        parts.push("save " + r.raw[k] + " + traits/medals " + (r.stats[k] - r.raw[k]));
+      parts.push("rookie roll " + r.initial[k] + " (" + signed(r.raw[k] - r.initial[k]) + ")");
+      if (r.train[k] > 0)
+        parts.push(r.raw[k] >= r.train[k] ? "gym cap " + r.train[k] + " - trained out" : "gym cap " + r.train[k] + " - " + (r.train[k] - r.raw[k]) + " left");
+      else
+        parts.push("gym does not train it");
+      if (r.cap[k] > 0)
+        parts.push("hard cap " + r.cap[k] + (r.raw[k] >= r.cap[k] ? " - MAXED" : ""));
+      const g = (grades.get(r.id) || {})[k];
+      if (g != null)
+        parts.push(basis == "rank" ? "better than " + Math.round(g) + "% of the crew" : Math.round(g) + "% of the crew's best");
+      return parts.join("\n");
+    }
+    function roleTip(role) {
+      const w = Object.entries(role.weights).sort((a, b) => b[1] - a[1]).map(([k, n]) => STAT_NAME[k] + " \xD7" + n).join(", ");
+      return role.name + (role.note ? " - " + role.note : "") + "\n" + (w || "No weights yet");
+    }
+    function addRule() {
+      $$invalidate(10, filter2.rules = [...filter2.rules, { k: "firing", op: ">=", v: 60 }], filter2);
+    }
+    function dropRule(i) {
+      $$invalidate(10, filter2.rules = filter2.rules.filter((_, j2) => j2 != i), filter2);
+    }
+    function clearFilter() {
+      $$invalidate(10, filter2 = __spreadProps(__spreadValues({}, EMPTY_FILTER), { rules: [] }));
+    }
+    function commitRoles() {
+      $$invalidate(11, roles);
+      saveRoles(roles);
+    }
+    function setWeight(role, k, v) {
+      const n = Math.max(0, Math.min(5, Math.round(+v || 0)));
+      if (n)
+        role.weights[k] = n;
+      else
+        delete role.weights[k];
+      commitRoles();
+    }
+    function addRole() {
+      $$invalidate(11, roles = [
+        ...roles,
+        {
+          id: "r" + Date.now().toString(36),
+          name: "New role",
+          weights: { firing: 1 },
+          note: ""
+        }
+      ]);
+      commitRoles();
+    }
+    function dropRole(id) {
+      $$invalidate(11, roles = roles.filter((r) => r.id != id));
+      $$invalidate(12, slots = slots.filter((s) => s.role != id));
+      commitRoles();
+    }
+    function resetRoles() {
+      $$invalidate(11, roles = cloneRoles(DEFAULT_ROLES));
+      commitRoles();
+    }
+    function nextFor(roleId, bench) {
+      let top = null;
+      for (const r of bench) {
+        const s = scores.get(r.id)[roleId];
+        if (s != null && (!top || s > top.s))
+          top = { r, s };
+      }
+      return top;
+    }
+    function addSlot() {
+      const used = new Set(slots.map((s) => s.role));
+      const role = roles.find((r) => !used.has(r.id)) || roles[0];
+      if (role)
+        $$invalidate(12, slots = [...slots, { role: role.id, count: 1 }]);
+    }
+    function dropSlot(i) {
+      $$invalidate(12, slots = slots.filter((_, j2) => j2 != i));
+    }
+    function select(r) {
+      $$invalidate(14, selectedId = selectedId == r.id ? "" : r.id);
+    }
+    function openInCentcom(r) {
+      centcomSoldier.set(r.id);
+      window.location.hash = "##DAMAGE";
+    }
+    function exportCsv() {
+      const header = ["Name", "Type", "Rank", "Base", "Craft", "Status", "Armour"];
+      for (const s of PAX_STATS)
+        header.push(s.name);
+      for (const role of roles)
+        header.push(role.name);
+      header.push("Best role");
+      for (const c of CAREER)
+        header.push(c.title.split(" - ")[0]);
+      const body = sorted.map((r) => {
+        const b = best.get(r.id);
+        return [
+          r.name,
+          r.typeName,
+          r.rankName,
+          r.base,
+          r.craft,
+          r.status == "wounded" ? "wounded " + r.recovery + "d" : r.status,
+          r.armorName,
+          ...PAX_KEYS.map((k) => statOf(r, k)),
+          ...roles.map((role) => {
+            const s = scores.get(r.id)[role.id];
+            return s == null ? "" : Math.round(s);
+          }),
+          b ? b.name : "",
+          ...CAREER.map((c) => {
+            const v = c.get(r);
+            return v == null ? "" : v;
+          })
+        ];
+      });
+      const name = (saveState && saveState.name || "crew").replace(/[^\w\- ]+/g, "").trim() || "crew";
+      download(name + " - pax.csv", toCsv(header, body));
+    }
+    const strip = (s) => String(s || "").replace(/<[^>]*>/g, "");
+    const change_handler = (e) => pickSave(e.target.value);
+    const change_handler_1 = (e) => {
+      readSavFile(e.target.files && e.target.files[0]);
+      e.target.value = "";
+    };
+    const dragover_handler2 = () => $$invalidate(32, savDragOver = true);
+    const dragleave_handler = () => $$invalidate(32, savDragOver = false);
+    function input0_input_handler() {
+      filter2.text = this.value;
+      $$invalidate(10, filter2), $$invalidate(4, armored);
+      $$invalidate(24, baseNames), $$invalidate(22, living), $$invalidate(78, allRows), $$invalidate(0, saveState);
+    }
+    const click_handler = (id) => $$invalidate(10, filter2.status = id, filter2);
+    function select_1_change_handler() {
+      filter2.base = select_value(this);
+      $$invalidate(10, filter2), $$invalidate(4, armored);
+      $$invalidate(24, baseNames), $$invalidate(22, living), $$invalidate(78, allRows), $$invalidate(0, saveState);
+    }
+    function select0_change_handler() {
+      filter2.craft = select_value(this);
+      $$invalidate(10, filter2), $$invalidate(4, armored);
+      $$invalidate(24, baseNames), $$invalidate(22, living), $$invalidate(78, allRows), $$invalidate(0, saveState);
+    }
+    function select1_change_handler() {
+      filter2.type = select_value(this);
+      $$invalidate(10, filter2), $$invalidate(4, armored);
+      $$invalidate(24, baseNames), $$invalidate(22, living), $$invalidate(78, allRows), $$invalidate(0, saveState);
+    }
+    function select2_change_handler() {
+      filter2.rank = select_value(this);
+      $$invalidate(10, filter2), $$invalidate(4, armored);
+      $$invalidate(24, baseNames), $$invalidate(22, living), $$invalidate(78, allRows), $$invalidate(0, saveState);
+    }
+    function select0_change_handler_1(each_value_23, i) {
+      each_value_23[i].k = select_value(this);
+      $$invalidate(10, filter2), $$invalidate(4, armored);
+      $$invalidate(24, baseNames), $$invalidate(22, living), $$invalidate(78, allRows), $$invalidate(0, saveState);
+    }
+    function select1_change_handler_1(each_value_23, i) {
+      each_value_23[i].op = select_value(this);
+      $$invalidate(10, filter2), $$invalidate(4, armored);
+      $$invalidate(24, baseNames), $$invalidate(22, living), $$invalidate(78, allRows), $$invalidate(0, saveState);
+    }
+    function input_input_handler(each_value_23, i) {
+      each_value_23[i].v = to_number(this.value);
+      $$invalidate(10, filter2), $$invalidate(4, armored);
+      $$invalidate(24, baseNames), $$invalidate(22, living), $$invalidate(78, allRows), $$invalidate(0, saveState);
+    }
+    const click_handler_1 = (i) => dropRule(i);
+    function input1_change_handler() {
+      armored = this.checked;
+      $$invalidate(4, armored);
+    }
+    function input2_change_handler() {
+      showFallen = this.checked;
+      $$invalidate(5, showFallen);
+    }
+    function select3_change_handler() {
+      groupBy = select_value(this);
+      $$invalidate(7, groupBy);
+      $$invalidate(50, GROUPS);
+    }
+    const click_handler_2 = (v) => $$invalidate(1, view = v.id);
+    const click_handler_3 = (m) => $$invalidate(2, statMode = m.id);
+    const click_handler_4 = (b) => $$invalidate(3, basis = b.id);
+    const click_handler_5 = () => $$invalidate(6, showInfo = !showInfo);
+    const click_handler_6 = () => $$invalidate(30, editingRoles = !editingRoles);
+    function input_input_handler_1(each_value_15, role_index_3) {
+      each_value_15[role_index_3].name = this.value;
+      $$invalidate(11, roles);
+    }
+    const change_handler_2 = (role, k, e) => setWeight(role, k, e.target.value);
+    const click_handler_7 = (role) => dropRole(role.id);
+    function input_input_handler_2(each_value_5, i) {
+      each_value_5[i].count = to_number(this.value);
+      $$invalidate(12, slots);
+      $$invalidate(11, roles);
+    }
+    function select_1_change_handler_1(each_value_5, i) {
+      each_value_5[i].role = select_value(this);
+      $$invalidate(12, slots);
+      $$invalidate(11, roles);
+    }
+    const click_handler_8 = (i) => dropSlot(i);
+    function input_change_handler() {
+      squadFitOnly = this.checked;
+      $$invalidate(13, squadFitOnly);
+    }
+    const func7 = (role, a, b) => role.weights[b] - role.weights[a];
+    const func_13 = (pick, k) => PAX_STATS.find((s) => s.k == k).ab + " " + statOf(pick.row, k);
+    const click_handler_9 = (pick) => select(pick.row);
+    const click_handler_10 = () => sortBy("name");
+    const click_handler_11 = () => sortBy("type");
+    const click_handler_12 = () => sortBy("rank");
+    const click_handler_13 = () => sortBy("where");
+    const click_handler_14 = () => sortBy("status");
+    const click_handler_15 = (s) => sortBy("stat:" + s.k);
+    const click_handler_16 = () => sortBy("gym");
+    const click_handler_17 = () => sortBy("best");
+    const click_handler_18 = (role) => sortBy("role:" + role.id);
+    const click_handler_19 = (c) => sortBy("c:" + c.id);
+    const click_handler_20 = (r) => select(r);
+    const click_handler_21 = () => $$invalidate(14, selectedId = "");
+    const click_handler_22 = () => $$invalidate(31, peekId = selected.armor);
+    const click_handler_23 = () => openInCentcom(selected);
+    const click_handler_24 = (w) => $$invalidate(31, peekId = w);
+    const click_handler_25 = (m) => $$invalidate(31, peekId = m.name);
+    function articlepeek_id_binding(value) {
+      peekId = value;
+      $$invalidate(31, peekId);
+    }
+    $$self.$$.update = () => {
+      if ($$self.$$.dirty[0] & 16) {
+        $:
+          $$invalidate(10, filter2.armored = armored, filter2);
+      }
+      if ($$self.$$.dirty[0] & 14334 | $$self.$$.dirty[2] & 16384) {
+        $:
+          if (prefsLoaded)
+            persist({
+              view,
+              statMode,
+              basis,
+              groupBy,
+              sortKey,
+              sortDir,
+              armored,
+              showFallen,
+              showInfo,
+              squadFitOnly,
+              slots,
+              rules: filter2.rules,
+              status: filter2.status
+            });
+      }
+      if ($$self.$$.dirty[0] & 1) {
+        $:
+          $$invalidate(78, allRows = saveState ? paxRows(saveState, true) : []);
+      }
+      if ($$self.$$.dirty[2] & 65536) {
+        $:
+          $$invalidate(22, living = allRows.filter((r) => r.status != "fallen"));
+      }
+      if ($$self.$$.dirty[0] & 4194304 | $$self.$$.dirty[2] & 65536) {
+        $:
+          $$invalidate(46, fallenCount = allRows.length - living.length);
+      }
+      if ($$self.$$.dirty[0] & 4194336 | $$self.$$.dirty[2] & 65536) {
+        $:
+          $$invalidate(23, rows = showFallen ? allRows : living);
+      }
+      if ($$self.$$.dirty[0] & 16) {
+        $:
+          $$invalidate(33, statOf = (r, k) => armored ? r.armored[k] : r.stats[k]);
+      }
+      if ($$self.$$.dirty[0] & 4194328 | $$self.$$.dirty[2] & 65536) {
+        $:
+          $$invalidate(80, grades = percentiles(living, (r, k) => armored ? r.armored[k] : r.stats[k], basis, allRows));
+      }
+      if ($$self.$$.dirty[0] & 2048 | $$self.$$.dirty[2] & 327680) {
+        $:
+          $$invalidate(15, scores = roleScores(allRows, roles, grades));
+      }
+      if ($$self.$$.dirty[0] & 34816 | $$self.$$.dirty[2] & 65536) {
+        $:
+          $$invalidate(16, best = new Map(allRows.map((r) => [r.id, bestRole(scores.get(r.id), roles)])));
+      }
+      if ($$self.$$.dirty[0] & 4194304) {
+        $:
+          $$invalidate(24, baseNames = [...new Set(living.map((r) => r.base))].sort());
+      }
+      if ($$self.$$.dirty[0] & 4194304) {
+        $:
+          $$invalidate(45, craftNames = [...new Set(living.map((r) => r.craft).filter(Boolean))].sort());
+      }
+      if ($$self.$$.dirty[2] & 65536) {
+        $:
+          $$invalidate(44, typeList = [...new Map(allRows.map((r) => [r.type, r.typeName])).entries()].sort((a, b) => a[1] < b[1] ? -1 : 1));
+      }
+      if ($$self.$$.dirty[2] & 65536) {
+        $:
+          $$invalidate(43, rankList = [...new Set(allRows.map((r) => r.rank))].sort((a, b) => a - b));
+      }
+      if ($$self.$$.dirty[0] & 16777216) {
+        $:
+          $$invalidate(42, manyBases = baseNames.length > 1);
+      }
+      if ($$self.$$.dirty[0] & 8389632) {
+        $:
+          $$invalidate(20, shown = rows.filter((r) => passes(r, filter2)));
+      }
+      if ($$self.$$.dirty[0] & 12582912) {
+        $:
+          $$invalidate(41, counts = {
+            all: rows.length,
+            fit: living.filter((r) => r.status == "fit").length,
+            wounded: living.filter((r) => r.status == "wounded").length
+          });
+      }
+      if ($$self.$$.dirty[0] & 4194304) {
+        $:
+          $$invalidate(40, careerMax = Object.fromEntries(CAREER.map((c) => [c.id, Math.max(0, ...living.map((r) => +c.get(r) || 0))])));
+      }
+      if ($$self.$$.dirty[0] & 4194304) {
+        $:
+          growthMax = Object.fromEntries(PAX_KEYS.map((k) => [k, Math.max(0, ...living.map((r) => r.raw[k] - r.initial[k]))]));
+      }
+      if ($$self.$$.dirty[0] & 1147668 | $$self.$$.dirty[2] & 262144) {
+        $:
+          $$invalidate(77, sorted = ((list2, key, dir, _s, _m, _b, _a, _g) => [...list2].sort((a, b) => {
+            const x = sortValue2(a, key);
+            const y = sortValue2(b, key);
+            if (x < y)
+              return -dir;
+            if (x > y)
+              return dir;
+            return a.name < b.name ? -1 : 1;
+          }))(shown, sortKey, sortDir, scores, statMode, best, armored, grades));
+      }
+      if ($$self.$$.dirty[0] & 65664 | $$self.$$.dirty[2] & 32768) {
+        $:
+          $$invalidate(39, groups = ((list2, _g, _b) => {
+            if (!groupBy)
+              return [{ name: "", rows: list2 }];
+            const map2 = /* @__PURE__ */ new Map();
+            for (const r of list2) {
+              const g = groupOf(r);
+              if (!map2.has(g))
+                map2.set(g, []);
+              map2.get(g).push(r);
+            }
+            return [...map2.entries()].map(([name, rows2]) => ({ name, rows: rows2 }));
+          })(sorted, groupBy, best));
+      }
+      if ($$self.$$.dirty[0] & 1024) {
+        $:
+          $$invalidate(38, filtering = !!(filter2.text || filter2.status != "all" || filter2.base || filter2.craft || filter2.type || filter2.rank >= 0 || filter2.rules.length));
+      }
+      if ($$self.$$.dirty[0] & 2048) {
+        $:
+          $$invalidate(21, roleById = new Map(roles.map((r) => [r.id, r])));
+      }
+      if ($$self.$$.dirty[0] & 2101248) {
+        $:
+          $$invalidate(79, liveSlots = slots.filter((s) => roleById.has(s.role) && s.count > 0));
+      }
+      if ($$self.$$.dirty[0] & 1056768) {
+        $:
+          $$invalidate(19, candidates = shown.filter((r) => r.status != "fallen" && (!squadFitOnly || r.status == "fit")));
+      }
+      if ($$self.$$.dirty[0] & 557056 | $$self.$$.dirty[2] & 131072) {
+        $:
+          $$invalidate(18, squad = staffSquad(candidates, liveSlots, scores));
+      }
+      if ($$self.$$.dirty[2] & 131072) {
+        $:
+          $$invalidate(37, seatCount = liveSlots.reduce((a, s) => a + s.count, 0));
+      }
+      if ($$self.$$.dirty[0] & 262144) {
+        $:
+          $$invalidate(36, squadTotal = squad.length ? squad.reduce((a, p) => a + p.score, 0) / squad.length : 0);
+      }
+      if ($$self.$$.dirty[0] & 786432) {
+        $:
+          $$invalidate(35, benched = candidates.filter((c) => !squad.some((p) => p.row.id == c.id)));
+      }
+      if ($$self.$$.dirty[0] & 16384 | $$self.$$.dirty[2] & 65536) {
+        $:
+          $$invalidate(17, selected = allRows.find((r) => r.id == selectedId) || null);
+      }
+      if ($$self.$$.dirty[0] & 165888) {
+        $:
+          $$invalidate(34, selectedRoles = selected ? roles.map((role) => ({
+            role,
+            s: scores.get(selected.id)[role.id]
+          })).filter((x) => x.s != null).sort((a, b) => b.s - a.s) : []);
+      }
+    };
+    return [
+      saveState,
+      view,
+      statMode,
+      basis,
+      armored,
+      showFallen,
+      showInfo,
+      groupBy,
+      sortKey,
+      sortDir,
+      filter2,
+      roles,
+      slots,
+      squadFitOnly,
+      selectedId,
+      scores,
+      best,
+      selected,
+      squad,
+      candidates,
+      shown,
+      roleById,
+      living,
+      rows,
+      baseNames,
+      saveList,
+      savePath,
+      saveLoading,
+      saveError,
+      savesRefreshing,
+      editingRoles,
+      peekId,
+      savDragOver,
+      statOf,
+      selectedRoles,
+      benched,
+      squadTotal,
+      seatCount,
+      filtering,
+      groups,
+      careerMax,
+      counts,
+      manyBases,
+      rankList,
+      typeList,
+      craftNames,
+      fallenCount,
+      VIEWS,
+      STAT_MODES,
+      BASES,
+      GROUPS,
+      CAREER,
+      refreshSaves,
+      pickSave,
+      readSavFile,
+      onSavDrop,
+      sortBy,
+      cellHeat,
+      cellText,
+      statTip,
+      roleTip,
+      addRule,
+      dropRule,
+      clearFilter,
+      commitRoles,
+      setWeight,
+      addRole,
+      dropRole,
+      resetRoles,
+      nextFor,
+      addSlot,
+      dropSlot,
+      select,
+      openInCentcom,
+      exportCsv,
+      strip,
+      prefsLoaded,
+      sorted,
+      allRows,
+      liveSlots,
+      grades,
+      change_handler,
+      change_handler_1,
+      dragover_handler2,
+      dragleave_handler,
+      input0_input_handler,
+      click_handler,
+      select_1_change_handler,
+      select0_change_handler,
+      select1_change_handler,
+      select2_change_handler,
+      select0_change_handler_1,
+      select1_change_handler_1,
+      input_input_handler,
+      click_handler_1,
+      input1_change_handler,
+      input2_change_handler,
+      select3_change_handler,
+      click_handler_2,
+      click_handler_3,
+      click_handler_4,
+      click_handler_5,
+      click_handler_6,
+      input_input_handler_1,
+      change_handler_2,
+      click_handler_7,
+      input_input_handler_2,
+      select_1_change_handler_1,
+      click_handler_8,
+      input_change_handler,
+      func7,
+      func_13,
+      click_handler_9,
+      click_handler_10,
+      click_handler_11,
+      click_handler_12,
+      click_handler_13,
+      click_handler_14,
+      click_handler_15,
+      click_handler_16,
+      click_handler_17,
+      click_handler_18,
+      click_handler_19,
+      click_handler_20,
+      click_handler_21,
+      click_handler_22,
+      click_handler_23,
+      click_handler_24,
+      click_handler_25,
+      articlepeek_id_binding
+    ];
+  }
+  var Pax = class extends SvelteComponent {
+    constructor(options) {
+      super();
+      init(this, options, instance45, create_fragment45, safe_not_equal, {}, null, [-1, -1, -1, -1, -1, -1, -1, -1]);
+    }
+  };
+  var Pax_default = Pax;
+
+  // src/Notepad.svelte
+  function create_if_block32(ctx) {
     let div1;
     let div0;
     let span;
@@ -55807,8 +63242,8 @@
     let t5;
     let mounted;
     let dispose;
-    let if_block0 = show_if && create_if_block_221(ctx);
-    let if_block1 = !ctx[1] && create_if_block_131(ctx);
+    let if_block0 = show_if && create_if_block_227(ctx);
+    let if_block1 = !ctx[1] && create_if_block_139(ctx);
     return {
       c() {
         div1 = element("div");
@@ -55868,7 +63303,7 @@
           if (if_block0) {
             if_block0.p(ctx2, dirty);
           } else {
-            if_block0 = create_if_block_221(ctx2);
+            if_block0 = create_if_block_227(ctx2);
             if_block0.c();
             if_block0.m(span, null);
           }
@@ -55885,7 +63320,7 @@
           if (if_block1) {
             if_block1.p(ctx2, dirty);
           } else {
-            if_block1 = create_if_block_131(ctx2);
+            if_block1 = create_if_block_139(ctx2);
             if_block1.c();
             if_block1.m(div1, null);
           }
@@ -55915,7 +63350,7 @@
       }
     };
   }
-  function create_if_block_221(ctx) {
+  function create_if_block_227(ctx) {
     let t0;
     let t1_value = ctx[2].trim().split("\n")[0].slice(0, 24) + "";
     let t1;
@@ -55940,7 +63375,7 @@
       }
     };
   }
-  function create_if_block_131(ctx) {
+  function create_if_block_139(ctx) {
     let textarea;
     let mounted;
     let dispose;
@@ -55979,7 +63414,7 @@
       }
     };
   }
-  function create_fragment45(ctx) {
+  function create_fragment46(ctx) {
     let button;
     let t0;
     let button_title_value;
@@ -55987,7 +63422,7 @@
     let if_block_anchor;
     let mounted;
     let dispose;
-    let if_block = ctx[0] && create_if_block31(ctx);
+    let if_block = ctx[0] && create_if_block32(ctx);
     return {
       c() {
         button = element("button");
@@ -56020,7 +63455,7 @@
           if (if_block) {
             if_block.p(ctx2, dirty);
           } else {
-            if_block = create_if_block31(ctx2);
+            if_block = create_if_block32(ctx2);
             if_block.c();
             if_block.m(if_block_anchor.parentNode, if_block_anchor);
           }
@@ -56045,8 +63480,8 @@
       }
     };
   }
-  var PREF = "xpediaNotepad";
-  function instance45($$self, $$props, $$invalidate) {
+  var PREF2 = "xpediaNotepad";
+  function instance46($$self, $$props, $$invalidate) {
     let open = false;
     let collapsed = false;
     let text2 = "";
@@ -56057,7 +63492,7 @@
     let loaded2 = false;
     onMount(() => {
       try {
-        const s = JSON.parse(localStorage[PREF] || "{}");
+        const s = JSON.parse(localStorage[PREF2] || "{}");
         if (s && typeof s == "object") {
           $$invalidate(0, open = !!s.open);
           $$invalidate(1, collapsed = !!s.collapsed);
@@ -56088,11 +63523,11 @@
       if (y < 0)
         $$invalidate(4, y = 0);
     }
-    function persist() {
+    function persist2() {
       if (!loaded2)
         return;
       try {
-        localStorage[PREF] = JSON.stringify({ open, collapsed, text: text2, x, y, w, h });
+        localStorage[PREF2] = JSON.stringify({ open, collapsed, text: text2, x, y, w, h });
       } catch (e) {
       }
     }
@@ -56136,7 +63571,7 @@
         $:
           if (loaded2) {
             open, collapsed, text2, x, y, w, h;
-            persist();
+            persist2();
           }
       }
     };
@@ -56160,13 +63595,13 @@
   var Notepad = class extends SvelteComponent {
     constructor(options) {
       super();
-      init(this, options, instance45, create_fragment45, safe_not_equal, {});
+      init(this, options, instance46, create_fragment46, safe_not_equal, {});
     }
   };
   var Notepad_default = Notepad;
 
   // src/Download.svelte
-  function create_fragment46(ctx) {
+  function create_fragment47(ctx) {
     let button;
     let tr2;
     let current;
@@ -56213,7 +63648,7 @@
       }
     };
   }
-  function instance46($$self, $$props, $$invalidate) {
+  function instance47($$self, $$props, $$invalidate) {
     let { title = "Export" } = $$props;
     let { onlyCurrent = false } = $$props;
     const click_handler = () => exportPedia(onlyCurrent);
@@ -56228,64 +63663,64 @@
   var Download = class extends SvelteComponent {
     constructor(options) {
       super();
-      init(this, options, instance46, create_fragment46, safe_not_equal, { title: 0, onlyCurrent: 1 });
+      init(this, options, instance47, create_fragment47, safe_not_equal, { title: 0, onlyCurrent: 1 });
     }
   };
   var Download_default = Download;
 
   // src/App.svelte
   var { document: document_1 } = globals;
-  function get_each_context31(ctx, list2, i) {
-    const child_ctx = ctx.slice();
-    child_ctx[82] = list2[i];
-    return child_ctx;
-  }
-  function get_each_context_115(ctx, list2, i) {
+  function get_each_context32(ctx, list2, i) {
     const child_ctx = ctx.slice();
     child_ctx[85] = list2[i];
-    child_ctx[87] = i;
     return child_ctx;
   }
-  function get_each_context_211(ctx, list2, i) {
+  function get_each_context_117(ctx, list2, i) {
     const child_ctx = ctx.slice();
-    child_ctx[85] = list2[i];
-    child_ctx[87] = i;
+    child_ctx[88] = list2[i];
+    child_ctx[90] = i;
     return child_ctx;
   }
-  function get_each_context_38(ctx, list2, i) {
+  function get_each_context_214(ctx, list2, i) {
     const child_ctx = ctx.slice();
-    child_ctx[89] = list2[i];
+    child_ctx[88] = list2[i];
+    child_ctx[90] = i;
     return child_ctx;
   }
-  function get_each_context_56(ctx, list2, i) {
+  function get_each_context_39(ctx, list2, i) {
     const child_ctx = ctx.slice();
-    child_ctx[27] = list2[i];
+    child_ctx[92] = list2[i];
     return child_ctx;
   }
-  function get_each_context_47(ctx, list2, i) {
+  function get_each_context_57(ctx, list2, i) {
     const child_ctx = ctx.slice();
-    child_ctx[27] = list2[i];
+    child_ctx[29] = list2[i];
     return child_ctx;
   }
-  function get_each_context_66(ctx, list2, i) {
+  function get_each_context_48(ctx, list2, i) {
     const child_ctx = ctx.slice();
-    child_ctx[85] = list2[i];
-    child_ctx[87] = i;
+    child_ctx[29] = list2[i];
     return child_ctx;
   }
-  function get_each_context_75(ctx, list2, i) {
+  function get_each_context_67(ctx, list2, i) {
     const child_ctx = ctx.slice();
-    child_ctx[85] = list2[i];
-    child_ctx[87] = i;
+    child_ctx[88] = list2[i];
+    child_ctx[90] = i;
     return child_ctx;
   }
-  function create_if_block_177(ctx) {
+  function get_each_context_76(ctx, list2, i) {
+    const child_ctx = ctx.slice();
+    child_ctx[88] = list2[i];
+    child_ctx[90] = i;
+    return child_ctx;
+  }
+  function create_if_block_188(ctx) {
     let title_value;
     document_1.title = title_value = tr("XPedia");
     return { c: noop, m: noop, d: noop };
   }
-  function create_else_block21(ctx) {
-    let previous_key = [ctx[27], ctx[2], markersLoaded];
+  function create_else_block22(ctx) {
+    let previous_key = [ctx[29], ctx[6], markersLoaded];
     let key_block_anchor;
     let current;
     let key_block = create_key_block3(ctx);
@@ -56300,7 +63735,7 @@
         current = true;
       },
       p(ctx2, dirty) {
-        if (dirty[0] & 134217732 && safe_not_equal(previous_key, previous_key = [ctx2[27], ctx2[2], markersLoaded])) {
+        if (dirty[0] & 536870976 && safe_not_equal(previous_key, previous_key = [ctx2[29], ctx2[6], markersLoaded])) {
           group_outros();
           transition_out(key_block, 1, 1, noop);
           check_outros();
@@ -56329,7 +63764,7 @@
       }
     };
   }
-  function create_if_block32(ctx) {
+  function create_if_block33(ctx) {
     let div0;
     let t;
     let div1;
@@ -56347,15 +63782,15 @@
       },
       m(target, anchor) {
         insert(target, div0, anchor);
-        div0.innerHTML = ctx[25];
+        div0.innerHTML = ctx[27];
         insert(target, t, anchor);
         insert(target, div1, anchor);
         mount_component(coganimation, div1, null);
         current = true;
       },
       p(ctx2, dirty) {
-        if (!current || dirty[0] & 33554432)
-          div0.innerHTML = ctx2[25];
+        if (!current || dirty[0] & 134217728)
+          div0.innerHTML = ctx2[27];
         ;
       },
       i(local) {
@@ -56379,17 +63814,17 @@
       }
     };
   }
-  function create_each_block_75(ctx) {
+  function create_each_block_76(ctx) {
     let a;
     let tr_1;
     let a_href_value;
     let current;
-    tr_1 = new Tr_default({ props: { s: ctx[85].id } });
+    tr_1 = new Tr_default({ props: { s: ctx[88].id } });
     return {
       c() {
         a = element("a");
         create_component(tr_1.$$.fragment);
-        attr(a, "href", a_href_value = "##" + ctx[85].id);
+        attr(a, "href", a_href_value = "##" + ctx[88].id);
       },
       m(target, anchor) {
         insert(target, a, anchor);
@@ -56414,20 +63849,20 @@
       }
     };
   }
-  function create_each_block_66(ctx) {
+  function create_each_block_67(ctx) {
     let a;
     let tr_1;
-    let t_value = tableSections.includes(ctx[85].id) ? "\u2630" : "";
+    let t_value = tableSections.includes(ctx[88].id) ? "\u2630" : "";
     let t;
     let a_href_value;
     let current;
-    tr_1 = new Tr_default({ props: { s: ctx[85].id } });
+    tr_1 = new Tr_default({ props: { s: ctx[88].id } });
     return {
       c() {
         a = element("a");
         create_component(tr_1.$$.fragment);
         t = text(t_value);
-        attr(a, "href", a_href_value = "##" + ctx[85].id);
+        attr(a, "href", a_href_value = "##" + ctx[88].id);
       },
       m(target, anchor) {
         insert(target, a, anchor);
@@ -56453,7 +63888,7 @@
       }
     };
   }
-  function create_if_block_167(ctx) {
+  function create_if_block_178(ctx) {
     let button;
     let mounted;
     let dispose;
@@ -56467,7 +63902,7 @@
       m(target, anchor) {
         insert(target, button, anchor);
         if (!mounted) {
-          dispose = listen(button, "click", ctx[49]);
+          dispose = listen(button, "click", ctx[52]);
           mounted = true;
         }
       },
@@ -56480,7 +63915,7 @@
       }
     };
   }
-  function create_if_block_157(ctx) {
+  function create_if_block_168(ctx) {
     let button;
     let mounted;
     let dispose;
@@ -56494,7 +63929,7 @@
       m(target, anchor) {
         insert(target, button, anchor);
         if (!mounted) {
-          dispose = listen(button, "click", ctx[51]);
+          dispose = listen(button, "click", ctx[54]);
           mounted = true;
         }
       },
@@ -56507,12 +63942,12 @@
       }
     };
   }
-  function create_if_block_138(ctx) {
+  function create_if_block_148(ctx) {
     let current_block_type_index;
     let if_block;
     let if_block_anchor;
     let current;
-    const if_block_creators = [create_if_block_147, create_else_block_44];
+    const if_block_creators = [create_if_block_158, create_else_block_45];
     const if_blocks = [];
     function select_block_type_1(ctx2, dirty) {
       var _a;
@@ -56552,7 +63987,7 @@
       }
     };
   }
-  function create_else_block_44(ctx) {
+  function create_else_block_45(ctx) {
     let div1;
     let button;
     let big;
@@ -56567,7 +64002,7 @@
     let each_value_5 = rul.langNames;
     let each_blocks = [];
     for (let i = 0; i < each_value_5.length; i += 1) {
-      each_blocks[i] = create_each_block_56(get_each_context_56(ctx, each_value_5, i));
+      each_blocks[i] = create_each_block_57(get_each_context_57(ctx, each_value_5, i));
     }
     const out = (i) => transition_out(each_blocks[i], 1, 1, () => {
       each_blocks[i] = null;
@@ -56585,7 +64020,7 @@
         }
         attr(button, "class", "navbar-button");
         attr(div0, "class", "navbar-dropdown");
-        attr(div0, "style", div0_style_value = ctx[11] ? "visibility:visible" : "visibility:hidden");
+        attr(div0, "style", div0_style_value = ctx[15] ? "visibility:visible" : "visibility:hidden");
         attr(div1, "class", "navbar-dropdown-container select-language");
       },
       m(target, anchor) {
@@ -56601,24 +64036,24 @@
         current = true;
         if (!mounted) {
           dispose = [
-            listen(button, "mousedown", ctx[53]),
-            listen(div1, "mouseover", ctx[55]),
-            listen(div1, "mouseout", ctx[56])
+            listen(button, "mousedown", ctx[56]),
+            listen(div1, "mouseover", ctx[58]),
+            listen(div1, "mouseout", ctx[59])
           ];
           mounted = true;
         }
       },
       p(ctx2, dirty) {
-        if (dirty[1] & 1) {
+        if (dirty[1] & 4) {
           each_value_5 = rul.langNames;
           let i;
           for (i = 0; i < each_value_5.length; i += 1) {
-            const child_ctx = get_each_context_56(ctx2, each_value_5, i);
+            const child_ctx = get_each_context_57(ctx2, each_value_5, i);
             if (each_blocks[i]) {
               each_blocks[i].p(child_ctx, dirty);
               transition_in(each_blocks[i], 1);
             } else {
-              each_blocks[i] = create_each_block_56(child_ctx);
+              each_blocks[i] = create_each_block_57(child_ctx);
               each_blocks[i].c();
               transition_in(each_blocks[i], 1);
               each_blocks[i].m(div0, null);
@@ -56630,7 +64065,7 @@
           }
           check_outros();
         }
-        if (!current || dirty[0] & 2048 && div0_style_value !== (div0_style_value = ctx2[11] ? "visibility:visible" : "visibility:hidden")) {
+        if (!current || dirty[0] & 32768 && div0_style_value !== (div0_style_value = ctx2[15] ? "visibility:visible" : "visibility:hidden")) {
           attr(div0, "style", div0_style_value);
         }
       },
@@ -56661,13 +64096,13 @@
       }
     };
   }
-  function create_if_block_147(ctx) {
+  function create_if_block_158(ctx) {
     let each_1_anchor;
     let current;
     let each_value_4 = rul.langNames;
     let each_blocks = [];
     for (let i = 0; i < each_value_4.length; i += 1) {
-      each_blocks[i] = create_each_block_47(get_each_context_47(ctx, each_value_4, i));
+      each_blocks[i] = create_each_block_48(get_each_context_48(ctx, each_value_4, i));
     }
     const out = (i) => transition_out(each_blocks[i], 1, 1, () => {
       each_blocks[i] = null;
@@ -56687,16 +64122,16 @@
         current = true;
       },
       p(ctx2, dirty) {
-        if (dirty[1] & 1) {
+        if (dirty[1] & 4) {
           each_value_4 = rul.langNames;
           let i;
           for (i = 0; i < each_value_4.length; i += 1) {
-            const child_ctx = get_each_context_47(ctx2, each_value_4, i);
+            const child_ctx = get_each_context_48(ctx2, each_value_4, i);
             if (each_blocks[i]) {
               each_blocks[i].p(child_ctx, dirty);
               transition_in(each_blocks[i], 1);
             } else {
-              each_blocks[i] = create_each_block_47(child_ctx);
+              each_blocks[i] = create_each_block_48(child_ctx);
               each_blocks[i].c();
               transition_in(each_blocks[i], 1);
               each_blocks[i].m(each_1_anchor.parentNode, each_1_anchor);
@@ -56731,7 +64166,7 @@
       }
     };
   }
-  function create_each_block_56(ctx) {
+  function create_each_block_57(ctx) {
     let div;
     let nobr;
     let tr_1;
@@ -56739,9 +64174,9 @@
     let current;
     let mounted;
     let dispose;
-    tr_1 = new Tr_default({ props: { s: ctx[27] } });
+    tr_1 = new Tr_default({ props: { s: ctx[29] } });
     function click_handler_6(...args) {
-      return ctx[54](ctx[27], ...args);
+      return ctx[57](ctx[29], ...args);
     }
     return {
       c() {
@@ -56784,7 +64219,7 @@
       }
     };
   }
-  function create_each_block_47(ctx) {
+  function create_each_block_48(ctx) {
     let button;
     let nobr;
     let tr_1;
@@ -56792,9 +64227,9 @@
     let current;
     let mounted;
     let dispose;
-    tr_1 = new Tr_default({ props: { s: ctx[27] } });
+    tr_1 = new Tr_default({ props: { s: ctx[29] } });
     function click_handler_5(...args) {
-      return ctx[52](ctx[27], ...args);
+      return ctx[55](ctx[29], ...args);
     }
     return {
       c() {
@@ -56837,7 +64272,7 @@
       }
     };
   }
-  function create_if_block_1113(ctx) {
+  function create_if_block_1212(ctx) {
     var _a;
     let nav;
     let button;
@@ -56851,10 +64286,10 @@
     let mounted;
     let dispose;
     tr_1 = new Tr_default({ props: { s: "A-Z" } });
-    let each_value_3 = ctx[23]((_a = ctx[5]) == null ? void 0 : _a.articles) || [];
+    let each_value_3 = ctx[24]((_a = ctx[9]) == null ? void 0 : _a.articles) || [];
     let each_blocks = [];
     for (let i = 0; i < each_value_3.length; i += 1) {
-      each_blocks[i] = create_each_block_38(get_each_context_38(ctx, each_value_3, i));
+      each_blocks[i] = create_each_block_39(get_each_context_39(ctx, each_value_3, i));
     }
     const out = (i) => transition_out(each_blocks[i], 1, 1, () => {
       each_blocks[i] = null;
@@ -56889,7 +64324,7 @@
         append(nav, br);
         current = true;
         if (!mounted) {
-          dispose = listen(button, "click", ctx[58]);
+          dispose = listen(button, "click", ctx[61]);
           mounted = true;
         }
       },
@@ -56898,16 +64333,16 @@
         if (!current || dirty[0] & 2 && button_style_value !== (button_style_value = ctx2[1] ? "" : "text-decoration:line-through")) {
           attr(button, "style", button_style_value);
         }
-        if (dirty[0] & 8388836) {
-          each_value_3 = ctx2[23]((_a2 = ctx2[5]) == null ? void 0 : _a2.articles) || [];
+        if (dirty[0] & 16780864) {
+          each_value_3 = ctx2[24]((_a2 = ctx2[9]) == null ? void 0 : _a2.articles) || [];
           let i;
           for (i = 0; i < each_value_3.length; i += 1) {
-            const child_ctx = get_each_context_38(ctx2, each_value_3, i);
+            const child_ctx = get_each_context_39(ctx2, each_value_3, i);
             if (each_blocks[i]) {
               each_blocks[i].p(child_ctx, dirty);
               transition_in(each_blocks[i], 1);
             } else {
-              each_blocks[i] = create_each_block_38(child_ctx);
+              each_blocks[i] = create_each_block_39(child_ctx);
               each_blocks[i].c();
               transition_in(each_blocks[i], 1);
               each_blocks[i].m(div, null);
@@ -56947,7 +64382,7 @@
       }
     };
   }
-  function create_else_block_35(ctx) {
+  function create_else_block_36(ctx) {
     let a;
     let tr_1;
     let t;
@@ -56955,14 +64390,14 @@
     let current;
     let mounted;
     let dispose;
-    tr_1 = new Tr_default({ props: { s: ctx[89].id } });
+    tr_1 = new Tr_default({ props: { s: ctx[92].id } });
     return {
       c() {
         a = element("a");
         create_component(tr_1.$$.fragment);
         t = space();
         attr(a, "class", "side-link");
-        attr(a, "href", a_href_value = "##" + ctx[89].id);
+        attr(a, "href", a_href_value = "##" + ctx[92].id);
       },
       m(target, anchor) {
         insert(target, a, anchor);
@@ -56970,16 +64405,16 @@
         append(a, t);
         current = true;
         if (!mounted) {
-          dispose = listen(a, "click", ctx[60]);
+          dispose = listen(a, "click", ctx[63]);
           mounted = true;
         }
       },
       p(ctx2, dirty) {
         const tr_1_changes = {};
-        if (dirty[0] & 8388640)
-          tr_1_changes.s = ctx2[89].id;
+        if (dirty[0] & 16777728)
+          tr_1_changes.s = ctx2[92].id;
         tr_1.$set(tr_1_changes);
-        if (!current || dirty[0] & 8388640 && a_href_value !== (a_href_value = "##" + ctx2[89].id)) {
+        if (!current || dirty[0] & 16777728 && a_href_value !== (a_href_value = "##" + ctx2[92].id)) {
           attr(a, "href", a_href_value);
         }
       },
@@ -57002,34 +64437,34 @@
       }
     };
   }
-  function create_if_block_1211(ctx) {
+  function create_if_block_1310(ctx) {
     let a;
     let tr_1;
     let t;
     let a_href_value;
     let current;
-    tr_1 = new Tr_default({ props: { s: ctx[89].id } });
+    tr_1 = new Tr_default({ props: { s: ctx[92].id } });
     return {
       c() {
         a = element("a");
         create_component(tr_1.$$.fragment);
         t = space();
-        attr(a, "href", a_href_value = "##" + ctx[89].id);
+        attr(a, "href", a_href_value = "##" + ctx[92].id);
         attr(a, "class", "active-article-option side-link");
       },
       m(target, anchor) {
         insert(target, a, anchor);
         mount_component(tr_1, a, null);
         append(a, t);
-        ctx[59](a);
+        ctx[62](a);
         current = true;
       },
       p(ctx2, dirty) {
         const tr_1_changes = {};
-        if (dirty[0] & 8388640)
-          tr_1_changes.s = ctx2[89].id;
+        if (dirty[0] & 16777728)
+          tr_1_changes.s = ctx2[92].id;
         tr_1.$set(tr_1_changes);
-        if (!current || dirty[0] & 8388640 && a_href_value !== (a_href_value = "##" + ctx2[89].id)) {
+        if (!current || dirty[0] & 16777728 && a_href_value !== (a_href_value = "##" + ctx2[92].id)) {
           attr(a, "href", a_href_value);
         }
       },
@@ -57047,19 +64482,19 @@
         if (detaching)
           detach(a);
         destroy_component(tr_1);
-        ctx[59](null);
+        ctx[62](null);
       }
     };
   }
-  function create_each_block_38(ctx) {
+  function create_each_block_39(ctx) {
     let current_block_type_index;
     let if_block;
     let if_block_anchor;
     let current;
-    const if_block_creators = [create_if_block_1211, create_else_block_35];
+    const if_block_creators = [create_if_block_1310, create_else_block_36];
     const if_blocks = [];
     function select_block_type_2(ctx2, dirty) {
-      if (ctx2[2] && ctx2[2].id == ctx2[89].id)
+      if (ctx2[6] && ctx2[6].id == ctx2[92].id)
         return 0;
       return 1;
     }
@@ -57114,7 +64549,7 @@
       }
     };
   }
-  function create_if_block_108(ctx) {
+  function create_if_block_1114(ctx) {
     let button;
     let span;
     let button_style_value;
@@ -57127,18 +64562,18 @@
         span.textContent = "\u2261";
         set_style(span, "font-size", "150%");
         attr(button, "class", "side-hide-button");
-        attr(button, "style", button_style_value = ctx[9] ? "" : "left:1em;");
+        attr(button, "style", button_style_value = ctx[13] ? "" : "left:1em;");
       },
       m(target, anchor) {
         insert(target, button, anchor);
         append(button, span);
         if (!mounted) {
-          dispose = listen(button, "click", ctx[61]);
+          dispose = listen(button, "click", ctx[64]);
           mounted = true;
         }
       },
       p(ctx2, dirty) {
-        if (dirty[0] & 512 && button_style_value !== (button_style_value = ctx2[9] ? "" : "left:1em;")) {
+        if (dirty[0] & 8192 && button_style_value !== (button_style_value = ctx2[13] ? "" : "left:1em;")) {
           attr(button, "style", button_style_value);
         }
       },
@@ -57150,7 +64585,7 @@
       }
     };
   }
-  function create_else_block_25(ctx) {
+  function create_else_block_26(ctx) {
     let h20;
     let tr0;
     let t0;
@@ -57176,21 +64611,21 @@
     let each_value_2 = rul.sectionsOrder;
     let each_blocks_2 = [];
     for (let i = 0; i < each_value_2.length; i += 1) {
-      each_blocks_2[i] = create_each_block_213(get_each_context_211(ctx, each_value_2, i));
+      each_blocks_2[i] = create_each_block_215(get_each_context_214(ctx, each_value_2, i));
     }
     tr1 = new Tr_default({ props: { s: "Extra sections" } });
     let each_value_1 = rul.typeSectionsOrder;
     let each_blocks_1 = [];
     for (let i = 0; i < each_value_1.length; i += 1) {
-      each_blocks_1[i] = create_each_block_115(get_each_context_115(ctx, each_value_1, i));
+      each_blocks_1[i] = create_each_block_117(get_each_context_117(ctx, each_value_1, i));
     }
     tr2 = new Tr_default({ props: { s: "Mods" } });
     let each_value = rul.mods;
     let each_blocks = [];
     for (let i = 0; i < each_value.length; i += 1) {
-      each_blocks[i] = create_each_block31(get_each_context31(ctx, each_value, i));
+      each_blocks[i] = create_each_block32(get_each_context32(ctx, each_value, i));
     }
-    let if_block = !packedData && create_if_block_98(ctx);
+    let if_block = !packedData && create_if_block_109(ctx);
     tr3 = new Tr_default({ props: { s: "About XPedia" } });
     tr4 = new Tr_default({ props: { s: "STR_ABOUT_XPEDIA" } });
     return {
@@ -57266,11 +64701,11 @@
           each_value_2 = rul.sectionsOrder;
           let i;
           for (i = 0; i < each_value_2.length; i += 1) {
-            const child_ctx = get_each_context_211(ctx2, each_value_2, i);
+            const child_ctx = get_each_context_214(ctx2, each_value_2, i);
             if (each_blocks_2[i]) {
               each_blocks_2[i].p(child_ctx, dirty);
             } else {
-              each_blocks_2[i] = create_each_block_213(child_ctx);
+              each_blocks_2[i] = create_each_block_215(child_ctx);
               each_blocks_2[i].c();
               each_blocks_2[i].m(p0, null);
             }
@@ -57284,11 +64719,11 @@
           each_value_1 = rul.typeSectionsOrder;
           let i;
           for (i = 0; i < each_value_1.length; i += 1) {
-            const child_ctx = get_each_context_115(ctx2, each_value_1, i);
+            const child_ctx = get_each_context_117(ctx2, each_value_1, i);
             if (each_blocks_1[i]) {
               each_blocks_1[i].p(child_ctx, dirty);
             } else {
-              each_blocks_1[i] = create_each_block_115(child_ctx);
+              each_blocks_1[i] = create_each_block_117(child_ctx);
               each_blocks_1[i].c();
               each_blocks_1[i].m(p1, null);
             }
@@ -57302,11 +64737,11 @@
           each_value = rul.mods;
           let i;
           for (i = 0; i < each_value.length; i += 1) {
-            const child_ctx = get_each_context31(ctx2, each_value, i);
+            const child_ctx = get_each_context32(ctx2, each_value, i);
             if (each_blocks[i]) {
               each_blocks[i].p(child_ctx, dirty);
             } else {
-              each_blocks[i] = create_each_block31(child_ctx);
+              each_blocks[i] = create_each_block32(child_ctx);
               each_blocks[i].c();
               each_blocks[i].m(ul, null);
             }
@@ -57383,17 +64818,17 @@
       }
     };
   }
-  function create_if_block_89(ctx) {
+  function create_if_block_99(ctx) {
     let article_1;
     let current;
     article_1 = new Article_default({
       props: {
-        article: ctx[2],
-        query: ctx[4]
+        article: ctx[6],
+        query: ctx[8]
       }
     });
-    article_1.$on("prev", ctx[65]);
-    article_1.$on("next", ctx[66]);
+    article_1.$on("prev", ctx[68]);
+    article_1.$on("next", ctx[69]);
     return {
       c() {
         create_component(article_1.$$.fragment);
@@ -57404,10 +64839,10 @@
       },
       p(ctx2, dirty) {
         const article_1_changes = {};
-        if (dirty[0] & 4)
-          article_1_changes.article = ctx2[2];
-        if (dirty[0] & 16)
-          article_1_changes.query = ctx2[4];
+        if (dirty[0] & 64)
+          article_1_changes.article = ctx2[6];
+        if (dirty[0] & 256)
+          article_1_changes.query = ctx2[8];
         article_1.$set(article_1_changes);
       },
       i(local) {
@@ -57425,14 +64860,14 @@
       }
     };
   }
-  function create_if_block_414(ctx) {
+  function create_if_block_513(ctx) {
     let t0;
     let em;
     let t1;
     let t2;
     let br;
     let t3;
-    let previous_key = ctx[3];
+    let previous_key = ctx[7];
     let key_block_anchor;
     let current;
     let key_block = create_key_block_1(ctx);
@@ -57440,7 +64875,7 @@
       c() {
         t0 = text('Searching "\r\n        ');
         em = element("em");
-        t1 = text(ctx[4]);
+        t1 = text(ctx[8]);
         t2 = text('\r\n        ":\r\n        ');
         br = element("br");
         t3 = space();
@@ -57459,9 +64894,9 @@
         current = true;
       },
       p(ctx2, dirty) {
-        if (!current || dirty[0] & 16)
-          set_data(t1, ctx2[4]);
-        if (dirty[0] & 8 && safe_not_equal(previous_key, previous_key = ctx2[3])) {
+        if (!current || dirty[0] & 256)
+          set_data(t1, ctx2[8]);
+        if (dirty[0] & 128 && safe_not_equal(previous_key, previous_key = ctx2[7])) {
           group_outros();
           transition_out(key_block, 1, 1, noop);
           check_outros();
@@ -57500,18 +64935,18 @@
       }
     };
   }
-  function create_if_block_318(ctx) {
+  function create_if_block_416(ctx) {
     let compare;
     let current;
     compare = new Compare_default({
       props: {
-        ids: ctx[15],
+        ids: ctx[18],
         sortArticles: ctx[1],
-        autofocus: ctx[16]
+        autofocus: ctx[19]
       }
     });
-    compare.$on("change", ctx[36]);
-    compare.$on("open", ctx[62]);
+    compare.$on("change", ctx[39]);
+    compare.$on("open", ctx[65]);
     return {
       c() {
         create_component(compare.$$.fragment);
@@ -57522,12 +64957,12 @@
       },
       p(ctx2, dirty) {
         const compare_changes = {};
-        if (dirty[0] & 32768)
-          compare_changes.ids = ctx2[15];
+        if (dirty[0] & 262144)
+          compare_changes.ids = ctx2[18];
         if (dirty[0] & 2)
           compare_changes.sortArticles = ctx2[1];
-        if (dirty[0] & 65536)
-          compare_changes.autofocus = ctx2[16];
+        if (dirty[0] & 524288)
+          compare_changes.autofocus = ctx2[19];
         compare.$set(compare_changes);
       },
       i(local) {
@@ -57545,11 +64980,11 @@
       }
     };
   }
-  function create_if_block_226(ctx) {
+  function create_if_block_320(ctx) {
     let damagecalc;
     let current;
     damagecalc = new DamageCalc_default({
-      props: { targetId: ctx[20] }
+      props: { targetId: ctx[21] }
     });
     return {
       c() {
@@ -57561,8 +64996,8 @@
       },
       p(ctx2, dirty) {
         const damagecalc_changes = {};
-        if (dirty[0] & 1048576)
-          damagecalc_changes.targetId = ctx2[20];
+        if (dirty[0] & 2097152)
+          damagecalc_changes.targetId = ctx2[21];
         damagecalc.$set(damagecalc_changes);
       },
       i(local) {
@@ -57580,11 +65015,11 @@
       }
     };
   }
-  function create_if_block_139(ctx) {
+  function create_if_block_228(ctx) {
     let techtree;
     let current;
     techtree = new TechTree_default({
-      props: { topicId: ctx[19] }
+      props: { topicId: ctx[20] }
     });
     return {
       c() {
@@ -57596,8 +65031,8 @@
       },
       p(ctx2, dirty) {
         const techtree_changes = {};
-        if (dirty[0] & 524288)
-          techtree_changes.topicId = ctx2[19];
+        if (dirty[0] & 1048576)
+          techtree_changes.topicId = ctx2[20];
         techtree.$set(techtree_changes);
       },
       i(local) {
@@ -57615,12 +65050,40 @@
       }
     };
   }
-  function create_each_block_213(ctx) {
+  function create_if_block_140(ctx) {
+    let pax;
+    let current;
+    pax = new Pax_default({});
+    return {
+      c() {
+        create_component(pax.$$.fragment);
+      },
+      m(target, anchor) {
+        mount_component(pax, target, anchor);
+        current = true;
+      },
+      p: noop,
+      i(local) {
+        if (current)
+          return;
+        transition_in(pax.$$.fragment, local);
+        current = true;
+      },
+      o(local) {
+        transition_out(pax.$$.fragment, local);
+        current = false;
+      },
+      d(detaching) {
+        destroy_component(pax, detaching);
+      }
+    };
+  }
+  function create_each_block_215(ctx) {
     let html_tag;
-    let raw_value = divider(ctx[87]) + "";
+    let raw_value = divider(ctx[90]) + "";
     let t0;
     let a;
-    let t1_value = ctx[85].title + "";
+    let t1_value = ctx[88].title + "";
     let t1;
     let a_href_value;
     return {
@@ -57630,7 +65093,7 @@
         a = element("a");
         t1 = text(t1_value);
         html_tag.a = t0;
-        attr(a, "href", a_href_value = "##" + ctx[85].id);
+        attr(a, "href", a_href_value = "##" + ctx[88].id);
       },
       m(target, anchor) {
         html_tag.m(raw_value, target, anchor);
@@ -57649,14 +65112,14 @@
       }
     };
   }
-  function create_each_block_115(ctx) {
+  function create_each_block_117(ctx) {
     let html_tag;
-    let raw_value = divider(ctx[87]) + "";
+    let raw_value = divider(ctx[90]) + "";
     let t0;
     let a;
-    let t1_value = ctx[85].title + "";
+    let t1_value = ctx[88].title + "";
     let t1;
-    let t2_value = tableSections.includes(ctx[85].id) ? "\u2630" : "";
+    let t2_value = tableSections.includes(ctx[88].id) ? "\u2630" : "";
     let t2;
     let a_href_value;
     return {
@@ -57667,7 +65130,7 @@
         t1 = text(t1_value);
         t2 = text(t2_value);
         html_tag.a = t0;
-        attr(a, "href", a_href_value = "##" + ctx[85].id);
+        attr(a, "href", a_href_value = "##" + ctx[88].id);
       },
       m(target, anchor) {
         html_tag.m(raw_value, target, anchor);
@@ -57687,12 +65150,12 @@
       }
     };
   }
-  function create_each_block31(ctx) {
+  function create_each_block32(ctx) {
     let li;
-    let t0_value = ctx[82].name + "";
+    let t0_value = ctx[85].name + "";
     let t0;
     let t1;
-    let t2_value = ctx[82].version + "";
+    let t2_value = ctx[85].version + "";
     let t2;
     return {
       c() {
@@ -57714,7 +65177,7 @@
       }
     };
   }
-  function create_if_block_98(ctx) {
+  function create_if_block_109(ctx) {
     let h2;
     let tr0;
     let t0;
@@ -57775,7 +65238,7 @@
         insert(target, br1, anchor);
         current = true;
         if (!mounted) {
-          dispose = listen(button, "click", ctx[67]);
+          dispose = listen(button, "click", ctx[70]);
           mounted = true;
         }
       },
@@ -57824,7 +65287,7 @@
       }
     };
   }
-  function create_else_block_110(ctx) {
+  function create_else_block_111(ctx) {
     let i;
     let tr_1;
     let current;
@@ -57857,7 +65320,7 @@
       }
     };
   }
-  function create_if_block_712(ctx) {
+  function create_if_block_810(ctx) {
     let tr_1;
     let br;
     let t;
@@ -57904,7 +65367,7 @@
       }
     };
   }
-  function create_if_block_612(ctx) {
+  function create_if_block_713(ctx) {
     let i;
     return {
       c() {
@@ -57923,7 +65386,7 @@
       }
     };
   }
-  function create_if_block_512(ctx) {
+  function create_if_block_613(ctx) {
     let linkspage0;
     let br;
     let t;
@@ -57931,12 +65394,12 @@
     let current;
     linkspage0 = new LinksPage_default({
       props: {
-        links: ctx[3].filter(ctx[63]).slice(0, 200)
+        links: ctx[7].filter(ctx[66]).slice(0, 200)
       }
     });
     linkspage1 = new LinksPage_default({
       props: {
-        links: ctx[3].filter(ctx[64]).slice(0, 200),
+        links: ctx[7].filter(ctx[67]).slice(0, 200),
         title: " "
       }
     });
@@ -57956,12 +65419,12 @@
       },
       p(ctx2, dirty) {
         const linkspage0_changes = {};
-        if (dirty[0] & 24)
-          linkspage0_changes.links = ctx2[3].filter(ctx2[63]).slice(0, 200);
+        if (dirty[0] & 384)
+          linkspage0_changes.links = ctx2[7].filter(ctx2[66]).slice(0, 200);
         linkspage0.$set(linkspage0_changes);
         const linkspage1_changes = {};
-        if (dirty[0] & 24)
-          linkspage1_changes.links = ctx2[3].filter(ctx2[64]).slice(0, 200);
+        if (dirty[0] & 384)
+          linkspage1_changes.links = ctx2[7].filter(ctx2[67]).slice(0, 200);
         linkspage1.$set(linkspage1_changes);
       },
       i(local) {
@@ -57991,14 +65454,14 @@
     let if_block;
     let if_block_anchor;
     let current;
-    const if_block_creators = [create_if_block_512, create_if_block_612, create_if_block_712, create_else_block_110];
+    const if_block_creators = [create_if_block_613, create_if_block_713, create_if_block_810, create_else_block_111];
     const if_blocks = [];
     function select_block_type_4(ctx2, dirty) {
-      if (ctx2[3] && ctx2[3].length > 0)
+      if (ctx2[7] && ctx2[7].length > 0)
         return 0;
-      if (ctx2[4].length < 2)
+      if (ctx2[8].length < 2)
         return 1;
-      if (ctx2[8] || ctx2[21])
+      if (ctx2[12] || ctx2[22])
         return 2;
       return 3;
     }
@@ -58104,24 +65567,29 @@
     let div10_title_value;
     let t19;
     let div11;
-    let t20;
+    let nobr4;
+    let div11_class_value;
+    let div11_title_value;
     let t21;
-    let button;
-    let t23;
-    let t24;
-    let t25;
     let div12;
-    let input;
-    let input_placeholder_value;
+    let t22;
+    let t23;
+    let button;
+    let t25;
     let t26;
     let t27;
-    let t28;
     let div13;
+    let input;
+    let input_placeholder_value;
+    let t28;
+    let t29;
+    let t30;
+    let div14;
     let current_block_type_index;
     let if_block5;
-    let div13_style_value;
-    let t29;
-    let div14;
+    let div14_style_value;
+    let t31;
+    let div15;
     let current;
     let mounted;
     let dispose;
@@ -58129,7 +65597,7 @@
     let each_value_7 = rul.sectionsOrder;
     let each_blocks_1 = [];
     for (let i = 0; i < each_value_7.length; i += 1) {
-      each_blocks_1[i] = create_each_block_75(get_each_context_75(ctx, each_value_7, i));
+      each_blocks_1[i] = create_each_block_76(get_each_context_76(ctx, each_value_7, i));
     }
     const out = (i) => transition_out(each_blocks_1[i], 1, 1, () => {
       each_blocks_1[i] = null;
@@ -58137,39 +65605,42 @@
     let each_value_6 = rul.sortedTypeSections();
     let each_blocks = [];
     for (let i = 0; i < each_value_6.length; i += 1) {
-      each_blocks[i] = create_each_block_66(get_each_context_66(ctx, each_value_6, i));
+      each_blocks[i] = create_each_block_67(get_each_context_67(ctx, each_value_6, i));
     }
     const out_1 = (i) => transition_out(each_blocks[i], 1, 1, () => {
       each_blocks[i] = null;
     });
     tr1 = new Tr_default({ props: { s: "Compare" } });
     notepad = new Notepad_default({});
-    let if_block0 = !packedData && create_if_block_167(ctx);
-    let if_block1 = allowHugeFont && create_if_block_157(ctx);
-    let if_block2 = ((_a = rul.langNames) == null ? void 0 : _a.length) > 1 && create_if_block_138(ctx);
-    let if_block3 = ctx[9] && !ctx[14] && !ctx[17] && !ctx[18] && create_if_block_1113(ctx);
-    let if_block4 = !ctx[14] && !ctx[17] && !ctx[18] && create_if_block_108(ctx);
+    let if_block0 = !packedData && create_if_block_178(ctx);
+    let if_block1 = allowHugeFont && create_if_block_168(ctx);
+    let if_block2 = ((_a = rul.langNames) == null ? void 0 : _a.length) > 1 && create_if_block_148(ctx);
+    let if_block3 = ctx[13] && !ctx[25] && create_if_block_1212(ctx);
+    let if_block4 = !ctx[25] && create_if_block_1114(ctx);
     const if_block_creators = [
-      create_if_block_139,
-      create_if_block_226,
-      create_if_block_318,
-      create_if_block_414,
-      create_if_block_89,
-      create_else_block_25
+      create_if_block_140,
+      create_if_block_228,
+      create_if_block_320,
+      create_if_block_416,
+      create_if_block_513,
+      create_if_block_99,
+      create_else_block_26
     ];
     const if_blocks = [];
     function select_block_type_3(ctx2, dirty) {
-      if (ctx2[18])
+      if (ctx2[5])
         return 0;
-      if (ctx2[17])
+      if (ctx2[4])
         return 1;
-      if (ctx2[14])
+      if (ctx2[3])
         return 2;
-      if (ctx2[4] && ctx2[13])
-        return 3;
       if (ctx2[2])
+        return 3;
+      if (ctx2[8] && ctx2[17])
         return 4;
-      return 5;
+      if (ctx2[6])
+        return 5;
+      return 6;
     }
     current_block_type_index = select_block_type_3(ctx, [-1, -1, -1, -1]);
     if_block5 = if_blocks[current_block_type_index] = if_block_creators[current_block_type_index](ctx);
@@ -58225,33 +65696,37 @@
         nobr3.textContent = "TECH";
         t19 = space();
         div11 = element("div");
-        t20 = space();
+        nobr4 = element("nobr");
+        nobr4.textContent = "PAX";
+        t21 = space();
+        div12 = element("div");
+        t22 = space();
         if (if_block0)
           if_block0.c();
-        t21 = space();
+        t23 = space();
         button = element("button");
         button.textContent = "\u2580\u2584";
-        t23 = space();
+        t25 = space();
         if (if_block1)
           if_block1.c();
-        t24 = space();
+        t26 = space();
         if (if_block2)
           if_block2.c();
-        t25 = space();
-        div12 = element("div");
+        t27 = space();
+        div13 = element("div");
         input = element("input");
-        t26 = space();
+        t28 = space();
         if (if_block3)
           if_block3.c();
-        t27 = space();
+        t29 = space();
         if (if_block4)
           if_block4.c();
-        t28 = space();
-        div13 = element("div");
-        if_block5.c();
-        t29 = space();
+        t30 = space();
         div14 = element("div");
-        div14.textContent = "Tooltip";
+        if_block5.c();
+        t31 = space();
+        div15 = element("div");
+        div15.textContent = "Tooltip";
         if (!src_url_equal(img.src, img_src_value = favicon))
           attr(img, "src", img_src_value);
         attr(img, "alt", "XPedia");
@@ -58267,34 +65742,37 @@
         attr(div3, "class", "navbar-custom navbar-list");
         attr(div4, "class", "flex-horisontal");
         attr(div5, "class", "navbar-dropdown");
-        attr(div5, "style", div5_style_value = ctx[10] ? "visibility:visible" : "visibility:hidden");
+        attr(div5, "style", div5_style_value = ctx[14] ? "visibility:visible" : "visibility:hidden");
         attr(div6, "class", "navbar-dropdown-container");
-        attr(div7, "class", div7_class_value = "navbar-button " + (ctx[26] ? "reveal-lock" : ""));
+        attr(div7, "class", div7_class_value = "navbar-button " + (ctx[28] ? "reveal-lock" : ""));
         attr(div7, "id", "reveal");
         attr(div7, "tooltip", "tip_reveal");
         attr(span2, "class", "on-wide");
-        attr(div8, "class", div8_class_value = "navbar-button " + (ctx[14] ? "reveal-lock" : ""));
+        attr(div8, "class", div8_class_value = "navbar-button " + (ctx[2] ? "reveal-lock" : ""));
         attr(div8, "id", "compare-button");
-        attr(div8, "title", div8_title_value = ctx[14] ? "Leave compare" : "Compare (shift-click any link to compare against this page)");
-        attr(div9, "class", div9_class_value = "navbar-button " + (ctx[17] ? "reveal-lock" : ""));
+        attr(div8, "title", div8_title_value = ctx[2] ? "Leave compare" : "Compare (shift-click any link to compare against this page)");
+        attr(div9, "class", div9_class_value = "navbar-button " + (ctx[3] ? "reveal-lock" : ""));
         attr(div9, "id", "damage-button");
-        attr(div9, "title", div9_title_value = ctx[17] ? "Leave the damage calculator" : "Estimate damage against an enemy");
-        attr(div10, "class", div10_class_value = "navbar-button " + (ctx[18] ? "reveal-lock" : ""));
+        attr(div9, "title", div9_title_value = ctx[3] ? "Leave the damage calculator" : "Estimate damage against an enemy");
+        attr(div10, "class", div10_class_value = "navbar-button " + (ctx[4] ? "reveal-lock" : ""));
         attr(div10, "id", "tech-button");
-        attr(div10, "title", div10_title_value = ctx[18] ? "Leave the tech tree" : "Browse the research tree against a save");
-        attr(div11, "class", "stretcher on-wide");
+        attr(div10, "title", div10_title_value = ctx[4] ? "Leave the tech tree" : "Browse the research tree against a save");
+        attr(div11, "class", div11_class_value = "navbar-button " + (ctx[5] ? "reveal-lock" : ""));
+        attr(div11, "id", "pax-button");
+        attr(div11, "title", div11_title_value = ctx[5] ? "Leave the personnel manager" : "Your whole crew on one screen: stats, roles, careers, squads");
+        attr(div12, "class", "stretcher on-wide");
         attr(button, "class", "navbar-button");
         attr(input, "class", "input");
         attr(input, "type", "text");
         attr(input, "id", "search-string");
         attr(input, "placeholder", input_placeholder_value = tr("Search..."));
-        attr(div12, "class", "navbar-search");
+        attr(div13, "class", "navbar-search");
         attr(nav, "class", "navbar flex-horisontal");
-        attr(div13, "class", "main");
-        attr(div13, "id", "main");
-        attr(div13, "style", div13_style_value = ctx[9] && !ctx[14] && !ctx[17] && !ctx[18] ? "" : "padding-left:1rem;");
-        toggle_class(div13, "main-compare", ctx[14] || ctx[17] || ctx[18]);
-        attr(div14, "class", "tooltip fadein");
+        attr(div14, "class", "main");
+        attr(div14, "id", "main");
+        attr(div14, "style", div14_style_value = ctx[13] && !ctx[25] ? "" : "padding-left:1rem;");
+        toggle_class(div14, "main-compare", ctx[25]);
+        attr(div15, "class", "tooltip fadein");
       },
       m(target, anchor) {
         insert(target, nav, anchor);
@@ -58323,7 +65801,7 @@
         for (let i = 0; i < each_blocks.length; i += 1) {
           each_blocks[i].m(div3, null);
         }
-        ctx[43](div6);
+        ctx[46](div6);
         append(nav, t9);
         append(nav, div7);
         append(div7, t10);
@@ -58344,48 +65822,52 @@
         append(div10, nobr3);
         append(nav, t19);
         append(nav, div11);
-        append(nav, t20);
+        append(div11, nobr4);
+        append(nav, t21);
+        append(nav, div12);
+        append(nav, t22);
         if (if_block0)
           if_block0.m(nav, null);
-        append(nav, t21);
-        append(nav, button);
         append(nav, t23);
+        append(nav, button);
+        append(nav, t25);
         if (if_block1)
           if_block1.m(nav, null);
-        append(nav, t24);
+        append(nav, t26);
         if (if_block2)
           if_block2.m(nav, null);
-        append(nav, t25);
-        append(nav, div12);
-        append(div12, input);
-        set_input_value(input, ctx[4]);
-        insert(target, t26, anchor);
+        append(nav, t27);
+        append(nav, div13);
+        append(div13, input);
+        set_input_value(input, ctx[8]);
+        insert(target, t28, anchor);
         if (if_block3)
           if_block3.m(target, anchor);
-        insert(target, t27, anchor);
+        insert(target, t29, anchor);
         if (if_block4)
           if_block4.m(target, anchor);
-        insert(target, t28, anchor);
-        insert(target, div13, anchor);
-        if_blocks[current_block_type_index].m(div13, null);
-        insert(target, t29, anchor);
+        insert(target, t30, anchor);
         insert(target, div14, anchor);
-        ctx[68](div14);
+        if_blocks[current_block_type_index].m(div14, null);
+        insert(target, t31, anchor);
+        insert(target, div15, anchor);
+        ctx[71](div15);
         current = true;
         if (!mounted) {
           dispose = [
-            listen(div0, "click", ctx[42]),
-            listen(div6, "mousemove", ctx[44]),
-            listen(div6, "mouseout", ctx[45]),
-            listen(div7, "mouseover", ctx[46]),
-            listen(div7, "mouseout", ctx[47]),
-            listen(div7, "click", ctx[48]),
-            listen(div8, "click", ctx[35]),
-            listen(div9, "click", ctx[34]),
-            listen(div10, "click", ctx[33]),
-            listen(button, "click", ctx[50]),
-            listen(input, "input", ctx[57]),
-            listen(input, "keyup", ctx[39])
+            listen(div0, "click", ctx[45]),
+            listen(div6, "mousemove", ctx[47]),
+            listen(div6, "mouseout", ctx[48]),
+            listen(div7, "mouseover", ctx[49]),
+            listen(div7, "mouseout", ctx[50]),
+            listen(div7, "click", ctx[51]),
+            listen(div8, "click", ctx[38]),
+            listen(div9, "click", ctx[37]),
+            listen(div10, "click", ctx[35]),
+            listen(div11, "click", ctx[36]),
+            listen(button, "click", ctx[53]),
+            listen(input, "input", ctx[60]),
+            listen(input, "keyup", ctx[42])
           ];
           mounted = true;
         }
@@ -58396,12 +65878,12 @@
           each_value_7 = rul.sectionsOrder;
           let i;
           for (i = 0; i < each_value_7.length; i += 1) {
-            const child_ctx = get_each_context_75(ctx2, each_value_7, i);
+            const child_ctx = get_each_context_76(ctx2, each_value_7, i);
             if (each_blocks_1[i]) {
               each_blocks_1[i].p(child_ctx, dirty);
               transition_in(each_blocks_1[i], 1);
             } else {
-              each_blocks_1[i] = create_each_block_75(child_ctx);
+              each_blocks_1[i] = create_each_block_76(child_ctx);
               each_blocks_1[i].c();
               transition_in(each_blocks_1[i], 1);
               each_blocks_1[i].m(div2, null);
@@ -58417,12 +65899,12 @@
           each_value_6 = rul.sortedTypeSections();
           let i;
           for (i = 0; i < each_value_6.length; i += 1) {
-            const child_ctx = get_each_context_66(ctx2, each_value_6, i);
+            const child_ctx = get_each_context_67(ctx2, each_value_6, i);
             if (each_blocks[i]) {
               each_blocks[i].p(child_ctx, dirty);
               transition_in(each_blocks[i], 1);
             } else {
-              each_blocks[i] = create_each_block_66(child_ctx);
+              each_blocks[i] = create_each_block_67(child_ctx);
               each_blocks[i].c();
               transition_in(each_blocks[i], 1);
               each_blocks[i].m(div3, null);
@@ -58434,29 +65916,35 @@
           }
           check_outros();
         }
-        if (!current || dirty[0] & 1024 && div5_style_value !== (div5_style_value = ctx2[10] ? "visibility:visible" : "visibility:hidden")) {
+        if (!current || dirty[0] & 16384 && div5_style_value !== (div5_style_value = ctx2[14] ? "visibility:visible" : "visibility:hidden")) {
           attr(div5, "style", div5_style_value);
         }
-        if (!current || dirty[0] & 67108864 && div7_class_value !== (div7_class_value = "navbar-button " + (ctx2[26] ? "reveal-lock" : ""))) {
+        if (!current || dirty[0] & 268435456 && div7_class_value !== (div7_class_value = "navbar-button " + (ctx2[28] ? "reveal-lock" : ""))) {
           attr(div7, "class", div7_class_value);
         }
-        if (!current || dirty[0] & 16384 && div8_class_value !== (div8_class_value = "navbar-button " + (ctx2[14] ? "reveal-lock" : ""))) {
+        if (!current || dirty[0] & 4 && div8_class_value !== (div8_class_value = "navbar-button " + (ctx2[2] ? "reveal-lock" : ""))) {
           attr(div8, "class", div8_class_value);
         }
-        if (!current || dirty[0] & 16384 && div8_title_value !== (div8_title_value = ctx2[14] ? "Leave compare" : "Compare (shift-click any link to compare against this page)")) {
+        if (!current || dirty[0] & 4 && div8_title_value !== (div8_title_value = ctx2[2] ? "Leave compare" : "Compare (shift-click any link to compare against this page)")) {
           attr(div8, "title", div8_title_value);
         }
-        if (!current || dirty[0] & 131072 && div9_class_value !== (div9_class_value = "navbar-button " + (ctx2[17] ? "reveal-lock" : ""))) {
+        if (!current || dirty[0] & 8 && div9_class_value !== (div9_class_value = "navbar-button " + (ctx2[3] ? "reveal-lock" : ""))) {
           attr(div9, "class", div9_class_value);
         }
-        if (!current || dirty[0] & 131072 && div9_title_value !== (div9_title_value = ctx2[17] ? "Leave the damage calculator" : "Estimate damage against an enemy")) {
+        if (!current || dirty[0] & 8 && div9_title_value !== (div9_title_value = ctx2[3] ? "Leave the damage calculator" : "Estimate damage against an enemy")) {
           attr(div9, "title", div9_title_value);
         }
-        if (!current || dirty[0] & 262144 && div10_class_value !== (div10_class_value = "navbar-button " + (ctx2[18] ? "reveal-lock" : ""))) {
+        if (!current || dirty[0] & 16 && div10_class_value !== (div10_class_value = "navbar-button " + (ctx2[4] ? "reveal-lock" : ""))) {
           attr(div10, "class", div10_class_value);
         }
-        if (!current || dirty[0] & 262144 && div10_title_value !== (div10_title_value = ctx2[18] ? "Leave the tech tree" : "Browse the research tree against a save")) {
+        if (!current || dirty[0] & 16 && div10_title_value !== (div10_title_value = ctx2[4] ? "Leave the tech tree" : "Browse the research tree against a save")) {
           attr(div10, "title", div10_title_value);
+        }
+        if (!current || dirty[0] & 32 && div11_class_value !== (div11_class_value = "navbar-button " + (ctx2[5] ? "reveal-lock" : ""))) {
+          attr(div11, "class", div11_class_value);
+        }
+        if (!current || dirty[0] & 32 && div11_title_value !== (div11_title_value = ctx2[5] ? "Leave the personnel manager" : "Your whole crew on one screen: stats, roles, careers, squads")) {
+          attr(div11, "title", div11_title_value);
         }
         if (!packedData)
           if_block0.p(ctx2, dirty);
@@ -58464,20 +65952,20 @@
           if_block1.p(ctx2, dirty);
         if (((_a2 = rul.langNames) == null ? void 0 : _a2.length) > 1)
           if_block2.p(ctx2, dirty);
-        if (dirty[0] & 16 && input.value !== ctx2[4]) {
-          set_input_value(input, ctx2[4]);
+        if (dirty[0] & 256 && input.value !== ctx2[8]) {
+          set_input_value(input, ctx2[8]);
         }
-        if (ctx2[9] && !ctx2[14] && !ctx2[17] && !ctx2[18]) {
+        if (ctx2[13] && !ctx2[25]) {
           if (if_block3) {
             if_block3.p(ctx2, dirty);
-            if (dirty[0] & 410112) {
+            if (dirty[0] & 33562624) {
               transition_in(if_block3, 1);
             }
           } else {
-            if_block3 = create_if_block_1113(ctx2);
+            if_block3 = create_if_block_1212(ctx2);
             if_block3.c();
             transition_in(if_block3, 1);
-            if_block3.m(t27.parentNode, t27);
+            if_block3.m(t29.parentNode, t29);
           }
         } else if (if_block3) {
           group_outros();
@@ -58486,13 +65974,13 @@
           });
           check_outros();
         }
-        if (!ctx2[14] && !ctx2[17] && !ctx2[18]) {
+        if (!ctx2[25]) {
           if (if_block4) {
             if_block4.p(ctx2, dirty);
           } else {
-            if_block4 = create_if_block_108(ctx2);
+            if_block4 = create_if_block_1114(ctx2);
             if_block4.c();
-            if_block4.m(t28.parentNode, t28);
+            if_block4.m(t30.parentNode, t30);
           }
         } else if (if_block4) {
           if_block4.d(1);
@@ -58516,13 +66004,13 @@
             if_block5.p(ctx2, dirty);
           }
           transition_in(if_block5, 1);
-          if_block5.m(div13, null);
+          if_block5.m(div14, null);
         }
-        if (!current || dirty[0] & 410112 && div13_style_value !== (div13_style_value = ctx2[9] && !ctx2[14] && !ctx2[17] && !ctx2[18] ? "" : "padding-left:1rem;")) {
-          attr(div13, "style", div13_style_value);
+        if (!current || dirty[0] & 33562624 && div14_style_value !== (div14_style_value = ctx2[13] && !ctx2[25] ? "" : "padding-left:1rem;")) {
+          attr(div14, "style", div14_style_value);
         }
-        if (dirty[0] & 409600) {
-          toggle_class(div13, "main-compare", ctx2[14] || ctx2[17] || ctx2[18]);
+        if (dirty[0] & 33554432) {
+          toggle_class(div14, "main-compare", ctx2[25]);
         }
       },
       i(local) {
@@ -58565,7 +66053,7 @@
         destroy_component(tr0);
         destroy_each(each_blocks_1, detaching);
         destroy_each(each_blocks, detaching);
-        ctx[43](null);
+        ctx[46](null);
         destroy_component(tr1);
         destroy_component(notepad);
         if (if_block0)
@@ -58575,29 +66063,29 @@
         if (if_block2)
           if_block2.d();
         if (detaching)
-          detach(t26);
+          detach(t28);
         if (if_block3)
           if_block3.d(detaching);
         if (detaching)
-          detach(t27);
+          detach(t29);
         if (if_block4)
           if_block4.d(detaching);
         if (detaching)
-          detach(t28);
-        if (detaching)
-          detach(div13);
-        if_blocks[current_block_type_index].d();
-        if (detaching)
-          detach(t29);
+          detach(t30);
         if (detaching)
           detach(div14);
-        ctx[68](null);
+        if_blocks[current_block_type_index].d();
+        if (detaching)
+          detach(t31);
+        if (detaching)
+          detach(div15);
+        ctx[71](null);
         mounted = false;
         run_all(dispose);
       }
     };
   }
-  function create_fragment47(ctx) {
+  function create_fragment48(ctx) {
     let meta0;
     let meta1;
     let link2;
@@ -58606,11 +66094,11 @@
     let if_block1;
     let if_block1_anchor;
     let current;
-    let if_block0 = !ctx[2] && create_if_block_177(ctx);
-    const if_block_creators = [create_if_block32, create_else_block21];
+    let if_block0 = !ctx[6] && create_if_block_188(ctx);
+    const if_block_creators = [create_if_block33, create_else_block22];
     const if_blocks = [];
     function select_block_type(ctx2, dirty) {
-      if (!ctx2[24])
+      if (!ctx2[26])
         return 0;
       return 1;
     }
@@ -58645,10 +66133,10 @@
         current = true;
       },
       p(ctx2, dirty) {
-        if (!ctx2[2]) {
+        if (!ctx2[6]) {
           if (if_block0) {
           } else {
-            if_block0 = create_if_block_177(ctx2);
+            if_block0 = create_if_block_188(ctx2);
             if_block0.c();
             if_block0.m(meta0.parentNode, meta0);
           }
@@ -58711,14 +66199,15 @@
   function contains2(text2, substr) {
     return text2.toLowerCase().indexOf(substr) != -1;
   }
-  function instance47($$self, $$props, $$invalidate) {
+  function instance48($$self, $$props, $$invalidate) {
+    let toolMode;
     let sortedArticles;
     let $loaded;
     let $loadingFile;
     let $revealed;
-    component_subscribe($$self, loaded, ($$value) => $$invalidate(24, $loaded = $$value));
-    component_subscribe($$self, loadingFile, ($$value) => $$invalidate(25, $loadingFile = $$value));
-    component_subscribe($$self, revealed, ($$value) => $$invalidate(26, $revealed = $$value));
+    component_subscribe($$self, loaded, ($$value) => $$invalidate(26, $loaded = $$value));
+    component_subscribe($$self, loadingFile, ($$value) => $$invalidate(27, $loadingFile = $$value));
+    component_subscribe($$self, revealed, ($$value) => $$invalidate(28, $revealed = $$value));
     "use strict";
     let article = null;
     let found = null;
@@ -58743,6 +66232,7 @@
     let techMode = false;
     let techTopic = "";
     let damageTarget = "";
+    let paxMode = false;
     let isTouch = "ontouchstart" in window;
     let lang;
     let markers;
@@ -58791,7 +66281,7 @@
         let data = JSON.parse(localStorage.xpediaSettings);
         if (data && typeof data == "object") {
           $$invalidate(0, hugeFont = data.hugeFont);
-          $$invalidate(9, seeSide = data.seeSide);
+          $$invalidate(13, seeSide = data.seeSide);
           $$invalidate(1, sortArticles = data.sortArticles);
           theme = data.theme;
           linksPageSorted.set(data.linksPageSorted);
@@ -58805,7 +66295,7 @@
     }
     function selectLang(n) {
       if (rul.selectLang(n))
-        $$invalidate(27, lang = n);
+        $$invalidate(29, lang = n);
       saveState();
       checkHash();
     }
@@ -58825,6 +66315,9 @@
       }
       setHash("##TECH" + (article && rul.research && rul.research[article.id] ? "::" + article.id : ""));
     }
+    function goPax() {
+      setHash(paxMode ? "##HOME" : "##PAX");
+    }
     function goDamage() {
       if (damageMode) {
         goTo("HOME");
@@ -58842,96 +66335,108 @@
         return;
       }
       if (article) {
-        $$invalidate(15, compareIds = [article.id, ...compareIds.slice(1)]);
-        $$invalidate(16, compareAutofocus = 1);
+        $$invalidate(18, compareIds = [article.id, ...compareIds.slice(1)]);
+        $$invalidate(19, compareAutofocus = 1);
       } else {
-        $$invalidate(16, compareAutofocus = 0);
+        $$invalidate(19, compareAutofocus = 0);
       }
       setHash(compareHash());
     }
     function goCompareWith(left, right) {
-      $$invalidate(15, compareIds = [left || "", right || ""]);
-      $$invalidate(16, compareAutofocus = -1);
+      $$invalidate(18, compareIds = [left || "", right || ""]);
+      $$invalidate(19, compareAutofocus = -1);
       window.location.hash = compareHash();
     }
     function onCompareChange(e) {
-      $$invalidate(15, compareIds = e.detail);
+      $$invalidate(18, compareIds = e.detail);
       window.location.hash = compareHash();
     }
     let searchinInProgres;
     function checkHash() {
       return __async(this, null, function* () {
-        $$invalidate(10, showDropdown = $$invalidate(11, showLanguagesDropdown = false));
+        $$invalidate(14, showDropdown = $$invalidate(15, showLanguagesDropdown = false));
         let hash = decodeURI(document.location.hash);
         if (hash.substring(0, 2) != "##")
           return;
         id = hash.substring(2);
-        if (id.substring(0, 6) == "DAMAGE") {
-          $$invalidate(17, damageMode = true);
-          $$invalidate(14, compareMode = false);
-          $$invalidate(18, techMode = false);
-          $$invalidate(20, damageTarget = id.split("::")[1] || "");
+        if (id == "PAX") {
+          $$invalidate(5, paxMode = true);
+          $$invalidate(3, damageMode = false);
+          $$invalidate(2, compareMode = false);
+          $$invalidate(4, techMode = false);
           if (article)
-            $$invalidate(2, article = null);
-          $$invalidate(3, found = null);
-          $$invalidate(13, searching = false);
+            $$invalidate(6, article = null);
+          $$invalidate(7, found = null);
+          $$invalidate(17, searching = false);
+          return;
+        }
+        $$invalidate(5, paxMode = false);
+        if (id.substring(0, 6) == "DAMAGE") {
+          $$invalidate(3, damageMode = true);
+          $$invalidate(2, compareMode = false);
+          $$invalidate(4, techMode = false);
+          $$invalidate(21, damageTarget = id.split("::")[1] || "");
+          if (article)
+            $$invalidate(6, article = null);
+          $$invalidate(7, found = null);
+          $$invalidate(17, searching = false);
           return;
         }
         if (id.substring(0, 4) == "TECH") {
-          $$invalidate(18, techMode = true);
-          $$invalidate(17, damageMode = false);
-          $$invalidate(14, compareMode = false);
-          $$invalidate(19, techTopic = id.split("::")[1] || "");
+          $$invalidate(4, techMode = true);
+          $$invalidate(3, damageMode = false);
+          $$invalidate(2, compareMode = false);
+          $$invalidate(20, techTopic = id.split("::")[1] || "");
           if (article)
-            $$invalidate(2, article = null);
-          $$invalidate(3, found = null);
-          $$invalidate(13, searching = false);
+            $$invalidate(6, article = null);
+          $$invalidate(7, found = null);
+          $$invalidate(17, searching = false);
           return;
         }
-        $$invalidate(18, techMode = false);
-        $$invalidate(17, damageMode = false);
+        $$invalidate(4, techMode = false);
+        $$invalidate(3, damageMode = false);
         if (id.substring(0, 7) == "COMPARE") {
-          $$invalidate(14, compareMode = true);
+          $$invalidate(2, compareMode = true);
           let parts = id.split("::").slice(1);
           while (parts.length < 2)
             parts.push("");
-          $$invalidate(15, compareIds = parts.slice(0, 4));
+          $$invalidate(18, compareIds = parts.slice(0, 4));
           if (article)
-            $$invalidate(2, article = null);
-          $$invalidate(3, found = null);
-          $$invalidate(13, searching = false);
+            $$invalidate(6, article = null);
+          $$invalidate(7, found = null);
+          $$invalidate(17, searching = false);
           return;
         }
-        $$invalidate(14, compareMode = false);
+        $$invalidate(2, compareMode = false);
         if (id == "HOME") {
-          $$invalidate(4, query = "");
+          $$invalidate(8, query = "");
         }
-        $$invalidate(13, searching = false);
+        $$invalidate(17, searching = false);
         if (id) {
           let dd = id.indexOf("::");
           if (dd != -1) {
-            $$invalidate(4, query = id.substring(dd + 2).toLowerCase());
+            $$invalidate(8, query = id.substring(dd + 2).toLowerCase());
             id = id.substring(0, dd);
           }
           if (id == "SEARCH") {
-            $$invalidate(13, searching = true);
+            $$invalidate(17, searching = true);
             if (query.length >= 2) {
-              $$invalidate(21, searchinInProgres = true);
-              $$invalidate(3, found = yield rul.search[rul.langName].findArticles(query));
-              $$invalidate(21, searchinInProgres = false);
+              $$invalidate(22, searchinInProgres = true);
+              $$invalidate(7, found = yield rul.search[rul.langName].findArticles(query));
+              $$invalidate(22, searchinInProgres = false);
             } else
-              $$invalidate(3, found = 0);
-            $$invalidate(2, article = null);
+              $$invalidate(7, found = 0);
+            $$invalidate(6, article = null);
           } else {
-            $$invalidate(3, found = null);
+            $$invalidate(7, found = null);
             if (!article || article.id != id)
-              $$invalidate(2, article = rul.article(id));
+              $$invalidate(6, article = rul.article(id));
           }
         }
         if (article) {
           if (article.sections) {
             if (!article.sections.includes(currentSection)) {
-              $$invalidate(5, currentSection = article.sections[0]);
+              $$invalidate(9, currentSection = article.sections[0]);
             }
           }
         }
@@ -58956,24 +66461,24 @@
     function searchKeyUp(e) {
       if (searchDelayHandle)
         clearTimeout(searchDelayHandle);
-      $$invalidate(8, searchDelayHandle = setTimeout(() => {
+      $$invalidate(12, searchDelayHandle = setTimeout(() => {
         goTo("SEARCH::" + e.target.value);
-        $$invalidate(8, searchDelayHandle = null);
+        $$invalidate(12, searchDelayHandle = null);
       }, e.key == "Enter" ? 10 : 1e3));
     }
     window.onhashchange = checkHash;
     function dropdown(val = null) {
       if (val === null) {
-        $$invalidate(10, showDropdown = !showDropdown);
+        $$invalidate(14, showDropdown = !showDropdown);
       } else {
         if (!isTouch)
-          $$invalidate(10, showDropdown = val);
+          $$invalidate(14, showDropdown = val);
       }
     }
     document.addEventListener("keydown", (event) => {
       if (compareMode)
         return;
-      if (damageMode)
+      if (damageMode || paxMode)
         return;
       const keyName = event.key;
       if (keyName == "ArrowRight")
@@ -59028,8 +66533,8 @@
         if (el && el.attributes && el.attributes.tooltip) {
           let idattr = el.attributes.tooltip;
           let rect = e.target.getBoundingClientRect();
-          $$invalidate(12, tooltip.style.left = rect.left + rect.width / 2 + "px", tooltip);
-          $$invalidate(12, tooltip.style.top = (rect.top > 100 ? rect.top : rect.top + 120) + "px", tooltip);
+          $$invalidate(16, tooltip.style.left = rect.left + rect.width / 2 + "px", tooltip);
+          $$invalidate(16, tooltip.style.top = (rect.top > 100 ? rect.top : rect.top + 120) + "px", tooltip);
           let id2 = idattr.value;
           toggleTooltip(id2 in rul.lang && !e.shiftKey ? rul.lang[id2] : id2.substring(4));
         } else {
@@ -59038,7 +66543,7 @@
       }
     }));
     function toggleTooltip(text2) {
-      $$invalidate(12, tooltip.innerHTML = text2, tooltip);
+      $$invalidate(16, tooltip.innerHTML = text2, tooltip);
       let classes = tooltip.classList;
       if (text2) {
         classes.add("visible");
@@ -59053,7 +66558,7 @@
     function div6_binding($$value) {
       binding_callbacks[$$value ? "unshift" : "push"](() => {
         navbarDropDown = $$value;
-        $$invalidate(22, navbarDropDown);
+        $$invalidate(23, navbarDropDown);
       });
     }
     const mousemove_handler = (e) => {
@@ -59081,13 +66586,13 @@
     const click_handler_3 = () => toggleTheme();
     const click_handler_4 = (e) => $$invalidate(0, hugeFont = !hugeFont);
     const click_handler_5 = (lang2, e) => selectLang(lang2);
-    const mousedown_handler = (e) => $$invalidate(11, showLanguagesDropdown = !showLanguagesDropdown);
+    const mousedown_handler = (e) => $$invalidate(15, showLanguagesDropdown = !showLanguagesDropdown);
     const click_handler_6 = (lang2, e) => selectLang(lang2);
-    const mouseover_handler_1 = (e) => !isTouch && $$invalidate(11, showLanguagesDropdown = true);
-    const mouseout_handler_2 = (e) => !isTouch && $$invalidate(11, showLanguagesDropdown = false);
+    const mouseover_handler_1 = (e) => !isTouch && $$invalidate(15, showLanguagesDropdown = true);
+    const mouseout_handler_2 = (e) => !isTouch && $$invalidate(15, showLanguagesDropdown = false);
     function input_input_handler() {
       query = this.value;
-      $$invalidate(4, query);
+      $$invalidate(8, query);
     }
     const click_handler_7 = (e) => {
       $$invalidate(1, sortArticles = !sortArticles);
@@ -59097,15 +66602,15 @@
     function a_binding($$value) {
       binding_callbacks[$$value ? "unshift" : "push"](() => {
         activeOption = $$value;
-        $$invalidate(6, activeOption);
+        $$invalidate(10, activeOption);
       });
     }
     const click_handler_8 = () => {
-      $$invalidate(7, ignoreNextAutoscroll = true);
+      $$invalidate(11, ignoreNextAutoscroll = true);
     };
     const click_handler_9 = (e) => {
       if (e.button == 0)
-        $$invalidate(9, seeSide = !seeSide);
+        $$invalidate(13, seeSide = !seeSide);
       saveState();
     };
     const open_handler = (e) => goTo(e.detail);
@@ -59117,13 +66622,17 @@
       useCache("wipe");
       location.reload();
     };
-    function div14_binding($$value) {
+    function div15_binding($$value) {
       binding_callbacks[$$value ? "unshift" : "push"](() => {
         tooltip = $$value;
-        $$invalidate(12, tooltip);
+        $$invalidate(16, tooltip);
       });
     }
     $$self.$$.update = () => {
+      if ($$self.$$.dirty[0] & 60) {
+        $:
+          $$invalidate(25, toolMode = compareMode || damageMode || techMode || paxMode);
+      }
       if ($$self.$$.dirty[0] & 1) {
         $: {
           document.documentElement.style.fontSize = hugeFont ? "24pt" : "12pt";
@@ -59131,12 +66640,16 @@
       }
       if ($$self.$$.dirty[0] & 2) {
         $:
-          $$invalidate(23, sortedArticles = (articles) => sortArticles ? [...articles || []].sort((a, b) => a.title > b.title ? 1 : -1) : articles);
+          $$invalidate(24, sortedArticles = (articles) => sortArticles ? [...articles || []].sort((a, b) => a.title > b.title ? 1 : -1) : articles);
       }
     };
     return [
       hugeFont,
       sortArticles,
+      compareMode,
+      damageMode,
+      techMode,
+      paxMode,
       article,
       found,
       query,
@@ -59149,16 +66662,14 @@
       showLanguagesDropdown,
       tooltip,
       searching,
-      compareMode,
       compareIds,
       compareAutofocus,
-      damageMode,
-      techMode,
       techTopic,
       damageTarget,
       searchinInProgres,
       navbarDropDown,
       sortedArticles,
+      toolMode,
       $loaded,
       $loadingFile,
       $revealed,
@@ -59169,6 +66680,7 @@
       selectLang,
       goTo,
       goTech,
+      goPax,
       goDamage,
       goCompare,
       onCompareChange,
@@ -59203,16 +66715,16 @@
       prev_handler,
       next_handler,
       click_handler_10,
-      div14_binding
+      div15_binding
     ];
   }
   var App = class extends SvelteComponent {
     constructor(options) {
       super();
-      init(this, options, instance47, create_fragment47, safe_not_equal, { loadState: 41 }, null, [-1, -1, -1, -1]);
+      init(this, options, instance48, create_fragment48, safe_not_equal, { loadState: 44 }, null, [-1, -1, -1, -1]);
     }
     get loadState() {
-      return this.$$.ctx[41];
+      return this.$$.ctx[44];
     }
   };
   var App_default = App;

@@ -57,7 +57,7 @@
   import { download } from "./exportPedia";
   import ArticlePeek from "./ArticlePeek.svelte";
   import { get } from "svelte/store";
-  import { currentSave, currentSavePath, droppedSaves, setCurrentSave } from "./store";
+  import { currentSave, currentSavePath, droppedSaves, setCurrentSave, centcomSoldier } from "./store";
 
   export let targetId = "";
 
@@ -417,6 +417,18 @@
   $: saveCrew = saveState ? soldiersFromSave(saveState.crew) : [];
   $: if (saveCrew.length && !sourceTouched && soldierSource != "save") {
     soldierSource = "save";
+  }
+  /**
+   * Sent here from PAX with a soldier in mind. Waits for the crew to exist -
+   * the save may still be parsing - then selects them once and clears the
+   * request. The search box is cleared too, or it could hide who was asked for.
+   */
+  $: if ($centcomSoldier && saveCrew.some((s) => s.id == $centcomSoldier)) {
+    soldierSource = "save";
+    sourceTouched = true;
+    crewFilter = "";
+    currentId = $centcomSoldier;
+    centcomSoldier.set("");
   }
   // Whatever list is showing, keep a valid selection in it.
   $: if (roster.length && !roster.some((x) => x.id == currentId)) currentId = roster[0].id;

@@ -3188,3 +3188,432 @@ tr.diff-row > td:first-child {
   margin: 0.15rem 0;
   text-indent: -0.6rem;
 }
+
+/* ------------------------------------------------------------------ PAX */
+
+/* One hue, light to dark, for every shaded cell: stat grades, role scores,
+   career columns. Text stays in the ink colour - the shade carries the
+   magnitude, the number carries the value. Redefined in light.css. */
+:root {
+  --pax-heat: 70, 140, 225;
+  --pax-h1: 0.14;
+  --pax-h2: 0.27;
+  --pax-h3: 0.4;
+  --pax-h4: 0.55;
+  --pax-h5: 0.72;
+  --pax-hurt: #ff9a86;
+}
+
+.pax-body {
+  height: calc(100vh - 5.5rem);
+  min-height: 0;
+  overflow: hidden;
+}
+
+.pax-body > .dmg-side {
+  overflow-y: auto;
+  overflow-x: hidden;
+  max-height: 100%;
+}
+
+.pax-main {
+  flex: 1 1 auto;
+  min-width: 0;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 0.4rem 0.5rem;
+  overflow: hidden;
+}
+
+.pax-empty {
+  padding: 2rem;
+  max-width: 34rem;
+}
+
+.pax-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.2rem 0.8rem;
+}
+
+.pax-bar .dmg-chips {
+  margin-bottom: 0;
+}
+
+.pax-tabs .dmg-chip {
+  font-size: 100%;
+  padding: 0.15em 0.7em;
+}
+
+.pax-stretch {
+  flex: 1 1 auto;
+}
+
+.pax-legend {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  margin: 0.35rem 0;
+  font-size: 85%;
+}
+
+.pax-legend > span:first-child {
+  margin-right: 0.3rem;
+}
+
+.pax-legend > span:nth-child(7) {
+  margin: 0 0.6rem 0 0.3rem;
+}
+
+.pax-swatch {
+  display: inline-block;
+  width: 1.4em;
+  height: 0.9em;
+}
+
+.pax-scroll {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: auto;
+}
+
+.pax-grid {
+  border-collapse: separate;
+  border-spacing: 2px;
+  font-size: 92%;
+}
+
+.pax-grid th,
+.pax-grid td {
+  padding: 0.1em 0.4em;
+  white-space: nowrap;
+}
+
+.pax-grid thead th {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background: var(--table-header);
+  font-weight: bold;
+  text-align: left;
+}
+
+.pax-sort {
+  cursor: pointer;
+  user-select: none;
+}
+
+.pax-sort:hover {
+  background: var(--hover) !important;
+}
+
+.pax-numh {
+  text-align: center !important;
+}
+
+/* The name stays put while the stats scroll under it. */
+.pax-grid .pax-name {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  background: var(--background);
+  max-width: 12rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.pax-grid thead .pax-name {
+  z-index: 3;
+  background: var(--table-header);
+}
+
+.pax-grid tbody tr {
+  cursor: pointer;
+}
+
+.pax-grid tbody tr:hover td {
+  box-shadow: inset 0 -1px 0 var(--border);
+}
+
+.pax-grid tbody tr:hover .pax-name,
+.pax-grid tr.pax-on .pax-name {
+  background: var(--lighter);
+}
+
+.pax-grid tr.pax-on td {
+  box-shadow: inset 0 -2px 0 var(--link);
+}
+
+.pax-fallen {
+  opacity: 0.45;
+}
+
+.pax-group td {
+  background: var(--table-subheader);
+  font-weight: bold;
+  padding-top: 0.25em;
+}
+
+.pax-cell {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  min-width: 2.2em;
+}
+
+.pax-h1 { background: rgba(var(--pax-heat), var(--pax-h1)); }
+.pax-h2 { background: rgba(var(--pax-heat), var(--pax-h2)); }
+.pax-h3 { background: rgba(var(--pax-heat), var(--pax-h3)); }
+.pax-h4 { background: rgba(var(--pax-heat), var(--pax-h4)); }
+.pax-h5 { background: rgba(var(--pax-heat), var(--pax-h5)); }
+
+/* At the hard cap: done growing. Bold plus a rule, never colour alone. */
+.pax-maxed {
+  font-weight: bold;
+  box-shadow: inset 0 -2px 0 var(--em);
+}
+
+/* The soldier's own best role, in the Roles grid. */
+.pax-top {
+  font-weight: bold;
+  outline: 1px solid var(--text);
+  outline-offset: -1px;
+}
+
+.pax-weak {
+  opacity: 0.55;
+}
+
+.pax-status {
+  font-size: 88%;
+  opacity: 0.7;
+}
+
+.pax-hurt {
+  color: var(--pax-hurt);
+  opacity: 1;
+}
+
+/* Sidebar */
+.pax-rules {
+  margin: 0.3rem 0;
+}
+
+.pax-rule {
+  display: flex;
+  gap: 0.2rem;
+  margin-bottom: 0.2rem;
+  align-items: center;
+}
+
+.pax-rule select:first-child {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.pax-op {
+  width: 3em;
+  flex: 0 0 auto;
+}
+
+.pax-num {
+  width: 3.8em;
+  flex: 0 0 auto;
+}
+
+.pax-check {
+  display: block;
+  margin: 0.25rem 0;
+  font-size: 92%;
+  cursor: pointer;
+}
+
+/* Role editor */
+.pax-roleedit {
+  margin-bottom: 0.4rem;
+}
+
+.pax-weights {
+  border-collapse: collapse;
+  margin: 0.3rem 0;
+  font-size: 90%;
+}
+
+.pax-weights th,
+.pax-weights td {
+  padding: 0.05em 0.1em;
+  text-align: center;
+}
+
+.pax-rolename {
+  width: 8em;
+}
+
+.pax-w {
+  width: 2.6em;
+  opacity: 0.45;
+}
+
+.pax-w-on {
+  opacity: 1;
+  font-weight: bold;
+}
+
+/* Squad builder */
+.pax-squad {
+  display: flex;
+  gap: 1.2rem;
+  flex-wrap: wrap;
+  overflow: auto;
+  min-height: 0;
+}
+
+.pax-slots {
+  flex: 0 0 17rem;
+}
+
+.pax-slots h4 {
+  margin: 0.3rem 0;
+}
+
+.pax-slot {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  margin-bottom: 0.2rem;
+}
+
+.pax-slot select {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.pax-picks {
+  flex: 1 1 24rem;
+  min-width: 0;
+  overflow-x: auto;
+}
+
+/* "Why" and "Next in line" wrap rather than push the table off-screen. */
+.pax-picks .pax-grid td.dmg-cap {
+  white-space: normal;
+  min-width: 7rem;
+}
+
+/* Soldier file */
+.pax-detail {
+  flex: 0 0 19rem;
+  min-width: 0;
+  overflow-y: auto;
+  /* A tick at 100% pokes a pixel past its track; never scroll sideways for it. */
+  overflow-x: hidden;
+  border-left: solid 2px var(--border);
+  padding: 0.5rem 0.7rem;
+}
+
+.pax-dhead {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+
+.pax-dhead h3 {
+  margin: 0 0 0.2rem 0;
+}
+
+.pax-detail h4 {
+  margin: 0.8rem 0 0.3rem 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.pax-dline {
+  margin: 0.4rem 0;
+  line-height: 1.4;
+}
+
+.pax-bars {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.pax-barrow {
+  display: grid;
+  grid-template-columns: 2.6em 1fr 4.2em;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 90%;
+}
+
+.pax-rolelabel {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.pax-bars .pax-barrow:has(.pax-rolelabel) {
+  grid-template-columns: 5.5em 1fr 2em;
+}
+
+.pax-track {
+  position: relative;
+  height: 0.75em;
+  background: var(--table-secondary);
+  border: 1px solid var(--border);
+}
+
+.pax-fill {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  background: rgba(var(--pax-heat), var(--pax-h5));
+}
+
+.pax-fillmax {
+  box-shadow: inset 0 -2px 0 var(--em);
+}
+
+.pax-tick {
+  position: absolute;
+  top: -3px;
+  bottom: -3px;
+  width: 2px;
+  margin-left: -1px;
+}
+
+.pax-tick-start,
+.pax-key-start {
+  background: var(--text);
+  color: var(--text);
+  opacity: 0.55;
+}
+
+.pax-tick-gym,
+.pax-key-gym {
+  background: var(--link);
+  color: var(--link);
+}
+
+.pax-key-start,
+.pax-key-gym {
+  background: none;
+  font-weight: bold;
+}
+
+.pax-barval {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.pax-barkey {
+  margin-top: 0.3rem;
+}
+
+.pax-list {
+  margin: 0;
+  padding-left: 1.1rem;
+  line-height: 1.45;
+}

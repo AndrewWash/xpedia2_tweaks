@@ -55,6 +55,30 @@ export type RawSoldier = {
   bonuses: string[];
   /** Medals, which also carry bonuses via the commendation's own table. */
   commendations: { name: string; level: number }[];
+  /**
+   * The rest is for PAX, the personnel screen. CENTCOM ignores all of it.
+   */
+  /** initialStats verbatim: the rookie roll, so growth is current - initial. */
+  initial: { [k: string]: number };
+  /** Base name, from the base record the soldier sits in. */
+  base: string;
+  missions: number;
+  kills: number;
+  stuns: number;
+  /** 0 male, 1 female, as the engine stores it. */
+  gender: number;
+  /** Freshness spent and not yet recovered. */
+  manaMissing: number;
+  /**
+   * Whole-career counters from the diary - shots fired and landed, times
+   * wounded and so on - verbatim. Absent keys mean zero; old soldiers predate
+   * some of them.
+   */
+  diary: { [k: string]: number };
+  /** Kills by weapon id, from diary.killList - kills and stuns alike. */
+  killsByWeapon: { [k: string]: number };
+  /** Set only for records read out of deadSoldiers. */
+  fallen?: boolean;
 };
 
 export type SaveState = {
@@ -74,6 +98,12 @@ export type SaveState = {
   crafts: number;
   /** The living roster, in file order. Excludes deadSoldiers by construction. */
   crew: RawSoldier[];
+  /**
+   * The memorial: deadSoldiers, same shape, flagged `fallen`. Kept apart from
+   * `crew` so nothing that fields a squad can ever pick a corpse - only PAX's
+   * memorial toggle reads this.
+   */
+  fallen: RawSoldier[];
   /**
    * Research underway, by topic id.
    *
@@ -307,13 +337,25 @@ export function parseSave(text: string, path = ""): SaveState {
     }
     /**
      * Only bases[].soldiers. `deadSoldiers` is a separate TOP-LEVEL key holding
-     * memorial records in the same shape - reading it would put casualties in
-     * the roster, so nothing here ever looks at it.
+     * memorial records in the same shape - reading it here would put casualties
+     * in the roster, so it is read separately below into `fallen`.
      */
+    const baseName = typeof b.name == "string" ? b.name : "Base " + (bi + 1);
     for (const sol of Array.isArray(b.soldiers) ? b.soldiers : []) {
-      const parsed = readSoldier(sol, bi);
+      const parsed = readSoldier(sol, bi, baseName);
       if (parsed) crew.push(parsed);
     }
+  }
+
+  const fallen: RawSoldier[] = [];
+  for (const sol of Array.isArray(state.deadSoldiers) ? state.deadSoldiers : []) {
+    // "kia" keeps their keys apart from any living soldier's.
+    const parsed = readSoldier(sol, "kia", "");
+    if (!parsed) continue;
+    parsed.fallen = true;
+    parsed.craft = "";
+    parsed.recovery = 0;
+    fallen.push(parsed);
   }
 
   return {
@@ -327,21 +369,43 @@ export function parseSave(text: string, path = ""): SaveState {
     bases: bases.length,
     crafts,
     crew,
+    fallen,
     projects,
     scientists,
   };
 }
 
 /** One soldier record, defensively. Returns null for anything unrecognisable. */
-function readSoldier(sol: any, baseIndex: number): RawSoldier {
+function readSoldier(sol: any, baseIndex: number | string, baseName: string): RawSoldier {
   if (!sol || typeof sol != "object") return null;
   const name = typeof sol.name == "string" && sol.name ? sol.name : "Unnamed";
 
-  const stats: { [k: string]: number } = {};
-  const cur = sol.currentStats && typeof sol.currentStats == "object" ? sol.currentStats : {};
-  for (const k of Object.keys(cur)) {
-    const n = +cur[k];
-    if (!isNaN(n)) stats[k] = n;
+  const numbers = (src: any) => {
+    const out: { [k: string]: number } = {};
+    if (!src || typeof src != "object") return out;
+    for (const k of Object.keys(src)) {
+      const n = +src[k];
+      if (!isNaN(n)) out[k] = n;
+    }
+    return out;
+  };
+  const stats = numbers(sol.currentStats);
+  const initial = numbers(sol.initialStats);
+
+  /**
+   * Only the scalar counters - commendations, killList and missionIdList are
+   * lists and are either read on their own or not needed.
+   */
+  const diaryRaw = sol.diary && typeof sol.diary == "object" ? sol.diary : {};
+  const diary: { [k: string]: number } = {};
+  for (const k of Object.keys(diaryRaw)) {
+    const v = diaryRaw[k];
+    if (typeof v == "number" && !isNaN(v)) diary[k] = v;
+  }
+  const killsByWeapon: { [k: string]: number } = {};
+  for (const kill of Array.isArray(diaryRaw.killList) ? diaryRaw.killList : []) {
+    if (!kill || typeof kill.weapon != "string") continue;
+    killsByWeapon[kill.weapon] = (killsByWeapon[kill.weapon] || 0) + 1;
   }
 
   /**
@@ -376,6 +440,15 @@ function readSoldier(sol: any, baseIndex: number): RawSoldier {
     recovery: +sol.recovery || 0,
     bonuses,
     commendations,
+    initial,
+    base: baseName,
+    missions: +sol.missions || 0,
+    kills: +sol.kills || 0,
+    stuns: +sol.stuns || 0,
+    gender: +sol.gender || 0,
+    manaMissing: +sol.manaMissing || 0,
+    diary,
+    killsByWeapon,
   };
 }
 

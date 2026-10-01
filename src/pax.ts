@@ -59,8 +59,11 @@ export type PaxRow = {
   rankName: string;
   base: string;
   craft: string;
+  /** The armour being shown: what they wear, unless a sandbox pick replaced it. */
   armor: string;
   armorName: string;
+  /** What the save says they have on. */
+  wornArmor: string;
   status: "fit" | "wounded" | "fallen";
   /** Days to fit, rounded up. 0 when fit. */
   recovery: number;
@@ -169,6 +172,7 @@ function buildRow(raw: RawSoldier, profile: any): PaxRow {
     craft: raw.craft ? rul.tr(raw.craft) : "",
     armor: raw.armor,
     armorName: raw.armor ? rul.tr(raw.armor) : "",
+    wornArmor: raw.armor,
     status: raw.fallen ? "fallen" : raw.recovery > 0 ? "wounded" : "fit",
     recovery: raw.recovery > 0 ? Math.ceil(raw.recovery) : 0,
     fresh: mana > 0 ? Math.max(0, Math.min(1, (mana - (raw.manaMissing || 0)) / mana)) : 1,
@@ -193,6 +197,27 @@ function buildRow(raw: RawSoldier, profile: any): PaxRow {
     capLeft,
     weapons: Object.entries(raw.killsByWeapon || {}).sort((a, b) => b[1] - a[1]),
   };
+}
+
+/**
+ * The rows with sandbox armour picks applied: `armor` and `armored` move to the
+ * pick, `wornArmor` keeps what the save says. A pick equal to the worn armour
+ * is no pick at all. Rows without a pick come back untouched.
+ *
+ * `picks` is CENTCOM's own override map (xpediaCrewArmor), keyed by the same
+ * soldier id - so a suit tried on here is still on when you jump to CENTCOM.
+ */
+export function withArmor(rows: PaxRow[], picks: { [id: string]: string }): PaxRow[] {
+  return rows.map((r) => {
+    const pick = picks && picks[r.id];
+    if (pick == null || pick == r.wornArmor || r.status == "fallen") return r;
+    return {
+      ...r,
+      armor: pick,
+      armorName: pick ? rul.tr(pick) : "",
+      armored: numbers(effectiveStats({ id: r.id, name: r.name, stats: r.stats, armor: pick })),
+    };
+  });
 }
 
 /**

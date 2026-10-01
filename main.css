@@ -3617,3 +3617,57 @@ tr.diff-row > td:first-child {
   padding-left: 1.1rem;
   line-height: 1.45;
 }
+
+/* The sort chain, read left to right: primary first. */
+.pax-sortline {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.3rem;
+  margin-bottom: 0.35rem;
+}
+
+.pax-then {
+  opacity: 0.6;
+}
+
+/* Sandbox armour column. */
+/* Kept to the height of a plain text row - the grid is meant to be dense, and a
+   full-size form control in every row made it a third taller. */
+.pax-armor {
+  cursor: default;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+.pax-armor select {
+  width: 9.5rem;
+  height: 1.3em;
+  margin: 0;
+  padding: 0 0.15em;
+  font-size: 85%;
+  line-height: 1;
+  vertical-align: middle;
+}
+
+.pax-armor .dmg-mini {
+  margin-left: 0.2rem;
+  padding: 0 0.35em;
+  font-size: 85%;
+  line-height: 1.2;
+  vertical-align: middle;
+}
+
+/* Trying something on: marked by the ↺ button and a rule, never colour alone. */
+.pax-trying select {
+  border-color: var(--link);
+  font-weight: bold;
+}
+
+.pax-armorlist {
+  margin: 0.2rem 0 0.4rem 1.3rem;
+}
+
+.pax-armorlist .dmg-chips {
+  margin: 0.15rem 0 0.25rem 0;
+}

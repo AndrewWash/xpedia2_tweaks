@@ -638,8 +638,6 @@
         <nobr>CENTCOM</nobr>
       </div>
 
-      <Notepad />
-
       <div
         class="navbar-button {techMode ? 'reveal-lock' : ''}"
         id="tech-button"
@@ -657,6 +655,8 @@
       >
         <nobr>PAX</nobr>
       </div>
+
+      <Notepad />
 
       <div class="stretcher on-wide" />
 

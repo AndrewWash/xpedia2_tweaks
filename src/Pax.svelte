@@ -16,6 +16,8 @@
   import { currentSave, currentSavePath, droppedSaves, setCurrentSave, centcomSoldier } from "./store";
   import { findSaves, stampSaves, sortSaves, loadSave, parseSave } from "./damageSave";
   import { download } from "./exportPedia";
+  import { wearableArmors } from "./damageSoldiers";
+  import { armorAvailable } from "./damageAvailable";
   import {
     PAX_STATS,
     PAX_KEYS,
@@ -33,6 +35,7 @@
     cloneRoles,
     toCsv,
     rankName,
+    withArmor,
   } from "./pax";
 
   const SAVE_PREF = "xpediaSave";
@@ -52,7 +55,18 @@
   /** Grade against the crew by order, or by share of the best. */
   let basis = "rank";
   /** Show stats in the armour they wear, rather than bare. */
-  let armored = false;
+  let armored = true;
+  /**
+   * Sandbox armour, by soldier id: what to try on instead of what they wear.
+   *
+   * CENTCOM's own override store, shared on purpose - try a suit on here, hit
+   * "Open in CENTCOM", and she is still wearing it there. Only the save's
+   * soldiers are keyed into it, by the same id both screens use.
+   */
+  const CREW_ARMOR_PREF = "xpediaCrewArmor";
+  let armorPicks = {};
+  /** Which suits the armour dropdowns offer: every wearable one, or only fieldable ones. */
+  let armorList = "obtainable";
   let showFallen = false;
   /**
    * Type, rank and where-are-they columns. Worth hiding on a narrow window -
@@ -60,9 +74,12 @@
    * file shows all three anyway.
    */
   let showInfo = true;
+  /** The two voodoo columns on the Stats grid. Hidden until asked for. */
+  let showVoodoo = false;
+  $: gridStats = showVoodoo ? PAX_STATS : PAX_STATS.filter((s) => s.k != "psiStrength" && s.k != "psiSkill");
   let groupBy = "";
-  let sortKey = "rank";
-  let sortDir = -1;
+  /** The sort chain, primary first: [{key, dir}]. Empty means the default. */
+  let sorts = [];
   let filter = { ...EMPTY_FILTER, rules: [] };
   let roles = loadRoles();
   let editingRoles = false;
@@ -141,11 +158,17 @@
       if (STAT_MODES.some((m) => m.id == p.statMode)) statMode = p.statMode;
       if (BASES.some((b) => b.id == p.basis)) basis = p.basis;
       if (GROUPS.some((g) => g.id == p.groupBy)) groupBy = p.groupBy;
-      if (typeof p.sortKey == "string") sortKey = p.sortKey;
-      if (p.sortDir == 1 || p.sortDir == -1) sortDir = p.sortDir;
-      armored = !!p.armored;
+      if (Array.isArray(p.sorts))
+        sorts = p.sorts
+          .filter((s) => s && typeof s.key == "string" && (s.dir == 1 || s.dir == -1))
+          .map((s) => ({ key: s.key, dir: s.dir }));
+      // Stored as `inArmour`, not the old `armored`: that one remembers the
+      // old default of off, and would keep everyone off the new default of on.
+      armored = p.inArmour !== false;
+      if (p.armorList == "all" || p.armorList == "obtainable") armorList = p.armorList;
       showFallen = !!p.showFallen;
       showInfo = p.showInfo !== false;
+      showVoodoo = !!p.showVoodoo;
       squadFitOnly = p.squadFitOnly !== false;
       if (Array.isArray(p.slots))
         slots = p.slots
@@ -159,6 +182,12 @@
     } catch (e) {
       // Defaults are fine.
     }
+    try {
+      const raw = JSON.parse(localStorage[CREW_ARMOR_PREF] || "{}");
+      if (raw && typeof raw == "object" && !Array.isArray(raw)) armorPicks = raw;
+    } catch (e) {
+      armorPicks = {};
+    }
     prefsLoaded = true;
     adoptSharedSave();
     discoverSaves();
@@ -166,7 +195,7 @@
 
   let prefsLoaded = false;
   $: if (prefsLoaded)
-    persist({ view, statMode, basis, groupBy, sortKey, sortDir, armored, showFallen, showInfo, squadFitOnly, slots, rules: filter.rules, status: filter.status });
+    persist({ view, statMode, basis, groupBy, sorts, inArmour: armored, armorList, showFallen, showInfo, showVoodoo, squadFitOnly, slots, rules: filter.rules, status: filter.status });
 
   function persist(p) {
     try {
@@ -295,7 +324,56 @@
    * that predates this build - has no `fallen`. paxRows copes; this just keeps
    * the memorial count honest.
    */
-  $: allRows = saveState ? paxRows(saveState, true) : [];
+  $: allRows = saveState ? withArmor(paxRows(saveState, true), armorPicks) : [];
+
+  /**
+   * The armour dropdown's options for one soldier.
+   *
+   * Only suits their type may wear (an armour's `units`), narrowed in
+   * "have or can get" mode to what is in stores or can be bought or built -
+   * the same test CENTCOM uses. The worn suit and the current pick always
+   * survive the narrowing, so a dropdown can never show a blank.
+   * Built once per soldier type and mode, not per row.
+   */
+  $: armorOptions = ((mode, save) => {
+    const byType = new Map();
+    return (r) => {
+      if (!byType.has(r.type)) {
+        const list = wearableArmors(r.type);
+        byType.set(r.type, mode == "all" ? list : list.filter((a) => armorAvailable(a.id, "obtainable", save)));
+      }
+      let list = byType.get(r.type);
+      for (const id of [r.armor, r.wornArmor])
+        if (id && !list.some((a) => a.id == id)) list = [{ id, title: rul.tr(id) }, ...list];
+      return list;
+    };
+  })(armorList, saveState);
+
+  function setArmor(r, id) {
+    const next = { ...armorPicks };
+    if (id == r.wornArmor) delete next[r.id];
+    else next[r.id] = id;
+    armorPicks = next;
+    saveArmorPicks();
+  }
+
+  /** Everyone back into what they actually wear. Only this save's crew. */
+  function resetArmor() {
+    const next = { ...armorPicks };
+    for (const r of allRows) delete next[r.id];
+    armorPicks = next;
+    saveArmorPicks();
+  }
+
+  function saveArmorPicks() {
+    try {
+      localStorage[CREW_ARMOR_PREF] = JSON.stringify(armorPicks);
+    } catch (e) {
+      // The sandbox still works for this visit.
+    }
+  }
+
+  $: tryingOn = allRows.filter((r) => r.armor != r.wornArmor).length;
   $: living = allRows.filter((r) => r.status != "fallen");
   $: fallenCount = allRows.length - living.length;
   $: rows = showFallen ? allRows : living;
@@ -348,29 +426,58 @@
     return 0;
   }
 
-  /** Click a header: sort by it, high first for numbers; click again to flip. */
+  /** Text columns read A-Z first; everything else best first. */
+  const firstDir = (key) => (key == "name" || key == "type" || key == "where" ? 1 : -1);
+
+  /**
+   * Header clicks build a sort CHAIN, in click order: click TU, then REA, and
+   * it is TU first with Reactions breaking the ties. Click REA then TU for the
+   * reverse.
+   *
+   * Clicking a column already in the chain flips it, and a second click takes
+   * it back out - so each header cycles best-first, worst-first, off. The ✕
+   * beside the chain starts over.
+   */
   function sortBy(key) {
-    if (sortKey == key) sortDir = -sortDir;
-    else {
-      sortKey = key;
-      sortDir = key == "name" || key == "type" || key == "where" ? 1 : -1;
-    }
+    const i = sorts.findIndex((s) => s.key == key);
+    if (i < 0) sorts = [...sorts, { key, dir: firstDir(key) }];
+    else if (sorts[i].dir == firstDir(key))
+      sorts = sorts.map((s, j) => (j == i ? { key, dir: -s.dir } : s));
+    else sorts = sorts.filter((_, j) => j != i);
   }
 
-  function arrow(key, sk, sd) {
-    return sk == key ? (sd > 0 ? " ▲" : " ▼") : "";
+  /** "▼" for a lone sort, "▼1" "▼2" once there is a chain to read. */
+  function arrow(key, chain) {
+    const i = chain.findIndex((s) => s.key == key);
+    if (i < 0) return "";
+    return (chain[i].dir > 0 ? " ▲" : " ▼") + (chain.length > 1 ? i + 1 : "");
   }
+
+  /** Short name for a sort key, for the chain shown above the grid. */
+  function sortLabel(key) {
+    if (key.startsWith("stat:")) return (PAX_STATS.find((s) => s.k == key.slice(5)) || { ab: key }).ab;
+    if (key.startsWith("role:")) return (roles.find((r) => r.id == key.slice(5)) || { name: "?" }).name;
+    if (key.startsWith("c:")) return (CAREER.find((c) => c.id == key.slice(2)) || { ab: key }).ab;
+    return { name: "Name", type: "Type", rank: "Rank", where: "Where", status: "Status", gym: "Gym", best: "Best role" }[key] || key;
+  }
+
+  /** With nothing clicked: highest rank first, which is how the game lists them. */
+  const DEFAULT_SORT = [{ key: "rank", dir: -1 }];
 
   // Everything sortValue reads is passed in, so Svelte re-sorts when it moves -
   // it tracks what an expression names, not what the functions it calls touch.
-  $: sorted = ((list, key, dir, _s, _m, _b, _a, _g) =>
-    [...list].sort((a, b) => {
-      const x = sortValue(a, key);
-      const y = sortValue(b, key);
-      if (x < y) return -dir;
-      if (x > y) return dir;
+  $: sorted = ((list, chain, _s, _m, _b, _a, _g) => {
+    const keys = chain.length ? chain : DEFAULT_SORT;
+    return [...list].sort((a, b) => {
+      for (const { key, dir } of keys) {
+        const x = sortValue(a, key);
+        const y = sortValue(b, key);
+        if (x < y) return -dir;
+        if (x > y) return dir;
+      }
       return a.name < b.name ? -1 : 1;
-    }))(shown, sortKey, sortDir, scores, statMode, best, armored, grades);
+    });
+  })(shown, sorts, scores, statMode, best, armored, grades);
 
   function groupOf(r) {
     if (groupBy == "base") return r.base;
@@ -762,8 +869,35 @@
           <label class="pax-check" title="Test stat rules, show stats, and grade the crew in the armour each soldier has on, rather than bare.">
             <input type="checkbox" bind:checked={armored} /> In their armour
           </label>
+          <div class="pax-armorlist">
+            <span class="dmg-cap">Armour to try on</span>
+            <div class="dmg-chips">
+              <button
+                class="dmg-chip"
+                class:dmg-chip-on={armorList == "obtainable"}
+                title="Only suits in your stores, or ones your research lets you buy or manufacture - same rule as CENTCOM. What they wear is always listed."
+                on:click={() => (armorList = "obtainable")}>Have or can get</button
+              >
+              <button
+                class="dmg-chip"
+                class:dmg-chip-on={armorList == "all"}
+                title="Every suit this soldier's type can wear, owned or not."
+                on:click={() => (armorList = "all")}>All</button
+              >
+            </div>
+            {#if tryingOn}
+              <button
+                class="dmg-mini dmg-wide"
+                title="Put everyone back into the armour the save says they wear"
+                on:click={resetArmor}>↺ All back to worn ({tryingOn} trying on)</button
+              >
+            {/if}
+          </div>
           <label class="pax-check" title="Add the fallen from the memorial, greyed out. They are graded against the living and never staffed into a squad.">
             <input type="checkbox" bind:checked={showFallen} /> Show the fallen
+          </label>
+          <label class="pax-check" title="Voodoo Power and Voodoo Skill columns on the Stats grid. Off by default - they are near-zero for most crews until psionics come online. Roles and the soldier file always use them.">
+            <input type="checkbox" bind:checked={showVoodoo} /> Show VPW, VSK
           </label>
         </section>
 
@@ -848,6 +982,21 @@
                 shading: share of the crew's best
               {/if}
             </span>
+          </div>
+        {/if}
+
+        {#if view != "squad"}
+          <div class="pax-sortline dmg-cap">
+            {#if sorts.length}
+              Sorted by
+              {#each sorts as s, i}
+                {#if i}<span class="pax-then">then</span>{/if}
+                <b>{sortLabel(s.key)}{s.dir > 0 ? " ▲" : " ▼"}</b>
+              {/each}
+              <button class="dmg-mini" title="Clear the sort and start a new chain" on:click={() => (sorts = [])}>✕</button>
+            {:else}
+              Click a column to sort; click more columns to break ties in that order. Click again to flip, a third time to drop.
+            {/if}
           </div>
         {/if}
 
@@ -977,33 +1126,34 @@
             <table class="pax-grid">
               <thead>
                 <tr>
-                  <th class="pax-name pax-sort" on:click={() => sortBy("name")}>Name{arrow("name", sortKey, sortDir)}</th>
+                  <th class="pax-name pax-sort" on:click={() => sortBy("name")}>Name{arrow("name", sorts)}</th>
                   {#if showInfo}
-                    <th class="pax-sort" on:click={() => sortBy("type")}>Type{arrow("type", sortKey, sortDir)}</th>
-                    <th class="pax-sort" on:click={() => sortBy("rank")}>Rank{arrow("rank", sortKey, sortDir)}</th>
-                    <th class="pax-sort" title="Craft, else base" on:click={() => sortBy("where")}>Where{arrow("where", sortKey, sortDir)}</th>
+                    <th class="pax-sort" on:click={() => sortBy("type")}>Type{arrow("type", sorts)}</th>
+                    <th class="pax-sort" on:click={() => sortBy("rank")}>Rank{arrow("rank", sorts)}</th>
+                    <th class="pax-sort" title="Craft, else base" on:click={() => sortBy("where")}>Where{arrow("where", sorts)}</th>
                   {/if}
-                  <th class="pax-sort" title="Days to fit" on:click={() => sortBy("status")}>Status{arrow("status", sortKey, sortDir)}</th>
+                  <th class="pax-sort" title="Days to fit" on:click={() => sortBy("status")}>Status{arrow("status", sorts)}</th>
                   {#if view == "stats"}
-                    {#each PAX_STATS as s}
+                    {#each gridStats as s}
                       <th class="pax-sort pax-numh" title={s.name} on:click={() => sortBy("stat:" + s.k)}>
-                        {s.ab}{arrow("stat:" + s.k, sortKey, sortDir)}
+                        {s.ab}{arrow("stat:" + s.k, sorts)}
                       </th>
                     {/each}
                     <th class="pax-sort pax-numh" title="Stat points the gym can still add, all stats" on:click={() => sortBy("gym")}>
-                      Gym{arrow("gym", sortKey, sortDir)}
+                      Gym{arrow("gym", sorts)}
                     </th>
-                    <th class="pax-sort" title="Highest-scoring role" on:click={() => sortBy("best")}>Best role{arrow("best", sortKey, sortDir)}</th>
+                    <th class="pax-sort" title="Highest-scoring role" on:click={() => sortBy("best")}>Best role{arrow("best", sorts)}</th>
+                    <th title="Sandbox: try a different suit on. Stats, grades and roles follow it while 'In their armour' is on. (worn) marks what the save says they have on.">Armour</th>
                   {:else if view == "roles"}
                     {#each roles as role (role.id)}
                       <th class="pax-sort pax-numh" title={roleTip(role)} on:click={() => sortBy("role:" + role.id)}>
-                        {role.name}{arrow("role:" + role.id, sortKey, sortDir)}
+                        {role.name}{arrow("role:" + role.id, sorts)}
                       </th>
                     {/each}
                   {:else}
                     {#each CAREER as c}
                       <th class="pax-sort pax-numh" title={c.title} on:click={() => sortBy("c:" + c.id)}>
-                        {c.ab}{arrow("c:" + c.id, sortKey, sortDir)}
+                        {c.ab}{arrow("c:" + c.id, sorts)}
                       </th>
                     {/each}
                     <th title="Weapon with the most kills and stuns">Favourite</th>
@@ -1031,7 +1181,7 @@
                       {/if}
                       <td class="pax-status" class:pax-hurt={r.status == "wounded"} title={statusTip(r)}>{statusText(r)}</td>
                       {#if view == "stats"}
-                        {#each PAX_KEYS as k}
+                        {#each gridStats.map((s) => s.k) as k}
                           <td
                             class="pax-cell pax-h{cellHeat(r, k)}"
                             class:pax-maxed={r.cap[k] > 0 && r.raw[k] >= r.cap[k]}
@@ -1046,6 +1196,27 @@
                             {@const b = best.get(r.id)}
                             {@const s = scores.get(r.id)[b.id]}
                             <span class:pax-weak={s < 40} title={roleTip(b)}>{b.name} {Math.round(s)}</span>
+                          {/if}
+                        </td>
+                        <!-- Clicks here must not select the row, or every
+                             dropdown open would also flip the soldier file. -->
+                        <td class="pax-armor" class:pax-trying={r.armor != r.wornArmor} on:click|stopPropagation>
+                          {#if r.status != "fallen"}
+                            <select
+                              class="dmg-input"
+                              value={r.armor}
+                              title={r.armor == r.wornArmor ? "Worn - pick another suit to try it on" : "Trying on - worn is " + rul.tr(r.wornArmor)}
+                              on:change={(e) => setArmor(r, e.target.value)}
+                            >
+                              {#each armorOptions(r) as a (a.id)}
+                                <option value={a.id}>{a.title}{a.id == r.wornArmor ? " (worn)" : ""}</option>
+                              {/each}
+                            </select>
+                            {#if r.armor != r.wornArmor}
+                              <button class="dmg-mini" title="Back to what they wear: {rul.tr(r.wornArmor)}" on:click={() => setArmor(r, r.wornArmor)}>↺</button>
+                            {/if}
+                          {:else}
+                            <span class="dmg-cap">{r.armorName}</span>
                           {/if}
                         </td>
                       {:else if view == "roles"}
@@ -1108,7 +1279,11 @@
             Fit · freshness {Math.round(selected.fresh * 100)}%
           {/if}
           <br />
-          {#if selected.armor}
+          {#if selected.armor != selected.wornArmor}
+            Trying on <a href={"##" + selected.armor} on:click|preventDefault={() => (peekId = selected.armor)}>{selected.armorName}</a>
+            <button class="dmg-mini" title="Back to what they wear" on:click={() => setArmor(selected, selected.wornArmor)}>↺</button><br />
+            <span class="dmg-cap">worn: {rul.tr(selected.wornArmor)}</span>
+          {:else if selected.armor}
             Wearing <a href={"##" + selected.armor} on:click|preventDefault={() => (peekId = selected.armor)}>{selected.armorName}</a>
           {/if}
         </p>

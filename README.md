@@ -9,12 +9,12 @@ Currently WIP.
 
 # What's new 
 
-* Severless XPedia export is now made from XPedia UI ("Export" button on the main page)
-* It generates a self-sufficient HTML file that do not need additional files and directories. Just put it in game's root directory,
-* More info collected from ruls
-* Better support for multiple mods
-* UI rework to look better on all devices
-* "Reveal" mode to see untranslated text. Use eye icon or hold shift.
+*COMPARE - simple compare module to run two xpedia entries side-by-side. Highlights differences. "this or that"
+*CENTCOM - Load save and view how weapons stack against one another for different enemy types for individual soldiers. 
+*TECH - tech tree viewer. Load current save to parse available tech or search for ANY item/subject in the game and figure out how to get it from research, craft, enemies, etc. 
+
+* Planned:
+* * Better support for multiple mods - planned, not done.
 
 # How to use
 
@@ -22,9 +22,11 @@ Unpack or clone it into a subdir of the game.
 
 Have https://nodejs.org installed.
 
+Open command prompt, CD to xpedia folder (placed in game dir)
+
 Run `npm install` (or `yarn install` if you use) then `npm start`
 
 It will read user settings to find out which mods and submods to use, then open the page.
 
-If you run xpedia this way, you can click "Export" button on the main
+If you run xpedia this way, you can click "Export" button on the main page
 

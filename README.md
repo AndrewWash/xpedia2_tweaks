@@ -15,8 +15,19 @@ version 1.0 done.
 
 # How to use
 
-Unpack or clone it into a subdir of the game.
+put xpedia2 folder in your main game folder somewhere.
 
+YOU MUST RENAME THE FOLDER TO JUST 'XPEDIA2'
+click on xpedia.bat
+export, or not. you can just click xpedia.bat each time if you'd like.
+alternatively you can:
+
+Command prompt and cd "path to game directory/xpedia2"
+npm install
+npm start
+export
+Do this each time you want use a different mod. I would recommend having seperate game folders for each game version to avoid conflicts. So like a xpiratez folder, an xcomfiles folder, 40k, reavers harmony, etc. dont put two mega mods in the same game folder.
+---other notes
 Have https://nodejs.org installed.
 
 Open command prompt, CD to xpedia folder (placed in game dir)

@@ -12418,15 +12418,22 @@
   function onlyDirs(files) {
     return files.filter((dir) => dir[dir.length - 1] == "/");
   }
+  function dirName(dir) {
+    let parts = dir.split("/").filter((p) => p);
+    return parts[parts.length - 1];
+  }
   function loadFromFiles() {
     return __async(this, null, function* () {
-      let [options, modDirs, rootDirs, xpediaDirs] = yield Promise.all([
+      var _a;
+      let [options, modDirs, standardDirs, rootDirs, xpediaDirs] = yield Promise.all([
         readYaml(`${OXCPath}user/options.cfg`),
         listDir(`${OXCPath}user/mods/`, true),
+        listDir(`${OXCPath}standard/`, true),
         listDir(`${OXCPath}`, true),
         listDir(`${PediaPath}mods/`, true)
       ]);
       modDirs = onlyDirs(modDirs);
+      standardDirs = onlyDirs(standardDirs);
       rootDirs = onlyDirs(rootDirs);
       xpediaDirs = onlyDirs(xpediaDirs);
       if (modDirs.length == 0) {
@@ -12436,51 +12443,83 @@
       if (options == null) {
         warn("can't find user/options.cfg file. Loading all mods");
       }
-      modDirs = [`${OXCPath}standard/xcom1/`, ...modDirs];
-      let allModDirs = [...modDirs, ...xpediaDirs];
+      let gameModDirs = [...standardDirs, ...modDirs];
+      if (!gameModDirs.includes(`${OXCPath}standard/xcom1/`))
+        gameModDirs.unshift(`${OXCPath}standard/xcom1/`);
+      let allModDirs = [...gameModDirs, ...xpediaDirs];
       let modMetadataById = {};
-      let modMetadata = yield Promise.all(allModDirs.map((dir) => readYaml(`${dir}metadata.yml`)));
-      modMetadata = modMetadata.filter((m) => m);
-      for (let i in modMetadata) {
-        let data = modMetadata[i];
-        if (data == null)
+      let rawMetadata = yield Promise.all(allModDirs.map((dir) => readYaml(`${dir}metadata.yml`)));
+      let xpediaModIds = [];
+      for (let i in rawMetadata) {
+        let data = rawMetadata[i];
+        if (data == null || typeof data != "object")
           continue;
         let dir = allModDirs[i];
-        modMetadataById[data.id] = __spreadProps(__spreadValues({}, data), { dir });
+        let id = data.id != null && data.id !== "" ? String(data.id) : dirName(dir);
+        modMetadataById[id] = __spreadProps(__spreadValues({}, data), { id, dir });
+        if (xpediaDirs.includes(dir))
+          xpediaModIds.push(id);
       }
-      let activeMods;
-      let masterModIds = modMetadata.filter((m) => m.isMaster).map((m) => m.id);
-      masterModIds.push("xpedia");
-      if (options) {
-        activeMods = ["xcom1", ...[...options.mods.filter((m) => m.active), ...modMetadata.filter((m) => m.active)].map((m) => m.id)];
+      let isXpediaMod = (id) => xpediaModIds.includes(id);
+      let optionIds;
+      if (options == null ? void 0 : options.mods) {
+        optionIds = options.mods.filter((m) => m.active).map((m) => String(m.id));
       } else {
-        activeMods = ["xcom1", ...modMetadata.map((m) => m.id)];
+        optionIds = Object.keys(modMetadataById).filter((id) => !isXpediaMod(id));
       }
-      activeMods = activeMods.filter((id) => {
-        let mod = modMetadataById[id];
-        return mod && (mod.isMaster || masterModIds.includes(mod.master));
-      });
-      const priority = (id) => {
-        let mod = modMetadataById[id];
-        if (mod.master == "xpedia")
-          return 0;
-        if (mod.master == null)
-          return 1;
-        if (mod.master == "xcom1")
-          return 2;
-        return 3;
-      };
-      activeMods = activeMods.sort((a, b) => priority(a) - priority(b));
+      let activeMaster = optionIds.find((id) => {
+        var _a2;
+        return (_a2 = modMetadataById[id]) == null ? void 0 : _a2.isMaster;
+      }) || "xcom1";
+      let masterChain = [];
+      for (let id = activeMaster; id && ((_a = modMetadataById[id]) == null ? void 0 : _a.isMaster) && !masterChain.includes(id); id = modMetadataById[id].master)
+        masterChain.unshift(id);
+      if (!masterChain.includes(activeMaster))
+        masterChain.push(activeMaster);
+      const masterOk = (mod) => mod.master == null || mod.master === "" || mod.master == "*" || masterChain.includes(mod.master) || mod.master == "xpedia";
+      let activeMods = [
+        ...xpediaModIds.filter((id) => modMetadataById[id].master == "xpedia"),
+        ...masterChain,
+        ...optionIds.filter((id) => {
+          let mod = modMetadataById[id];
+          if (!mod) {
+            console.warn(`mod "${id}" is active in options.cfg but no folder for it was found (zipped mods are not supported)`);
+            return false;
+          }
+          return !mod.isMaster && masterOk(mod);
+        }),
+        ...xpediaModIds.filter((id) => {
+          let mod = modMetadataById[id];
+          return mod.master != "xpedia" && masterChain.includes(mod.master) && mod.active !== false;
+        })
+      ].filter((id, i, all) => modMetadataById[id] && all.indexOf(id) == i);
       let activeModsMetadata = activeMods.map((id) => modMetadataById[id]);
       for (let mod of activeModsMetadata)
-        mod.rulDir = mod.id == "xcom1" ? mod.dir : `${mod.dir}Ruleset/`;
-      let langDirs = activeModsMetadata.map((m) => `${m.dir}Language/`);
-      langDirs.splice(1, 0, "/standard/xcom1/Language/OXCE/");
+        mod.rulDir = mod.dir;
+      let langDirs = [];
+      for (let m of activeModsMetadata) {
+        langDirs.push(`${m.dir}Language/`);
+        if (m.isMaster)
+          langDirs.push(`${m.dir}Language/OXCE/`);
+      }
       let [ruls, langs] = yield Promise.all([
         loadRulsFromMods(activeModsMetadata),
         loadLanguagesFromDirs(langDirs)
       ]);
       return { ruls, langs, mods: activeModsMetadata };
+    });
+  }
+  var assetDirs = /* @__PURE__ */ new Set(["language", "maps", "routes", "terrain", "resources", "sound", "sounds", "music", "units", "geograph", "geodata", "ufograph", "ufointro", "images", "sprites"]);
+  function listRulsRecursive(dir, depth = 0) {
+    return __async(this, null, function* () {
+      let entries = yield listDir(dir);
+      let ruls = entries.filter((name) => name.toLowerCase().endsWith(".rul")).map((name) => dir + name);
+      if (depth < 4) {
+        let subdirs = entries.filter((name) => name.endsWith("/") && !assetDirs.has(name.slice(0, -1).toLowerCase()));
+        let nested = yield Promise.all(subdirs.map((sub) => listRulsRecursive(dir + sub, depth + 1)));
+        ruls.push(...nested.flat());
+      }
+      return ruls;
     });
   }
   var extRegexp = /^(.+)\.([0-9a-z\-]+)?$/i;
@@ -12517,13 +12556,8 @@
   }
   function loadRulsFromMods(mods) {
     return __async(this, null, function* () {
-      let dirLists = yield Promise.all(mods.map((mod) => listDir(mod.rulDir)));
-      dirLists = dirLists.map((files2) => files2.filter((name) => name.substr(-4) == ".rul"));
-      let dirLists2 = [];
-      for (let i in mods) {
-        dirLists2[i] = dirLists[i].map((name) => ({ mod: mods[i].id, path: `${mods[i].rulDir}${name}`, modDir: mods[i].dir }));
-      }
-      let files = dirLists2.flat(1);
+      let dirLists = yield Promise.all(mods.map((mod) => listRulsRecursive(mod.rulDir)));
+      let files = mods.map((mod, i) => dirLists[i].map((path) => ({ mod: mod.id, path, modDir: mod.dir }))).flat(1);
       let ruls = yield Promise.all(files.map((file) => __async(this, null, function* () {
         let data = yield readYaml(file.path);
         return __spreadProps(__spreadValues({}, data), { file });
@@ -12531,7 +12565,17 @@
       return ruls;
     });
   }
-  function useCache(data) {
+  function cacheKey() {
+    return __async(this, null, function* () {
+      let [options, mods] = yield Promise.all([
+        Promise.resolve().then(() => fetchText(`${OXCPath}user/options.cfg`)).catch(() => ""),
+        Promise.resolve().then(() => fetchText(`${OXCPath}user/mods/`)).catch(() => "")
+      ]);
+      let activeMods = (options.match(/^mods:[\s\S]*?(?=^\S)/m) || [options])[0];
+      return `${location.pathname}|${activeMods}|${mods}`;
+    });
+  }
+  function useCache(data, key) {
     return new Promise((done) => {
       let request = indexedDB.open("xpedia", 1);
       request.onupgradeneeded = () => {
@@ -12545,15 +12589,19 @@
         if (data == "load") {
           const query = store.get(1);
           query.onsuccess = () => {
-            var _a;
+            var _a, _b;
             let data2 = (_a = query.result) == null ? void 0 : _a.data;
+            if (key != null && ((_b = query.result) == null ? void 0 : _b.key) !== key) {
+              done(null);
+              return;
+            }
             done(data2 ? JSON.parse(data2) : null);
           };
         } else {
           if (data == "wipe")
             store.delete(1);
           else
-            store.put({ id: 1, data: JSON.stringify(data) });
+            store.put({ id: 1, key, data: JSON.stringify(data) });
           done([]);
         }
         transaction.oncomplete = () => {
@@ -12573,11 +12621,12 @@
         yield delay(10);
       } else {
         loadingFile.set("loading from cache");
-        data = yield useCache("load");
+        let key = yield cacheKey();
+        data = yield useCache("load", key);
         if (!data) {
           loadingFile.set("loading from local files");
           data = yield loadFromFiles();
-          useCache(data);
+          useCache(data, key);
         }
       }
       if (data == null) {
@@ -28202,7 +28251,10 @@
       eventScripts: { title: "Event Script" },
       inventorySections: {}
     };
-    const func7 = ([key]) => rul[key][id];
+    const func7 = ([key]) => {
+      var _a;
+      return (_a = rul[key]) == null ? void 0 : _a[id];
+    };
     $$self.$$set = ($$props2) => {
       if ("text" in $$props2)
         $$invalidate(0, text2 = $$props2.text);

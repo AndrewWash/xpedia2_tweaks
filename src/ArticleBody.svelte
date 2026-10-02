@@ -72,7 +72,7 @@
   };
 </script>
 
-{#each Object.entries(renderers).filter(([key]) => rul[key][id]) as [key, ren]}
+{#each Object.entries(renderers).filter(([key]) => rul[key]?.[id]) as [key, ren]}
   {#if typeof ren == "function"}
     <svelte:component this={ren} entry={rul[key][id]} {text} />
   {:else}

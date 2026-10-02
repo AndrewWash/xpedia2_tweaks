@@ -105,17 +105,25 @@ function onlyDirs(files:string[]){
   return files.filter(dir=>dir[dir.length-1] == "/")
 }
 
+/** Folder name of a mod dir like "/user/mods/ReaverHarmony/" -> "ReaverHarmony". */
+function dirName(dir: string) {
+  let parts = dir.split("/").filter(p => p);
+  return parts[parts.length - 1];
+}
+
 export async function loadFromFiles() {
-  
-  let [options, modDirs, rootDirs, xpediaDirs]: [OXCOptions, string[], string[], string[]] =
+
+  let [options, modDirs, standardDirs, rootDirs, xpediaDirs]: [OXCOptions, string[], string[], string[], string[]] =
     await Promise.all([
       readYaml(`${OXCPath}user/options.cfg`),
       listDir(`${OXCPath}user/mods/`, true),
+      listDir(`${OXCPath}standard/`, true),
       listDir(`${OXCPath}`, true),
       listDir(`${PediaPath}mods/`, true)
     ])
 
   modDirs = onlyDirs(modDirs);
+  standardDirs = onlyDirs(standardDirs);
   rootDirs = onlyDirs(rootDirs);
   xpediaDirs = onlyDirs(xpediaDirs);
 
@@ -129,63 +137,111 @@ export async function loadFromFiles() {
   }
 
 
-  modDirs = [`${OXCPath}standard/xcom1/`, ...modDirs]
-  let allModDirs = [...modDirs, ...xpediaDirs]
-  let modMetadataById = {};
-  let modMetadata = await Promise.all(allModDirs.map(dir => readYaml(`${dir}metadata.yml`)))
-  modMetadata = modMetadata.filter(m=>m);
+  // OXCE looks for mods in standard/ (xcom1, xcom2 and the bundled XcomUtil_*
+  // etc. mods) as well as user/mods/. user/mods is listed last so a user copy
+  // of a mod overrides the bundled one, as in the game.
+  let gameModDirs = [...standardDirs, ...modDirs];
+  if (!gameModDirs.includes(`${OXCPath}standard/xcom1/`))
+    gameModDirs.unshift(`${OXCPath}standard/xcom1/`);
 
-  for (let i in modMetadata) {
-    let data = modMetadata[i];
-    if(data==null)
+  let allModDirs = [...gameModDirs, ...xpediaDirs];
+  let modMetadataById = {};
+  let rawMetadata = await Promise.all(allModDirs.map(dir => readYaml(`${dir}metadata.yml`)))
+
+  let xpediaModIds: string[] = [];
+  for (let i in rawMetadata) {
+    let data = rawMetadata[i];
+    // a missing metadata.yml comes back as the 404 page, which parses to a string
+    if(data==null || typeof data != "object")
       continue;
     let dir = allModDirs[i];
-    modMetadataById[data.id] = { ...data, dir };
+    // OXCE uses the folder name when metadata.yml has no id (ReaverHarmony,
+    // Better_Ingame_UI, ...). Without this every such mod was stored under
+    // "undefined" and silently dropped.
+    let id = data.id != null && data.id !== "" ? String(data.id) : dirName(dir);
+    modMetadataById[id] = { ...data, id, dir };
+    if (xpediaDirs.includes(dir))
+      xpediaModIds.push(id);
   }
 
-  let activeMods: string[];
-    
-  let masterModIds = modMetadata.filter(m=>m.isMaster).map(m=>m.id);
-  masterModIds.push("xpedia");
+  let isXpediaMod = (id: string) => xpediaModIds.includes(id);
 
-  if(options){
-    activeMods = ["xcom1", ...[...options.mods.filter(m => m.active), ...modMetadata.filter(m=>m.active)].map(m => m.id)];
+  // Mods activated in options.cfg, in the options.cfg order. That order is the
+  // game's load order, so later mods override earlier ones.
+  let optionIds: string[];
+  if(options?.mods){
+    optionIds = options.mods.filter(m => m.active).map(m => String(m.id));
   } else {
-    activeMods = ["xcom1", ...modMetadata.map(m=>m.id)];
+    optionIds = Object.keys(modMetadataById).filter(id => !isXpediaMod(id));
   }
 
-  activeMods = activeMods.filter(id => {
-    let mod = modMetadataById[id];
-    return mod && (mod.isMaster || masterModIds.includes(mod.master));
-  });
+  let activeMaster = optionIds.find(id => modMetadataById[id]?.isMaster) || "xcom1";
 
-  const priority = (id:string)=>{
-    let mod = modMetadataById[id];
-    if(mod.master == "xpedia")
-      return 0;
-    if(mod.master == null)
-      return 1;
-    if(mod.master == "xcom1")
-      return 2;
-    return 3;
-  }
+  // A master can itself be built on another master (piratez has master xcom1).
+  // The game loads the whole chain, base first, so do the same.
+  let masterChain: string[] = [];
+  for (let id = activeMaster; id && modMetadataById[id]?.isMaster && !masterChain.includes(id); id = modMetadataById[id].master)
+    masterChain.unshift(id);
+  if (!masterChain.includes(activeMaster))
+    masterChain.push(activeMaster);
 
-  activeMods = activeMods.sort((a,b)=>priority(a) - priority(b))
+  // Same rule as the game: a mod loads if it has no master, master "*" (any
+  // master), or a master in the active chain. Previously only an exact master
+  // id match was accepted, so every "*" mod was dropped.
+  const masterOk = (mod) =>
+    mod.master == null || mod.master === "" || mod.master == "*" || masterChain.includes(mod.master) || mod.master == "xpedia";
+
+  let activeMods = [
+    // xpedia's own common data, under everything
+    ...xpediaModIds.filter(id => modMetadataById[id].master == "xpedia"),
+    ...masterChain,
+    ...optionIds.filter(id => {
+      let mod = modMetadataById[id];
+      if (!mod) {
+        console.warn(`mod "${id}" is active in options.cfg but no folder for it was found (zipped mods are not supported)`);
+        return false;
+      }
+      return !mod.isMaster && masterOk(mod);
+    }),
+    // xpedia's per-mod extras (e.g. piratez_xpedia), on top of their mod
+    ...xpediaModIds.filter(id => {
+      let mod = modMetadataById[id];
+      return mod.master != "xpedia" && masterChain.includes(mod.master) && (mod.active !== false);
+    })
+  ].filter((id, i, all) => modMetadataById[id] && all.indexOf(id) == i);
 
   let activeModsMetadata = activeMods.map(id => modMetadataById[id])
   for (let mod of activeModsMetadata)
-    mod.rulDir = mod.id == "xcom1" ? mod.dir : `${mod.dir}Ruleset/`;
+    mod.rulDir = mod.dir;
 
-  let langDirs = activeModsMetadata.map(m => `${m.dir}Language/`);
+  let langDirs: string[] = [];
+  for (let m of activeModsMetadata) {
+    langDirs.push(`${m.dir}Language/`);
+    if (m.isMaster)
+      langDirs.push(`${m.dir}Language/OXCE/`);
+  }
 
-  langDirs.splice(1, 0, "/standard/xcom1/Language/OXCE/");
-  
   let [ruls, langs] = await Promise.all(
     [loadRulsFromMods(activeModsMetadata),
     loadLanguagesFromDirs(langDirs)]
   );
   
   return { ruls, langs, mods: activeModsMetadata }
+}
+
+/** Folders that only hold game assets. Skipped when scanning for .rul files. */
+const assetDirs = new Set(["language", "maps", "routes", "terrain", "resources", "sound", "sounds", "music", "units", "geograph", "geodata", "ufograph", "ufointro", "images", "sprites"]);
+
+/** OXCE loads every .rul file anywhere under the mod folder, not only in Ruleset/. */
+async function listRulsRecursive(dir: string, depth = 0): Promise<string[]> {
+  let entries = await listDir(dir);
+  let ruls = entries.filter(name => name.toLowerCase().endsWith(".rul")).map(name => dir + name);
+  if (depth < 4) {
+    let subdirs = entries.filter(name => name.endsWith("/") && !assetDirs.has(name.slice(0, -1).toLowerCase()));
+    let nested = await Promise.all(subdirs.map(sub => listRulsRecursive(dir + sub, depth + 1)));
+    ruls.push(...nested.flat());
+  }
+  return ruls;
 }
 
 const extRegexp = /^(.+)\.([0-9a-z\-]+)?$/i;
@@ -233,13 +289,8 @@ async function loadLanguagesFromDirs(dirs: string[]) {
 }
 
 async function loadRulsFromMods(mods: { id: string, rulDir: string, dir: string }[]) {
-  let dirLists = await Promise.all(mods.map(mod => listDir(mod.rulDir)));
-  dirLists = dirLists.map(files => files.filter(name => name.substr(-4) == ".rul"))
-  let dirLists2: { mod: string, path: string }[][] = [];
-  for (let i in mods) {
-    dirLists2[i] = dirLists[i].map(name => ({ mod: mods[i].id, path: `${mods[i].rulDir}${name}`, modDir: mods[i].dir }))
-  }
-  let files = dirLists2.flat(1);
+  let dirLists = await Promise.all(mods.map(mod => listRulsRecursive(mod.rulDir)));
+  let files = mods.map((mod, i) => dirLists[i].map(path => ({ mod: mod.id, path, modDir: mod.dir }))).flat(1);
   let ruls = await Promise.all(files.map(async file => {
     let data = await readYaml(file.path);
     return { ...data, file }
@@ -247,7 +298,23 @@ async function loadRulsFromMods(mods: { id: string, rulDir: string, dir: string 
   return ruls;
 }
 
-export function useCache(data) {
+/**
+ * Identifies the game install the cache was built from. The cache lives in the
+ * browser's IndexedDB for http://localhost:2601, which is the same origin for
+ * every xpedia install - so running xpedia from an XPiratez folder and then from
+ * another mod's folder showed the cached XPiratez data. Keying the cache on the
+ * active mod list and mod folders makes it rebuild when they change.
+ */
+async function cacheKey() {
+  let [options, mods] = await Promise.all([
+    Promise.resolve().then(() => fetchText(`${OXCPath}user/options.cfg`)).catch(() => ""),
+    Promise.resolve().then(() => fetchText(`${OXCPath}user/mods/`)).catch(() => "")
+  ]);
+  let activeMods = (options.match(/^mods:[\s\S]*?(?=^\S)/m) || [options])[0];
+  return `${location.pathname}|${activeMods}|${mods}`;
+}
+
+export function useCache(data, key?: string) {
   return new Promise((done) => {
     let request = indexedDB.open("xpedia", 1);
     request.onupgradeneeded = () => {
@@ -263,14 +330,18 @@ export function useCache(data) {
       if (data == "load"){
         const query = store.get(1);
         query.onsuccess = () => {
-          let data = query.result?.data;          
+          let data = query.result?.data;
+          if (key != null && query.result?.key !== key) {
+            done(null);
+            return;
+          }
           done(data?JSON.parse(data):null);
         };        
       } else {
         if(data == "wipe")
           store.delete(1);
         else
-          store.put({ id: 1, data: JSON.stringify(data) });
+          store.put({ id: 1, key, data: JSON.stringify(data) });
         done([]);
       }
 
@@ -293,11 +364,12 @@ export async function loadRules(rul) {
     await delay(10);
   } else {
     loadingFile.set("loading from cache")
-    data = await useCache("load");
+    let key = await cacheKey();
+    data = await useCache("load", key);
     if(!data){
       loadingFile.set("loading from local files")
       data = await loadFromFiles();
-      useCache(data);
+      useCache(data, key);
     }
   }
 

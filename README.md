@@ -1,20 +1,17 @@
 # xpedia2
-Check out https://baturinsky.com/xpedia for live version with N.1 XPiratez loaded in
+XPEDIA NOW WORKS WITH ALL MODS
 
 Sequel to https://github.com/baturinsky/xpedia
 
 I'm changing a lot of things around, so have created it as a separate ptoject.
 
-Currently WIP.
+version 1.0 done.
 
 # What's new 
 
 *COMPARE - simple compare module to run two xpedia entries side-by-side. Highlights differences. "this or that"
 *CENTCOM - Load save and view how weapons stack against one another for different enemy types for individual soldiers. 
 *TECH - tech tree viewer. Load current save to parse available tech or search for ANY item/subject in the game and figure out how to get it from research, craft, enemies, etc. 
-
-* Planned:
-* * Better support for multiple mods - planned, not done.
 
 # How to use
 

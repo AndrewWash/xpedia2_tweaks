@@ -1,4 +1,6 @@
 # xpedia2
+XPEDIA NOW WORKS WITH ALL MODS
+
 Check out https://baturinsky.com/xpedia for live version with N.1 XPiratez loaded in
 
 Sequel to https://github.com/baturinsky/xpedia

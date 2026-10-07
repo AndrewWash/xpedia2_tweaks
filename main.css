@@ -3079,6 +3079,28 @@ tr.diff-row > td:first-child {
   opacity: 0.6;
 }
 
+/* A dependency already researched. Dimmed rather than hidden: the in-game tree
+   lists every one, and the length of the list is information in itself. */
+.tech-depdone {
+  opacity: 0.6;
+}
+
+.tech-tick {
+  color: var(--link);
+  flex: none;
+}
+
+/* "15/16 → Contacts: Gun Emporium" beside a row. Shrinks before the name does. */
+.tech-payoff {
+  flex: 0 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  opacity: 0.7;
+  font-size: 85%;
+}
+
 /* ---- Dot legend ------------------------------------------------------ */
 
 /* A colour key, not a tutorial: six swatches and six words, wrapping onto two

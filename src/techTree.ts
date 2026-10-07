@@ -49,6 +49,8 @@ export type TopicInfo = {
   status: TopicStatus;
   /** Unmet prerequisites, minimal - see missingFor. */
   missing: string[];
+  /** Every `dependencies` entry, met or not, as the in-game tree lists them. */
+  dependencies: string[];
   /** Rolled cost when started, ruleset cost otherwise. Null when unknown. */
   cost: number;
   /** Work left: cost - spent for a started project, else cost. */
@@ -328,6 +330,7 @@ export function topicInfo(id: string, save: SaveState): TopicInfo {
     title: rul.tr(id),
     status: statusOf(id, save),
     missing: missingFor(id, save),
+    dependencies: list(t.dependencies),
     cost: p ? p.cost : +t.cost || 0,
     remaining: remainingCost(id, save),
     days: daysFor(id, save),
@@ -378,6 +381,81 @@ export function unblockCounts(save: SaveState): Map<string, number> {
     // Exactly one thing missing: that one thing is the gate.
     if (unmet.length !== 1) continue;
     out.set(unmet[0], (out.get(unmet[0]) || 0) + 1);
+  }
+  return out;
+}
+
+/** The best thing further down the path that a topic is the last opening to. */
+export type Payoff = {
+  /** The topic down the path. */
+  target: string;
+  /** Its dependencies already discovered. */
+  done: number;
+  /** Its dependencies in all. */
+  total: number;
+  /** Topics to research after this one before the target opens up. */
+  steps: number;
+};
+
+/** Past this many missing ancestors a target is not "nearly there" anyway. */
+const PAYOFF_WALK_LIMIT = 60;
+
+/**
+ * For every topic you could start, the most-completed thing down the path that
+ * it alone stands in the way of.
+ *
+ * The question is not "how many dependencies does the NEXT topic have" - that
+ * is a property of the next topic and says nothing about how close you are.
+ * Shiny Niner leads to Niner Magnum Clip, which is one of the sixteen
+ * dependencies of Contacts: Gun Emporium. When the other fifteen are done,
+ * Shiny Niner is the single thread left to pull, and that is what this finds.
+ *
+ * For each topic Y not yet researchable, walk its missing ancestry. The places
+ * that walk bottoms out - topics whose own research gates are already met -
+ * are where you would have to START to reach Y. If there is exactly one, that
+ * topic gets the credit for Y, scored by how many of Y's dependencies are
+ * done. Two or more starting points means no single topic finishes Y, so none
+ * of them is credited: a big dependency list you are nowhere near does not
+ * float anything to the top.
+ *
+ * Dependencies only, as everywhere else in here. A ruled-out topic anywhere on
+ * the way makes Y unreachable, so Y is skipped.
+ */
+export function payoffs(save: SaveState): Map<string, Payoff> {
+  const out = new Map<string, Payoff>();
+  for (const id of Object.keys(research())) {
+    const t = research()[id];
+    const deps = list(t.dependencies);
+    if (!deps.length || isDone(id, save) || researchUnblocked(id, save)) continue;
+    const done = deps.filter((d) => isDone(d, save)).length;
+    if (!done) continue;
+
+    const seen = new Set<string>();
+    let start = "";
+    let ok = true;
+    const walk = (cur: string) => {
+      if (!ok || seen.has(cur) || isDone(cur, save)) return;
+      seen.add(cur);
+      if (seen.size > PAYOFF_WALK_LIMIT || !topic(cur) || isLockedOut(cur, save)) {
+        ok = false;
+        return;
+      }
+      if (cur != id && researchUnblocked(cur, save)) {
+        // A second place to start: no single topic finishes this one.
+        if (start && start != cur) ok = false;
+        start = cur;
+        return;
+      }
+      for (const d of list(topic(cur).dependencies)) walk(d);
+    };
+    walk(id);
+    if (!ok || !start) continue;
+
+    // Everything walked except the target and the starting point.
+    const steps = seen.size - 2;
+    const best = out.get(start);
+    if (!best || done > best.done || (done == best.done && steps < best.steps))
+      out.set(start, { target: id, done, total: deps.length, steps });
   }
   return out;
 }

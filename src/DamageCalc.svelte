@@ -1,3 +1,14 @@
+<script context="module">
+  /**
+   * The screen as it was last left, or null. See keepScreen.
+   *
+   * Module scope, so it outlives the component: App tears CENTCOM down on every
+   * trip to TECH or PAX and builds a fresh one on the way back. Deliberately not
+   * localStorage - a reload is the way to start clean.
+   */
+  let kept = null;
+</script>
+
 <script>
   /**
    * Damage calculator.
@@ -16,7 +27,7 @@
    */
   import { rul } from "./Ruleset";
   import { Tr } from "./Components";
-  import { onMount } from "svelte";
+  import { onMount, onDestroy } from "svelte";
   import { resolveTarget, SIDES, armorValue, computeDamage,
     DEFAULT_TU_PER_TILE, DEFAULT_FREE_TILES } from "./damageCalc";
   import { sightDistance, sightNote, sightSteps, maxViewDistance } from "./damageSight";
@@ -233,8 +244,50 @@
     // Whatever the other screen was looking at wins; discoverSaves only
     // fills in the picker list and the remembered fallback.
     adoptSharedSave();
+    restoreScreen();
     discoverSaves();
   });
+
+  onDestroy(keepScreen);
+
+  /**
+   * Remember what was picked - mission, enemy, soldier, filters, sorts - so a
+   * hop to TECH or PAX and back lands on the same screen instead of a blank one.
+   *
+   * Tied to the save it was made against: once another save has been loaded
+   * the picks describe a different campaign, so they are dropped.
+   */
+  function keepScreen() {
+    kept = {
+      save: savePath,
+      targetId, view, currentId, side, distance, tuPerTile, freeTiles, isDay,
+      showSight, excludeDemo, kneeling, oneHanded, noLOS, ufoExtender,
+      pelletModel, goal, weaponFilter, kindFilter, handsFilter, dtFilters,
+      catFilters, includeFixed, targetFilter, missionId, missionFilter,
+      showDeployment, expandedId, weaponId, armorFilter, availMode,
+      availTouched, soldierSource, sourceTouched, crewFilter, tSortKeys,
+      tSortTouched, expandedTargetId, sortKeys, sortTouched,
+    };
+  }
+
+  function restoreScreen() {
+    if (!kept || kept.save != savePath) {
+      kept = null;
+      return;
+    }
+    // An enemy named in the hash - arriving from a unit's article - wins.
+    const linked = targetId;
+    ({
+      targetId, view, currentId, side, distance, tuPerTile, freeTiles, isDay,
+      showSight, excludeDemo, kneeling, oneHanded, noLOS, ufoExtender,
+      pelletModel, goal, weaponFilter, kindFilter, handsFilter, dtFilters,
+      catFilters, includeFixed, targetFilter, missionId, missionFilter,
+      showDeployment, expandedId, weaponId, armorFilter, availMode,
+      availTouched, soldierSource, sourceTouched, crewFilter, tSortKeys,
+      tSortTouched, expandedTargetId, sortKeys, sortTouched,
+    } = kept);
+    if (linked) targetId = linked;
+  }
 
   /**
    * Find the saves without loading any of them.

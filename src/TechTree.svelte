@@ -34,6 +34,7 @@
     impactOf,
     routeTopics,
     isRouteTopic,
+    payoffs,
   } from "./techTree";
   import {
     searchGoals,
@@ -118,9 +119,10 @@
   const started = (status) => (status == "inProgress" ? 0 : 1);
 
   /**
-   * Sorts for the first column. Deliberately only two: the column is a place
-   * finder, and anything more than "alphabetical" or "what is already running"
-   * makes a list you cannot scan for a name.
+   * Sorts for the first column. Kept short: the column is a place finder, and
+   * a list you cannot scan for a name has stopped doing that job. "Most deps
+   * done" earns its place because it answers a question no other screen does -
+   * see payoffs in techTree.ts.
    */
   const LIST_SORTS = [
     { id: "name", label: "A–Z", title: "Alphabetical." },
@@ -128,6 +130,11 @@
       id: "inProgress",
       label: "In progress",
       title: "Topics the save already has underway first, the rest alphabetically behind them - so you can see what is running without leaving the filter you are on.",
+    },
+    {
+      id: "payoff",
+      label: "Most deps done",
+      title: "Looks DOWN the research path, not at the next topic. A topic rises when it is the one thread left to something further on whose dependencies are mostly done - Shiny Niner leads to Niner Magnum Clip, the last of Gun Emporium's sixteen. The figure is how many of that far topic's dependencies are done. Topics that are not the only way in to anything sink, alphabetically.",
     },
   ];
 
@@ -341,6 +348,16 @@
               ? routeTopics()
               : allIds;
 
+  /** Down-the-path targets, per starting topic. Only the save changes it. */
+  $: payoff = saveState ? payoffs(saveState) : new Map();
+
+  /** "Shiny Niner, then Niner Magnum Clip, makes Gun Emporium available" in words. */
+  function payoffTitle(p) {
+    const via = p.steps == 0 ? "" : ", then " + p.steps + " more,";
+    return "Researching this" + via + " makes " + rul.tr(p.target) + " available. " +
+      p.done + " of its " + p.total + " dependencies are already done.";
+  }
+
   $: needle = search.trim().toLowerCase();
   $: rows = (needle
     ? pool.filter((id) => rul.tr(id).toLowerCase().includes(needle) || id.toLowerCase().includes(needle))
@@ -352,6 +369,16 @@
       if (listSort == "inProgress") {
         const d = started(a.status) - started(b.status);
         if (d) return d;
+      }
+      if (listSort == "payoff") {
+        const pa = payoff.get(a.id);
+        const pb = payoff.get(b.id);
+        if (pa || pb) {
+          if (!pa) return 1;
+          if (!pb) return -1;
+          const d = pb.done - pa.done || pa.steps - pb.steps;
+          if (d) return d;
+        }
       }
       // On the Routes tab the useful order is "what can I still choose",
       // then what I already took, then the doors that closed behind me.
@@ -935,6 +962,11 @@
               <span class="tech-rowname" class:tech-locked={r.status == "lockedOut"}
                 >{r.title}</span
               >
+              {#if listSort == "payoff" && payoff.get(r.id)}
+                <span class="tech-payoff" title={payoffTitle(payoff.get(r.id))}
+                  >{payoff.get(r.id).done}/{payoff.get(r.id).total} → {rul.tr(payoff.get(r.id).target)}</span
+                >
+              {/if}
               <span
                 class="tech-star"
                 class:tech-starred={marks.includes(r.id)}
@@ -981,18 +1013,36 @@
                 {/if}
               </p>
 
-              {#if card.info.missing.length}
+              {#if card.info.dependencies.length}
                 <div class="tech-group">
                   <!-- The in-game tech tree calls this "Depends On"; match it
-                       so the two read the same way. Only the UNMET ones are
-                       listed - see missingFor. -->
-                  <h5>Depends on</h5>
-                  {#each card.info.missing as m}
+                       so the two read the same way. All of them, as in game -
+                       a long list is itself a sign the topic matters - with the
+                       unmet ones first and the done ones ticked. -->
+                  <h5>
+                    Depends on · {card.info.dependencies.length - card.info.missing.length}/{card.info.dependencies.length} done
+                  </h5>
+                  {#each [...card.info.missing, ...card.info.dependencies.filter((d) => !card.info.missing.includes(d))] as m}
                     <button class="tech-row" on:click={() => open(m, i + 1)}>
                       <span class={dot(statusOf(m, saveState))} title={STATUS_LABEL[statusOf(m, saveState)]} />
-                      <span class="tech-rowname">{rul.tr(m)}</span>
+                      <span class="tech-rowname" class:tech-depdone={!card.info.missing.includes(m)}>{rul.tr(m)}</span>
+                      {#if !card.info.missing.includes(m)}
+                        <span class="tech-tick" title="Already researched">✓</span>
+                      {/if}
                     </button>
                   {/each}
+                </div>
+              {/if}
+
+              {#if payoff.get(card.id)}
+                <div class="tech-group">
+                  <h5>Last way in to</h5>
+                  <button class="tech-row" title={payoffTitle(payoff.get(card.id))}
+                    on:click={() => open(payoff.get(card.id).target, i + 1)}>
+                    <span class={dot(statusOf(payoff.get(card.id).target, saveState))} />
+                    <span class="tech-rowname">{rul.tr(payoff.get(card.id).target)}</span>
+                    <span class="tech-payoff">{payoff.get(card.id).done}/{payoff.get(card.id).total} done</span>
+                  </button>
                 </div>
               {/if}
 
